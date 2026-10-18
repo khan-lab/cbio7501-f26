@@ -63,7 +63,7 @@ We will have two lectures on Monday and Tuesday and a lab on Wednesday. The time
 | 23.11.2026 | Mon  |   | 15:00-16:20 | 1A-B201 |  |
 | 24.11.2026 | Tue  |   | 16:00-17:20 | CR1 |  |
 | 25.11.2026 | Wed  |  Lab | 17:00-18:50 | A-B201 |  |
-| 20.11.2026 | Mon  |   | 15:00-16:20 | 1A-B201 |  |
+| 30.11.2026 | Mon  |   | 15:00-16:20 | 1A-B201 |  |
 | 01.12.2026 | Tue  |   | 16:00-17:20 | CR1 |  |
 | 02.12.2026 | Wed  |  Lab | 17:00-18:50 | A-B201 |  |
 
