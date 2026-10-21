@@ -67,6 +67,11 @@ We will have two lectures on Monday and Tuesday and a lab on Wednesday. The time
 | 01.12.2026 | Tue  |   | 16:00-17:20 | CR1 |  |
 | 02.12.2026 | Wed  |  Lab | 17:00-18:50 | A-B201 |  |
 
+### Getting Started
+
+Before attending the course, please complete the
+[software installation and setup guide](SETUP.md).
+
 ### Resources and additional reading material
 
 - Reproducibility and Replicability in Science (2019) by National Academies of Sciences, Engineering, and Medicine. ePub available - http://www.nap.edu/25303
