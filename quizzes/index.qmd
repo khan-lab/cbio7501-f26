@@ -1,0 +1,34 @@
+---
+title: "Quiz banks"
+subtitle: "Questions for the in-class quizzes (10% online assessment) and for self-checks"
+toc: false
+---
+
+One bank per lesson. Each question names the learning outcome it checks, and
+answers are folded so the page can be shown in class. Multiple-choice
+questions work in Slido or any polling tool; questions marked *discussion* or
+*open* are for think-pair-share and need no polling.
+
+Each deck also ends with two to four of these questions on a *Quiz* slide.
+
+| Lesson | Questions |
+|--------|-----------|
+| [00 Setup](00-setup.qmd) | 4 |
+| [01 Reproducibility and open science](01-introduction.qmd) | 8 |
+| [02 Project organization](02-project-organization.qmd) | 7 |
+| [03 Data management and FAIR](03-data-management.qmd) | 8 |
+| [04 Git and GitHub](04-git.qmd) | 7 |
+| [05 Pixi and 05b Conda comparison](05-pixi.qmd) | 10 |
+| [06 Jupyter](06-jupyter.qmd) | 6 |
+| [07 Quarto](07-quarto.qmd) | 7 |
+| [08 Containers](08-containers.qmd) | 7 |
+| [09 Snakemake](09-snakemake.qmd) | 7 |
+| [10 Nextflow](10-nextflow.qmd) | 6 |
+| [11 Documentation](11-documentation.qmd) | 6 |
+| [12 Putting it all together](12-putting-it-together.qmd) | 6 |
+| [S1 Package and share your tool](S1-packaging.qmd) | 6 |
+
+::: {.callout-note title="For instructors"}
+The banks are plain Quarto pages. To build a quiz, pick questions by outcome
+and copy them into your polling tool; keep the folded answers for the debrief.
+:::

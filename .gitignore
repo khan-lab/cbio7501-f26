@@ -47,7 +47,7 @@ tutorials/ltee-project/results/*
 .idea/
 
 # Quizzes
-quizzes/*.qmd
+quizzes/*-*.qmd
 
 README.proposed.md
 SETUP.proposed.md
