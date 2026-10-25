@@ -16,8 +16,8 @@ project:
     - 404.qmd
     - pages/*.qmd
     - lectures/*/*.qmd
-    - quizzes/*.qmd
-    - assessment/*.qmd
+    #- quizzes/*.qmd
+    #- assessment/*.qmd
     - cheatsheets/*.qmd
   resources:
     - assets/fonts/
