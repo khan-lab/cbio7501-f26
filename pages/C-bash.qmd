@@ -1,0 +1,570 @@
+---
+title: "C Bash 101"
+subtitle: "Practise the shell: files, folders, pipes, loops and a first script"
+description: "A self-paced practice page for the command line used in every lesson: where you are, files and folders, looking into data, pipes and redirection, loops, a small script, permissions and quoting. Ends with the shell tutorials worth doing next."
+adapted_from: []
+test:
+  needs: []
+  timeout: 600
+---
+
+::: {.at-a-glance}
+- **Time:** 60 to 90 minutes, at home, any time; best before [lesson 02](02-project-organization.qmd).
+- **You need:** a terminal ([lesson 00](00-setup.qmd#open-a-terminal): macOS Terminal, a Linux terminal, or Ubuntu in WSL2 on Windows). Pixi only for the ShellCheck step.
+- **You will have:** a practice folder with a sample sheet, three small FASTQ files and `count_reads.sh`, a script that counts reads.
+- **Cheat sheet:** [Bash](../cheatsheets/bash.qmd)
+:::
+
+## Overview
+
+Every lesson in this course is typed into a terminal, where a program called
+the **shell** reads your commands and runs them. This page practises the
+commands the lessons use, in a folder of its own, on files you make yourself,
+so nothing you do here can harm your other work. Type the commands rather
+than pasting them: your fingers learn them faster than your eyes.
+
+If you have used a terminal before, go straight to
+[*Try it yourself*](#try-it-yourself) and check whether you can answer the
+questions.
+
+::: {.callout-note title="Bash or zsh?"}
+The terminal on macOS runs **zsh**; Linux and WSL2 run **bash**. Both are
+shells, and every command on this page works in both. Scripts (section 8)
+always run with bash, because their first line asks for it. The one
+difference that matters here is explained in the [*Break it*](#break-it-spaces-in-file-names).
+:::
+
+### Learning outcomes
+
+After this page you can:
+
+1. **Move** between folders and **use** paths relative to where you are.
+2. **Create**, look into, copy, move and delete files and folders.
+3. **Combine** commands with pipes and redirection to answer a question about a data file.
+4. **Repeat** a command over many files with a loop, and **save** it as a script you run with one command.
+
+Checks: your answers to *Try it yourself*, and `count_reads.sh` printing the
+read counts of all three files.
+
+## 1. Where am I?
+
+The shell always works *in* a folder, the **working directory**. Ask which:
+
+```{.bash .run}
+cd ~
+pwd
+```
+
+```text
+/Users/ada
+```
+
+`~` is your **home** folder (on Linux `/home/ada`). `cd` (change directory)
+moves you; `pwd` (print working directory) says where you are. Make a folder
+for this page and go there:
+
+```{.bash .run}
+mkdir -p ~/cbio7501/bash-practice
+cd ~/cbio7501/bash-practice
+pwd
+```
+
+```text
+/Users/ada/cbio7501/bash-practice
+```
+
+`mkdir -p` makes the folder and any missing folders above it, and does not
+complain if it already exists.
+
+A path that starts with `/` (or `~`) is **absolute**: it means the same thing
+wherever you are. Any other path is **relative** to the working directory.
+`..` means the folder above, `.` the folder you are in:
+
+```{.bash .run}
+cd ..
+pwd
+cd bash-practice
+```
+
+```text
+/Users/ada/cbio7501
+```
+
+The lessons always work from the project folder with relative paths, so a
+project still works after it moves ([lesson 02](02-project-organization.qmd#break-it-absolute-paths)).
+
+## 2. Make some files
+
+`echo` prints text; `>` sends it into a file instead of the screen
+(**redirection**), and `>>` adds to the end of a file:
+
+```{.bash .run}
+echo "My first file" > notes.txt
+echo "A second line" >> notes.txt
+cat notes.txt
+```
+
+```text
+My first file
+A second line
+```
+
+Careful: `>` replaces the file without asking. `cat` prints a whole file.
+
+Now make the practice data. First two folders, like a small project:
+
+```{.bash .run}
+mkdir -p data results
+ls
+```
+
+```text
+data  notes.txt  results
+```
+
+In your editor (or with the copy buttons), save this sample sheet as
+`samples.tsv` in `bash-practice/`. Its columns are separated by tabs; it is a
+short version of the LTEE sample sheet from [lesson 03](03-data-management.qmd#describe-the-samples):
+
+```{.text filename="samples.tsv" .write}
+sample	strain	generation	population	mutator	cit
+SRR2589044	REL2181A	5000	Ara-3	None	unknown
+SRR2584863	REL7179B	15000	Ara-3	None	unknown
+SRR2584866	REL11365	50000	Ara-3	plus	plus
+```
+
+And three small FASTQ files in `data/`. FASTQ stores one read in four lines:
+a name starting with `@`, the sequence, a `+`, and one quality letter per
+base. These reads are made up for practice:
+
+```{.text filename="data/SRR2589044.fastq" .write}
+@SRR2589044.1
+ACGTTGCAAGGCTTACGATC
++
+IIIIIIIIIIIIIIIIIIII
+@SRR2589044.2
+TTGACCGTAGGCATCGATCA
++
+IIIIIIIIIIIIHHHHGGGG
+```
+
+```{.text filename="data/SRR2584863.fastq" .write}
+@SRR2584863.1
+GGCATTACGTACGATCGGAA
++
+IIIIIIIIIIIIIIIIIIII
+@SRR2584863.2
+CATCGGATTACAGGCT
++
+IIIIIIIIIIIIIIII
+@SRR2584863.3
+ATTGCCGATCGTTACGGACT
++
+IIIIIIIIIIIIIIHHHHHH
+```
+
+```{.text filename="data/SRR2584866.fastq" .write}
+@SRR2584866.1
+TTACGGCATCGATTACGCAT
++
+IIIIIIIIIIIIIIIIIIII
+@SRR2584866.2
+GCGCGATATCGCGATTACGA
++
+IIIIIIIIIIIIIIIIIIII
+@SRR2584866.3
+ACGATCGGCT
++
+IIIIIIIIII
+@SRR2584866.4
+TTGCAGGCATCGAATCGGCA
++
+IIIIIIIIIIIIIIIIIIII
+```
+
+## 3. Look into files
+
+```{.bash .run}
+ls -l data
+```
+
+```text
+total 24
+-rw-r--r--  1 ada  staff  166 Oct 25 10:00 SRR2584863.fastq
+-rw-r--r--  1 ada  staff  212 Oct 25 10:00 SRR2584866.fastq
+-rw-r--r--  1 ada  staff  116 Oct 25 10:00 SRR2589044.fastq
+```
+
+`ls -l` lists files with their permissions, owner, size in bytes and date.
+For a first look at a data file, read only its start or end:
+
+```{.bash .run}
+head -n 2 samples.tsv
+tail -n 1 samples.tsv
+wc -l samples.tsv data/SRR2584863.fastq
+```
+
+```text
+sample	strain	generation	population	mutator	cit
+SRR2589044	REL2181A	5000	Ara-3	None	unknown
+SRR2584866	REL11365	50000	Ara-3	plus	plus
+       4 samples.tsv
+      12 data/SRR2584863.fastq
+      16 total
+```
+
+`wc -l` counts lines: the sample sheet has a header and three samples, and
+the FASTQ file has 12 lines, so 3 reads. (Linux prints the numbers without
+the leading spaces.) `head -4 FILE.fastq` shows the first read of any FASTQ
+file, as in [lesson 03](03-data-management.qmd#download-the-reads-and-check-them).
+
+To scroll through a long file, use `less`; leave it with `q`:
+
+```{.bash .norun}
+less samples.tsv
+```
+
+## 4. Pick out what you need
+
+`grep` prints the lines that contain a word; `-c` counts them instead, and
+`-v` keeps the lines that do *not* match:
+
+```{.bash .run}
+grep SRR2584863 samples.tsv
+grep -c Ara-3 samples.tsv
+grep -v unknown samples.tsv
+```
+
+```text
+SRR2584863	REL7179B	15000	Ara-3	None	unknown
+3
+sample	strain	generation	population	mutator	cit
+SRR2584866	REL11365	50000	Ara-3	plus	plus
+```
+
+`cut` keeps columns (fields, separated by tabs): here the sample name and the
+generation.
+
+```{.bash .run}
+cut -f 1,3 samples.tsv
+```
+
+```text
+sample	generation
+SRR2589044	5000
+SRR2584863	15000
+SRR2584866	50000
+```
+
+A `*` in a file name matches anything (a **wildcard**). The shell replaces
+`data/*.fastq` with the list of matching files before the command runs:
+
+```{.bash .run}
+ls data/*.fastq
+echo data/*.fastq
+```
+
+```text
+data/SRR2584863.fastq data/SRR2584866.fastq data/SRR2589044.fastq
+data/SRR2584863.fastq data/SRR2584866.fastq data/SRR2589044.fastq
+```
+
+## 5. Pipes: one command's output is the next one's input
+
+The `|` (**pipe**) passes what one command prints to the next command. Which
+values does the `cit` column (column 6) take, and how often? Take the column,
+drop the header line, sort, and count identical neighbours:
+
+```{.bash .run}
+cut -f 6 samples.tsv | tail -n +2 | sort | uniq -c
+```
+
+```text
+   1 plus
+   2 unknown
+```
+
+`tail -n +2` starts at line 2, so it drops the header. `uniq -c` only counts
+lines that are next to each other, which is why `sort` comes first. Build a
+pipe one command at a time, and look at the output after each step.
+
+Save the answer in a file with `>`, as for `echo`:
+
+```{.bash .run}
+cut -f 6 samples.tsv | tail -n +2 | sort | uniq -c > results/cit-counts.txt
+cat results/cit-counts.txt
+```
+
+Two more pipes the lessons use: how many files, and which sample is the most
+evolved (sort by column 3 as numbers, take the last line)?
+
+```{.bash .run}
+ls data/*.fastq | wc -l
+tail -n +2 samples.tsv | sort -k3,3n | tail -n 1 | cut -f 1
+```
+
+```text
+       3
+SRR2584866
+```
+
+## 6. Copy, move, rename, delete
+
+```{.bash .run}
+cp samples.tsv samples-backup.tsv
+mv samples-backup.tsv results/
+ls results
+mv results/samples-backup.tsv results/samples-copy.tsv
+rm results/samples-copy.tsv
+ls results
+```
+
+```text
+cit-counts.txt  samples-backup.tsv
+cit-counts.txt
+```
+
+`mv` both moves and renames. `rm` deletes **for good**: there is no trash
+folder in the shell. `rm -r FOLDER` deletes a folder and everything in it, so
+read the command twice before you press Enter. Files in Git can be brought
+back ([lesson 04](04-git.qmd#break-it-delete-your-work-then-get-it-back)); other files cannot.
+
+## 7. Variables and loops
+
+A **variable** holds a value; `$` reads it. `$( ... )` puts a command's
+output into the command line, and `$(( ... ))` does arithmetic:
+
+```{.bash .run}
+f=data/SRR2584863.fastq
+echo "The file is $f"
+lines=$(wc -l < "$f")
+echo "It has $(( lines / 4 )) reads"
+```
+
+```text
+The file is data/SRR2584863.fastq
+It has 3 reads
+```
+
+No spaces around `=`. `wc -l < "$f"` reads the file through `<` so that `wc`
+prints only the number, without the file name.
+
+A `for` loop runs the same commands once for each item in a list. Count the
+reads of every file:
+
+```{.bash .run}
+for f in data/*.fastq; do
+    echo "$f: $(( $(wc -l < "$f") / 4 )) reads"
+done
+```
+
+```text
+data/SRR2584863.fastq: 3 reads
+data/SRR2584866.fastq: 4 reads
+data/SRR2589044.fastq: 2 reads
+```
+
+`basename` drops the folder and, if you give it, an ending; the lessons use
+it to turn file names into sample names:
+
+```{.bash .run}
+basename data/SRR2584863.fastq .fastq
+```
+
+```text
+SRR2584863
+```
+
+## 8. Your first script
+
+Typing the loop again tomorrow is error-prone. Save it in a file, a
+**script**, as `count_reads.sh` in `bash-practice/`:
+
+```{.bash filename="count_reads.sh" .write}
+#!/usr/bin/env bash
+# Print the number of reads in each FASTQ file given on the command line.
+# Usage: bash count_reads.sh data/*.fastq
+set -euo pipefail
+
+for f in "$@"; do
+    reads=$(( $(wc -l < "$f") / 4 ))
+    printf '%s\t%s\n' "$(basename "$f" .fastq)" "$reads"
+done
+```
+
+- The first line (the **shebang**) says which program runs the file: bash.
+- `set -euo pipefail` stops the script at the first error, at an unset
+  variable, and at a failing command inside a pipe, instead of going on with
+  wrong results. The pipeline script in [lesson 05](05-pixi.qmd#alignment-and-variant-calling) starts the same way.
+- `"$@"` is the list of everything you typed after the script's name.
+
+Run it:
+
+```{.bash .run}
+bash count_reads.sh data/*.fastq
+```
+
+```text
+SRR2584863	3
+SRR2584866	4
+SRR2589044	2
+```
+
+To run it by its name, make it **executable** once, then save its output as a
+table:
+
+```{.bash .run}
+chmod +x count_reads.sh
+./count_reads.sh data/*.fastq > results/read-counts.tsv
+cat results/read-counts.tsv
+```
+
+`./` means "in this folder": the shell does not look for programs in the
+working directory unless you say so.
+
+ShellCheck reads a script and points out common mistakes, such as missing
+quotes. Run it through Pixi ([lesson 00](00-setup.qmd)); no output means it
+found nothing:
+
+```{.bash .run}
+pixi exec shellcheck count_reads.sh
+```
+
+## 9. Permissions
+
+The first column of `ls -l` shows who may **r**ead, **w**rite and e**x**ecute
+a file: the owner, the group, everyone else.
+
+```{.bash .run}
+ls -l count_reads.sh data/SRR2589044.fastq
+```
+
+```text
+-rwxr-xr-x  1 ada  staff  272 Oct 25 10:00 count_reads.sh
+-rw-r--r--  1 ada  staff  116 Oct 25 10:00 data/SRR2589044.fastq
+```
+
+Raw data should be read-only, so that no command changes it by mistake
+([lesson 03](03-data-management.qmd#make-raw-data-read-only)). Take away the
+write permission, then try to add a line:
+
+```{.bash .run}
+chmod a-w data/*.fastq
+```
+
+```{.bash .expect-fail}
+echo "oops" >> data/SRR2589044.fastq
+```
+
+```text
+bash: data/SRR2589044.fastq: Permission denied
+```
+
+The file is safe. (`chmod u+w FILE` gives the write permission back.)
+
+## Try it yourself
+
+1. In which folder are you? List the files in `results/` without going there.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `pwd`, then `ls results`.
+   :::
+
+2. Which samples carry the mutator (column 5 is not `None`)? Print only their names.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `tail -n +2 samples.tsv | grep -v None | cut -f 1` prints `SRR2584866`.
+   Careful: a plain `grep -v None` would also keep the header line.
+   :::
+
+3. How many bases are in `data/SRR2584866.fastq` in total? (The sequences are
+   on lines 2, 6, 10, ...; `awk` can pick every fourth line and add up
+   lengths.)
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `awk 'NR % 4 == 2 { n += length($0) } END { print n }' data/SRR2584866.fastq`
+   prints `70` (20 + 20 + 10 + 20). `NR` is the line number in `awk`.
+   :::
+
+4. Change `count_reads.sh` so that it also prints the total number of reads at
+   the end, then check it with ShellCheck.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   Before the loop add `total=0`; inside it, `total=$(( total + reads ))`;
+   after `done`, `printf 'total\t%s\n' "$total"`. The output ends with
+   `total	9`.
+   :::
+
+## Break it: spaces in file names
+
+The shell splits a command line at spaces, so a file name with a space looks
+like two names, unless it is in quotes. Make such a file and try to count its
+lines, first without quotes:
+
+```{.bash .run}
+cp data/SRR2584863.fastq "my reads.fastq"
+f="my reads.fastq"
+```
+
+Predict what happens, then run it:
+
+```{.bash .expect-fail}
+bash -c 'f="my reads.fastq"; wc -l $f'
+```
+
+```text
+wc: my: open: No such file or directory
+wc: reads.fastq: open: No such file or directory
+       0 total
+```
+
+(Linux words the message a little differently.) Bash split `$f` into `my` and `reads.fastq`. With quotes it works:
+
+```{.bash .run}
+wc -l "$f"
+rm "my reads.fastq"
+```
+
+(The command runs in `bash -c '...'` because zsh, the macOS terminal's shell,
+does *not* split variables, so `wc -l $f` happens to work there. Scripts run
+with bash, where it fails.) Two habits avoid the problem: put `"$f"` in quotes
+every time, and never put spaces in file names
+([lesson 02](02-project-organization.qmd#name-files-so-that-they-sort-and-explain-themselves)).
+
+## Troubleshooting
+
+| Problem | What to do |
+|---------|------------|
+| `No such file or directory` | You are in another folder, or the name is misspelt. Check with `pwd` and `ls`; press `Tab` to complete names. |
+| `Permission denied` when running a script | Run it with `bash script.sh`, or once `chmod +x script.sh`, then `./script.sh`. |
+| `command not found` | A typo, or the program is not installed. Tools for this course run through Pixi: `pixi run TOOL` in a project, `pixi exec TOOL` elsewhere. |
+| The prompt shows `>` and waits | A quote or a loop is still open. Finish it, or press `Ctrl-C` to start again. |
+| Stuck in `less` or `man` | Press `q`. |
+| A command runs forever | `Ctrl-C` stops it. |
+| You pressed Enter on `rm` too soon | The file is gone unless it was committed to Git. That is one reason to use Git. |
+
+## Apply it to your own mini-analysis
+
+Open a terminal in the folder of your own data. Answer three questions with
+the commands from this page: how many files are there, how many lines does
+the biggest one have (`wc -l` and `sort -n`), and what do its first lines
+look like? Write the commands down: they are the start of your download and
+check scripts in [lesson 03](03-data-management.qmd#automate-it).
+
+## Key points
+
+- The shell works in one folder at a time: `pwd` says which, `cd` changes it, and relative paths start from there.
+- `>` writes a command's output to a file (replacing it), `>>` adds to it, and `|` passes it to the next command.
+- `head`, `tail`, `wc -l`, `grep`, `cut`, `sort` and `uniq -c` answer most first questions about a data file.
+- A `for` loop repeats commands over files; a script saves them, starting with `#!/usr/bin/env bash` and `set -euo pipefail`.
+- Quote variables (`"$f"`), avoid spaces in file names, and remember that `rm` has no undo.
+
+## Further reading
+
+- Cheat sheet: [Bash](../cheatsheets/bash.qmd), with links to the official references.
+- **Data Carpentry, *Introduction to the Command Line for Genomics***: the shell for sequencing data, from the same Data Carpentry genomics curriculum as the LTEE data in this course (about half a day). <https://datacarpentry.github.io/shell-genomics/>
+- **Software Carpentry, *The Unix Shell***: a general, deeper introduction, with more on loops, scripts and finding files (about a day), and a one-page summary of its commands. <https://swcarpentry.github.io/shell-novice/>, summary: <https://swcarpentry.github.io/shell-novice/reference.html>
+- **MIT, *The Missing Semester of Your CS Education***: lecture videos and notes on the shell, scripting and command-line tools, for when you want to go further. <https://missing.csail.mit.edu/>
+- **ShellCheck**, finds bugs in shell scripts (also as a web page): <https://www.shellcheck.net/>
+- **explainshell**, explains each part of a command line you paste in: <http://www.explainshell.com/>
+- *GNU Bash Reference Manual*, the official manual: <https://www.gnu.org/software/bash/manual/>

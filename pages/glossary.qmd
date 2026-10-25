@@ -1,0 +1,41 @@
+---
+title: "Glossary"
+subtitle: "Terms used in the lessons, in one line each"
+adapted_from: []
+---
+
+| Term | Meaning | Lesson |
+|------|---------|--------|
+| Bind mount | Making a folder of your computer visible inside a container (`-v "$PWD":/work`). | [08](08-containers.qmd) |
+| Bioconda | A conda channel of bioinformatics software. | [05](05-pixi.qmd) |
+| Branch | A separate line of work in a Git repository. | [04](04-git.qmd) |
+| CARE | Collective benefit, Authority to control, Responsibility, Ethics: principles for data from Indigenous Peoples, used together with FAIR. | [03](03-data-management.qmd) |
+| Cell (code cell) | A block of code in a Quarto document or notebook that runs when the document renders. | [07](07-quarto.qmd) |
+| Channel (conda) | A place packages are downloaded from, such as conda-forge or bioconda. | [05](05-pixi.qmd) |
+| Channel (Nextflow) | A queue of data items connecting processes. | [10](10-nextflow.qmd) |
+| Checksum | A short fingerprint of a file (md5, SHA-256); any change to the file changes it. | [03](03-data-management.qmd) |
+| CI (continuous integration) | Automatic checks that run on every push, here with GitHub Actions. | [04](04-git.qmd) |
+| `CITATION.cff` | A file that says how to cite a repository; GitHub and Zenodo read it. | [11](11-documentation.qmd) |
+| Commit | A recorded snapshot of a Git repository, with a message. | [04](04-git.qmd) |
+| conda-forge | The largest community conda channel, for general software. | [05](05-pixi.qmd) |
+| Container / image | An image packs software and a minimal operating system; a container is a running image. | [08](08-containers.qmd) |
+| Digest | The checksum of a container image (`@sha256:...`); unlike a tag it never changes. | [08](08-containers.qmd) |
+| DOI | A persistent identifier for a publication, dataset or software release. | [12](12-putting-it-together.qmd) |
+| Environment | The software (programs and libraries, with versions) an analysis runs with. | [05](05-pixi.qmd) |
+| FAIR | Findable, Accessible, Interoperable, Reusable: principles for data. | [03](03-data-management.qmd) |
+| Feature (Pixi) | A named set of dependencies, tasks and platforms that environments are built from. | [05](05-pixi.qmd) |
+| Job graph (DAG) | The jobs of a workflow and the files that connect them. | [09](09-snakemake.qmd) |
+| Literate programming | Text and code in one document, rendered by running the code. | [07](07-quarto.qmd) |
+| Lock file (`pixi.lock`) | The exact package files and checksums of an environment, for every platform. | [05](05-pixi.qmd) |
+| Manifest (`pixi.toml`) | What software a project asks for, written by you. | [05](05-pixi.qmd) |
+| Metadata | Data about the data: where it comes from, what each column and file means. | [03](03-data-management.qmd) |
+| Process (Nextflow) | A step of a Nextflow pipeline: inputs, outputs, script. | [10](10-nextflow.qmd) |
+| Pull request | A proposal to merge a branch, with review and checks. | [04](04-git.qmd) |
+| Recipe (conda) | Instructions to build a conda package: source, requirements, tests, license. | [S1](S1-packaging.qmd) |
+| Replicable | A new study with new data gives consistent results. | [01](01-introduction.qmd) |
+| Reproducible | The same data and the same analysis give the same results. | [01](01-introduction.qmd) |
+| Rule (Snakemake) | How to make output files from input files. | [09](09-snakemake.qmd) |
+| Task (Pixi) | A named command in `pixi.toml`, run with `pixi run NAME`. | [05](05-pixi.qmd) |
+| Template | A ready-made project layout generated with one command (Cookiecutter). | [02](02-project-organization.qmd) |
+| Wildcard | A placeholder in a Snakemake file name (`{sample}`) filled in from the requested file. | [09](09-snakemake.qmd) |
+| Workflow manager | A tool that runs the steps of an analysis in the right order, only when needed. | [09](09-snakemake.qmd) |

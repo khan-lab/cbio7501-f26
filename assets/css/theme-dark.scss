@@ -1,0 +1,55 @@
+/*-- scss:defaults --*/
+// Dark theme tokens, chosen for the dark background (not an automatic
+// inversion). Contrast on #0d1117: body text 13:1, muted 7.5:1, links 8.2:1,
+// quiz accent 8.2:1.
+
+// Custom tokens, used by styles.scss
+$surface: #161b22;
+$surface-strong: #1d2430;
+$border-subtle: #2a313c;
+$border-strong: #3a4350;
+$muted: #9aa4b2;
+$accent-quiz: #f0945c;
+$shadow-color: rgba(0, 0, 0, 0.35);
+
+// Bootstrap and Quarto
+$body-bg: #0d1117;
+$body-color: #d6dde6;
+$headings-color: #f0f4f8;
+$primary: #7cacf8;
+$secondary: $muted;
+$success: #4cc38a;
+$info: #7cacf8;
+$warning: #e3b341;
+$danger: #f47067;
+$link-color: $primary;
+$border-color: $border-subtle;
+$table-border-color: $border-subtle;
+
+$navbar-bg: #0d1117;
+$navbar-fg: #c9d1d9;
+$navbar-hl: $primary;
+$sidebar-bg: #0d1117;
+$sidebar-fg: #aeb8c4;
+$sidebar-hl: $primary;
+$footer-bg: #0d1117;
+$footer-fg: $muted;
+
+$code-color: #e6edf3;
+$code-bg: $surface;
+$code-block-bg: $surface;
+
+// Typography (shared with the light theme: keep in sync)
+$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+$font-size-root: 16px;
+$line-height-base: 1.68;
+$headings-font-weight: 650;
+$headings-line-height: 1.25;
+$h1-font-size: 2.2rem;
+$h2-font-size: 1.55rem;
+$h3-font-size: 1.22rem;
+$h4-font-size: 1.05rem;
+$border-radius: 0.5rem;
+$link-decoration: none;
+$link-hover-decoration: underline;

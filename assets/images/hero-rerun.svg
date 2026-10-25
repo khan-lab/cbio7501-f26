@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 1148.29 522.05">
+  <!-- Generator: Adobe Illustrator 30.8.2, SVG Export Plug-In . SVG Version: 2.1.4 Build 7)  -->
+  <defs>
+    <style>
+      .st0, .st1, .st2, .st3, .st4, .st5, .st6, .st7, .st8 {
+        fill: none;
+      }
+
+      .st9 {
+        fill: url(#dots);
+      }
+
+      .st10 {
+        fill: #0c2945;
+      }
+
+      .st11 {
+        fill: #ff5c60;
+      }
+
+      .st12, .st13, .st14 {
+        fill: #fff;
+      }
+
+      .st12, .st14 {
+        stroke: #7b7c7c;
+      }
+
+      .st1 {
+        stroke-width: 5px;
+      }
+
+      .st1, .st2, .st15, .st16, .st5 {
+        stroke: #0c2945;
+      }
+
+      .st1, .st3, .st5, .st6, .st7, .st8 {
+        stroke-linecap: round;
+      }
+
+      .st1, .st3, .st7 {
+        stroke-linejoin: round;
+      }
+
+      .st17 {
+        fill: #35c759;
+      }
+
+      .st18 {
+        fill: #d5dce4;
+      }
+
+      .st13 {
+        font-size: 17px;
+      }
+
+      .st13, .st19, .st20, .st21, .st22, .st23, .st24, .st25 {
+        isolation: isolate;
+      }
+
+      .st13, .st20, .st24 {
+        font-family: Helvetica-Bold, Helvetica;
+        font-weight: 700;
+      }
+
+      .st2, .st26, .st3, .st27, .st16, .st6, .st8 {
+        stroke-width: 2.5px;
+      }
+
+      .st28, .st26, .st15, .st16, .st29, .st20, .st25 {
+        fill: #e6c787;
+      }
+
+      .st30 {
+        fill: #fac800;
+      }
+
+      .st26, .st7 {
+        stroke: #164678;
+      }
+
+      .st3, .st27, .st6, .st8, .st31 {
+        stroke: #e6c787;
+      }
+
+      .st4 {
+        stroke: #b9c5d2;
+        stroke-width: 2px;
+      }
+
+      .st14 {
+        stroke-miterlimit: 10;
+      }
+
+      .st15, .st5 {
+        stroke-width: 4px;
+      }
+
+      .st27, .st32, .st31 {
+        fill: #164678;
+      }
+
+      .st29 {
+        stroke: #042e51;
+      }
+
+      .st20, .st23 {
+        font-size: 18px;
+      }
+
+      .st21 {
+        font-family: ArialMT, Arial;
+      }
+
+      .st21, .st22 {
+        font-size: 13px;
+      }
+
+      .st21, .st22, .st23 {
+        fill: #5b6b7c;
+      }
+
+      .st22 {
+        font-family: AppleBraille-Outline6Dot, 'Apple Braille';
+      }
+
+      .st23 {
+        font-family: Helvetica, Helvetica;
+      }
+
+      .st33 {
+        fill: #e7edf4;
+      }
+
+      .st24 {
+        fill: #042e51;
+        font-size: 24px;
+      }
+
+      .st7 {
+        stroke-width: 3px;
+      }
+
+      .st8 {
+        stroke-dasharray: 3 8;
+      }
+
+      .st25 {
+        opacity: .16;
+      }
+
+      .st31 {
+        stroke-width: 1.5px;
+      }
+    </style>
+    <pattern id="dots" x="0" y="0" width="28" height="28" patternTransform="translate(23.9701 16915.4445)" patternUnits="userSpaceOnUse" viewBox="0 0 28 28">
+      <g>
+        <rect class="st0" width="28" height="28"/>
+        <g>
+          <rect class="st0" width="28" height="28"/>
+          <circle class="st25" cx="14" cy="14" r="1.6"/>
+        </g>
+      </g>
+    </pattern>
+  </defs>
+  <rect class="st9" width="1148.29" height="522.05" rx="28" ry="28"/>
+  <g class="st19">
+    <text class="st24" transform="translate(31.97 29.61)"><tspan x="0" y="0">Today</tspan></text>
+  </g>
+  <g class="st19">
+    <text class="st24" transform="translate(691.97 29.61)"><tspan x="0" y="0">Five years later</tspan></text>
+  </g>
+  <g>
+    <rect class="st12" x="31.97" y="49.61" width="420" height="310" rx="16" ry="16"/>
+    <rect class="st33" x="32.49" y="50.11" width="418.95" height="39.5" rx="16" ry="16"/>
+    <rect class="st33" x="32.49" y="73.61" width="418.99" height="16"/>
+    <circle class="st11" cx="57.97" cy="69.61" r="6"/>
+    <circle class="st30" cx="77.97" cy="69.61" r="6"/>
+    <circle class="st17" cx="97.97" cy="69.61" r="6"/>
+    <g class="st19">
+      <text class="st23" transform="translate(123.97 74.61)"><tspan x="0" y="0">report.qmd</tspan></text>
+    </g>
+    <path class="st10" d="M66.97,111.61h166c3.87,0,7,3.13,7,7h0c0,3.87-3.13,7-7,7H66.97c-3.87,0-7-3.13-7-7h0c0-3.87,3.13-7,7-7Z"/>
+    <path class="st18" d="M63.97,139.61h356c2.21,0,4,1.79,4,4h0c0,2.21-1.79,4-4,4H63.97c-2.21,0-4-1.79-4-4h0c0-2.21,1.79-4,4-4Z"/>
+    <path class="st18" d="M63.97,155.61h292c2.21,0,4,1.79,4,4h0c0,2.21-1.79,4-4,4H63.97c-2.21,0-4-1.79-4-4h0c0-2.21,1.79-4,4-4Z"/>
+    <line class="st4" x1="59.97" y1="253.61" x2="423.97" y2="253.61"/>
+    <rect class="st32" x="59.97" y="223.61" width="28" height="30" rx="3" ry="3"/>
+    <rect class="st32" x="101.97" y="205.61" width="28" height="48" rx="3" ry="3"/>
+    <rect class="st32" x="143.97" y="215.61" width="28" height="38" rx="3" ry="3"/>
+    <rect class="st28" x="185.97" y="193.61" width="28" height="60" rx="3" ry="3"/>
+    <rect class="st32" x="227.97" y="209.61" width="28" height="44" rx="3" ry="3"/>
+    <polyline class="st7" points="287.97 237.61 319.97 219.61 351.97 229.61 385.97 199.61 423.97 209.61"/>
+    <circle class="st26" cx="385.97" cy="199.61" r="5"/>
+    <g class="st19">
+      <text class="st21" transform="translate(59.97 285.61)"><tspan x="0" y="0">REL606</tspan></text>
+      <text class="st22" transform="translate(90.33 285.61)"><tspan x="0" y="0"> </tspan></text>
+      <text class="st22" transform="translate(96.96 285.61)"><tspan x="0" y="0"> </tspan></text>
+      <text class="st21" transform="translate(113.14 285.77)"><tspan x="0" y="0">variant</tspan></text>
+      <text class="st22" transform="translate(140.85 285.61)"><tspan x="0" y="0"> </tspan></text>
+      <text class="st21" transform="translate(157.97 285.61)"><tspan x="0" y="0">calls</tspan></text>
+    </g>
+    <line class="st5" x1="59.97" y1="331.61" x2="423.97" y2="331.61"/>
+    <g>
+      <line class="st2" x1="93.97" y1="331.61" x2="93.97" y2="309.61"/>
+      <line class="st2" x1="131.97" y1="331.61" x2="131.97" y2="299.61"/>
+      <line class="st2" x1="181.97" y1="331.61" x2="181.97" y2="315.61"/>
+      <line class="st2" x1="203.97" y1="331.61" x2="203.97" y2="295.61"/>
+      <line class="st2" x1="263.97" y1="331.61" x2="263.97" y2="307.61"/>
+      <line class="st2" x1="301.97" y1="331.61" x2="301.97" y2="313.61"/>
+      <line class="st2" x1="343.97" y1="331.61" x2="343.97" y2="301.61"/>
+      <line class="st2" x1="385.97" y1="331.61" x2="385.97" y2="311.61"/>
+    </g>
+    <g>
+      <circle class="st32" cx="93.97" cy="309.61" r="5.5"/>
+      <circle class="st32" cx="181.97" cy="315.61" r="5.5"/>
+      <circle class="st32" cx="263.97" cy="307.61" r="5.5"/>
+      <circle class="st32" cx="343.97" cy="301.61" r="5.5"/>
+    </g>
+    <g>
+      <circle class="st16" cx="131.97" cy="299.61" r="5.5"/>
+      <circle class="st16" cx="203.97" cy="295.61" r="5.5"/>
+      <circle class="st16" cx="301.97" cy="313.61" r="5.5"/>
+      <circle class="st16" cx="385.97" cy="311.61" r="5.5"/>
+    </g>
+  </g>
+  <g>
+    <rect class="st14" x="691.97" y="49.61" width="420" height="310" rx="16" ry="16"/>
+    <rect class="st33" x="692.52" y="50.12" width="418.93" height="39.48" rx="16" ry="16"/>
+    <rect class="st33" x="692.52" y="73.61" width="418.93" height="16"/>
+    <circle class="st11" cx="717.97" cy="69.61" r="6"/>
+    <circle class="st30" cx="737.97" cy="69.61" r="6"/>
+    <circle class="st17" cx="757.97" cy="69.61" r="6"/>
+    <g class="st19">
+      <text class="st23" transform="translate(783.97 74.61)"><tspan x="0" y="0">report.qmd</tspan></text>
+    </g>
+    <path class="st10" d="M726.97,111.61h166c3.87,0,7,3.13,7,7h0c0,3.87-3.13,7-7,7h-166c-3.87,0-7-3.13-7-7h0c0-3.87,3.13-7,7-7Z"/>
+    <path class="st18" d="M723.97,139.61h356c2.21,0,4,1.79,4,4h0c0,2.21-1.79,4-4,4h-356c-2.21,0-4-1.79-4-4h0c0-2.21,1.79-4,4-4Z"/>
+    <path class="st18" d="M723.97,155.61h292c2.21,0,4,1.79,4,4h0c0,2.21-1.79,4-4,4h-292c-2.21,0-4-1.79-4-4h0c0-2.21,1.79-4,4-4Z"/>
+    <line class="st4" x1="719.97" y1="253.61" x2="1083.97" y2="253.61"/>
+    <rect class="st32" x="719.97" y="223.61" width="28" height="30" rx="3" ry="3"/>
+    <rect class="st32" x="761.97" y="205.61" width="28" height="48" rx="3" ry="3"/>
+    <rect class="st32" x="803.97" y="215.61" width="28" height="38" rx="3" ry="3"/>
+    <rect class="st28" x="845.97" y="193.61" width="28" height="60" rx="3" ry="3"/>
+    <rect class="st32" x="887.97" y="209.61" width="28" height="44" rx="3" ry="3"/>
+    <polyline class="st7" points="947.97 237.61 979.97 219.61 1011.97 229.61 1045.97 199.61 1083.97 209.61"/>
+    <circle class="st26" cx="1045.97" cy="199.61" r="5"/>
+    <g class="st19">
+      <text class="st21" transform="translate(719.97 285.61)"><tspan x="0" y="0">REL606</tspan></text>
+      <text class="st22" transform="translate(750.33 285.61)"><tspan x="0" y="0"> </tspan></text>
+      <text class="st22" transform="translate(756.96 285.61)"><tspan x="0" y="0"> </tspan></text>
+      <text class="st21" transform="translate(772.65 285.91)"><tspan x="0" y="0">variant</tspan></text>
+      <text class="st22" transform="translate(788.52 285.61)"><tspan x="0" y="0"> </tspan></text>
+      <text class="st21" transform="translate(817.03 285.77)"><tspan x="0" y="0">calls</tspan></text>
+    </g>
+    <line class="st5" x1="719.97" y1="331.61" x2="1083.97" y2="331.61"/>
+    <g>
+      <line class="st2" x1="753.97" y1="331.61" x2="753.97" y2="309.61"/>
+      <line class="st2" x1="791.97" y1="331.61" x2="791.97" y2="299.61"/>
+      <line class="st2" x1="841.97" y1="331.61" x2="841.97" y2="315.61"/>
+      <line class="st2" x1="863.97" y1="331.61" x2="863.97" y2="295.61"/>
+      <line class="st2" x1="923.97" y1="331.61" x2="923.97" y2="307.61"/>
+      <line class="st2" x1="961.97" y1="331.61" x2="961.97" y2="313.61"/>
+      <line class="st2" x1="1003.97" y1="331.61" x2="1003.97" y2="301.61"/>
+      <line class="st2" x1="1045.97" y1="331.61" x2="1045.97" y2="311.61"/>
+    </g>
+    <g>
+      <circle class="st32" cx="753.97" cy="309.61" r="5.5"/>
+      <circle class="st32" cx="841.97" cy="315.61" r="5.5"/>
+      <circle class="st32" cx="923.97" cy="307.61" r="5.5"/>
+      <circle class="st32" cx="1003.97" cy="301.61" r="5.5"/>
+    </g>
+    <g>
+      <circle class="st16" cx="791.97" cy="299.61" r="5.5"/>
+      <circle class="st16" cx="863.97" cy="295.61" r="5.5"/>
+      <circle class="st16" cx="961.97" cy="313.61" r="5.5"/>
+      <circle class="st16" cx="1045.97" cy="311.61" r="5.5"/>
+    </g>
+  </g>
+  <g>
+    <circle class="st15" cx="445.97" cy="49.61" r="24"/>
+    <path class="st1" d="M435.97,50.61l7,8,14-17"/>
+  </g>
+  <g>
+    <circle class="st15" cx="1105.97" cy="49.61" r="24"/>
+    <path class="st1" d="M1095.97,50.61l7,8,14-17"/>
+  </g>
+  <path class="st29" d="M540.47,183.61h63c3.59,0,6.5,2.91,6.5,6.5h0c0,3.59-2.91,6.5-6.5,6.5h-63c-3.59,0-6.5-2.91-6.5-6.5h0c0-3.59,2.91-6.5,6.5-6.5Z"/>
+  <path class="st29" d="M540.47,215.61h63c3.59,0,6.5,2.91,6.5,6.5h0c0,3.59-2.91,6.5-6.5,6.5h-63c-3.59,0-6.5-2.91-6.5-6.5h0c0-3.59,2.91-6.5,6.5-6.5Z"/>
+  <g>
+    <g>
+      <polyline class="st8" points="241.97 368.51 241.97 403.61 901.97 403.61 901.97 368.51"/>
+      <path class="st28" d="M241.97,369.51c2.61,2.61,7.78,3.86,11.36,3.96-4.81-3.58-9.01-8.24-11.36-13.87-2.25,5.63-6.7,10.08-11.36,13.87,3.84-.31,8.5-1.25,11.36-3.96Z"/>
+      <path class="st28" d="M901.97,369.51c-2.61,2.61-7.78,3.86-11.36,3.96,4.81-3.58,9.01-8.24,11.36-13.87,2.25,5.63,6.7,10.08,11.36,13.87-3.84-.31-8.5-1.25-11.36-3.96Z"/>
+    </g>
+    <g>
+      <line class="st8" x1="571.97" y1="412.51" x2="571.97" y2="431.7"/>
+      <path class="st28" d="M571.97,413.51c2.61,2.61,7.78,3.86,11.36,3.96-4.81-3.58-9.01-8.24-11.36-13.87-2.25,5.63-6.7,10.08-11.36,13.87,3.84-.31,8.5-1.25,11.36-3.96Z"/>
+      <path class="st28" d="M571.97,430.7c2.61-2.61,7.78-3.86,11.36-3.96-4.81,3.58-9.01,8.24-11.36,13.87-2.25-5.63-6.7-10.08-11.36-13.87,3.84.31,8.5,1.25,11.36,3.96Z"/>
+    </g>
+  </g>
+  <path class="st10" d="M456.97,389.61h230c8.28,0,15,6.72,15,15h0c0,8.28-6.72,15-15,15h-230c-8.28,0-15-6.72-15-15h0c0-8.28,6.72-15,15-15h0Z"/>
+  <g class="st19">
+    <text class="st20" transform="translate(459.42 410.61)"><tspan x="0" y="0">same inputs, same results</tspan></text>
+  </g>
+  <g>
+    <g>
+      <rect class="st31" x="53.97" y="431.61" width="250" height="64" rx="14" ry="14"/>
+      <g>
+        <ellipse class="st6" cx="87.97" cy="455.61" rx="12" ry="5"/>
+        <path class="st6" d="M75.97,455.61v16c0,3,5,6,12,6s12-3,12-6v-16"/>
+        <path class="st6" d="M75.97,463.61c0,3,5,6,12,6s12-3,12-6"/>
+      </g>
+      <g class="st19">
+        <text class="st13" transform="translate(115.97 470.61)"><tspan x="0" y="0">Data + checksums</tspan></text>
+      </g>
+    </g>
+    <g>
+      <rect class="st31" x="315.97" y="431.61" width="250" height="64" rx="14" ry="14"/>
+      <g>
+        <path class="st6" d="M343.97,451.61v24"/>
+        <path class="st6" d="M343.97,467.61c0-8,12-4,12-12"/>
+      </g>
+      <g>
+        <circle class="st27" cx="343.97" cy="451.61" r="4.5"/>
+        <circle class="st27" cx="343.97" cy="475.61" r="4.5"/>
+        <circle class="st27" cx="355.97" cy="453.61" r="4.5"/>
+      </g>
+      <g class="st19">
+        <text class="st13" transform="translate(377.97 470.61)"><tspan x="0" y="0">Code + Git history</tspan></text>
+      </g>
+    </g>
+    <g>
+      <rect class="st31" x="577.97" y="431.61" width="250" height="64" rx="14" ry="14"/>
+      <g>
+        <rect class="st3" x="600.97" y="460.61" width="22" height="16" rx="3" ry="3"/>
+        <path class="st3" d="M605.97,460.61v-5c0-6,12-6,12,0v5"/>
+      </g>
+      <g class="st19">
+        <text class="st13" transform="translate(631.97 470.61)"><tspan x="0" y="0">Environment/pixi.lock</tspan></text>
+      </g>
+    </g>
+    <g>
+      <rect class="st31" x="839.97" y="431.61" width="250" height="64" rx="14" ry="14"/>
+      <g>
+        <path class="st3" d="M873.97,449.61l12,6v14l-12,6-12-6v-14l12-6Z"/>
+        <path class="st3" d="M861.97,455.61l12,6,12-6M873.97,461.61v14"/>
+      </g>
+      <g class="st19">
+        <text class="st13" transform="translate(901.97 470.61)"><tspan x="0" y="0">Container/Dockerfile</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

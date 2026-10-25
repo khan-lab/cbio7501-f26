@@ -1,0 +1,26 @@
+# Environment for building, previewing and testing the workshop website.
+# The LTEE example project has its own manifest in tutorials/ltee-project/.
+[workspace]
+name = "cbio7501-workshop"
+description = "Reproducible and Open Science (CBIO7501): open workshop materials"
+authors = ["Aziz Khan"]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+requires-pixi = ">=0.60.0"
+version = "0.1.0"
+license = "MIT AND CC-BY-4.0"
+
+[dependencies]
+quarto = "1.9.*"
+python = "3.13.*"
+pyyaml = ">=6"
+lychee = ">=0.20"
+
+[tasks]
+render = { cmd = "quarto render", description = "Build the website into _site/" }
+preview = { cmd = "quarto preview", description = "Live preview of the website" }
+check-credits = { cmd = "python scripts/check_credits.py", description = "Fail if a page's adapted_from sources are missing from the credits page" }
+check-links = { cmd = "lychee --offline --include-fragments --no-progress --root-dir _site --exclude-path _site/404.html '_site/**/*.html'", depends-on = ["render"], description = "Check internal links in the rendered site" }
+check-links-online = { cmd = "lychee --no-progress --max-concurrency 8 --accept '200..=299,403,429' --exclude-path _site/404.html '_site/**/*.html'", depends-on = ["render"], description = "Check external links too (slow, needs network)" }
+check-capstone = { cmd = "python assessment/check_capstone.py", description = "List the automatic rubric checks for a capstone project: pixi run check-capstone PATH" }
+test-tutorials = { cmd = "python scripts/test_tutorials.py", description = "Run the tested code blocks of the tutorials in a clean folder" }

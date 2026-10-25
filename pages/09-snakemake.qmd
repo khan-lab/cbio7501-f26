@@ -1,0 +1,1075 @@
+---
+title: "09 Snakemake"
+subtitle: "Describe the LTEE pipeline as rules, and let Snakemake work out what to run, in what order, and what is out of date"
+description: "Rules, wildcards and the job graph; rerun triggers; config files and sample sheets; logs, temporary files, threads; the full LTEE pipeline in Snakemake, checked against the shell script; profiles for Slurm clusters."
+adapted_from:
+  - title: "Tools for Reproducible Research: Snakemake"
+    url: https://nbisweden.github.io/workshop-reproducible-research/pages/snakemake.html
+    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Same teaching sequence (basics with a toy example, wildcards, visualising the graph, rerun triggers, a real workflow, parameters and configuration, logs, temporary files, expand, generalising with a sample sheet, best practices, Slurm and profiles as extras). The MRSA RNA-seq workflow is replaced by the LTEE variant-calling pipeline, built rule by rule in the learner's project; tools come from one Pixi environment; added a comparison with the shell script, a threads Break it, and the analysis question."
+  - title: "Data Carpentry Wrangling Genomics: Variant calling"
+    url: https://datacarpentry.github.io/wrangling-genomics/04-variant_calling.html
+    authors: "Data Carpentry contributors"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit d965cc4 (2025-07-18)"
+    changes: "Each step of the lesson (bwa index, bwa mem, samtools view/sort/index/flagstat, bcftools mpileup/call, vcfutils.pl varFilter, bcftools stats) becomes a Snakemake rule with the lesson's options."
+test:
+  needs: [07-quarto]
+  timeout: 3600
+---
+
+::: {.at-a-glance}
+- **Time:** three sessions: sections 1 to 5, 6 to 11, and a lab (12 to 14, 70 minutes, then the [Nextflow](10-nextflow.qmd) introduction). Section 15 (clusters) at home or on Karakoram.
+- **Slides:** [Snakemake](../lectures/09-snakemake/09-snakemake.qmd)
+- **You need:** the `ltee-project` after [lesson 07](07-quarto.qmd): the `pipeline` environment and the shell-script results in `results/` ([lesson 05](05-pixi.qmd)), and the report.
+- **You will have:** `workflow/Snakefile` and `config/config.yaml` that rebuild every result with one command, a report that answers the project's question, and evidence that Snakemake reproduces the shell script exactly.
+:::
+
+## Overview
+
+In [lesson 05](05-pixi.qmd) a shell script ran the pipeline: every sample,
+every step, every time. If one step fails halfway, you start again. If you
+change the filter, everything reruns, including the slow alignment. If you add
+a sample, you edit the loop. And nothing records which output came from which
+input.
+
+A **workflow manager** fixes this. In **Snakemake** you write **rules**: how
+to make an output file from input files. You ask for the files you want;
+Snakemake works out the chain of rules that makes them (the **job graph**),
+runs only what is missing or out of date, runs independent jobs in parallel,
+and stops cleanly on errors. It is a Python-based language, so you can read
+the sample sheet and config with ordinary Python.
+
+The analysis steps are the Data Carpentry ones; you do not need to know the
+genomics. The Snakefile you write here is the reference workflow of this
+course; the [Nextflow lesson](10-nextflow.qmd) implements the same steps.
+
+### Learning outcomes
+
+After this lesson you can:
+
+1. **Write** Snakemake rules with inputs, outputs, wildcards and shell commands, and **run** a workflow for a target file.
+2. **Read** the job graph and **predict** which jobs rerun after a change (file times, parameters, code).
+3. **Separate** settings (config file) and samples (sample sheet) from the workflow code, so new samples or thresholds need no code changes.
+4. **Run** the whole LTEE pipeline from raw data with one command, and **show** that it reproduces the shell script's results exactly.
+5. (extra) **Configure** a profile to run the workflow on a Slurm cluster.
+
+Checks: `pixi run compare-to-shell` reports identical variants (outcome 4);
+`snakemake -n` after a config change lists only the jobs you predicted (2,
+3); the *Reproduce* GitHub Action runs the Snakemake workflow (4).
+
+# Part A: how Snakemake thinks
+
+## 1. Add Snakemake to the project
+
+Snakemake comes from bioconda, like the pipeline tools, so it goes in the
+`pipeline` feature. `graphviz` draws the job graph; `snakefmt` formats
+Snakefiles:
+
+```{.bash .run}
+cd ~/cbio7501/ltee-project
+pixi add --feature pipeline snakemake graphviz snakefmt
+pixi run -e pipeline snakemake --version
+```
+
+Graphviz registers its output formats (SVG, PNG) in a script that runs after
+installation. Pixi does not run such scripts by default, for safety (you saw
+the warning *Skipped running the post-link scripts*). Register the formats
+once, yourself:
+
+```{.bash .run}
+pixi run -e pipeline dot -c
+```
+
+```{.bash .run-ci}
+git switch -c lesson-09-snakemake
+```
+
+## 2. A toy workflow first
+
+Before the real pipeline, see the core ideas on two text files. Work in a
+separate folder and run Snakemake through `pixi exec`, so the toy does not
+touch your project:
+
+```{.bash .run}
+mkdir -p ~/cbio7501/snakemake-practice
+cd ~/cbio7501/snakemake-practice
+echo "This is a.txt" > a.txt
+echo "This is b.txt" > b.txt
+```
+
+A **rule** says how to make output from input. Save this as `Snakefile`:
+
+```{.python filename="Snakefile" .write}
+rule convert_to_upper_case:
+    input:
+        "a.txt",
+    output:
+        "a.upper.txt",
+    shell:
+        "tr a-z A-Z < {input} > {output}"
+```
+
+Ask Snakemake for the file you want (the **target**). First with `-n` (dry run:
+show the plan, do nothing) and `-p` (print the commands):
+
+```{.bash .run}
+pixi exec -c conda-forge -c bioconda snakemake -c 1 -n -p a.upper.txt
+```
+
+```text
+rule convert_to_upper_case:
+    input: a.txt
+    output: a.upper.txt
+    jobid: 0
+    reason: Missing output files: a.upper.txt
+...
+tr a-z A-Z < a.txt > a.upper.txt
+```
+
+`-c 1` means "use 1 CPU core". Run it for real, then run it again:
+
+```{.bash .run}
+pixi exec -c conda-forge -c bioconda snakemake -c 1 -p a.upper.txt
+cat a.upper.txt
+pixi exec -c conda-forge -c bioconda snakemake -c 1 -p a.upper.txt
+```
+
+The second run says `Nothing to be done`: the output exists and is newer than
+its input.
+
+### Wildcards
+
+The rule only makes `a.upper.txt`. Make it general: `{name}` is a
+**wildcard** that matches any part of a file name. Replace the Snakefile with:
+
+```{.python filename="Snakefile" .write}
+rule convert_to_upper_case:
+    input:
+        "{name}.txt",
+    output:
+        "{name}.upper.txt",
+    shell:
+        "tr a-z A-Z < {input} > {output}"
+
+
+rule concatenate:
+    input:
+        "a.upper.txt",
+        "b.upper.txt",
+    output:
+        "a_b.txt",
+    shell:
+        "cat {input} > {output}"
+```
+
+```{.bash .run}
+pixi exec -c conda-forge -c bioconda snakemake -c 2 -p a_b.txt
+cat a_b.txt
+```
+
+You asked for `a_b.txt`. Snakemake saw it needs `a.upper.txt` (exists) and
+`b.upper.txt` (missing), found that `convert_to_upper_case` makes
+`{name}.upper.txt` with `name=b`, and ran that job first. Nobody wrote a loop
+or an order: the file names connect the rules.
+
+### Rerun triggers
+
+Change an input and ask again:
+
+```{.bash .run}
+echo "This is a CHANGED a.txt" > a.txt
+pixi exec -c conda-forge -c bioconda snakemake -c 1 -n a_b.txt
+```
+
+```text
+reason: Updated input files: a.txt
+...
+reason: Input files updated by another job: a.upper.txt
+```
+
+Only the jobs downstream of the changed file rerun. Snakemake reruns a job
+when its output is missing or older than an input (**mtime**), or when the
+rule's **code**, **params**, set of **input** files or **software environment**
+changed since the output was made. You will use this in section 10.
+
+# Part B: the LTEE pipeline in Snakemake
+
+Back in the project. Your `results/` folder holds the shell script's output
+from lesson 05, at the same paths Snakemake will write to. Move it aside (into
+`results/shell-script/`, still ignored by Git) so Snakemake really rebuilds
+everything, and so you can compare the two at the end. Also remove the
+reference copy the shell script made in `data/processed/`:
+
+```{.bash .run}
+cd ~/cbio7501/ltee-project
+mkdir -p results/shell-script
+for d in sam bam bcf vcf stats qc; do if [ -d "results/$d" ]; then mv "results/$d" results/shell-script/; fi; done
+rm -rf data/processed/reference
+ls results results/shell-script
+```
+
+## 3. Settings first: the config file
+
+Everything that might change between runs goes in `config/config.yaml`, not in
+the code: where the sample sheet and reference are, tool options, thresholds.
+Create it (the comments explain each setting; `bwa_extra` is explained in the
+*Break it* section):
+
+```{.yaml filename="config/config.yaml" .write}
+# Settings for the Snakemake and Nextflow versions of the LTEE pipeline.
+samples: metadata/samples.tsv
+reference_gz: data/raw/reference/ecoli_rel606.fasta.gz
+
+# Extra options for bwa mem. -K 10000000 makes the alignments independent of
+# the number of threads (lesson 09, Break it); it is bwa's own batch size for
+# one thread, so results equal the Data Carpentry lesson's single-thread run.
+bwa_extra: "-K 10000000"
+
+# Minimum read depth for the final variant filter (vcfutils.pl varFilter -d).
+# 2 is the tool's default and what Data Carpentry uses.
+min_depth: 2
+
+# The analysis question: how do the variant counts depend on the depth
+# threshold? Each sample is also filtered at these depths (results/sensitivity/).
+sensitivity_depths: [2, 5, 10, 15]
+```
+
+## 4. The Snakefile: setup
+
+Snakemake looks for `workflow/Snakefile` by default. Its first part is plain
+Python: load the config, read the sample sheet you wrote in lesson 03, and
+name the reference file. Create `workflow/Snakefile`:
+
+```{.python filename="workflow/Snakefile" .write}
+# LTEE variant calling with Snakemake.
+#
+# Steps and tool options follow Data Carpentry "Wrangling Genomics"
+# (variant calling episode, CC BY 4.0,
+# https://datacarpentry.github.io/wrangling-genomics/04-variant_calling.html),
+# with FastQC and MultiQC added at the start. The Nextflow version in
+# workflow/nextflow/main.nf runs the same steps with the same options.
+#
+# Run from the project folder:  pixi run run-snakemake
+# (or: pixi run -e pipeline snakemake --cores 4)
+
+import csv
+
+
+configfile: "config/config.yaml"
+
+
+with open(config["samples"]) as fh:
+    SAMPLES = {row["sample"]: row for row in csv.DictReader(fh, delimiter="\t")}
+
+GENOME = "data/processed/reference/ecoli_rel606.fasta"
+
+
+wildcard_constraints:
+    sample="|".join(SAMPLES),
+    read="1|2",
+    depth=r"\d+",
+```
+
+- `configfile:` loads the YAML into a dictionary called `config`.
+- `SAMPLES` maps each sample ID to its row of `metadata/samples.tsv`. Add a
+  row to the sample sheet and the workflow processes one more sample, with no
+  change to the code.
+- `wildcard_constraints` stop wildcards from matching the wrong part of a
+  file name: `{sample}` can only be one of our three IDs, `{read}` only 1 or 2.
+
+## 5. The reference genome and alignment
+
+Add the first rules. They follow the Data Carpentry steps: decompress and
+index the reference, align each sample with `bwa mem`, convert to BAM, sort
+and index. Paste them at the end of `workflow/Snakefile`:
+
+```{.python filename="workflow/Snakefile" .append}
+
+rule prepare_reference:
+    input:
+        config["reference_gz"],
+    output:
+        GENOME,
+    shell:
+        "gunzip -c {input} > {output}"
+
+
+rule bwa_index:
+    input:
+        GENOME,
+    output:
+        multiext(GENOME, ".amb", ".ann", ".bwt", ".pac", ".sa"),
+    log:
+        "results/logs/bwa_index.log",
+    shell:
+        "bwa index {input} 2> {log}"
+
+
+rule bwa_mem:
+    input:
+        genome=GENOME,
+        index=rules.bwa_index.output,
+        r1=lambda wc: SAMPLES[wc.sample]["fastq_1"],
+        r2=lambda wc: SAMPLES[wc.sample]["fastq_2"],
+    output:
+        temp("results/sam/{sample}.aligned.sam"),
+    log:
+        "results/logs/bwa_mem/{sample}.log",
+    threads: 4
+    params:
+        extra=config["bwa_extra"] or "",  # an empty setting means no extra options
+    shell:
+        "bwa mem -t {threads} {params.extra} {input.genome} {input.r1} {input.r2} > {output} 2> {log}"
+
+
+rule sam_to_bam:
+    input:
+        "results/sam/{sample}.aligned.sam",
+    output:
+        temp("results/bam/{sample}.aligned.bam"),
+    shell:
+        "samtools view -S -b {input} > {output}"
+
+
+rule sort_bam:
+    input:
+        "results/bam/{sample}.aligned.bam",
+    output:
+        "results/bam/{sample}.aligned.sorted.bam",
+    shell:
+        "samtools sort -o {output} {input}"
+
+
+rule index_bam:
+    input:
+        "results/bam/{sample}.aligned.sorted.bam",
+    output:
+        "results/bam/{sample}.aligned.sorted.bam.bai",
+    shell:
+        "samtools index {input}"
+```
+
+New things to notice:
+
+- **Named inputs** (`genome=`, `r1=`) are used in the command as `{input.r1}`.
+- **Input functions**: `lambda wc: SAMPLES[wc.sample]["fastq_1"]` looks up the
+  FASTQ file of the sample in the sample sheet, instead of guessing it from a
+  naming pattern.
+- `rules.bwa_index.output` refers to another rule's output, so alignment waits
+  for the index.
+- `log:` files catch each tool's messages, one per job, instead of mixing them
+  in the terminal.
+- `temp()` marks files Snakemake may delete once every job that needs them is
+  done. The SAM and unsorted BAM files are large and only needed in between.
+- `threads: 4` lets `bwa mem` use 4 cores; `params:` passes a setting from the
+  config into the command.
+
+Ask for one sorted, indexed BAM file and look at the plan:
+
+```{.bash .run}
+pixi run -e pipeline snakemake -c 4 -n results/bam/SRR2584863.aligned.sorted.bam.bai
+```
+
+The job graph, drawn by graphviz (open `results/dag.svg` in a browser):
+
+```{.bash .run}
+mkdir -p results
+pixi run -e pipeline snakemake --dag dot results/bam/SRR2584863.aligned.sorted.bam.bai > results/dag.dot
+pixi run -e pipeline dot -Tsvg results/dag.dot -o results/dag.svg
+```
+
+Each box is a job, each arrow a file passed from one job to the next. Now run
+it:
+
+```{.bash .run}
+pixi run -e pipeline snakemake -c 4 results/bam/SRR2584863.aligned.sorted.bam.bai
+ls results/bam
+ls results/sam || echo "no results/sam: temp() removed the SAM file (and the empty folder)"
+```
+
+The sorted BAM and its index are there; the SAM file and the unsorted BAM are
+gone, deleted by `temp()` once nothing needed them.
+
+## 6. Variant calling and filtering
+
+```{.python filename="workflow/Snakefile" .append}
+
+rule flagstat:
+    input:
+        "results/bam/{sample}.aligned.sorted.bam",
+    output:
+        "results/stats/{sample}.flagstat.txt",
+    shell:
+        "samtools flagstat {input} > {output}"
+
+
+rule mpileup:
+    input:
+        genome=GENOME,
+        bam="results/bam/{sample}.aligned.sorted.bam",
+        bai="results/bam/{sample}.aligned.sorted.bam.bai",
+    output:
+        temp("results/bcf/{sample}_raw.bcf"),
+    log:
+        "results/logs/mpileup/{sample}.log",
+    shell:
+        "bcftools mpileup -O b -o {output} -f {input.genome} {input.bam} 2> {log}"
+
+
+rule call:
+    input:
+        "results/bcf/{sample}_raw.bcf",
+    output:
+        "results/bcf/{sample}_variants.vcf",
+    shell:
+        "bcftools call --ploidy 1 -m -v -o {output} {input}"
+
+
+rule filter:
+    input:
+        "results/bcf/{sample}_variants.vcf",
+    output:
+        "results/vcf/{sample}_final_variants.vcf",
+    params:
+        min_depth=config["min_depth"],
+    shell:
+        "vcfutils.pl varFilter -d {params.min_depth} {input} > {output}"
+
+
+rule variant_stats:
+    input:
+        "results/vcf/{sample}_final_variants.vcf",
+    output:
+        "results/stats/{sample}.bcftools-stats.txt",
+    shell:
+        "bcftools stats {input} > {output}"
+```
+
+The `filter` rule takes the minimum depth from the config through `params:`,
+so changing the threshold means editing `config/config.yaml`, not the code.
+
+## 7. Quality control
+
+FastQC runs once per FASTQ file (two wildcards: sample and read). MultiQC needs
+all FastQC results at once: `expand()` builds that list of file names from the
+samples and reads.
+
+```{.python filename="workflow/Snakefile" .append}
+
+rule fastqc:
+    input:
+        lambda wc: SAMPLES[wc.sample][f"fastq_{wc.read}"],
+    output:
+        html="results/qc/fastqc/{sample}_{read}.trim.sub_fastqc.html",
+        zip="results/qc/fastqc/{sample}_{read}.trim.sub_fastqc.zip",
+    log:
+        "results/logs/fastqc/{sample}_{read}.log",
+    shell:
+        "fastqc --quiet --outdir results/qc/fastqc {input} > {log} 2>&1"
+
+
+rule multiqc:
+    input:
+        expand(
+            "results/qc/fastqc/{sample}_{read}.trim.sub_fastqc.zip",
+            sample=SAMPLES,
+            read=["1", "2"],
+        ),
+    output:
+        "results/qc/multiqc/multiqc_report.html",
+    log:
+        "results/logs/multiqc.log",
+    shell:
+        "multiqc --force -o results/qc/multiqc {input} > {log} 2>&1"
+```
+
+## 8. The analysis question
+
+Our project asks whether the result depends on the depth threshold of the
+filter. This rule filters each sample at each depth listed in
+`sensitivity_depths` in the config (a new wildcard, `{depth}`):
+
+```{.python filename="workflow/Snakefile" .append}
+
+rule depth_sensitivity:
+    input:
+        "results/bcf/{sample}_variants.vcf",
+    output:
+        "results/sensitivity/{sample}_d{depth}.vcf",
+    shell:
+        "vcfutils.pl varFilter -d {wildcards.depth} {input} > {output}"
+```
+
+## 9. The target rule: everything you want
+
+A rule with only inputs lists the final results. `default_target: True` makes
+it what Snakemake builds when you name no target:
+
+```{.python filename="workflow/Snakefile" .append}
+
+rule all:
+    default_target: True
+    input:
+        "results/qc/multiqc/multiqc_report.html",
+        expand("results/vcf/{sample}_final_variants.vcf", sample=SAMPLES),
+        expand("results/stats/{sample}.flagstat.txt", sample=SAMPLES),
+        expand("results/stats/{sample}.bcftools-stats.txt", sample=SAMPLES),
+        expand(
+            "results/sensitivity/{sample}_d{depth}.vcf",
+            sample=SAMPLES,
+            depth=config["sensitivity_depths"],
+        ),
+```
+
+Tidy the file with `snakefmt`, then see the whole plan and the graph of rules:
+
+```{.bash .run}
+pixi run -e pipeline snakefmt workflow/Snakefile
+pixi run -e pipeline snakemake -n --quiet
+pixi run -e pipeline snakemake --rulegraph > results/rulegraph.dot
+pixi run -e pipeline dot -Tsvg results/rulegraph.dot -o results/rulegraph.svg
+```
+
+```text
+Job stats:
+job                  count
+-----------------  -------
+all                      1
+bwa_mem                  2
+call                     3
+depth_sensitivity       12
+...
+```
+
+Only two `bwa_mem` jobs: SRR2584863 was aligned in section 5, and Snakemake
+does not redo it.
+
+## 10. Did it reproduce? Snakemake versus the shell script
+
+The shell script's variant calls are in `results/shell-script/vcf/`. A small script compares the variant records of two runs (headers record dates
+and commands, so they always differ). Save it as `scripts/compare_vcfs.py`:
+
+```{.python filename="scripts/compare_vcfs.py" .write}
+"""Compare the final variant calls of two runs of the pipeline.
+
+Usage: python scripts/compare_vcfs.py results/vcf results/nextflow/vcf
+
+Header lines (starting with #) record dates, commands and tool versions, so
+they always differ between runs. This script compares only the variant
+records. It prints one line per sample and exits with 1 if any sample
+differs, so it can be used as a test.
+"""
+
+import sys
+from pathlib import Path
+
+
+def records(path):
+    with open(path) as fh:
+        return [line.rstrip("\n") for line in fh if not line.startswith("#")]
+
+
+def main():
+    if len(sys.argv) != 3:
+        sys.exit(__doc__)
+    first, second = Path(sys.argv[1]), Path(sys.argv[2])
+    names = sorted(p.name for p in first.glob("*_final_variants.vcf"))
+    if not names:
+        sys.exit(f"no *_final_variants.vcf files in {first}")
+    differ = 0
+    for name in names:
+        other = second / name
+        if not other.exists():
+            print(f"{name}: missing in {second}")
+            differ += 1
+            continue
+        a, b = records(first / name), records(other)
+        if a == b:
+            print(f"{name}: identical ({len(a)} variants)")
+        else:
+            only_a, only_b = len(set(a) - set(b)), len(set(b) - set(a))
+            print(f"{name}: DIFFERENT ({len(a)} vs {len(b)} variants; {only_a} only in first, {only_b} only in second)")
+            differ += 1
+    sys.exit(1 if differ else 0)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Run the whole workflow, then compare:
+
+```{.bash .run}
+pixi run -e pipeline snakemake -c 4
+pixi run python scripts/compare_vcfs.py results/shell-script/vcf results/vcf
+```
+
+```text
+SRR2584863_final_variants.vcf: identical (25 variants)
+SRR2584866_final_variants.vcf: identical (775 variants)
+SRR2589044_final_variants.vcf: identical (10 variants)
+```
+
+Same steps, same options, same software (`pixi.lock`): the same calls, to the
+last digit of every quality score.
+
+### Predict what reruns
+
+Change the minimum depth to 10 in `config/config.yaml` and predict, *before*
+you run the command, which jobs Snakemake will want to rerun:
+
+```{.bash .run}
+sed 's/^min_depth: 2/min_depth: 10/' config/config.yaml > config/config.tmp && mv config/config.tmp config/config.yaml
+pixi run -e pipeline snakemake -n --quiet
+```
+
+::: {.callout-tip collapse="true" title="Answer"}
+Only `filter` (three jobs, reason "params have changed"), `variant_stats`
+(its input changes) and `all`. Alignment and calling are untouched. With the
+shell script, everything would have rerun.
+:::
+
+Set it back to 2 (the value the report uses):
+
+```{.bash .run}
+sed 's/^min_depth: 10/min_depth: 2/' config/config.yaml > config/config.tmp && mv config/config.tmp config/config.yaml
+pixi run -e pipeline snakemake -n --quiet
+```
+
+## 11. Make it the project's pipeline
+
+Snakemake replaces the shell script as the way the project runs. Update the
+Pixi tasks:
+
+- a task that runs the workflow;
+- the shell-script task: as it is, it would write into the same folders as
+  Snakemake and overwrite its results. Give the script an output folder (its
+  second argument, after the minimum depth) so it keeps to
+  `results/shell-script/`. `pixi task add` does not replace a task, so remove
+  it first;
+- a comparison task that runs both versions, like the check you just did;
+- a report that needs the workflow's results:
+
+```{.bash .run}
+pixi task add --feature pipeline run-snakemake "snakemake --cores 4" --depends-on download --description "Run the pipeline with Snakemake"
+pixi task remove --feature pipeline variant-calling
+pixi task add --feature pipeline variant-calling "bash scripts/run_variant_calling.sh 2 results/shell-script" --depends-on download --description "Shell-script version of the pipeline (results in results/shell-script/)"
+pixi task add --feature pipeline compare-to-shell "python scripts/compare_vcfs.py results/shell-script/vcf results/vcf" --depends-on variant-calling --depends-on run-snakemake --description "Check that the shell script and Snakemake give the same variant calls"
+pixi task remove report
+pixi task add report "quarto render reports/ltee-report.qmd" --depends-on run-snakemake --description "Render the Quarto report"
+pixi task remove reproduce
+pixi task alias reproduce report
+pixi task list
+```
+
+Now `pixi run reproduce` runs download → Snakemake → report.
+
+Try the comparison task. It reruns the shell script into
+`results/shell-script/` (about a minute), checks that Snakemake is up to date,
+and compares:
+
+```{.bash .run}
+pixi run compare-to-shell
+```
+
+```text
+SRR2584863_final_variants.vcf: identical (25 variants)
+SRR2584866_final_variants.vcf: identical (775 variants)
+SRR2589044_final_variants.vcf: identical (10 variants)
+```
+
+### The report answers the question
+
+The report needs `pyyaml` to read the config (it was only installed as a
+dependency of something else; depend on it explicitly):
+
+```{.bash .run}
+pixi add pyyaml
+```
+
+Replace `reports/ltee-report.qmd` with this version. It is the lesson 07 report
+plus a *Variants* section that reads the workflow's results, shows the
+sensitivity to the depth threshold, and records a decision. (Use `git diff
+reports/ltee-report.qmd` afterwards to see exactly what changed.)
+
+````{.markdown filename="reports/ltee-report.qmd" .write}
+---
+title: "Mutations in the Long-Term Evolution Experiment"
+subtitle: "Variant calling on three *E. coli* clones from population Ara-3"
+author: "Ada Lovelace"
+date: today
+format:
+  html:
+    embed-resources: true
+    toc: true
+    code-fold: true
+    code-tools: true
+execute:
+  warning: false
+bibliography: references.bib
+jupyter: python3
+---
+
+## Question
+
+How many mutations did *E. coli* accumulate over 50,000 generations of the
+Long-Term Evolution Experiment [@tenaillon2016], and is that answer robust to
+how strictly we filter the variant calls?
+
+## Data
+
+```{{python}}
+#| tags: [parameters]
+# Number of reads per file used for the length, GC and quality summaries.
+# Change it without editing the report: quarto render ... -P max_reads:5000
+max_reads = 10000
+```
+
+```{{python}}
+#| label: setup
+import sys
+
+import matplotlib
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from scripts.fastq_stats import quality_by_position, summarize
+
+samples = pd.read_csv("metadata/samples.tsv", sep="\t")
+fastq_files = list(samples["fastq_1"]) + list(samples["fastq_2"])
+```
+
+We use a subset of the reads prepared by Data Carpentry [@dc_data]: three
+clones of population Ara-3, frozen at generations
+`{python} ", ".join(f"{g:,}" for g in samples["generation"])`
+(@tbl-samples).
+
+```{{python}}
+#| label: tbl-samples
+#| tbl-cap: "The three LTEE clones in this project."
+samples[["sample", "strain", "generation", "mutator", "cit"]]
+```
+
+## Reads
+
+```{{python}}
+#| label: tbl-reads
+#| tbl-cap: "Reads per FASTQ file. Length, GC content and mean base quality are computed on the first reads of each file (parameter `max_reads`)."
+reads = pd.DataFrame([summarize(f, max_reads) for f in sorted(fastq_files)])
+reads.round(1)
+```
+
+Each file has `{python} f"{reads['reads'].min():,}"` reads, so each sample has
+`{python} f"{reads['reads'].min():,}"` read pairs. The mean read length is
+`{python} f"{reads['mean_length'].mean():.0f}"` bases because the reads were
+trimmed before subsampling. @fig-quality shows that base quality stays high
+along the reads.
+
+```{{python}}
+#| label: fig-quality
+#| fig-cap: "Mean base quality along the reads (first `max_reads` reads of each file). Colour shows the sample, line style the read of the pair."
+#| fig-alt: "Line plot of mean Phred quality against position in the read, six lines (three samples, read 1 solid and read 2 dashed). Quality starts near 32, peaks near 39 around position 15, falls to about 33 by position 80 and stays there to position 150, with a brief dip near position 102. All six files follow the same shape."
+colors = ["#2a78d6", "#eb6834", "#1baf7a"]  # one per sample, in generation order
+fig, ax = plt.subplots(figsize=(7, 4.2))
+for color, (_, row) in zip(colors, samples.sort_values("generation").iterrows()):
+    for read, style in [("fastq_1", "-"), ("fastq_2", "--")]:
+        quality_by_position(row[read], max_reads).plot(
+            ax=ax, color=color, linestyle=style, linewidth=1.5,
+            label=f"{row['sample']} (gen. {row['generation']:,}) read {read[-1]}")
+ax.set_xlabel("Position in read (bases)")
+ax.set_ylabel("Mean Phred quality")
+ax.grid(alpha=0.3)
+ax.legend(fontsize=7, ncol=3, frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.18))
+fig.tight_layout()
+plt.show()
+```
+
+## Variants
+
+The pipeline (`workflow/Snakefile`, lesson 09) aligns the reads to the
+*E. coli* REL606 reference, calls variants with bcftools and filters them
+with `vcfutils.pl varFilter`, following the Data Carpentry lesson. Settings
+come from `config/config.yaml`; the [MultiQC report](../results/qc/multiqc/multiqc_report.html)
+summarizes the read quality.
+
+```{{python}}
+#| label: setup-variants
+import yaml
+
+config = yaml.safe_load(open("config/config.yaml"))
+
+
+def count_variants(path):
+    with open(path) as fh:
+        return sum(1 for line in fh if not line.startswith("#"))
+
+
+def percent_mapped(path):
+    for line in open(path):
+        if " mapped (" in line and "primary" not in line:
+            return float(line.split("(")[1].split("%")[0])
+
+
+def stats_value(path, key):
+    for line in open(path):
+        if line.startswith("SN") and key in line:
+            return int(line.rstrip().split("\t")[-1])
+
+
+variants = samples[["sample", "generation", "mutator"]].copy()
+variants["mapped_percent"] = [percent_mapped(f"results/stats/{s}.flagstat.txt") for s in variants["sample"]]
+variants["variants"] = [count_variants(f"results/vcf/{s}_final_variants.vcf") for s in variants["sample"]]
+variants["snps"] = [stats_value(f"results/stats/{s}.bcftools-stats.txt", "number of SNPs:") for s in variants["sample"]]
+variants["indels"] = [stats_value(f"results/stats/{s}.bcftools-stats.txt", "number of indels:") for s in variants["sample"]]
+variants = variants.sort_values("generation")
+```
+
+Almost all reads map to the reference
+(`{python} f"{variants['mapped_percent'].min():.2f}"`% or more per sample).
+With a minimum read depth of `{python} config["min_depth"]`, the number of
+filtered variants rises from `{python} int(variants["variants"].iloc[0])` at
+generation 5,000 to `{python} int(variants["variants"].iloc[-1])` at generation
+50,000 (@tbl-variants). The last clone is a hypermutator, which explains the
+jump [@tenaillon2016].
+
+```{{python}}
+#| label: tbl-variants
+#| tbl-cap: "Mapped reads and filtered variants per clone (minimum read depth from `config/config.yaml`)."
+variants
+```
+
+### Does the answer depend on the depth threshold?
+
+The mean read depth of these subsets is about 10, so the default minimum depth
+of 2 keeps variants supported by very few reads. @fig-sensitivity shows the
+counts for the thresholds in `config["sensitivity_depths"]`.
+
+```{{python}}
+#| label: fig-sensitivity
+#| fig-cap: "Filtered variants per clone at four minimum read depths. Darker lines are stricter thresholds; the y axis is logarithmic."
+#| fig-alt: "Line chart of the number of filtered variants (log scale) against generation (5,000, 15,000, 50,000) for minimum depths 2, 5, 10 and 15. All four lines rise with generation, steeply between 15,000 and 50,000. Stricter thresholds give fewer variants: at generation 50,000 about 775 at depth 2 and about 120 at depth 15."
+depths = config["sensitivity_depths"]
+sens = pd.DataFrame(
+    [{"sample": s, "generation": g, "depth": d,
+      "variants": count_variants(f"results/sensitivity/{s}_d{d}.vcf")}
+     for s, g in zip(variants["sample"], variants["generation"]) for d in depths])
+ramp = ["#86b6ef", "#5598e7", "#2a78d6", "#184f95"]  # one blue, light to dark = lenient to strict
+fig, ax = plt.subplots(figsize=(6.5, 3.8))
+nudge = [6, -6, 0, 0]  # points; keeps the labels of close lines apart
+for color, d, dy in zip(ramp, depths, nudge):
+    part = sens[sens["depth"] == d].sort_values("generation")
+    ax.plot(part["generation"], part["variants"], marker="o", markersize=6,
+            linewidth=2, color=color, label=f"min depth {d}")
+    ax.annotate(f"d={d}", (part["generation"].iloc[-1], part["variants"].iloc[-1]),
+                xytext=(8, dy), textcoords="offset points", va="center", fontsize=8)
+ax.set_yscale("log")
+ax.set_xlabel("Generation")
+ax.set_ylabel("Filtered variants")
+generations = sorted(sens["generation"].unique())
+ax.set_xticks(generations, [f"{g:,}" for g in generations])
+ax.set_xlim(right=max(generations) * 1.12)
+ax.grid(alpha=0.3)
+ax.legend(fontsize=8, frameon=False)
+fig.tight_layout()
+plt.show()
+```
+
+```{{python}}
+#| label: tbl-sensitivity
+#| tbl-cap: "The data behind the figure: filtered variants per clone and minimum depth."
+table = sens.pivot(index=["sample", "generation"], columns="depth", values="variants").sort_index(level="generation")
+ratios = table.iloc[-1] / table.iloc[-2]  # 50,000 vs 15,000 generations, per depth
+table
+```
+
+**Decision.** We report minimum depth `{python} config["min_depth"]` as the
+main result, to stay comparable with the Data Carpentry lesson, and we keep
+the sensitivity analysis in the report. The conclusion (mutations accumulate
+over the generations, and the 50,000-generation mutator clone has
+`{python} f"{ratios.min():.0f}"` to `{python} f"{ratios.max():.0f}"` times as many
+as the 15,000-generation clone) holds at every threshold we tried. See
+`docs/decisions.md`.
+
+## Software
+
+```{{python}}
+#| label: versions
+print(f"Python {sys.version.split()[0]}, pandas {pd.__version__}, matplotlib {matplotlib.__version__}")
+```
+
+The exact versions of every package are in `pixi.lock`.
+
+## References
+
+::: {#refs}
+:::
+````
+
+Rebuild everything and open `reports/ltee-report.html`:
+
+```{.bash .run}
+pixi run reproduce
+```
+
+Finally, write the decision into the decision log you started in lesson 04:
+
+```{.bash .run}
+mkdir -p docs
+printf '\n- %s: report minimum depth 2 (comparable with Data Carpentry); the conclusion holds at depths 2 to 15 (see the report, sensitivity figure).\n' "$(date +%F)" >> docs/decisions.md
+```
+
+## 12. Best practices
+
+```{.bash .run}
+pixi run -e pipeline snakefmt --check workflow/Snakefile
+pixi run -e pipeline snakemake --lint || echo "the linter has suggestions"
+```
+
+`snakemake --lint` gives advice. Two kinds appear here:
+
+- *No log directive defined* for small rules: fair; add `log:` where a tool
+  prints messages you may need.
+- *Specify a conda environment or container for each rule*: Snakemake's
+  recommended way to pin software is per rule. We pin it for the whole
+  workflow with `pixi.lock` and launch Snakemake through Pixi, so every rule
+  already runs with locked software. Snakemake 9.27.1 has no built-in Pixi
+  support (we checked in October 2026; an experimental plugin needs the
+  unreleased Snakemake 10). For a large pipeline with conflicting tools, use
+  per-rule `conda:` files exported from Pixi ([05b](05b-conda-comparison.qmd))
+  or containers ([08](08-containers.qmd)).
+
+Other habits from the Snakemake documentation that we follow: `workflow/` and
+`config/` folders, a sample sheet instead of hard-coded samples, `temp()` for
+large intermediates, and one rule per tool step.
+
+## Break it: threads change the answer
+
+Our `bwa mem` rule uses 4 threads and `bwa_extra: "-K 10000000"`. Why the `-K`?
+Remove it for one run and compare with the result you trust. Keep a copy first:
+
+```{.bash .run}
+cp -R results/vcf results/vcf-trusted
+pixi run -e pipeline snakemake -c 4 --config bwa_extra="" --quiet
+```
+
+Changing `bwa_extra` changed a parameter of `bwa_mem`, so Snakemake realigned
+every sample and redid everything downstream. Compare:
+
+```{.bash .expect-fail}
+pixi run python scripts/compare_vcfs.py results/vcf-trusted results/vcf
+```
+
+```text
+SRR2584863_final_variants.vcf: identical (25 variants)
+SRR2584866_final_variants.vcf: DIFFERENT (775 vs 775 variants; 4 only in first, 4 only in second)
+SRR2589044_final_variants.vcf: identical (10 variants)
+```
+
+Same data, same software, same commands, only the number of threads, and four
+variant records of the hypermutator clone have different quality values.
+`bwa mem` reads its input in batches whose size depends on the number of
+threads, and it estimates insert sizes per batch. `-K 10000000` fixes the batch
+size (to what one thread uses), so the result no longer depends on how many
+cores your computer has. Many tools have such settings; read their
+documentation for "deterministic" or "reproducible".
+
+Restore the trusted results:
+
+```{.bash .run}
+pixi run -e pipeline snakemake -c 4 --quiet
+pixi run python scripts/compare_vcfs.py results/vcf-trusted results/vcf
+rm -rf results/vcf-trusted
+```
+
+## Save your work
+
+```{.bash .run-ci}
+git add workflow/Snakefile config/config.yaml scripts/compare_vcfs.py reports/ltee-report.qmd docs/decisions.md pixi.toml pixi.lock
+git commit -m "Run the pipeline with Snakemake and answer the depth question in the report"
+git push -u origin lesson-09-snakemake
+```
+
+Open the pull request. The *Reproduce* check now runs the Snakemake workflow on
+a fresh machine and renders the report. Merge when it is green.
+
+## 13. Extra: running on a Slurm cluster (Karakoram)
+
+On a cluster, Snakemake can submit each job to the scheduler instead of
+running it on the login node. Add the Slurm executor plugin to the pipeline
+feature:
+
+```{.bash .norun}
+pixi add --feature pipeline snakemake-executor-plugin-slurm
+```
+
+Give rules the resources they need (`threads:` becomes the number of CPUs;
+add `resources: mem_mb=8000, runtime=60` where needed), and keep
+cluster-specific settings out of the workflow, in a **profile**: a folder with
+a `config.yaml` of command-line options. Create
+`profiles/karakoram/config.yaml` (ask your administrators for the account and
+partition names):
+
+```{.yaml filename="profiles/karakoram/config.yaml"}
+executor: slurm
+jobs: 20
+default-resources:
+  slurm_account: "YOUR-PROJECT"
+  slurm_partition: "YOUR-PARTITION"
+  mem_mb: 4000
+  runtime: 30
+```
+
+Run on the login node, inside `tmux` or `screen` so it survives logging out:
+
+```{.bash .norun}
+pixi run -e pipeline snakemake --profile profiles/karakoram
+```
+
+The workflow file does not change: the same Snakefile runs on your laptop and
+on the cluster. (Not tested in this build: no cluster access.)
+
+## Troubleshooting
+
+| Problem | What to do |
+|---------|------------|
+| `MissingInputException` | No rule makes a file that a rule needs, or a raw file is missing. Check the file name in the message; run `pixi run download`. |
+| `WildcardError` or a wildcard matching too much | Use `wildcard_constraints` and make file name patterns unambiguous. |
+| `IndentationError` / `SyntaxError` | Snakefiles are Python: use spaces consistently (4 per level), no tabs. `snakefmt` fixes formatting. |
+| `LockException: Directory cannot be locked` | Another Snakemake is running here, or one crashed. If none is running: `pixi run -e pipeline snakemake --unlock`. |
+| `IncompleteFilesException` after Ctrl-C | Rerun with `--rerun-incomplete`. |
+| Everything reruns although nothing changed | You edited the rule code or `params`, or touched input files. `snakemake -n` shows the reason for each job; `--rerun-triggers mtime` limits reruns to file times. |
+| `Missing output files` after a job ran | The command wrote the file somewhere else or under another name; compare the rule's `output:` with what the tool produces. |
+| `dot: command not found` | `pixi add --feature pipeline graphviz` and use `pixi run -e pipeline dot ...`. |
+| `Format: "svg" not recognized` | Run `pixi run -e pipeline dot -c` once (section 1); repeat after reinstalling the environment. |
+
+## Apply it to your own mini-analysis
+
+Turn your `reproduce` steps into a Snakefile: one rule per step, a config file
+for settings, a sample sheet if you have several inputs, a target rule, and a
+Pixi task that runs it. Check with `snakemake -n` that changing one setting
+reruns only what it should.
+
+## Key points
+
+- A rule says how to make output files from input files; Snakemake connects rules through file names.
+- You ask for targets; Snakemake builds the job graph and runs only what is missing or out of date.
+- Wildcards and input functions generalize rules; the sample sheet and config keep data and settings out of the code.
+- Logs, `temp()` and threads make workflows easier to debug, smaller and faster.
+- Same steps, options and locked software reproduce the shell script exactly; thread-dependent tools need care (`bwa mem -K`).
+- Profiles move cluster settings out of the workflow.
+
+## Further reading
+
+- Cheat sheet: [Snakemake](../cheatsheets/snakemake.qmd), with links to the official cheat sheets and references.
+- Snakemake documentation: <https://snakemake.readthedocs.io/>, in particular *Distribution and reproducibility* and *Snakefiles and rules*.
+- Snakemake plugin catalog (executors such as Slurm): <https://snakemake.github.io/snakemake-plugin-catalog/>
+- NBIS, *Snakemake* tutorial (shadow rules, benchmarks, integrated package management): <https://nbisweden.github.io/workshop-reproducible-research/pages/snakemake.html>
+- Mölder F et al. (2021). Sustainable data analysis with Snakemake. *F1000Research* 10:33. <https://doi.org/10.12688/f1000research.29032.3>
+- Li H (2013). Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM. arXiv:1303.3997. <https://arxiv.org/abs/1303.3997> (see `bwa mem -K`).

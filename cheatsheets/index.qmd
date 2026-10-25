@@ -1,0 +1,33 @@
+---
+title: "Cheat sheets"
+subtitle: "The commands and file formats from the lessons, one page per tool"
+toc: false
+---
+
+Each sheet collects what a lesson uses, grouped by task, and links back to
+the section that teaches it. Words in capitals (`FILE`, `BRANCH`, `MESSAGE`)
+are placeholders for your own names. Each sheet ends with the tool's official
+cheat sheet, or with its official reference where the tool has no cheat
+sheet. To keep a sheet at hand, print it or save it as a PDF from your
+browser.
+
+| Cheat sheet | Lessons | Official cheat sheet |
+|-------------|---------|----------------------|
+| [Bash](bash.qmd) | [C](../pages/C-bash.qmd), every lesson | none; the GNU Bash manual |
+| [Project and data](project-and-data.qmd) | [02](../pages/02-project-organization.qmd), [03](../pages/03-data-management.qmd) | none; Cookiecutter usage guide |
+| [Git and GitHub](git.qmd) | [04](../pages/04-git.qmd) | Git, GitHub |
+| [Pixi](pixi.qmd) | [05](../pages/05-pixi.qmd), [05b](../pages/05b-conda-comparison.qmd) | Conda; Pixi has a command reference |
+| [Jupyter](jupyter.qmd) | [06](../pages/06-jupyter.qmd) | none; JupyterLab and nbconvert guides |
+| [Quarto](quarto.qmd) | [07](../pages/07-quarto.qmd) | Quarto (by Posit) |
+| [Markdown](markdown.qmd) | [A](../pages/A-markdown.qmd) | CommonMark |
+| [Docker and Apptainer](containers.qmd) | [08](../pages/08-containers.qmd) | Docker; Apptainer quick start |
+| [Snakemake](snakemake.qmd) | [09](../pages/09-snakemake.qmd) | none; command line and rules reference |
+| [Nextflow](nextflow.qmd) | [10](../pages/10-nextflow.qmd) | none; command line and syntax reference |
+| [Documentation and sharing](sharing.qmd) | [11](../pages/11-documentation.qmd), [12](../pages/12-putting-it-together.qmd) | none; citation file guide, licenses, Zenodo |
+
+: {tbl-colwidths="[28,18,54]"}
+
+In the LTEE project, run tools through Pixi from the project folder:
+`pixi run COMMAND` for the default environment, `pixi run -e pipeline COMMAND`
+for the pipeline tools (Linux and macOS). The sheets show this prefix where the
+lessons use it.

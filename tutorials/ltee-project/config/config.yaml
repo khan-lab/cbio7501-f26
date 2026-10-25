@@ -1,0 +1,16 @@
+# Settings for the Snakemake and Nextflow versions of the LTEE pipeline.
+samples: metadata/samples.tsv
+reference_gz: data/raw/reference/ecoli_rel606.fasta.gz
+
+# Extra options for bwa mem. -K 10000000 makes the alignments independent of
+# the number of threads (lesson 09, Break it); it is bwa's own batch size for
+# one thread, so results equal the Data Carpentry lesson's single-thread run.
+bwa_extra: "-K 10000000"
+
+# Minimum read depth for the final variant filter (vcfutils.pl varFilter -d).
+# 2 is the tool's default and what Data Carpentry uses.
+min_depth: 2
+
+# The analysis question: how do the variant counts depend on the depth
+# threshold? Each sample is also filtered at these depths (results/sensitivity/).
+sensitivity_depths: [2, 5, 10, 15]

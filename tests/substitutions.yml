@@ -1,0 +1,11 @@
+# Text swapped in tutorial code blocks before tests run, for things that do
+# not exist in a test run. {ROOT} is this repository's folder. Entries are
+# applied in this order. Remove an entry once the real thing can be used.
+
+# The project template, until the course repository is on GitHub.
+"gh:khan-lab/cbio7501-f26": "{ROOT}"
+
+# Lesson 04: the learner's GitHub repository is replaced by a local bare
+# repository, so pushing, pulling and cloning can be tested without GitHub.
+"git remote add origin git@github.com:ada-lovelace/ltee-project.git": "git init --bare \"$HOME/remotes/ltee-project.git\" && git remote add origin \"$HOME/remotes/ltee-project.git\""
+"git@github.com:ada-lovelace/ltee-project.git": "\"$HOME/remotes/ltee-project.git\""

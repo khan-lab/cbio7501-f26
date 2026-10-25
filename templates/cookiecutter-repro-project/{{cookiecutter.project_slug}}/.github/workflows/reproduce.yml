@@ -1,0 +1,43 @@
+# Reproduce from a clean clone: does `pixi run reproduce` work on a machine
+# that has never seen this project? GitHub gives us a fresh Linux machine and
+# a fresh clone of the repository on every run.
+#
+# From the CBIO7501 project template (MIT). Copy it into any project that has
+# a pixi.toml with a `reproduce` task.
+name: Reproduce
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Fresh clone
+        uses: actions/checkout@v7
+
+      - name: Install Pixi and the locked environment
+        uses: prefix-dev/setup-pixi@v0.11.2
+        with:
+          pixi-version: v0.83.0
+          locked: true   # fail if pixi.lock does not match pixi.toml
+
+      - name: Rebuild every result from raw data
+        run: pixi run reproduce
+
+      - name: Committed files must not change when the analysis runs
+        run: git status --porcelain && git diff --exit-code
+
+      - name: Keep the results for 7 days
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: results
+          path: |
+            results/
+            reports/*.html
+          if-no-files-found: ignore
+          retention-days: 7

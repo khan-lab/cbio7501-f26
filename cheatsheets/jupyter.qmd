@@ -1,0 +1,75 @@
+---
+title: "Jupyter"
+subtitle: "Cheat sheet for lesson 06"
+---
+
+## Start and stop
+
+| What you want | How |
+|------------|------------------------|
+| Start JupyterLab with the project's environment | `pixi run jupyter lab`, from the project folder |
+| The browser did not open | copy the `http://localhost:8888/lab?token=...` link from the terminal |
+| Stop JupyterLab | `Ctrl-C` twice, in the terminal that runs it |
+
+See [lesson 06, section 1](../pages/06-jupyter.qmd#start-jupyterlab).
+
+## In a notebook
+
+| What you want | Keys or menu |
+|------------|------------------------|
+| Run a cell and move to the next | `Shift-Enter` |
+| Save | `Ctrl-S` (macOS: `Cmd-S`) |
+| Leave the cell to use the keys below / edit it again | `Esc` / `Enter` |
+| New cell above / below | `A` / `B` |
+| Make the cell Markdown / code | `M` / `Y` |
+| Delete the cell | `D` `D` |
+| Restart and run everything, top to bottom | *Kernel → Restart Kernel and Run All Cells* |
+| Clear all outputs | *Edit → Clear Outputs of All Cells* |
+| Use the project's Python | *Kernel → Change Kernel → Python 3 (ipykernel)* |
+
+The single-letter keys are JupyterLab's defaults; they work when no cell is being edited.
+
+## From the command line
+
+| What you want | Command |
+|------------|------------------------|
+| Does it run without you? Fresh kernel, top to bottom, HTML copy | `pixi run jupyter nbconvert --execute --to html NOTEBOOK.ipynb` |
+| Run it and save the outputs in the notebook | `pixi run jupyter nbconvert --execute --to notebook --inplace NOTEBOOK.ipynb` |
+| Clear the outputs before you commit | `pixi run jupyter nbconvert --clear-output --inplace NOTEBOOK.ipynb` |
+| Render it with Quarto, with captions and alt text | `pixi run quarto render NOTEBOOK.ipynb --execute` ([lesson 07](../pages/07-quarto.qmd#notebooks-too)) |
+
+See [sections 3 and 5](../pages/06-jupyter.qmd#does-it-run-without-you).
+
+## The first code cell, for paths relative to the project
+
+```{.python}
+import os
+from pathlib import Path
+
+if Path.cwd().name == "notebooks":
+    os.chdir("..")
+```
+
+## Warning signs
+
+- Execution counts out of order, such as `[1] [3] [2]`: check with *Restart Kernel and Run All Cells*.
+- `NameError` on a fresh kernel: the notebook used a cell you ran earlier, moved or deleted.
+- A notebook file of several MB: it holds outputs. Clear them.
+
+## Notebook, script or report?
+
+| | Use it for |
+|-|------------|
+| Notebook | exploring, trying ideas |
+| `scripts/` | code you reuse and can test |
+| Quarto report | results you show others ([lesson 07](../pages/07-quarto.qmd)) |
+
+## Official cheat sheets and references
+
+Project Jupyter has no official cheat sheet. The closest official references:
+
+- JupyterLab, *The JupyterLab Interface*: <https://jupyterlab.readthedocs.io/en/stable/user/interface.html>
+- JupyterLab, *Notebooks*: <https://jupyterlab.readthedocs.io/en/stable/user/notebook.html>
+- nbconvert, *Using as a command line tool*: <https://nbconvert.readthedocs.io/en/latest/usage.html>
+- Quarto, *JupyterLab*: <https://quarto.org/docs/tools/jupyter-lab.html>
+- In JupyterLab, *Settings → Settings Editor → Keyboard Shortcuts* lists every shortcut.

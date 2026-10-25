@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "{{ cookiecutter.project_name }}"
+abstract: "{{ cookiecutter.short_description }}"
+type: software
+authors:
+  - given-names: "{{ cookiecutter.author_given_names }}"
+    family-names: "{{ cookiecutter.author_family_names }}"
+    email: "{{ cookiecutter.author_email }}"
+{%- if cookiecutter.author_orcid != "0000-0000-0000-0000" %}
+    orcid: "https://orcid.org/{{ cookiecutter.author_orcid }}"
+{%- endif %}
+repository-code: "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
+{%- if cookiecutter.license != "Decide later" %}
+license: {{ cookiecutter.license }}
+{%- endif %}
+version: 0.1.0
+date-released: "{% now 'utc', '%Y-%m-%d' %}"

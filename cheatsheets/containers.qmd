@@ -1,0 +1,90 @@
+---
+title: "Docker and Apptainer"
+subtitle: "Cheat sheet for lesson 08"
+---
+
+## Words
+
+| Word | Meaning |
+|------------|------------------------|
+| image | a packed operating system plus software, read-only |
+| container | a running image; gone after `--rm` |
+| tag | a name for an image (`ubuntu:24.04`, `ltee-project:0.1.0`); its owner can move it |
+| digest | the checksum of an image (`sha256:...`); it never changes |
+| registry | where images are shared (Docker Hub, GitHub's `ghcr.io`) |
+| bind mount | a folder of your computer made visible inside the container |
+
+## Docker: run
+
+| What you want | Command |
+|------------|------------------------|
+| Is Docker running? | `docker --version`, then `docker run --rm hello-world` |
+| Run one command in a container | `docker run --rm ubuntu:24.04 cat /etc/os-release` |
+| A shell inside a container (leave with `exit`) | `docker run --rm -it ubuntu:24.04 bash` |
+| Let the container see your project | `docker run --rm -v "$PWD":/work -w /work IMAGE COMMAND` |
+| An Intel (amd64) image on an Apple-silicon Mac | add `--platform linux/amd64` |
+
+See [lesson 08, sections 2 and 3](../pages/08-containers.qmd#run-a-command-in-a-container). Without `-v`, the container cannot see your files.
+
+## Docker: images
+
+| What you want | Command |
+|------------|------------------------|
+| List images | `docker images` |
+| The image ID | `docker image inspect IMAGE --format '{{.Id}}'` |
+| The digest, after a pull or push | `docker image inspect IMAGE --format '{{index .RepoDigests 0}}'` |
+| Build the project's image from `pixi.lock` | `docker build --platform linux/amd64 -f containers/Dockerfile --build-arg ENV_NAME=pipeline -t ltee-project:0.1.0 .` |
+| Run the pipeline in it | `docker run --rm --platform linux/amd64 -v "$PWD":/work -w /work ltee-project:0.1.0 bash scripts/run_variant_calling.sh` |
+
+```{.bash}
+# Save the image to a file, to archive it
+docker save ltee-project:0.1.0 | gzip > containers/ltee-project_0.1.0.tar.gz
+```
+
+See [sections 4 to 6 and 8](../pages/08-containers.qmd#images-tags-and-digests).
+
+## Share an image on GitHub
+
+```{.bash}
+# Log in to GitHub's registry with a token that has the write:packages scope
+echo "$GITHUB_TOKEN" | docker login ghcr.io -u USER --password-stdin
+```
+
+| What you want | Command |
+|------------|------------------------|
+| Give the image its registry name | `docker tag ltee-project:0.1.0 ghcr.io/USER/ltee-project:0.1.0` |
+| Upload it | `docker push ghcr.io/USER/ltee-project:0.1.0` |
+
+## Apptainer (Linux, WSL2, clusters)
+
+| What you want | Command |
+|------------|------------------------|
+| Convert a local Docker image | `apptainer build containers/ltee-project.sif docker-daemon://ltee-project:0.1.0` |
+| Convert an image from a registry | `apptainer build containers/ltee-project.sif docker://ghcr.io/USER/ltee-project:0.1.0` |
+| Run one command in it | `apptainer exec containers/ltee-project.sif samtools --version` |
+| Run the image's default command, with arguments | `apptainer run containers/ltee-project.sif bash scripts/run_variant_calling.sh` |
+
+Apptainer mounts your home folder and the current folder by itself, and runs
+as you. See [section 7](../pages/08-containers.qmd#apptainer-linux-wsl2-or-karakoram).
+
+## A Dockerfile in six instructions
+
+| Instruction | What it does |
+|------------|------------------------|
+| `FROM ubuntu:24.04` | start from this image |
+| `WORKDIR /work` | the folder later instructions and the container start in |
+| `COPY pixi.toml pixi.lock ./` | copy files from the build folder into the image |
+| `RUN pixi install --locked` | run a command while building, and keep its result |
+| `ENV PATH=...` | set an environment variable for the container |
+| `ENTRYPOINT` / `CMD` | what the container runs when it starts |
+
+The course's `containers/Dockerfile` builds in two stages: Pixi installs the
+environment from `pixi.lock`, then only the environment is copied into a plain
+Ubuntu image. See [section 5](../pages/08-containers.qmd#an-image-of-the-ltee-environment-from-pixi.lock).
+
+## Official cheat sheets and references
+
+- **Docker cheat sheet** (PDF), from Docker: <https://docs.docker.com/get-started/docker_cheatsheet.pdf>
+- Docker, *Dockerfile reference*: <https://docs.docker.com/reference/dockerfile/>
+- Apptainer has no official cheat sheet. Its **Quick Start** is the closest: <https://apptainer.org/docs/user/latest/quick_start.html>
+- Apptainer, *Command Line Interface* (every command): <https://apptainer.org/docs/user/latest/cli.html>

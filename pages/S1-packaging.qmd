@@ -1,0 +1,520 @@
+---
+title: "S1 Package and share your tool"
+subtitle: "Supplementary, at home: from a script to an installable package, a conda recipe, and (maybe) conda-forge or Bioconda"
+description: "Level 1: make a small Python tool installable with pyproject.toml, test it, release it with a DOI. Level 2: write a conda recipe (v1, recipe.yaml), build and test it locally with rattler-build, install it from a local channel with Pixi, lint it. Level 3 (optional): submit to conda-forge or Bioconda."
+adapted_from: []
+test:
+  needs: []
+  timeout: 1800
+---
+
+::: {.at-a-glance}
+- **Time:** 2 to 3 hours, at home, any time after [lesson 05](05-pixi.qmd). Not taught in class and not graded on acceptance by conda-forge or Bioconda.
+- **You need:** Pixi; for level 1's release, Git and GitHub ([lesson 04](04-git.qmd)) and Zenodo ([lesson 12](12-putting-it-together.qmd)).
+- **You will have:** a small tool, `minivcf`, that installs with `pip` and as a conda package, built and tested on your laptop, with a recipe that passes conda-forge's linter.
+:::
+
+## Overview
+
+Everything in this course so far *uses* packages: samtools, FastQC, Snakemake
+all reached you as conda packages from conda-forge and bioconda. This optional
+lesson goes the other way: you turn a small piece of your own code into a
+package that others can install with one command, at three levels:
+
+1. **Installable** with `pip` from a `pyproject.toml`, tested, released with a DOI.
+2. **A conda package**, from a recipe that you build and test on your laptop and
+   install with Pixi from a local folder (a *local channel*). This is the level
+   that is checked: the build, its tests and the linter must pass.
+3. **Optional:** a pull request to conda-forge or Bioconda, but only for a
+   mature, published, open-source tool.
+
+What the communities ask, as we read their documentation on 2026-10-24
+(link, not copy; check again before you submit):
+
+- **conda-forge** accepts the new recipe format (`recipe.yaml`, "v1", built with
+  rattler-build); its staged-recipes template is now `example-v1`, and the old
+  `meta.yaml` example is marked deprecated. Sources must be release tarballs
+  (`url` and `sha256`), not Git repositories; recipes need a license file and
+  tests; submitting makes you the maintainer. See
+  <https://conda-forge.org/docs/maintainer/adding_pkgs/>.
+- **Bioconda** is for bioinformatics software (general tools go to
+  conda-forge). Its guidelines ask for a stable source URL with a checksum, a
+  license that allows redistribution, and a test, and still describe the
+  `meta.yaml` format; its build tool (bioconda-utils 5.1.0, October 2026) has
+  just added rattler-build support. See
+  <https://bioconda.github.io/contributor/guidelines.html>.
+- **Pixi** can also build packages from source (`pixi build`), but this is
+  still a *preview* feature with a limited set of build backends. We use
+  rattler-build, which is what conda-forge uses.
+
+### Learning outcomes
+
+After this lesson you can:
+
+1. **Package** a Python tool with `pyproject.toml` so it installs with `pip` and exposes a command.
+2. **Write** a conda recipe (`recipe.yaml`), **build** it with rattler-build, and **test** it in a clean Pixi environment from a local channel.
+3. **Decide** whether a tool belongs on conda-forge, Bioconda or neither, and **prepare** a submission.
+
+Checks: `rattler-build build` passes its tests, `conda-smithy recipe-lint` is
+clean, and `minivcf` runs from a Pixi workspace that installs it from your
+local channel (outcome 2).
+
+# Level 1: an installable Python tool
+
+## 1. The tool
+
+`minivcf` counts and compares the variant records of VCF files: the comparison
+you did with `scripts/compare_vcfs.py` in lessons 09 and 10, as a reusable
+command. Make a folder next to your project:
+
+```{.bash .run}
+mkdir -p ~/cbio7501/minivcf/src/minivcf ~/cbio7501/minivcf/tests/data ~/cbio7501/minivcf/recipe
+cd ~/cbio7501/minivcf
+```
+
+The code lives in a package folder `src/minivcf/` (the "src layout": the
+package can only be imported once it is installed, which catches packaging
+mistakes early):
+
+```{.python filename="src/minivcf/__init__.py" .write}
+"""Count and compare the variant records of VCF files."""
+
+__version__ = "0.1.0"
+
+
+def records(path):
+    """The variant records of a VCF file (header lines removed)."""
+    with open(path) as fh:
+        return [line.rstrip("\n") for line in fh if not line.startswith("#")]
+
+
+def count(path):
+    """Number of variant records in a VCF file."""
+    return len(records(path))
+
+
+def same_records(first, second):
+    """True if two VCF files have identical variant records."""
+    return records(first) == records(second)
+```
+
+```{.python filename="src/minivcf/cli.py" .write}
+"""Command-line interface: minivcf count FILE... | minivcf compare A B"""
+
+import argparse
+import sys
+
+from minivcf import __version__, count, same_records
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(prog="minivcf", description=__doc__)
+    parser.add_argument("--version", action="version", version=f"minivcf {__version__}")
+    sub = parser.add_subparsers(dest="command", required=True)
+    p_count = sub.add_parser("count", help="number of variant records per file")
+    p_count.add_argument("files", nargs="+")
+    p_compare = sub.add_parser("compare", help="exit 0 if two files have identical records")
+    p_compare.add_argument("first")
+    p_compare.add_argument("second")
+    args = parser.parse_args(argv)
+
+    if args.command == "count":
+        for path in args.files:
+            print(f"{path}\t{count(path)}")
+        return 0
+    same = same_records(args.first, args.second)
+    print("identical" if same else "DIFFERENT")
+    return 0 if same else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+```
+
+## 2. `pyproject.toml`: what makes it a package
+
+```{.toml filename="pyproject.toml" .write}
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "minivcf"
+version = "0.1.0"
+description = "Count and compare variant records in VCF files"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Ada Lovelace", email = "ada@example.org" }]
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+minivcf = "minivcf.cli:main"
+```
+
+- `[build-system]` names the tool that builds the package (here
+  [hatchling](https://hatch.pypa.io/)); `pip` installs it automatically.
+- `[project]` holds the metadata: name, version, license (as an SPDX
+  identifier), Python versions, dependencies (none here).
+- `[project.scripts]` creates the `minivcf` command from the `main` function.
+
+A package needs a license and a README:
+
+```{.text filename="LICENSE" .write}
+MIT License
+
+Copyright (c) 2026 Ada Lovelace
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+```{.markdown filename="README.md" .write}
+# minivcf
+
+Count and compare the variant records of VCF files.
+
+    minivcf count results/vcf/*.vcf
+    minivcf compare a.vcf b.vcf
+```
+
+## 3. Tests
+
+A tiny example VCF file and three tests:
+
+```{.text filename="tests/data/example.vcf" .write}
+##fileformat=VCFv4.2
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
+CP000819.1	100	.	A	G	50	.	DP=12
+CP000819.1	250	.	C	T	60	.	DP=9
+```
+
+```{.python filename="tests/test_minivcf.py" .write}
+from pathlib import Path
+
+from minivcf import count, same_records
+from minivcf.cli import main
+
+EXAMPLE = Path(__file__).parent / "data" / "example.vcf"
+
+
+def test_count():
+    assert count(EXAMPLE) == 2
+
+
+def test_compare_identical():
+    assert same_records(EXAMPLE, EXAMPLE)
+
+
+def test_compare_different(tmp_path):
+    other = tmp_path / "other.vcf"
+    other.write_text(EXAMPLE.read_text().replace("\t60\t", "\t61\t"))
+    assert not same_records(EXAMPLE, other)
+    assert main(["compare", str(EXAMPLE), str(other)]) == 1
+```
+
+## 4. A Pixi workspace for development
+
+Develop the tool in its own Pixi workspace. The package itself is installed
+**editable** from the folder (`path = "."`), so changes to the code are used
+at once:
+
+```{.toml filename="pixi.toml" .write}
+[workspace]
+name = "minivcf"
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+
+[dependencies]
+python = ">=3.10"
+pytest = ">=8"
+
+[pypi-dependencies]
+minivcf = { path = ".", editable = true }
+
+[tasks]
+test = { cmd = "pytest -q", description = "Run the tests" }
+```
+
+```{.text filename=".gitignore" .write}
+.pixi/*
+!.pixi/config.toml
+dist/
+output/
+__pycache__/
+```
+
+```{.bash .run}
+pixi run test
+pixi run minivcf --version
+pixi run minivcf count tests/data/example.vcf
+```
+
+```text
+3 passed in 0.54s
+minivcf 0.1.0
+tests/data/example.vcf	2
+```
+
+## 5. Build the package files
+
+`python -m build` makes the two files that `pip` installs from: a source
+archive (`.tar.gz`) and a wheel (`.whl`):
+
+```{.bash .run}
+pixi exec --spec python-build --spec "hatchling>=1.27" -- python -m build --no-isolation
+ls dist
+```
+
+```text
+minivcf-0.1.0-py3-none-any.whl  minivcf-0.1.0.tar.gz
+```
+
+## 6. Release it with a DOI
+
+Put the tool on GitHub as its own repository, tag the version and make a
+release; with Zenodo enabled for the repository, the release gets a DOI
+([lesson 12](12-putting-it-together.qmd)). Add a `CITATION.cff` first
+([lesson 11](11-documentation.qmd)).
+
+```{.bash .run-ci}
+git init
+git add .
+git commit -m "minivcf 0.1.0"
+git tag -a v0.1.0 -m "minivcf 0.1.0"
+```
+
+```{.bash .norun}
+git remote add origin git@github.com:ada-lovelace/minivcf.git
+git push -u origin main --tags
+```
+
+Publishing to PyPI is optional and separate (practise on TestPyPI first, see
+the Python Packaging User Guide in Further reading).
+
+# Level 2: a conda package, built and tested locally
+
+## 7. The recipe
+
+A **recipe** tells a build tool where the source is, how to install it, what it
+needs, and how to test the result. This one uses the v1 format
+(`recipe.yaml`) that conda-forge's template now uses:
+
+```{.yaml filename="recipe/recipe.yaml" .write}
+context:
+  name: minivcf
+  version: "0.1.0"
+  # conda-forge sets python_min globally; remove this line when you submit
+  # there, unless your package needs a newer Python than conda-forge's minimum.
+  python_min: "3.10"
+
+package:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  # Local build from this folder. For conda-forge or Bioconda, use the release
+  # tarball instead:
+  #   url: https://github.com/ada-lovelace/minivcf/archive/refs/tags/v${{ version }}.tar.gz
+  #   sha256: <checksum of that file>
+  path: ../
+
+build:
+  number: 0
+  noarch: python
+  script: python -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    entry_points:
+      - minivcf = minivcf.cli:main
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - hatchling >=1.27
+  run:
+    - python >=${{ python_min }}
+
+tests:
+  - python:
+      imports:
+        - minivcf
+      pip_check: true
+      python_version: ${{ python_min }}.*
+  - files:
+      source:
+        - tests/data/example.vcf
+    script:
+      - minivcf --version
+      - minivcf count tests/data/example.vcf
+
+about:
+  homepage: https://github.com/ada-lovelace/minivcf
+  summary: Count and compare variant records in VCF files
+  description: |
+    A tiny command-line tool used in the CBIO7501 workshop to show how a
+    Python tool becomes a conda package.
+  license: MIT
+  license_file: LICENSE
+  repository: https://github.com/ada-lovelace/minivcf
+
+extra:
+  recipe-maintainers:
+    - ada-lovelace
+```
+
+What each part does:
+
+- `context` holds variables, used as `${{ version }}`.
+- `source: path: ../` builds from your folder. A real submission uses the
+  release tarball (`url` and `sha256`), as the comment shows.
+- `noarch: python`: pure Python, one package for every platform. Commands
+  must then be listed under `entry_points`.
+- `requirements`: `host` is what the build needs, `run` what users need.
+- `tests` run automatically after the build, in a fresh environment: the
+  import works, `pip check` is happy, and the command runs on the example file.
+- `about` and `extra`: license (with the license file), links, and the
+  maintainers who answer for the recipe.
+
+## 8. Build and test
+
+```{.bash .run}
+pixi exec rattler-build build --recipe recipe/recipe.yaml --output-dir output
+ls output/noarch
+```
+
+```text
+ ╭─ Running python test(s)
+ │ │ ✔ python imports test passed!
+ │ │ ✔ pip check passed!
+ ╭─ Running script test for recipe: minivcf-0.1.0-pyh4616a5c_0.conda
+...
+minivcf-0.1.0-pyh4616a5c_0.conda
+```
+
+`output/` is now a **local channel**: a folder laid out like conda-forge, with
+your package in it.
+
+## 9. Install it like a user would
+
+In a new, clean Pixi workspace, add your local channel next to conda-forge and
+install the package:
+
+```{.bash .run}
+cd ~/cbio7501
+pixi init try-minivcf -c "file://$HOME/cbio7501/minivcf/output" -c conda-forge
+cd try-minivcf
+pixi add minivcf
+pixi run minivcf --version
+pixi run minivcf count ../minivcf/tests/data/example.vcf
+pixi list | grep minivcf
+```
+
+```text
+minivcf 0.1.0
+../minivcf/tests/data/example.vcf	2
+minivcf          0.1.0         pyh4616a5c_0          9.71 KiB  conda  file:///.../minivcf/output
+```
+
+The lock file of this workspace records the package's checksum and the local
+channel, like any other package.
+
+## 10. Lint
+
+conda-forge's linter checks the recipe against its rules:
+
+```{.bash .run}
+cd ~/cbio7501/minivcf
+pixi exec conda-smithy recipe-lint recipe
+```
+
+```text
+recipe is in fine form
+```
+
+## Break it: a typo in an entry point
+
+Recipes are tested so that broken packages never reach users. Introduce a
+typo in the entry point (`mian` instead of `main`) and build again:
+
+```{.bash .run}
+sed 's/minivcf.cli:main/minivcf.cli:mian/' recipe/recipe.yaml > recipe/recipe-broken.yaml
+mkdir -p broken
+cp recipe/recipe-broken.yaml broken/recipe.yaml
+```
+
+```{.bash .expect-fail}
+pixi exec rattler-build build --recipe broken/recipe.yaml --output-dir output-broken
+```
+
+The package builds, but its script test fails (`ImportError: cannot import name
+'mian' from 'minivcf.cli'`), and rattler-build stops with `Test failed`. A
+broken package never reaches a channel when the recipe has a test that runs
+the command. Clean up:
+
+```{.bash .run}
+rm -rf broken output-broken recipe/recipe-broken.yaml
+```
+
+# Level 3 (optional): submitting a recipe
+
+Only for a tool that is **mature, released and documented**, with a license
+that allows redistribution, and that you are willing to maintain. A course
+exercise such as `minivcf` does not belong there.
+
+1. **Where?** Bioinformatics tools: Bioconda. Everything else, including
+   general Python libraries your tool depends on: conda-forge. Search both
+   channels first (`pixi search NAME`); the package may exist already.
+2. **Source:** make a tagged release and point the recipe at its tarball:
+   `url: https://github.com/USER/TOOL/archive/refs/tags/v${{ version }}.tar.gz`
+   and its checksum, for example `curl -sL URL | sha256sum`. Do not checksum a
+   redirect page.
+3. **Fork and branch** `conda-forge/staged-recipes` (or `bioconda/bioconda-recipes`),
+   add `recipes/TOOL/recipe.yaml` (Bioconda: check which format its
+   documentation asks for at the time), and open a pull request. CI builds and
+   lints it.
+4. **Review** is done by volunteers, at their pace and with their rules: be
+   patient and answer comments. After merging, conda-forge creates a
+   *feedstock* repository for your package and you maintain it.
+
+## Troubleshooting
+
+| Problem | What to do |
+|---------|------------|
+| `ModuleNotFoundError: minivcf` in tests | The editable install is missing: check `[pypi-dependencies]` in `pixi.toml`, then `pixi install`. |
+| `python_min` is undefined | You removed the `context` line: keep it for local builds (conda-forge defines it globally). |
+| rattler-build copies a huge folder | The `path: ../` source respects `.gitignore`; make sure `.pixi/` and `output/` are listed there. |
+| `pixi add minivcf` finds nothing | The channel URL must be `file://` followed by the absolute path of `output/`, and `output/noarch/` must contain the `.conda` file. |
+| `recipe has some lint` | Read each message; most are metadata (license file, maintainers, tests). |
+
+## Key points
+
+- `pyproject.toml` turns code into a pip-installable package with a command; tests and a release make it trustworthy.
+- A conda recipe (`recipe.yaml`) describes source, build, requirements, tests and license; rattler-build builds it and runs the tests.
+- A folder of built packages is a local channel: Pixi installs from it like from conda-forge.
+- conda-forge and Bioconda want release tarballs with checksums, licenses, tests and a maintainer; submit only mature tools.
+
+## Further reading
+
+- Python Packaging User Guide, *Packaging Python projects*: <https://packaging.python.org/en/latest/tutorials/packaging-projects/>
+- rattler-build documentation: <https://rattler.build/>
+- conda-forge, *Contributing packages*: <https://conda-forge.org/docs/maintainer/adding_pkgs/>, and *noarch packages*: <https://conda-forge.org/docs/how-to/basics/noarch/>
+- Bioconda, *Guidelines for bioconda recipes*: <https://bioconda.github.io/contributor/guidelines.html>
+- Pixi, *Building packages* (preview): <https://pixi.prefix.dev/latest/build/getting_started/>
+- Grüning B et al. (2018). Bioconda: sustainable and comprehensive software distribution for the life sciences. *Nat Methods* 15:475–476. <https://doi.org/10.1038/s41592-018-0046-7>

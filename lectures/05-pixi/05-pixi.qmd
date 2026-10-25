@@ -1,0 +1,250 @@
+---
+title: "Reproducible environments with Pixi"
+subtitle: "CBIO7501 · Lesson 05"
+adapted_from:
+  - title: "Introduction to Pixi"
+    url: https://carpentries-incubator.github.io/pixi-introduction/
+    authors: "Matthew Feickert and The Carpentries Incubator contributors"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    changes: "Manifest vs lock file and features-as-building-blocks explanations, condensed and applied to the LTEE project."
+  - title: "Tools for Reproducible Research: Managing software environments with Conda (lecture)"
+    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/conda/conda.html
+    authors: "NBIS"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-25
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Merged in: the 'recreate the system' message, package / dependency / environment and channel diagrams (redrawn for samtools and the LTEE tools, with real counts from our lock file), the Conda command line as a comparison table, and 'Conda, Anaconda, Miniconda, Miniforge'. The comic and the Conda logo were not reused."
+sources:
+  - "Week 1 slides 57 to 61 (dependency hell, Conda/Bioconda/Mamba/Lmod, Pixi intro) are the opener; the xkcd comic on slide 58 is linked in class, not embedded (non-commercial license)."
+  - "Pixi documentation: <https://pixi.prefix.dev/latest/>"
+  - "Grüning B et al. (2018). Bioconda. *Nat Methods* 15:475–476. <https://doi.org/10.1038/s41592-018-0046-7>"
+---
+
+## Today you will
+
+- see an environment drift break a working command
+- read a manifest and a lock file, and rebuild an environment from the lock file
+- run the LTEE pipeline as Pixi tasks
+- keep Linux-only tools away from Windows users without dropping them
+
+## The same command, one year apart
+
+```{.bash}
+# 2025: FastQC 0.12.1
+$ fastqc -o results/qc data/raw/fastq/*.fastq        # works
+
+# 2026: FastQC 0.13.0
+$ fastqc -o results/qc data/raw/fastq/*.fastq
+fastqc: error: unrecognized arguments: -o
+```
+
+Your script did not change. **The environment did.**
+
+> Full reproducibility requires the possibility to recreate the system that
+> was originally used to generate the results. *(NBIS)*
+
+## Package, dependency, environment
+
+:::: {.columns}
+::: {.column width="40%"}
+- **package**: a program or library (`samtools`)
+- **dependency**: what it needs to run, which needs more
+- **environment**: one consistent set of packages, for one project
+
+You ask for **17** packages. The lock file records **395** (pipeline
+environment, Linux).
+:::
+::: {.column width="60%"}
+```{mermaid}
+%%| eval: true
+%%| echo: false
+%%| fig-width: 7
+flowchart LR
+  subgraph env [pipeline environment]
+    direction LR
+    samtools --> htslib
+    samtools --> ncurses
+    htslib --> libcurl
+    htslib --> libdeflate
+    htslib --> bzip2
+    htslib --> liblzma
+    htslib --> libzlib
+    samtools --> libzlib
+    libcurl --> openssl
+  end
+```
+:::
+::::
+
+## Where packages come from: channels
+
+A **channel** is an online collection of packages.
+
+:::: {.columns}
+::: {.column width="50%"}
+::: {.key-box}
+**bioconda**: bioinformatics software, built on top of conda-forge
+
+`bwa` · `samtools` · `bcftools` · `fastqc` · `multiqc` · `snakemake` · `nextflow`
+:::
+:::
+::: {.column width="50%"}
+::: {.key-box}
+**conda-forge**: a community channel with tens of thousands of packages
+
+`python` · `pandas` · `quarto` · `jupyterlab` · `graphviz`
+:::
+:::
+::::
+
+Pixi, Conda and Mamba all install from the same channels:
+`channels = ["conda-forge", "bioconda"]` in `pixi.toml`.
+
+## What you write vs what the machine records
+
+:::: {.columns}
+::: {.column width="45%"}
+**`pixi.toml`** (you)
+
+```{.toml}
+[workspace]
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64", "osx-arm64"]
+
+[dependencies]
+samtools = ">=1.24,<2"
+```
+
+intent: "any samtools 1.x from 1.24"
+:::
+::: {.column width="55%"}
+**`pixi.lock`** (Pixi)
+
+```{.yaml}
+osx-arm64:
+- conda: .../bioconda/osx-arm64/
+    samtools-1.24-h36b3a25_2.conda
+- conda: .../bioconda/osx-arm64/
+    htslib-1.24-hd3c6ec9_0.conda
+- ... every dependency
+packages:
+- conda: .../samtools-1.24-h36b3a25_2.conda
+  sha256: f8ee1aea15b0b5...
+```
+
+fact: exact files and checksums, every platform
+:::
+::::
+
+## Three commands
+
+| Command | Does |
+|---------|------|
+| `pixi add samtools` | edits `pixi.toml`, updates `pixi.lock`, installs |
+| `pixi run samtools ...` | runs one command in the project's environment |
+| `pixi install --locked` | rebuilds exactly what `pixi.lock` says, or stops |
+
+Delete `.pixi/` whenever you like: the lock file brings it back.
+
+## Features: building blocks for environments
+
+```{.toml}
+[dependencies]                      # default feature: report tools, all platforms
+quarto = ">=1.9"
+pandas = ">=2"
+
+[feature.pipeline]                  # bwa, samtools, bcftools: no Windows builds
+platforms = ["linux-64", "osx-arm64", "osx-64"]
+
+[feature.pipeline.dependencies]
+bwa = ">=0.7.19,<0.8"
+samtools = ">=1.24,<2"
+
+[environments]
+pipeline = ["pipeline"]             # = default + pipeline
+```
+
+## Tasks: the pipeline in one word
+
+```{.bash}
+$ pixi run reproduce
+✨ Pixi task (download in default): python scripts/download_data.py
+✨ Pixi task (qc in pipeline): fastqc ... && multiqc ...
+✨ Pixi task (variant-calling in pipeline): bash scripts/run_variant_calling.sh
+```
+
+Each task runs in the environment that has its tools. The report joins
+`reproduce` in lesson 07.
+
+## GitHub reruns it on every push
+
+```{.yaml}
+- uses: actions/checkout@v7          # a clean clone
+- uses: prefix-dev/setup-pixi@v0.11.2
+  with: { locked: true }             # both environments, from pixi.lock
+- run: pixi run reproduce            # download, QC, variant calling
+```
+
+The placeholder check from lesson 04 now does real work. Green check = your
+project rebuilds **and reruns** on a computer that has never seen it.
+
+## If you know Conda
+
+| Conda | Pixi |
+|-------|------|
+| `environment.yml` (often written by hand) | `pixi.toml` (written by `pixi add`) |
+| `conda env export > environment.yml` (if you remember) | `pixi.lock`, always up to date |
+| `conda env create -f environment.yml` | `pixi install` (`--locked` for exactly the lock file) |
+| `conda activate my-env` | `pixi shell`, or `pixi run COMMAND` |
+| one environment per name, shared by projects | environments live in the project (`.pixi/`) |
+
+Side by side, with commands: [tutorial 05b](../../pages/05b-conda-comparison.qmd).
+
+## Conda, Anaconda, Miniconda, Miniforge...
+
+| Name | What it is |
+|------|------------|
+| **conda** | the package and environment manager (open source) |
+| **Anaconda** | the company; also a large installer and its `defaults` channel, which has commercial terms for bigger organizations |
+| **Miniconda** | small conda installer, set to `defaults` |
+| **Miniforge** | small conda installer, set to **conda-forge** (use this if you use conda) |
+| **Mamba** | a faster reimplementation of conda |
+| **Pixi** | project-based manager for the same packages, with lock files and tasks |
+
+: {tbl-colwidths="[20,80]"}
+
+## Think, pair, share {.prompt-slide}
+
+::: {.prompt}
+**3 minutes.** The lock file pins every package. List three things that can
+still make your analysis give a different result on someone else's computer.
+:::
+
+::: {.notes}
+Expected: hardware/OS and system libraries (glibc), the data, channels removing
+packages, random seeds and thread counts, environment variables, time zones.
+:::
+
+## Quiz {.quiz-slide}
+
+::: {.quiz}
+1. Which file do you edit by hand? (a) `pixi.toml` (b) `pixi.lock` (c) both
+2. `pixi install --locked` fails with "lock file not up-to-date". What changed? (a) the data (b) `pixi.toml` without a new `pixi.lock` (c) your internet
+3. Why put bwa in a `pipeline` feature? (a) speed (b) it has no Windows build, and the report should still work on Windows (c) features are required
+:::
+
+::: {.notes}
+Answers: 1 a; 2 b; 3 b.
+:::
+
+## Recap
+
+- Manifest = intent; lock file = exact result, per platform. Commit both
+- `pixi run` uses the project's environment; `--locked` rebuilds it exactly
+- Features + environments handle tools that do not exist everywhere
+- Tasks make the pipeline one command, locally and in CI
+
+**Now:** [tutorial 05](../../pages/05-pixi.qmd). Conda users: [05b](../../pages/05b-conda-comparison.qmd).

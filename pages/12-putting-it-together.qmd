@@ -1,0 +1,254 @@
+---
+title: "12 Putting it all together"
+subtitle: "Swap and reproduce, release with a DOI, and a checklist for your next project"
+description: "Reproduce a classmate's project from a clean clone using only its README, release your own project and archive it on Zenodo with a DOI, and take a checklist for the before, during, submission and after phases of a project into your research."
+adapted_from:
+  - title: "Tools for Reproducible Research: Putting it all together (lecture)"
+    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html
+    authors: "NBIS"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Its summary of practices ('divide your work into projects', 'treasure your data', 'what is reasonable for your project') became the checklist, updated for Pixi; the swap-and-reproduce session, the release and Zenodo steps and the capstone are new."
+test:
+  needs: [11-documentation]
+  timeout: 2400
+---
+
+::: {.at-a-glance}
+- **Time:** 80 minutes in class (swap and reproduce), then at home (release and Zenodo, 30 minutes).
+- **Slides:** [Putting it all together](../lectures/12-putting-it-together/12-putting-it-together.qmd)
+- **You need:** your `ltee-project` and your capstone project on GitHub with green *Reproduce* checks; a partner.
+- **You will have:** a reproduce report on your partner's project (and one on yours), a released version of your project with a Zenodo DOI, and a checklist.
+:::
+
+## Overview
+
+All these tools, one question: **can someone else get your results, from
+your repository alone, without asking you?** Today you find out, with a
+classmate as the "someone else". Then you freeze a version of your project,
+give it a permanent identifier (a DOI) and archive it, so the answer stays yes
+after GitHub, the course and maybe you have moved on.
+
+The five pillars of computational reproducibility (Ziemann et al. 2023), and
+where this course covered them:
+
+| Pillar | Lessons |
+|--------|---------|
+| Literate programming | [06 Jupyter](06-jupyter.qmd), [07 Quarto](07-quarto.qmd) |
+| Code version control and sharing | [04 Git](04-git.qmd), this lesson |
+| Compute environment control | [05 Pixi](05-pixi.qmd), [08 Containers](08-containers.qmd) |
+| Persistent data sharing | [03 Data management](03-data-management.qmd), this lesson |
+| Documentation | [11 Documentation](11-documentation.qmd), [02 Project organization](02-project-organization.qmd) |
+
+and the glue between them: workflows ([09](09-snakemake.qmd),
+[10](10-nextflow.qmd)) and automatic checks (the *Reproduce* GitHub Action).
+
+### Learning outcomes
+
+After this lesson you can:
+
+1. **Reproduce** someone else's project from a clean clone using only its documentation, and **report** what worked and what did not.
+2. **Release** a version of your project and **archive** it on Zenodo with a DOI.
+3. **Apply** a checklist of reproducible practices at each phase of a new project.
+
+Checks: the reproduce report you file (outcome 1); the DOI badge in your
+README (outcome 2); your capstone, graded with the
+[capstone rubric](../assessment/capstone-rubric.qmd) (all).
+
+## 1. Before the swap: is your own project ready?
+
+Check the three things your partner will hit first, in a clean state:
+
+```{.bash .run}
+cd ~/cbio7501/ltee-project
+pixi install --locked
+pixi exec cffconvert --validate -i CITATION.cff
+pixi run reproduce
+```
+
+```{.bash .run-ci}
+git status --short
+```
+
+`git status` must show nothing important uncommitted: anything that is only on
+your laptop will be missing for your partner. Push, and check that the
+*Reproduce* check on GitHub is green.
+
+## 2. Swap and reproduce (60 minutes)
+
+Pair up. Each of you reproduces the other's capstone project (and, if time
+allows, their `ltee-project`). Rules:
+
+- Use **only the repository**: the README and what it links to. Do not ask
+  your partner, do not look over their shoulder.
+- Start from a **clean clone** in a new folder.
+- Write a **reproduce report** as you go: copy the
+  [template](../assessment/reproduce-report-template.qmd) into a new issue on
+  your partner's repository and fill it in.
+
+```{.bash .norun}
+cd ~/cbio7501
+git clone git@github.com:PARTNER/PROJECT.git partner-project
+cd partner-project
+pixi run reproduce        # or whatever the README says
+```
+
+Things to record: how long it took, every command you had to guess, every
+error message (in full), and whether your numbers match theirs. For the LTEE
+project, `pixi run compare-workflows` and the variant counts in the README give
+you an exact comparison.
+
+::: {.callout-note title="Discuss with your partner afterwards (15 minutes)"}
+Read each other's reports together. Which problem would have stopped a
+stranger? Which one fix would help most? Fix it before you hand
+in the capstone.
+:::
+
+## 3. Release and archive on Zenodo
+
+A Git commit can be rewritten and a GitHub repository can be deleted. A
+**release** on Zenodo is a permanent, citable copy of one version, with a
+**DOI**. Zenodo (run by CERN) keeps it, and every new release gets its own DOI
+under one "concept" DOI that always points to the latest version (the Scotland
+wastewater record in [lesson 03](03-data-management.qmd) is an example).
+
+Practise first on the **Zenodo sandbox** (<https://sandbox.zenodo.org/>), a
+copy of Zenodo for testing whose DOIs are not real. When you are sure, repeat
+on <https://zenodo.org/>.
+
+1. **Log in to Zenodo with your GitHub account** (or ORCID, and link GitHub
+   under your account settings).
+2. **Enable the repository.** In Zenodo, open the *GitHub* page from your
+   profile menu, press *Sync*, and switch on your repository. From now on,
+   Zenodo archives every GitHub release of it.
+3. **Check the metadata.** Zenodo uses your `CITATION.cff` for the title,
+   authors, ORCID iDs and license (unless the repository also has a
+   `.zenodo.json`, which then takes over). Make sure it is valid
+   ([lesson 11](11-documentation.qmd)).
+4. **Tag and release.** On your laptop, tag the commit you hand in, push the
+   tag, then on GitHub choose *Releases → Draft a new release*, pick the tag,
+   write what this version contains, and *Publish release*:
+
+```{.bash .run-ci}
+git switch main
+git pull
+git tag -a v1.0.0 -m "Version handed in for CBIO7501"
+git push origin v1.0.0
+```
+
+5. **Get the DOI.** After a minute, the release appears in Zenodo with a DOI
+   and a DOI badge. Add the badge to the top of your README, and the DOI to
+   `CITATION.cff` (`doi: 10.5281/zenodo.NNNNNNN`), then commit and push.
+
+### What else to archive
+
+A code release is not the whole analysis. For a publication, also deposit,
+and link from the README:
+
+- **the data**, if it is not already in a repository (here it is: figshare, NCBI);
+- **the container image** saved with `docker save` ([lesson 08](08-containers.qmd#archive-and-share-the-image)),
+  as a file in the same Zenodo record or a linked one;
+- **the rendered report** (`reports/ltee-report.html`) as supplementary material.
+
+## Break it: the file that was only on your laptop
+
+The most common reason a swap fails: something the analysis needs was never
+committed. See it happen. Add a helper the report would use, but do not commit
+it, then clone the project the way your partner does:
+
+```{.bash .run-ci}
+cd ~/cbio7501/ltee-project
+printf 'MIN_GENERATION = 5000\n' > scripts/settings.py
+git status --short scripts/
+cd ~/cbio7501
+rm -rf ltee-clone
+git clone git@github.com:ada-lovelace/ltee-project.git ltee-clone
+```
+
+```{.bash .run-ci .expect-fail}
+ls ltee-clone/scripts/settings.py
+```
+
+On your laptop the file exists, so everything works for you; in the clone it
+does not exist, and any code importing it fails. `git status` showed it as
+untracked (`??`), and the *Reproduce* GitHub Action would have failed on the
+next push: that is exactly what it is for. Clean up:
+
+```{.bash .run-ci}
+rm -rf ~/cbio7501/ltee-clone ~/cbio7501/ltee-project/scripts/settings.py
+```
+
+## 4. A checklist for your next project
+
+Updated from the checklist in the course's opening lecture
+([source](credits.qmd#week1)), with the tools from these lessons.
+
+**Before you start**
+
+- [ ] One folder (and one Git repository) per project, from a template ([02](02-project-organization.qmd))
+- [ ] A data management plan: sources, formats, storage, licenses, sensitive data ([03](03-data-management.qmd))
+- [ ] `pixi init` (or the template) with the platforms you and your collaborators use ([05](05-pixi.qmd))
+
+**During the project**
+
+- [ ] Raw data downloaded by a script, checksummed, read-only ([03](03-data-management.qmd))
+- [ ] Small, frequent commits with clear messages; branches and pull requests ([04](04-git.qmd))
+- [ ] Every tool added with `pixi add`; `pixi.toml` and `pixi.lock` committed together ([05](05-pixi.qmd))
+- [ ] Steps as Pixi tasks or a workflow (Snakemake, Nextflow); settings in a config file ([09](09-snakemake.qmd))
+- [ ] Results and figures made by code in a report, never pasted ([07](07-quarto.qmd))
+- [ ] Decisions logged in `docs/decisions.md`
+- [ ] A *Reproduce* check in CI from the first push
+
+**At submission**
+
+- [ ] README answers the seven questions; `CITATION.cff` valid; licenses chosen ([11](11-documentation.qmd))
+- [ ] A colleague reproduced it from a clean clone (section 2)
+- [ ] Data in a repository with an identifier; code released with a DOI; container image archived (section 3)
+- [ ] A data and code availability statement that names all of them ([03](03-data-management.qmd))
+
+**After publication**
+
+- [ ] Issues answered; corrections released as new versions (new DOI, same concept DOI)
+- [ ] `pixi.lock` kept; the image archived, so the old version can still be rebuilt
+
+## 5. The capstone
+
+Your capstone is your own mini-analysis, built with the same practices as the
+LTEE project, step by step since lesson 02. It is assessed with the
+[capstone rubric](../assessment/capstone-rubric.qmd), which is tied to checks
+you can run yourself: the *Reproduce* GitHub Action on a clean clone, the
+reproduce report from your partner, and the files above. Fix what your
+partner's report found, then release the version you hand in.
+
+## Troubleshooting
+
+| Problem | What to do |
+|---------|------------|
+| Your partner's `pixi install --locked` fails | They changed `pixi.toml` without committing the new `pixi.lock`. Report it; they run `pixi install` and commit the lock file. |
+| The download fails for your partner but not for you | The data was already on your laptop. Check that the download script is committed and the source URLs work. |
+| Zenodo does not show your repository | Press *Sync* on the Zenodo GitHub page, and check you logged in with the right GitHub account. |
+| No new Zenodo record after a release | Only releases made **after** enabling the repository are archived. Make a new release (for example `v1.0.1`). |
+| The Zenodo record has the wrong authors or license | Fix `CITATION.cff` (or `.zenodo.json`) and make a new release; the old version stays as it was. |
+
+## Apply it to your own mini-analysis
+
+This whole lesson is about your mini-analysis: get it reproduced by your
+partner, fix what they found, release it with a DOI, and hand it in.
+
+## Key points
+
+- The real test of reproducibility is someone else, a clean clone and only your documentation.
+- Uncommitted files, guessed commands and stale lock files are the usual failures; CI catches most of them early.
+- A release on Zenodo gives a version a permanent DOI; archive the data, the image and the report with it.
+- Reproducibility is a habit at every phase of a project, not a step at the end.
+
+## Further reading
+
+- Cheat sheet: [Documentation and sharing](../cheatsheets/sharing.qmd), with links to the official cheat sheets and references.
+- NBIS, *Putting it all together* (lecture): <https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html>
+- Zenodo, *GitHub integration*: <https://help.zenodo.org/docs/github/>
+- The Turing Way, *Guide for reproducible research*: <https://book.the-turing-way.org/reproducible-research/reproducible-research>
+- Ziemann M, Poulain P, Bora A (2023). The five pillars of computational reproducibility. *Brief Bioinform* 24:bbad375. <https://doi.org/10.1093/bib/bbad375>
+- Sandve GK, Nekrutenko A, Taylor J, Hovig E (2013). Ten simple rules for reproducible computational research. *PLoS Comput Biol* 9:e1003285. <https://doi.org/10.1371/journal.pcbi.1003285>

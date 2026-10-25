@@ -1,0 +1,198 @@
+---
+title: "Containers: Docker and Apptainer"
+subtitle: "CBIO7501 · Lesson 08"
+adapted_from:
+  - title: "Tools for Reproducible Research: Working with containers (lecture)"
+    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/containers/containers.html
+    authors: "NBIS"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Merged in: containers in benchmarking (CAMI, paraphrased), the different-OS example, mounting, 'What can I use Docker for?', the Docker vs Apptainer comparison rows, the Singularity history (wording checked against the SingularityCE README) and the wrap-up's further reading. Its image-and-container figure (which includes the Docker Hub logo and clip art) was redrawn by us for the LTEE image; logos not reused. Image built from pixi.lock."
+sources:
+  - "Week 1 slides 68 to 70 (why containers; Docker and Singularity for HPC) are the opener. Update to slide 70: Singularity became Apptainer under the Linux Foundation in 2021; SingularityCE is Sylabs' separate fork. This course uses Apptainer."
+  - "Nüst D et al. (2020). Ten simple rules for writing Dockerfiles for reproducible data science. *PLoS Comput Biol* 16:e1008316. <https://doi.org/10.1371/journal.pcbi.1008316>"
+  - "Pixi documentation, Containerizing: <https://pixi.prefix.dev/latest/deployment/container/>"
+  - "Sczyrba A et al. (2017). Critical Assessment of Metagenome Interpretation: a benchmark of metagenomics software. *Nat Methods* 14:1063–1071. <https://doi.org/10.1038/nmeth.4458>"
+  - "Meyer F et al. (2022). Critical Assessment of Metagenome Interpretation: the second round of challenges. *Nat Methods* 19:429–440. <https://doi.org/10.1038/s41592-022-01431-4>"
+  - "SingularityCE README, End of Life / End of Engineering notice (read 2026-10-25): <https://github.com/sylabs/singularity>"
+  - "Docker documentation: <https://docs.docker.com/>; Apptainer documentation: <https://apptainer.org/docs/user/latest/>"
+  - "Diagram 'Image and container': own work, CC BY 4.0, after the NBIS figure."
+---
+
+## Today you will
+
+- run tools inside containers, with your project mounted
+- build an image of the LTEE environment **from `pixi.lock`**
+- get the same variant calls on another operating system
+- record which image made a result
+
+## Containers in life science
+
+- **CAMI**, a community benchmark of metagenomics tools, asked every
+  participant to submit the tool **as a Docker container**, with its
+  parameters and databases, so the organizers could rerun it
+  (Sczyrba et al. 2017)
+- The second round accepted a container, a Bioconda recipe, or a repository
+  with installation instructions (Meyer et al. 2022)
+
+A container is a way to hand someone **the whole working setup**, not just
+the code.
+
+## What the lock file cannot pin
+
+```{.text}
+your analysis        ← Git (lesson 04)
+Python, samtools …   ← pixi.lock (lesson 05)
+C library, OS tools  ← ???      ← a container pins this too
+kernel, hardware     ← nobody
+```
+
+## Image and container
+
+![](../../assets/images/diagrams/containers.svg){fig-alt="Diagram: a Dockerfile and pixi.lock are built into an image with docker build; docker run starts containers from it; images are pushed to and pulled from a registry; apptainer build turns an image into a .sif file for HPC." width="88%" fig-align="center"}
+
+- **Image**: software plus a minimal operating system, read-only;
+  **container**: a running copy of it
+- **Tag** (`:0.1.0`) can move; **digest** (`@sha256:…`) cannot
+
+## Another operating system, one command away
+
+```{.bash}
+$ uname -sm                                  # your Mac
+Darwin arm64
+
+$ docker run --rm ubuntu:24.04 uname -sm     # a Linux container on it
+Linux aarch64
+```
+
+The container brings its own operating system files; it borrows only the
+kernel of the computer it runs on (on a Mac, a small Linux virtual machine).
+
+## A container sees only what you mount
+
+:::: {.columns}
+::: {.column width="50%"}
+```{.bash}
+$ docker run --rm ltee-project:0.1.0 \
+    ls scripts
+ls: cannot access 'scripts':
+  No such file or directory
+```
+:::
+::: {.column width="50%"}
+```{.bash}
+$ docker run --rm \
+    -v "$PWD":/work -w /work \
+    ltee-project:0.1.0 ls scripts
+README.md
+compare_vcfs.py
+download_data.py
+fastq_stats.py
+run_variant_calling.sh
+```
+:::
+::::
+
+`-v "$PWD":/work` puts your project folder at `/work` inside the container;
+`-w /work` starts there. Results written to `/work` land in your project.
+
+## Docker or Apptainer?
+
+| | Docker | Apptainer |
+|-|--------|-----------|
+| Where | laptops, GitHub Actions | HPC clusters (Linux only) |
+| Needs root? | a root service | no |
+| Your files | mount with `-v "$PWD":/work` | home and current folder mounted automatically |
+| Same image? | builds it | converts it: `apptainer build x.sif docker://…` |
+| Images | stored by the Docker service | single `.sif` files you can copy |
+| Isolation | separate file system by default | sees much of the host's |
+| Runs on | Linux, macOS, Windows | Linux (macOS and Windows only in a VM) |
+
+: {tbl-colwidths="[18,38,44]"}
+
+::: {.small .muted}
+Singularity became Apptainer under the Linux Foundation in 2021. Sylabs' fork,
+SingularityCE, released 4.6.0 in October 2026 and says it is expected to be
+its final release. Apptainer still runs the `singularity` command and SIF
+images.
+:::
+
+## What should go in a container?
+
+1. **The environment**: tools and libraries. Yes: this is what containers
+   are best at
+2. Your code **with** the environment: possible, but now every code change
+   needs a new image
+3. The **whole project**, data included: hard to update, hard to inspect
+
+. . .
+
+Best overall: a **Git repository** with code, documentation, the environment
+files (`pixi.toml`, `pixi.lock`, `Dockerfile`) and instructions to download the
+data; the image is built from it, and archived with each release.
+
+## The Dockerfile, in three ideas
+
+```{.dockerfile}
+FROM ghcr.io/prefix-dev/pixi:0.83.0 AS build          # 1. Pixi's image
+COPY pixi.toml pixi.lock ./
+RUN pixi install --locked --environment pipeline      #    exactly the lock file
+
+FROM ubuntu:24.04 AS production                        # 2. small final image
+COPY --from=build /opt/project/.pixi/envs/pipeline /opt/project/.pixi/envs/pipeline
+ENTRYPOINT ["/entrypoint.sh"]                          # 3. activate, then run
+```
+
+Container and laptop **cannot drift**: both come from `pixi.lock`.
+
+## Run the pipeline in it
+
+```{.bash}
+docker build --platform linux/amd64 -f containers/Dockerfile \
+  --build-arg ENV_NAME=pipeline -t ltee-project:0.1.0 .
+
+docker run --rm -v "$PWD":/work -w /work ltee-project:0.1.0 \
+  bash scripts/run_variant_calling.sh
+```
+
+10, 25 and 775 variants: the same as on your laptop.
+
+## Think, pair, share {.prompt-slide}
+
+::: {.prompt}
+**3 minutes.** A paper gives a Docker Hub image name `lab/tool:latest` as its
+"reproducible environment". What could go wrong in two years? What would you
+ask the authors to add?
+:::
+
+::: {.notes}
+Tag moved or image deleted; no Dockerfile or recipe; no digest; image built
+with unpinned apt-get. Ask for: the Dockerfile and lock file in the repository,
+a digest, and an archived image file (Zenodo).
+:::
+
+## Quiz {.quiz-slide}
+
+::: {.quiz}
+1. `docker run ltee-project:0.1.0 bash scripts/run_variant_calling.sh` says "No such file". Why? (a) image broken (b) project not mounted (c) wrong tag
+2. Which pins an image exactly? (a) `:latest` (b) `:0.1.0` (c) `@sha256:…`
+3. Where do you use Apptainer instead of Docker? (a) on a Mac (b) on an HPC cluster (c) in Word
+:::
+
+::: {.notes}
+Answers: 1 b; 2 c; 3 b.
+:::
+
+## Recap
+
+- Images pin software and the OS layer; containers run them
+- Build images from `pixi.lock`; mount your project with `-v`
+- Record digests and archive the image with a release
+- Docker on laptops and CI; Apptainer on clusters
+- More: [Docker docs](https://docs.docker.com/),
+  [Dockerfile reference](https://docs.docker.com/reference/dockerfile/),
+  [Apptainer docs](https://apptainer.org/docs/user/latest/)
+
+**Now:** [tutorial 08](../../pages/08-containers.qmd).

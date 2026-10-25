@@ -1,0 +1,112 @@
+---
+pagetitle: "Methods for Reproducible and Open Science"
+description: "Hands-on lessons for computational biologists: organize, record, rerun and share an analysis."
+toc: false
+---
+
+::: {.hero}
+[CBIO7501 @ MBZUAI - Fall 2026]{.kicker}
+
+# Reproducible and Open Science {.unnumbered .unlisted}
+
+[Hands-on lessons for computational biologists: organize, record, rerun and
+share an analysis.]{.lead}
+
+[Set up your computer](pages/00-setup.qmd){.btn .btn-primary}
+[Browse the lessons](contents.qmd){.btn .btn-outline-primary}
+[7-week schedule](schedule-course.qmd){.btn .btn-link}
+:::
+
+Your analysis worked last month. Can you rerun it today? Can a reviewer, a
+labmate, or you in five years? This workshop teaches the tools and habits that
+make the answer *yes*: project organization, data management, literate
+programming with Quarto and Jupyter, version control with Git and GitHub,
+software environments with Pixi, containers, workflow managers (Snakemake and
+Nextflow), documentation, and open publication.
+
+Everything is hands-on and built around **one project** that grows with you:
+variant calling on *E. coli* from Richard Lenski's
+[Long-Term Evolution Experiment](pages/ltee-project.qmd). You do not need to
+know genomics: the analysis is a given pipeline, and the lessons are about
+making it reproducible.
+
+## Three ways to use it
+
+::: {.grid}
+::: {.g-col-12 .g-col-md-4}
+::: {.feature-card}
+### CBIO7501 student
+MBZUAI, Fall 2026.
+
+Start with the [7-week schedule](schedule-course.qmd), then
+[setup](pages/00-setup.qmd).
+:::
+:::
+::: {.g-col-12 .g-col-md-4}
+::: {.feature-card}
+### Workshop participant
+The same lessons, condensed.
+
+See the [workshop schedule](schedule-workshop.qmd) and
+[setup](pages/00-setup.qmd).
+:::
+:::
+::: {.g-col-12 .g-col-md-4}
+::: {.feature-card}
+### On your own
+At your own pace.
+
+Do the [setup](pages/00-setup.qmd), then the lessons in the order of the
+[contents](contents.qmd).
+:::
+:::
+:::
+
+
+## What is in every lesson
+
+::: {.grid}
+::: {.g-col-12 .g-col-md-4}
+::: {.feature-card}
+### Slides: the *why*
+A short slides-deck that provides background and motivation.
+:::
+:::
+::: {.g-col-12 .g-col-md-4}
+::: {.feature-card}
+### Tutorial: the *how*
+Self-contained, with copy-and-paste commands, expected output, exercises and troubleshooting.
+:::
+:::
+::: {.g-col-12 .g-col-md-4}
+::: {.feature-card}
+### *Break it*
+Each lesson ends by breaking something on purpose, so you see what the tool
+protects you from.
+:::
+:::
+:::
+
+
+## What you will be able to do
+
+- Start a project with a clear layout, download its data with checksums, and keep raw data untouched
+- Write reports in which every number and figure is computed from the data
+- Track your work with Git, collaborate through pull requests, and let GitHub rerun it on every push
+- Pin your software with Pixi lock files, and ship it in containers
+- Run a multi-step pipeline with Snakemake and Nextflow, and get identical results from both
+- Document, license, cite and archive your work with a DOI
+
+## Built on open material
+
+This course began as a mini-course at Stanford Biosciences
+([BIOS259, Winter 2024](https://github.com/asntech/bios259-w24/)), developed and/or taught with
+Alvina, Clemens and Brenon. See [Sources and credits](pages/credits.qmd) for the
+full list.
+
+This workshop adapts and extends open lessons from [NBIS](https://nbisweden.github.io/), 
+[The carpentry](https://software-carpentry.org), [The Data Carpentry](https://datacarpentry.org/) and many more. See [Sources and credits](pages/credits.qmd).
+
+Text and slides: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Code: [MIT](https://opensource.org/license/mit). Created by Aziz Khan
+(MBZUAI) for CBIO7501.

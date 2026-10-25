@@ -1,0 +1,89 @@
+---
+title: "Bash"
+subtitle: "Cheat sheet for appendix C (and every lesson)"
+---
+
+## Where you are
+
+| What you want | Command |
+|------------|------------------------|
+| Which folder am I in? | `pwd` |
+| Go to a folder / your home / one up | `cd FOLDER`, `cd ~`, `cd ..` |
+| List files, with details, with hidden files | `ls`, `ls -l`, `ls -a` |
+| Make a folder (and the ones above it) | `mkdir -p FOLDER` |
+
+## Files
+
+| What you want | Command |
+|------------|------------------------|
+| Print a whole file / scroll through it (`q` quits) | `cat FILE`, `less FILE` |
+| First or last lines | `head -n 2 FILE`, `tail -n 1 FILE` |
+| From line 2 on (skip a header) | `tail -n +2 FILE` |
+| Count lines | `wc -l FILE` (just the number: `wc -l < FILE`) |
+| Copy, move or rename | `cp FROM TO`, `mv FROM TO` |
+| Delete a file / a folder and all in it (no undo) | `rm FILE`, `rm -r FOLDER` |
+| The file name without folder and ending | `basename data/SRR2584863.fastq .fastq` |
+
+## Find and select
+
+| What you want | Command |
+|------------|------------------------|
+| Lines that contain a word / count them / the others | `grep WORD FILE`, `grep -c WORD FILE`, `grep -v WORD FILE` |
+| Columns of a tab-separated file | `cut -f 1,3 FILE` |
+| Sort, by column 3 as numbers | `sort FILE`, `sort -k3,3n FILE` |
+| Count identical neighbouring lines | `sort FILE`, then `uniq -c` |
+| All files with an ending | `data/*.fastq` (a wildcard) |
+
+## Redirection and pipes
+
+```{.bash}
+echo "text" > FILE        # write to FILE (replaces it)
+echo "more" >> FILE       # add to the end of FILE
+cut -f 6 samples.tsv | tail -n +2 | sort | uniq -c    # | passes output on
+```
+
+## Variables, loops, scripts
+
+```{.bash}
+f=data/SRR2584863.fastq             # no spaces around =
+echo "$f has $(( $(wc -l < "$f") / 4 )) reads"   # "$f", $(command), $((arithmetic))
+
+for f in data/*.fastq; do
+    echo "$f"
+done
+```
+
+| What you want | Command |
+|------------|------------------------|
+| Run a script | `bash script.sh ARGUMENTS` |
+| Make it runnable by name, then run it | `chmod +x script.sh`, then `./script.sh` |
+| Check a script for common mistakes | `pixi exec shellcheck script.sh` |
+
+A script starts with `#!/usr/bin/env bash` and `set -euo pipefail`; `"$@"` is
+the list of its arguments. See [appendix C, section 8](../pages/C-bash.qmd#your-first-script).
+
+## Permissions
+
+| What you want | Command |
+|------------|------------------------|
+| See them (`r`ead, `w`rite, e`x`ecute) | `ls -l FILE` |
+| Make files read-only / writable again | `chmod a-w FILE`, `chmod u+w FILE` |
+
+## Keys
+
+| Key | What it does |
+|------------|------------------------|
+| `Tab` | complete a file or command name |
+| `↑` / `↓` | earlier commands |
+| `Ctrl-C` | stop the running command, or abandon the line |
+| `q` | leave `less` or `man` |
+
+## Official cheat sheets and references
+
+Bash has no official cheat sheet. The official reference, and the summaries
+the shell tutorials keep:
+
+- *GNU Bash Reference Manual*, the official manual: <https://www.gnu.org/software/bash/manual/>
+- In the terminal, `man COMMAND` (for example `man ls`) shows a command's own manual.
+- Software Carpentry, *The Unix Shell*, one-page summary of its commands: <https://swcarpentry.github.io/shell-novice/reference.html>
+- ShellCheck, the script checker used above: <https://www.shellcheck.net/>

@@ -1,0 +1,106 @@
+---
+title: "Nextflow"
+subtitle: "Cheat sheet for lesson 10"
+---
+
+## Run
+
+In the LTEE project, Nextflow is in the `pipeline` environment: put
+`pixi run -e pipeline` in front of each command (or use the task:
+`pixi run run-nextflow`). Always launch from the project folder.
+
+| What you want | Command |
+|------------|------------------------|
+| Run the workflow with the shared settings file | `nextflow run workflow/nextflow/main.nf -params-file config/config.yaml` |
+| Reuse the tasks that already finished | add `-resume` |
+| Change one parameter | add `--min_depth 10` (two dashes: a workflow parameter) |
+| Write the results somewhere else | add `-output-dir results/nextflow-d10` (one dash: a Nextflow option) |
+| An HTML report of the run | add `-with-report results/nextflow/execution-report.html` |
+| Check the code | `nextflow lint workflow/nextflow/` |
+| Which version | `nextflow -version` |
+| Past runs | `nextflow log` |
+| Delete the work files of older runs | `nextflow clean -f -before RUN_NAME` |
+| Run an nf-core pipeline | `nextflow run nf-core/demo -r 1.2.0 -profile test,docker --outdir DIR` |
+
+See [lesson 10, sections 3, 6 and 8](../pages/10-nextflow.qmd#run-the-finished-pipeline).
+
+## When a task fails
+
+Every task runs in its own folder under `work/`; Nextflow prints it when a
+task fails. Go there and read:
+
+| File | What it holds |
+|------------|------------------------|
+| `.command.sh` | the exact command the task ran |
+| `.command.err`, `.command.log` | its error messages and log |
+
+Run `bash .command.sh` in that folder to repeat the error by hand. See
+[section 5](../pages/10-nextflow.qmd#look-at-a-task).
+
+## A process
+
+```{.groovy}
+process ALIGN {
+    tag "${sample}"
+    cpus 4
+
+    input:
+    tuple val(sample), path(reads)
+    tuple path(genome), path(index)
+    val bwa_extra
+
+    output:
+    tuple val(sample), path("${sample}.aligned.sorted.bam"), path("${sample}.aligned.sorted.bam.bai")
+
+    script:
+    """
+    bwa mem -t ${task.cpus} ${bwa_extra} ${genome} ${reads[0]} ${reads[1]} > ${sample}.aligned.sam
+    samtools sort -o ${sample}.aligned.sorted.bam ...
+    """
+}
+```
+
+## The workflow: channels in, channels out
+
+```{.groovy}
+workflow {
+    main:
+    ch_samples = channel.fromPath(params.samples)
+        .splitCsv(header: true, sep: '\t')
+        .map { row -> tuple(row.sample, [file(row.fastq_1), file(row.fastq_2)]) }
+    ch_bam = ALIGN(ch_samples, ch_reference, params.bwa_extra)
+
+    publish:
+    bam = ch_bam
+}
+
+output {
+    bam {
+        path 'bam'      // below the output folder
+    }
+}
+```
+
+| Write | What it does |
+|------------|------------------------|
+| `params { min_depth: Integer = 2 }` | a parameter with a type and default; `params.min_depth` reads it |
+| `channel.fromPath(FILE)` | a channel with one file |
+| `channel.fromList([2, 5, 10])` | a channel with one item per value |
+| `.splitCsv(header: true, sep: '\t')` | one item per row of a sample sheet |
+| `.map { row -> ... }` | change each item |
+| `.collect()` | all items as one list (for example, all FastQC files for MultiQC) |
+| `.combine(other)` | every pair of items from two channels |
+| `.mix(other)` | both channels' items in one channel |
+| `publish:` and `output { }` | which results are saved, and where |
+
+See [sections 1 and 6](../pages/10-nextflow.qmd#processes-channels-outputs-a-toy).
+
+## Official cheat sheets and references
+
+Nextflow has no official cheat sheet. The closest official references, in
+the Nextflow documentation (now hosted by Seqera):
+
+- Nextflow, *CLI reference* (every command and option): <https://docs.seqera.io/nextflow/reference/cli>
+- Nextflow, *Syntax* (the language, in one page): <https://docs.seqera.io/nextflow/reference/syntax>
+- Nextflow documentation: <https://docs.seqera.io/nextflow/>
+- Nextflow training, from the Nextflow team: <https://training.nextflow.io/>

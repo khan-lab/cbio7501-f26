@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1200 690">
+  <!-- Generator: Adobe Illustrator 30.8.2, SVG Export Plug-In . SVG Version: 2.1.4 Build 7)  -->
+  <defs>
+    <style>
+      .st0, .st1, .st2, .st3, .st4 {
+        isolation: isolate;
+      }
+
+      .st0, .st1, .st2, .st4 {
+        font-family: Helvetica-Bold, Helvetica;
+        font-weight: 700;
+      }
+
+      .st0, .st2 {
+        font-size: 16px;
+      }
+
+      .st0, .st5 {
+        fill: #fff;
+      }
+
+      .st6, .st2 {
+        fill: #0c2945;
+      }
+
+      .st1 {
+        font-size: 24px;
+      }
+
+      .st1, .st7, .st8, .st9, .st4 {
+        fill: #e6c787;
+      }
+
+      .st7, .st9, .st10, .st11 {
+        stroke: #0c2945;
+      }
+
+      .st7, .st12, .st11, .st13 {
+        stroke-width: 1.5px;
+      }
+
+      .st14, .st9, .st10, .st15 {
+        stroke-width: 2.5px;
+      }
+
+      .st14, .st12, .st15 {
+        fill: none;
+      }
+
+      .st14, .st12, .st15, .st13 {
+        stroke: #e6c787;
+      }
+
+      .st14, .st15 {
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .st3 {
+        fill: #c9d6e4;
+        font-family: Helvetica, Helvetica;
+        font-size: 15px;
+      }
+
+      .st10, .st11 {
+        fill: #f4f7fb;
+      }
+
+      .st12 {
+        stroke-dasharray: 6 5;
+      }
+
+      .st5 {
+        fill-opacity: .06;
+      }
+
+      .st15 {
+        stroke-dasharray: 3 7;
+      }
+
+      .st4 {
+        font-size: 13px;
+        letter-spacing: .09em;
+      }
+
+      .st13 {
+        fill: #164678;
+      }
+    </style>
+  </defs>
+  <rect class="st6" width="1200" height="690" rx="28" ry="28"/>
+  <text class="st1" transform="translate(40 50)"><tspan x="0" y="0">The LTEE variant-calling pipeline</tspan></text>
+  <rect class="st7" x="800" y="33" width="20" height="20" rx="6" ry="6"/>
+  <text class="st3" transform="translate(828 49)"><tspan x="0" y="0">input</tspan></text>
+  <rect class="st13" x="894" y="33" width="20" height="20" rx="6" ry="6"/>
+  <text class="st3" transform="translate(922 49)"><tspan x="0" y="0">tool step</tspan></text>
+  <rect class="st11" x="1020" y="33" width="20" height="20" rx="6" ry="6"/>
+  <text class="st3" transform="translate(1048 49)"><tspan x="0" y="0">report</tspan></text>
+  <rect class="st5" x="250" y="80" width="920" height="96" rx="18" ry="18"/>
+  <text class="st4" transform="translate(268 105)"><tspan x="0" y="0">QUALITY CONTROL</tspan></text>
+  <rect class="st5" x="250" y="190" width="920" height="96" rx="18" ry="18"/>
+  <text class="st4" transform="translate(268 215)"><tspan x="0" y="0">REFERENCE</tspan></text>
+  <rect class="st5" x="250" y="300" width="920" height="96" rx="18" ry="18"/>
+  <text class="st4" transform="translate(268 325)"><tspan x="0" y="0">ALIGNMENT</tspan></text>
+  <rect class="st5" x="250" y="440" width="920" height="96" rx="18" ry="18"/>
+  <text class="st4" transform="translate(268 465)"><tspan x="0" y="0">VARIANT CALLING</tspan></text>
+  <rect class="st5" x="250" y="550" width="920" height="96" rx="18" ry="18"/>
+  <text class="st4" transform="translate(268 575)"><tspan x="0" y="0">SENSITIVITY</tspan></text>
+  <path class="st14" d="M205,248h35v-110h35"/>
+  <polygon class="st8" points="285 138 275 132 275 144 285 138"/>
+  <path class="st14" d="M205,248h70"/>
+  <polygon class="st8" points="285 248 275 242 275 254 285 248"/>
+  <path class="st14" d="M205,248h35v110h35"/>
+  <polygon class="st8" points="285 358 275 352 275 364 285 358"/>
+  <path class="st14" d="M465,138h26"/>
+  <polygon class="st8" points="501 138 491 132 491 144 501 138"/>
+  <path class="st14" d="M465,248h26"/>
+  <polygon class="st8" points="501 248 491 242 491 254 501 248"/>
+  <path class="st14" d="M465,358h26"/>
+  <polygon class="st8" points="501 358 491 352 491 364 501 358"/>
+  <path class="st14" d="M661,358h26"/>
+  <polygon class="st8" points="697 358 687 352 687 364 697 358"/>
+  <path class="st14" d="M947,358h26"/>
+  <polygon class="st8" points="983 358 973 352 973 364 983 358"/>
+  <path class="st14" d="M465,498h26"/>
+  <polygon class="st8" points="501 498 491 492 491 504 501 498"/>
+  <path class="st14" d="M661,498h26"/>
+  <polygon class="st8" points="697 498 687 492 687 504 697 498"/>
+  <path class="st14" d="M947,498h26"/>
+  <polygon class="st8" points="983 498 973 492 973 504 983 498"/>
+  <path class="st14" d="M581,274v48"/>
+  <polygon class="st8" points="581 332 575 322 587 322 581 332"/>
+  <path class="st14" d="M822,384v34H232v80h43"/>
+  <polygon class="st8" points="285 498 275 492 275 504 285 498"/>
+  <path class="st15" d="M822,524v48"/>
+  <polygon class="st8" points="822 582 816 572 828 572 822 582"/>
+  <rect class="st9" x="40" y="212" width="165" height="72" rx="14" ry="14"/>
+  <text class="st2" transform="translate(85.17 243)"><tspan x="0" y="0">download</tspan></text>
+  <text class="st2" transform="translate(72.02 263)"><tspan x="0" y="0">+ checksums</tspan></text>
+  <rect class="st13" x="285" y="112" width="180" height="52" rx="14" ry="14"/>
+  <text class="st0" transform="translate(346.55 143.5)"><tspan x="0" y="0">FastQC</tspan></text>
+  <rect class="st10" x="501" y="112" width="160" height="52" rx="14" ry="14"/>
+  <text class="st2" transform="translate(550.34 143.5)"><tspan x="0" y="0">MultiQC</tspan></text>
+  <rect class="st13" x="285" y="222" width="180" height="52" rx="14" ry="14"/>
+  <text class="st0" transform="translate(349.23 253.5)"><tspan x="0" y="0">gunzip</tspan></text>
+  <rect class="st13" x="501" y="222" width="160" height="52" rx="14" ry="14"/>
+  <text class="st0" transform="translate(542.32 253.5)"><tspan x="0" y="0">bwa index</tspan></text>
+  <rect class="st9" x="285" y="332" width="180" height="52" rx="14" ry="14"/>
+  <text class="st2" transform="translate(353.65 363.5)"><tspan x="0" y="0">reads</tspan></text>
+  <rect class="st13" x="501" y="332" width="160" height="52" rx="14" ry="14"/>
+  <text class="st0" transform="translate(544.54 363.5)"><tspan x="0" y="0">bwa mem</tspan></text>
+  <rect class="st13" x="697" y="332" width="250" height="52" rx="14" ry="14"/>
+  <text class="st0" transform="translate(726.86 363.5)"><tspan x="0" y="0">samtools view/sort/index</tspan></text>
+  <rect class="st10" x="983" y="332" width="165" height="52" rx="14" ry="14"/>
+  <text class="st2" transform="translate(1037.0508 363.5)"><tspan x="0" y="0">flagstat</tspan></text>
+  <rect class="st13" x="285" y="472" width="180" height="52" rx="14" ry="14"/>
+  <text class="st0" transform="translate(311 503.5)"><tspan x="0" y="0">bcftools mpileup</tspan></text>
+  <rect class="st13" x="501" y="472" width="160" height="52" rx="14" ry="14"/>
+  <text class="st0" transform="translate(531.66 503.5)"><tspan x="0" y="0">call (haploid)</tspan></text>
+  <rect class="st13" x="697" y="472" width="250" height="52" rx="14" ry="14"/>
+  <text class="st0" transform="translate(750.87 503.5)"><tspan x="0" y="0">vcfutils.pl varFilter</tspan></text>
+  <rect class="st10" x="983" y="472" width="165" height="52" rx="14" ry="14"/>
+  <text class="st2" transform="translate(1013.4922 503.5)"><tspan x="0" y="0">bcftools stats</tspan></text>
+  <rect class="st12" x="697" y="582" width="250" height="52" rx="14" ry="14"/>
+  <text class="st0" transform="translate(738.84 613.5)"><tspan x="0" y="0">varFilter at 2, 5, 10, 15</tspan></text>
+</svg>

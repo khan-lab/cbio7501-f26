@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "LTEE variant calling"
+abstract: "Variant calling on three E. coli clones from the Long-Term Evolution Experiment, with a sensitivity analysis of the variant filter."
+type: software
+authors:
+  - given-names: "Ada"
+    family-names: "Lovelace"
+    email: "ada@example.org"
+    orcid: "https://orcid.org/0000-0002-1825-0097"
+repository-code: "https://github.com/ada-lovelace/ltee-project"
+license: MIT
+version: 0.1.0
+date-released: "2026-12-01"
+keywords:
+  - reproducibility
+  - variant calling
+  - Long-Term Evolution Experiment
+references:
+  - type: article
+    title: "Tempo and mode of genome evolution in a 50,000-generation experiment"
+    authors:
+      - family-names: "Tenaillon"
+        given-names: "Olivier"
+      - name: "et al."
+    journal: "Nature"
+    volume: 536
+    start: 165
+    end: 170
+    year: 2016
+    doi: "10.1038/nature18959"

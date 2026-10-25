@@ -1,0 +1,13 @@
+# Apptainer image of this project, made from the Docker image (lesson 08).
+# Build on Linux (or WSL2, or the cluster) after pushing the Docker image:
+#   apptainer build containers/PROJECT.sif containers/apptainer.def
+# Or straight from a local Docker image, without this file:
+#   apptainer build containers/PROJECT.sif docker-daemon://PROJECT:0.1.0
+Bootstrap: docker
+From: ghcr.io/ada-lovelace/ltee-project:0.1.0
+
+%runscript
+    exec /entrypoint.sh "$@"
+
+%labels
+    Project ltee-project

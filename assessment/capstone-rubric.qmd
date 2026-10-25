@@ -1,0 +1,77 @@
+---
+title: "Capstone rubric"
+subtitle: "A reproducible project on your own small analysis"
+description: "How the capstone (30% of the course grade) is assessed: seven areas, each tied to checks that students can run themselves, with the reproduce-from-a-clean-clone check at the centre."
+toc: true
+---
+
+::: {.callout-note title="Note"}
+The weights within the capstone are to be confirm.
+:::
+
+## What you hand in
+
+A GitHub repository with your mini-analysis (started in lesson 02, one tool
+added per lesson, [lesson 12](../pages/12-putting-it-together.qmd)), a release
+of the version you hand in, and the reproduce report your partner filed on it.
+
+## How it is assessed
+
+Three sources of evidence, in this order:
+
+1. **The *Reproduce* GitHub Action** on the released version: a fresh machine,
+   a clean clone, `pixi install --locked`, `pixi run reproduce`. Green or red.
+2. **Your partner's reproduce report** (the
+   [template](reproduce-report-template.qmd)), from the swap session.
+3. **The automatic checks** below, listed by the instructor's script
+   (`pixi run check-capstone PATH` in the course repository), and a reading of
+   the repository.
+
+You can run 1 and 3 yourself at any time; there are no surprises. If your project did not start from the course
+template, copy [`assessment/reproduce-workflow.yml`](https://github.com/khan-lab/cbio7501-f26/blob/main/assessment/reproduce-workflow.yml)
+to `.github/workflows/reproduce.yml` in your repository.
+
+## The rubric (100 points within the capstone)
+
+| Area | Points | Full points when ... | Checked by |
+|------|-------:|----------------------|------------|
+| **Reproduces from a clean clone** | 25 | The *Reproduce* Action is green on the release; your partner reproduced the main result from the README alone. *Half points*: it runs after small fixes your partner could make from the error message. *None*: it does not run. | CI; reproduce report |
+| **Project organization and data** | 15 | Template layout or an equivalent you can defend; raw data read-only and downloaded by a script with recorded sources and checksums; nothing generated or large in Git. | checker; reading |
+| **Software environment** | 15 | `pixi.toml` and `pixi.lock` committed and in sync (`--locked` passes); all tools come from the environment; platforms listed honestly (features where needed). Bonus: a container image built from the lock file. | CI; checker |
+| **Automation** | 15 | One command (`pixi run reproduce`) runs everything, through Pixi tasks or a workflow (Snakemake or Nextflow); settings in a config file, not in code. | checker; reading |
+| **Literate report** | 10 | A Quarto report (or notebook rendered with Quarto) in which every number, table and figure is computed when it renders; figures have captions and alt text; software versions shown. | reading |
+| **Version control** | 10 | A history of small, described commits; work merged through pull requests; a tagged release. | GitHub history |
+| **Documentation and openness** | 10 | README answers the seven questions; LICENSE (code) and stated licenses for text and data; valid `CITATION.cff`; data availability statement; release archived with a DOI. | checker; reading |
+
+## Levels, for each area
+
+- **Full**: everything in the column, and you can explain each choice.
+- **Partial** (about half): most items, or all items with one that a reader
+  must guess or fix.
+- **Insufficient** (none or few points): the area is missing or does not work.
+
+The *Reproduces from a clean clone* area is the gate: a project that does not
+run from a clean clone cannot get full points in *Automation* or *Software
+environment* either, because nobody can check them.
+
+## What is *not* assessed
+
+- The size or novelty of the analysis. A small, honest analysis that anyone
+  can rerun beats an impressive one that nobody can.
+- Acceptance of anything by conda-forge, Bioconda or a journal ([S1](../pages/S1-packaging.qmd) is optional).
+- Sharing data you may not share: if your data is sensitive, use public or
+  simulated data of the same shape for the reproducible version, and say so in
+  the README.
+
+## Self-check before you hand in
+
+```{.bash}
+# In a new folder, as your partner would:
+git clone git@github.com:YOU/YOUR-PROJECT.git check && cd check
+pixi install --locked
+pixi run reproduce
+pixi exec cffconvert --validate -i CITATION.cff
+git tag            # your release tag is there
+```
+
+And from the course repository: `pixi run check-capstone ../check`.

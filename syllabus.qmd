@@ -1,0 +1,60 @@
+---
+title: "Syllabus"
+subtitle: "What the course covers and what you will be able to do"
+toc: false
+---
+
+::: {.callout-note}
+This page summarizes the content. The official CBIO7501 syllabus (credits,
+grading, deadlines, attendance and academic integrity policies) is the one
+published by the course and on the course repository's README; where they
+differ, the official syllabus applies.
+:::
+
+**CBIO7501 Reproducible and Open Science**, MBZUAI, Fall 2026. 2 credits;
+seven weeks; Monday and Tuesday sessions and a Wednesday lab. Instructor:
+Aziz Khan.
+
+## Course learning outcomes
+
+By the end of the course you can:
+
+1. **Explain** what makes computational research reproducible, replicable and
+   open, and **audit** a published study against the five pillars and FAIR.
+2. **Organize** a project so that raw data stays untouched, data is
+   downloaded and checked by code, and results can be rebuilt with one command.
+3. **Write** reports and notebooks in which every result is computed from
+   the data when they render.
+4. **Use** Git and GitHub to record, review and share work, and continuous
+   integration to check it reproduces on a fresh machine.
+5. **Pin and rebuild** software environments with Pixi lock files, and package
+   them in containers for laptops and clusters.
+6. **Automate** a multi-step analysis with a workflow manager (Snakemake; an
+   introduction to Nextflow), and show that independent implementations agree.
+7. **Document, license, cite and archive** a project so that others may and
+   can reuse it.
+
+## Topics by week
+
+| Week | Topic | Lessons |
+|------|-------|---------|
+| 1 | Introduction to reproducibility and open science | 01, 03 (concepts) |
+| 2 | Project organization and version control: Git and GitHub | 02, 03 (hands-on), 04 |
+| 3 | Portable and reproducible environments (Pixi first; Conda compared) | 05, 05b |
+| 4 | Literate programming: Jupyter and Quarto | 06, 07 |
+| 5 | Containers: Docker and Apptainer | 08 |
+| 6 | Workflows and automation: Snakemake and Nextflow | 09, 10 |
+| 7 | Publishing, archiving and open science practice | 11, 12 |
+
+## How the course works
+
+Hands-on: short slides, then tutorials on one shared example (the
+[LTEE project](pages/ltee-project.qmd)), and from Week 2 a small analysis of
+your own that becomes the capstone, assessed with the
+[capstone rubric](assessment/capstone-rubric.qmd). In-class quizzes use the
+[quiz banks](quizzes/index.qmd).
+
+## Readings
+
+Each lesson ends with *Further reading*. The core papers are listed on the
+[Sources and credits](pages/credits.qmd#readings) page.

@@ -1,0 +1,30 @@
+---
+title: "Course schedule - 7 weeks"
+subtitle: "CBIO750: The Art of Reproducible and Open Science - Fall 2026"
+toc: false
+---
+
+This is a 2-credit 7 week course for graduate students. There are two lecure sessions with hands-on (80 minutes) and one hands-on lab (110 minutes) per week.
+Nearly 60% of the time is hands-on. Anything that does not fit in class stays
+as an at-home tutorial, so the open material is complete even when class time
+is not. Dates, rooms and grading are in the official course information; this
+page maps lessons to weeks.
+
+| Week | Topic |Lecture 1 (80 min) | Lecture 2 (80 min) | Lab (110 min) | At home |
+|------|-------|-----------------|------------------|-------------------------|---------|
+| 1 | Reproducibility and open science | [01 Introduction](pages/01-introduction.qmd) (taught) | [03 FAIR](lectures/03-data-management/03-data-management.qmd) (taught) | Week 1 lab (taught) | [Setup](pages/00-setup.qmd); [audit a paper](pages/01-introduction.qmd#your-turn) |
+| 2 | Project organization and version control | [02 Project organization](pages/02-project-organization.qmd) + [03 hands-on](pages/03-data-management.qmd#hands-on) | [04 Git](pages/04-git.qmd) §1–6: Git on your laptop and on GitHub | [04 Git](pages/04-git.qmd) §7–10: branches, a conflict, tags, pull requests (70); your own project under Git (40) | Project proposal: one paragraph + data source |
+| 3 | Portable and reproducible environments | [05 Pixi](pages/05-pixi.qmd) Part A | [05 Pixi](pages/05-pixi.qmd) Part B: features, tasks | LTEE pipeline as Pixi tasks; the *Reproduce* check on GitHub; Pixi for your own project | [05 Part C](pages/05-pixi.qmd#part-c-beyond-one-project) (`pixi global`, HPC); [05b Conda comparison](pages/05b-conda-comparison.qmd) |
+| 4 | Literate programming | [06 Jupyter](pages/06-jupyter.qmd) (40); [07 Quarto](pages/07-quarto.qmd) §1–3: a first document (40) | [07](pages/07-quarto.qmd) §4–9: the LTEE report, parameters, formats, notebooks, the report in `reproduce` | Your own mini-analysis: explore in a notebook, report in Quarto, both in `reproduce` | Quarto extras; the *Break it* exercises |
+| 5 | Containers | [08](pages/08-containers.qmd) §1–4: Docker | [08](pages/08-containers.qmd) §5–7: image from the lock file, Apptainer | Containerize the LTEE environment; optional Karakoram run | [08](pages/08-containers.qmd) §8–9: registry, provenance |
+| 6 | Workflows and automation | [09 Snakemake](pages/09-snakemake.qmd) §1–5 | [09](pages/09-snakemake.qmd) §6–11 | LTEE pipeline in Snakemake (70) + [10 Nextflow](pages/10-nextflow.qmd) intro (40) | [10 Nextflow](pages/10-nextflow.qmd) full tutorial; nf-core demo |
+| 7 | Publishing, archiving, open practice | [11 Documentation](pages/11-documentation.qmd) | [12](pages/12-putting-it-together.qmd): swap and reproduce | Final presentations (can move a week later) | Fixes from the reproduce report; release with a DOI; optional [S1](pages/S1-packaging.qmd) |
+
+**Capstone thread.** From Week 2, the last 15 to 20 minutes of each lab apply
+that week's tool to your own mini-analysis (each tutorial ends with *Apply it
+to your own mini-analysis*). The capstone is assessed with the
+[rubric](assessment/capstone-rubric.qmd).
+
+**If a week runs long**, cut in this order: optional HPC steps, Jupyter, the
+Conda comparison (already at home), the Nextflow introduction (shrink to a
+demo). S1 is always at home.

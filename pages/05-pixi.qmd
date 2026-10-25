@@ -1,0 +1,641 @@
+---
+title: "05 Environments with Pixi"
+subtitle: "The project, not your laptop, decides which software it runs with"
+description: "Manifest and lock file, pixi add/run/shell, rebuilding an environment from its lock file, tasks for the LTEE pipeline, multi-platform features and environments, pixi global, and Pixi on an HPC cluster."
+adapted_from:
+  - title: "Introduction to Pixi"
+    url: https://carpentries-incubator.github.io/pixi-introduction/
+    authors: "Matthew Feickert and The Carpentries Incubator contributors"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit b88a073 (2026-10-05)"
+    changes: "Kept the order manifest → lock file → add/run/shell → tasks → multi-platform → features and environments → pixi global; the example is the LTEE pipeline with bioconda tools instead of a Python/Jupyter project; added the win-64 failure, cross-environment tasks, a drift demonstration and HPC notes."
+  - title: "Reproducible Research course: Introduction to Pixi (course environments)"
+    url: https://amrei-bp.github.io/Reproducible_Research/course_environments.html
+    authors: "Amrei Binzer-Panchal"
+    license: "MIT"
+    license_url: https://github.com/amrei-bp/Reproducible_Research/blob/main/LICENSE
+    accessed: 2026-10-24
+    version: "commit 015364a (2026-10-22)"
+    changes: "Used the minimal flow (pixi init with conda-forge and bioconda, pixi add, pixi run, pixi shell) and the HPC notes (run tools through `srun ... pixi run`; `pixi shell` may not work on a cluster). Copyright (c) 2026 Amrei, MIT License."
+  - title: "Tools for Reproducible Research: Controlling your environment with Conda"
+    url: https://nbisweden.github.io/workshop-reproducible-research/pages/conda.html
+    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Its Pixi extra section and its explanation of channels informed Part A; the Conda material itself moved to the comparison page (05b)."
+test:
+  needs: [04-git]
+  timeout: 3600
+---
+
+::: {.at-a-glance}
+- **Time:** Part A and Part B in class (80 minutes each), then a lab: the tasks and the GitHub check on your own project. Part C at home.
+- **Slides:** [Pixi](../lectures/05-pixi/05-pixi.qmd)
+- **You need:** the `ltee-project` so far: a Git repository on GitHub ([lesson 04](04-git.qmd)), with the data downloaded ([lesson 03](03-data-management.qmd#hands-on)).
+- **You will have:** the LTEE pipeline running as Pixi tasks in a Linux/macOS `pipeline` environment, rebuilt and rerun by GitHub on every push; the default environment still works on every platform.
+:::
+
+## Overview
+
+So far you have used `pixi exec` for one-off commands, and `pixi lock`
+wrote a lock file for GitHub, without asking what they do. Now you open
+the box. An **environment** is the set of
+programs and libraries an analysis runs with. If you install them by hand,
+your environment drifts: tools update, a colleague has other versions, and
+results change or commands stop working. Pixi stores the environment's
+*description* in the project (`pixi.toml`, written by you), records the
+*exact result* (`pixi.lock`, written by Pixi), and rebuilds it anywhere.
+
+The problem has a name, "dependency hell", and a classic answer: Conda.
+Pixi uses the same packages as
+Conda (from conda-forge and bioconda), but works per project, always keeps a
+lock file, solves for several operating systems at once, and runs tasks. The
+[Conda comparison](05b-conda-comparison.qmd) shows the Conda way side by side.
+
+### Learning outcomes
+
+After this lesson you can:
+
+1. **Create** a Pixi workspace, **add** packages from conda-forge and bioconda, and **run** tools with `pixi run`.
+2. **Rebuild** an environment from its lock file, and **explain** what the manifest records, what the lock file records, and what neither records.
+3. **Define** tasks with dependencies that run the LTEE pipeline with one command.
+4. **Make** a project work across platforms by putting tools that exist only for Linux and macOS in a separate feature and environment.
+5. **Install** a personal command-line tool with `pixi global`, and (optional) run a Pixi project on an HPC cluster.
+
+Checks: `pixi install --locked` rebuilds your environment from a clean state
+(outcome 2); `pixi run reproduce` runs the pipeline (3, 4); the *Reproduce*
+GitHub Action runs it on a fresh machine and is green on your pull request
+(2 to 4).
+
+# Part A: how Pixi works
+
+## 1. The problem in two commands
+
+FastQC is the first tool of our pipeline. Version 0.12.1 has an option `-o`
+for the output folder. Version 0.13.0, released in 2026, replaced FastQC's
+launcher and `-o` is gone (only `--outdir` is left). Compare the help of both,
+each run in a temporary environment with `pixi exec`:
+
+```{.bash .run}
+pixi exec -c conda-forge -c bioconda --spec "fastqc==0.12.1" -- fastqc --help | grep -e "--outdir"
+pixi exec -c conda-forge -c bioconda --spec "fastqc==0.13.0" -- fastqc --help | grep -e "--outdir"
+```
+
+```text
+    -o --outdir     Create all output files in the specified output directory.
+  --outdir OUTDIR       Create all output files in the specified output
+```
+
+A script that ran `fastqc -o results/` worked last year and fails today with
+`fastqc: error: unrecognized arguments: -o`. Nothing in your script changed:
+the environment did. (This happened to us while writing this course.)
+
+## 2. A practice workspace: manifest and lock file
+
+Pixi is already installed ([lesson 00](00-setup.qmd)). Make a small practice
+workspace next to your project:
+
+```{.bash .run}
+cd ~/cbio7501
+pixi init pixi-practice -c conda-forge -c bioconda
+cd pixi-practice
+ls -a
+cat pixi.toml
+```
+
+```toml
+[workspace]
+channels = ["conda-forge", "bioconda"]
+name = "pixi-practice"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+```
+
+`pixi.toml` is the **manifest**: what you want. `channels` are where packages
+come from ([conda-forge](https://conda-forge.org/) for general software,
+[bioconda](https://bioconda.github.io/) for bioinformatics; order matters,
+first wins). `platforms` lists the operating systems the environment must
+work on; Pixi filled in yours (`linux-64`, `osx-arm64`, `osx-64` or `win-64`).
+
+Add samtools:
+
+```{.bash .run}
+pixi add samtools
+ls -a
+```
+
+```text
+✔ Added samtools >=1.24,<2
+```
+
+Three things happened:
+
+- `pixi.toml` now says `samtools = ">=1.24,<2"`: any 1.x from 1.24 on. That is
+  your intent, written by you (through `pixi add`).
+- `pixi.lock` appeared: the **lock file**. It lists the *exact* package, build,
+  download URL and checksum of samtools **and of every one of its
+  dependencies**, for each platform. Written by Pixi, never by hand.
+- `.pixi/envs/default/` holds the installed environment. It can be deleted at
+  any time; the lock file rebuilds it.
+
+Look at the lock file and the full environment:
+
+```{.bash .run}
+grep -m 3 "samtools" pixi.lock
+pixi list
+pixi tree samtools
+```
+
+You asked for one package; the environment has dozens (`htslib`, `zlib`, ...).
+The lock file pins all of them.
+
+## 3. `pixi run` and `pixi shell`
+
+```{.bash .run}
+pixi run samtools --version | head -1
+samtools --version || echo "samtools is not on PATH outside the environment"
+```
+
+`pixi run CMD` runs one command inside the environment, then leaves it. The
+second line shows that samtools is not installed "on your laptop"; it is
+installed in the project.
+
+`pixi shell` starts a new shell *inside* the environment, until you type
+`exit`. Handy for interactive work; `pixi run` is better in scripts, tasks
+and on clusters.
+
+```{.bash .norun}
+pixi shell
+samtools --version
+exit
+```
+
+## 4. Prove it: rebuild from the lock file
+
+Delete the environment and rebuild it **from the lock file only**:
+
+```{.bash .run}
+pixi clean
+ls .pixi/envs 2>/dev/null || echo "no environments left"
+pixi install --locked
+pixi run samtools --version | head -1
+```
+
+`--locked` means: install exactly what `pixi.lock` says, and stop with an error
+if the lock file does not match the manifest. This is what the GitHub Action
+does (`locked: true`), and what a colleague does after cloning your project.
+The second install is fast because Pixi keeps downloaded packages in a cache.
+
+## 5. Break it: change a version on purpose
+
+Your reviewer asks you to rerun with samtools 1.21. Keep a copy of the lock
+file and change the requirement:
+
+```{.bash .run}
+cp pixi.lock pixi.lock.before
+pixi add "samtools==1.21"
+grep "samtools" pixi.toml
+diff pixi.lock.before pixi.lock | grep -E "samtools-|htslib-"
+pixi run samtools --version | head -1
+```
+
+```text
+samtools = "==1.21"
+<       - conda: https://conda.anaconda.org/bioconda/osx-arm64/htslib-1.24-hd3c6ec9_0.conda
+<       - conda: https://conda.anaconda.org/bioconda/osx-arm64/samtools-1.24-h36b3a25_2.conda
+>       - conda: https://conda.anaconda.org/bioconda/osx-arm64/htslib-1.21-hfcd771d_1.tar.bz2
+>       - conda: https://conda.anaconda.org/bioconda/osx-arm64/samtools-1.21-h267f7b9_1.tar.bz2
+samtools 1.21
+```
+
+One line in the manifest changed two packages in the lock file (samtools
+pulled its matching htslib down with it). Every change to the manifest updates
+the lock file, so the lock file always describes what you actually ran. Now
+try to install the *old* lock file against the *new* manifest:
+
+```{.bash .expect-fail}
+cp pixi.lock.before pixi.lock
+pixi install --locked
+```
+
+```text
+Error:   × lock file not up-to-date with the workspace
+```
+
+`--locked` refuses: the lock file and the manifest disagree. Without
+`--locked`, Pixi would simply solve again and update the lock file. Restore and
+clean up:
+
+```{.bash .run}
+pixi add "samtools>=1.24"
+rm pixi.lock.before
+cd ~/cbio7501
+```
+
+::: {.callout-note title="What the lock file does *not* pin"}
+- **Hardware and the operating system.** Packages are built for a platform
+  and rely on the system's C library (on Linux, `glibc`; `pixi info` shows it
+  as a "virtual package"). A very old cluster can be too old for new packages.
+- **The data.** That is what `metadata/checksums.sha256` is for.
+- **The channels themselves.** A package can be removed from a channel, or a
+  channel can disappear. For long-term reproducibility, also archive a
+  container image ([lesson 08](08-containers.qmd)).
+- **Randomness and threads.** Same software, different seed or thread count,
+  can still give different results ([lesson 09](09-snakemake.qmd)).
+:::
+
+# Part B: the LTEE pipeline as Pixi tasks
+
+## 6. Add the pipeline tools, and hit Windows
+
+Go to the project and start a branch for this lesson:
+
+```{.bash .run}
+cd ~/cbio7501/ltee-project
+```
+
+```{.bash .run-ci}
+git switch -c lesson-05-pixi
+```
+
+Your project's manifest lists four platforms, because the template wants
+reports and notebooks (lessons 07 and 06) to work on Windows too:
+
+```{.bash .run}
+grep platforms pixi.toml
+```
+
+Add the pipeline tools (FastQC, MultiQC, BWA, samtools, bcftools):
+
+```{.bash .expect-fail}
+pixi add fastqc multiqc bwa samtools bcftools
+```
+
+```text
+Error:   × failed to solve requirements of environment 'default' for platform 'win-64'
+  ╰─▶ Cannot solve the request because of: No candidates were found for bwa *.
+```
+
+Pixi solves for **every** platform in the list, and `bwa`, `samtools` and
+`bcftools` have no Windows builds (we checked on 2026-10-24: Linux and macOS
+builds exist on bioconda, Windows ones do not). Pixi tells you *now*, on your
+Mac or Linux laptop, instead of a Windows colleague finding out next month.
+
+You have two honest options: drop `win-64` from the project (Windows users
+work in WSL2, which is Linux), or keep reports and notebooks working on Windows and put
+the pipeline tools in a part of the project that only exists on Linux and
+macOS. We do the second, with a **feature**.
+
+## 7. Features and environments
+
+A **feature** is a named piece of an environment: its own dependencies, tasks
+and, if needed, platforms. An **environment** combines features. Every
+environment includes the default feature (the top-level `[dependencies]`)
+unless you say otherwise.
+
+Create a `pipeline` feature for Linux and macOS, an environment that uses it,
+and add the tools to it:
+
+```{.bash .run}
+pixi workspace platform add --feature pipeline linux-64 osx-arm64 osx-64
+pixi workspace environment add pipeline --feature pipeline
+pixi add --feature pipeline fastqc multiqc bwa samtools bcftools
+```
+
+```text
+✔ Added fastqc >=0.13.0,<0.14
+✔ Added multiqc >=1.35,<2
+✔ Added bwa >=0.7.19,<0.8
+✔ Added samtools >=1.24,<2
+✔ Added bcftools >=1.24,<2
+Added these only for feature: pipeline
+```
+
+The end of `pixi.toml` now reads:
+
+```toml
+[feature.pipeline]
+platforms = ["linux-64", "osx-arm64", "osx-64"]
+
+[feature.pipeline.dependencies]
+fastqc = ">=0.13.0,<0.14"
+multiqc = ">=1.35,<2"
+bwa = ">=0.7.19,<0.8"
+samtools = ">=1.24,<2"
+bcftools = ">=1.24,<2"
+
+[environments]
+pipeline = ["pipeline"]
+```
+
+So the project has two environments:
+
+| Environment | Contains | Platforms |
+|-------------|----------|-----------|
+| `default` | Python, Quarto, Jupyter, pandas, matplotlib, papermill | Linux, macOS, Windows |
+| `pipeline` | everything in `default` **plus** the pipeline tools | Linux, macOS |
+
+Run a tool in a named environment with `-e`:
+
+```{.bash .run}
+pixi run -e pipeline samtools --version | head -1
+pixi run -e pipeline fastqc --version
+```
+
+## 8. Tasks for the pipeline
+
+A **task** is a named command stored in `pixi.toml`, so nobody has to remember
+long commands. The template defined two: `check` and a placeholder
+`reproduce`. List them, then make the data download from lesson 03 a task:
+
+```{.bash .run}
+pixi task list
+pixi task add download "python scripts/download_data.py" --description "Download the raw data and verify checksums"
+pixi run download
+```
+
+```text
+✨ Pixi task (download in default): python scripts/download_data.py
+OK: all 7 raw files present, sha256 verified, read-only
+```
+
+The first `pixi run` in the project installs its default environment (a few
+minutes, once). The task works the same for everyone: no need to remember the
+script's name or which Python to use.
+
+### Quality control
+
+Run FastQC on every FASTQ file, then MultiQC to combine the reports. The task
+belongs to the `pipeline` feature, because it needs its tools, and it depends
+on `download`, so the data is always there and checked first:
+
+```{.bash .run}
+pixi task add --feature pipeline qc "mkdir -p results/qc/fastqc && fastqc --quiet --threads 2 --outdir results/qc/fastqc data/raw/fastq/*.fastq && multiqc --force -o results/qc/multiqc results/qc/fastqc" --depends-on download --description "FastQC on each FASTQ file, then a MultiQC summary"
+pixi run qc
+```
+
+```text
+✨ Pixi task (download in default): python scripts/download_data.py
+OK: all 7 raw files present, sha256 verified, read-only
+
+✨ Pixi task (qc in pipeline): mkdir -p results/qc/fastqc && fastqc ...
+...
+     multiqc | MultiQC complete
+```
+
+Notice `download in default` and `qc in pipeline`: Pixi picks, for each task,
+the environment that has it. Open `results/qc/multiqc/multiqc_report.html`.
+The reads were trimmed before they were shared, so expect a clean report:
+that is a property of this teaching data, not something to expect from raw
+sequencing data.
+
+::: {.callout-note title="Task commands run in Pixi's own shell"}
+Tasks run in a small cross-platform shell built into Pixi. It understands
+`&&`, `|`, `>` and wildcards like `*.fastq` on every operating system, but not
+Bash loops or `if`. For anything longer, write a script and make the task run
+it, as in the next step.
+:::
+
+### Alignment and variant calling
+
+These steps follow the Data Carpentry *Wrangling Genomics* lesson exactly. It
+automates them with a shell script; we use the same script, with paths
+relative to the project folder. Save it as `scripts/run_variant_calling.sh`:
+
+```{.bash filename="scripts/run_variant_calling.sh" .write}
+#!/usr/bin/env bash
+# Variant calling for the LTEE subset, one sample after another.
+#
+# Adapted from Data Carpentry "Wrangling Genomics", episode "Automating a
+# Variant Calling Workflow" (run_variant_calling.sh), CC BY 4.0,
+# https://datacarpentry.github.io/wrangling-genomics/05-automation.html
+# Changes: paths are relative to the project folder, the reference is taken
+# from data/raw/ and decompressed into data/processed/, alignment and variant
+# statistics are added, and the minimum read depth of the final filter (the
+# analysis question) and the output folder are parameters. Tool options are
+# the lesson's.
+#
+# Usage (from the project folder):
+#   bash scripts/run_variant_calling.sh [MIN_DEPTH] [OUTPUT_FOLDER]
+set -euo pipefail
+
+min_depth=${1:-2}   # vcfutils.pl varFilter -d (2 is its default)
+out=${2:-results}   # all results go below this folder
+
+genome=data/processed/reference/ecoli_rel606.fasta
+mkdir -p data/processed/reference "$out/sam" "$out/bam" "$out/bcf" "$out/vcf" "$out/stats"
+
+if [ ! -s "$genome" ]; then
+    gunzip -c data/raw/reference/ecoli_rel606.fasta.gz > "$genome"
+fi
+bwa index "$genome"
+
+for fq1 in data/raw/fastq/*_1.trim.sub.fastq; do
+    base=$(basename "$fq1" _1.trim.sub.fastq)
+    echo "working on sample $base"
+
+    fq2=data/raw/fastq/${base}_2.trim.sub.fastq
+    sam=$out/sam/${base}.aligned.sam
+    bam=$out/bam/${base}.aligned.bam
+    sorted_bam=$out/bam/${base}.aligned.sorted.bam
+    raw_bcf=$out/bcf/${base}_raw.bcf
+    variants=$out/bcf/${base}_variants.vcf
+    final_variants=$out/vcf/${base}_final_variants.vcf
+
+    bwa mem "$genome" "$fq1" "$fq2" > "$sam"
+    samtools view -S -b "$sam" > "$bam"
+    samtools sort -o "$sorted_bam" "$bam"
+    samtools index "$sorted_bam"
+    samtools flagstat "$sorted_bam" > "$out/stats/${base}.flagstat.txt"
+    bcftools mpileup -O b -o "$raw_bcf" -f "$genome" "$sorted_bam"
+    bcftools call --ploidy 1 -m -v -o "$variants" "$raw_bcf"
+    vcfutils.pl varFilter -d "$min_depth" "$variants" > "$final_variants"
+    bcftools stats "$final_variants" > "$out/stats/${base}.bcftools-stats.txt"
+done
+
+echo "done: final variants in $out/vcf/"
+```
+
+You do not need to know the genomics: the script indexes the reference,
+aligns each sample's reads (`bwa mem`), converts and sorts the alignments
+(`samtools`), calls variants (`bcftools mpileup` and `call`, haploid) and
+filters them (`vcfutils.pl varFilter`, which comes with bcftools). Make it a
+task and run it (about a minute on a laptop):
+
+```{.bash .run}
+pixi task add --feature pipeline variant-calling "bash scripts/run_variant_calling.sh" --depends-on download --description "Align, call and filter variants (shell script)"
+pixi run variant-calling
+```
+
+Count the variants per sample:
+
+```{.bash .run}
+for f in results/vcf/*_final_variants.vcf; do echo "$f $(grep -vc '^#' "$f")"; done
+```
+
+```text
+results/vcf/SRR2584863_final_variants.vcf 25
+results/vcf/SRR2584866_final_variants.vcf 775
+results/vcf/SRR2589044_final_variants.vcf 10
+```
+
+The Data Carpentry lesson reports 10, 25 and 766 with the tool versions of
+2018. Two samples match exactly; the hypermutator clone (SRR2584866, 50,000
+generations) differs by 9 variants out of about 770. Same data, same commands,
+newer software: a small but real difference. This is why the versions go
+into the lock file (and, from lesson 07, into the report).
+
+### One command for everything
+
+Make `reproduce` run the whole analysis, so the GitHub Action does too:
+
+```{.bash .run}
+pixi task remove reproduce
+pixi task alias reproduce qc variant-calling
+pixi task list
+pixi run reproduce
+```
+
+`pixi run reproduce` downloads and checks the data (once), then runs QC and
+variant calling in the `pipeline` environment. The report joins in lesson 07.
+
+### Save your work, and let GitHub reproduce it
+
+The lock file changed (new environment, new packages). Commit it with the
+manifest and the script, push, and open a pull request:
+
+```{.bash .run-ci}
+git add pixi.toml pixi.lock scripts/run_variant_calling.sh
+git commit -m "Run QC and variant calling as Pixi tasks in a pipeline environment"
+git push -u origin lesson-05-pixi
+```
+
+In lesson 04 the *Reproduce* check had nothing to do. Now open the pull
+request and click the check's *Details*: on a Linux machine that has never
+seen your project, GitHub clones the repository, rebuilds both environments
+from `pixi.lock`, downloads the data from figshare and NCBI, checks the
+checksums, and runs QC and variant calling. A green check means your project
+**reproduces from a clean clone**. Merge the pull request.
+
+::: {.callout-tip title="If the check fails"}
+Read the log from the bottom up. Common causes: a file you use is not
+committed (`git status` on your laptop shows it as untracked), a path that
+only exists on your laptop, or `pixi.lock` out of date with `pixi.toml`
+(run `pixi install` and commit `pixi.lock`).
+:::
+
+Merge locally if you are not using GitHub (or in the course tests):
+
+```{.bash .run-ci}
+git switch main
+git merge lesson-05-pixi
+git push
+```
+
+# Part C: beyond one project
+
+## 9. Personal tools with `pixi global`
+
+Some tools are not part of any project: Git, a nicer `cat`, Cookiecutter.
+`pixi global install` gives each one its own small environment and puts the
+command on your `PATH`, without touching your projects:
+
+```{.bash .run}
+pixi global install cookiecutter
+pixi global list
+```
+
+```{.bash .norun}
+cookiecutter --version     # works in any folder (open a new terminal first)
+```
+
+Upgrade with `pixi global update`, remove with `pixi global uninstall cookiecutter`.
+
+## 10. Pixi on an HPC cluster (optional, for Karakoram users)
+
+Pixi needs no administrator rights, so it works on clusters:
+
+- **Install** it in your home folder with the same one-line installer.
+- **Cache and quota.** Pixi's package cache grows to several GB. If your home
+  quota is small, point the cache at project storage before installing, for
+  example `export PIXI_CACHE_DIR=/path/to/project/space/pixi-cache` in your
+  `~/.bashrc` (ask your admins which file system to use).
+- **Run through the scheduler** with `pixi run`, as in Amrei Binzer-Panchal's
+  course: `srun -A <project> -t 00:30:00 -n 1 pixi run qc`. In a batch script,
+  `cd` to the project folder and call `pixi run ...`.
+- **`pixi shell` may not work** on some clusters' login setups; `pixi run`
+  always does.
+- **Compute nodes without internet:** run `pixi install --locked` on the login
+  node first; the job then needs no downloads.
+- **Same lock file, other platform:** your laptop is `osx-arm64`, the cluster
+  is `linux-64`. Because the manifest lists both, the lock file already has the
+  exact Linux packages: nothing is solved again on the cluster.
+
+## 11. How does this compare with Conda?
+
+If you have used Conda or Mamba, see the [Conda comparison](05b-conda-comparison.qmd):
+a command table, converting an `environment.yml` with `pixi init --import`,
+exporting a Pixi environment for Conda users, and an honest list of where
+Conda is still fine.
+
+## 12. Did it reproduce?
+
+Swap with a neighbor. Clone their repository and run their analysis on your
+laptop:
+
+```{.bash .norun}
+cd ~/cbio7501
+git clone git@github.com:NEIGHBOR/ltee-project.git neighbor-ltee
+cd neighbor-ltee
+pixi run reproduce
+```
+
+Did it work without asking them anything? Compare your variant counts. If it
+failed, open an issue on their repository with the error message: that is
+exactly the feedback a reviewer would give.
+
+## Troubleshooting
+
+| Problem | What to do |
+|---------|------------|
+| `No candidates were found for bwa` (or samtools, bcftools) | You added it to the default feature, which includes `win-64`. Use `--feature pipeline` (step 7). |
+| `lock file not up-to-date with the workspace` | Someone changed `pixi.toml` without updating `pixi.lock`. Run `pixi install` (without `--locked`) and commit `pixi.lock`. |
+| `the environment directory has moved from ... to ...` | You moved or renamed the project folder. Environments cannot move: `rm -rf .pixi/envs` and run your command again; Pixi rebuilds from the lock file. |
+| `fastqc: error: unrecognized arguments: -o` | FastQC 0.13 dropped `-o`; use `--outdir` (step 1). |
+| A task with a loop or `if` fails with a syntax error | Pixi's task shell is not Bash. Put the logic in a script and run the script from the task. |
+| `pixi run reproduce` fails on native Windows | Expected: the `pipeline` environment does not exist on Windows. Use WSL2 or Codespaces. |
+| Downloads are slow in class | Run `pixi install --all` at home; the cache makes later installs fast. |
+| Disk is full | `pixi clean` removes this project's environments; `pixi clean cache` empties the shared cache ([B Take-down](B-take-down.qmd)). |
+
+## Apply it to your own mini-analysis
+
+In your own project: add the tools your analysis needs with `pixi add` (use a
+feature if a tool is missing on a platform you list), make your steps tasks,
+and make `reproduce` run them all. Commit `pixi.toml` and `pixi.lock`, push,
+and get the *Reproduce* check green.
+
+## Key points
+
+- `pixi.toml` is what you ask for; `pixi.lock` is exactly what you got, for every platform. Commit both.
+- `pixi run` runs a command in the project's environment; `pixi install --locked` rebuilds it exactly.
+- Every manifest change updates the lock file; old versions can be restored on purpose.
+- A lock file pins packages, not hardware, data, channels or randomness.
+- Features and environments keep platform-specific tools apart; tasks pick the right environment.
+- Tasks turn long commands into one word; `reproduce` runs everything.
+
+## Further reading
+
+- Cheat sheet: [Pixi](../cheatsheets/pixi.qmd), with links to the official cheat sheets and references.
+- Pixi documentation: <https://pixi.prefix.dev/latest/>, in particular *Multi environment* (<https://pixi.prefix.dev/latest/workspace/multi_environment/>), *Tasks* (<https://pixi.prefix.dev/latest/workspace/advanced_tasks/>) and *Global tools* (<https://pixi.prefix.dev/latest/global_tools/introduction/>).
+- The Carpentries Incubator, *Introduction to Pixi*: <https://carpentries-incubator.github.io/pixi-introduction/>
+- Amrei Binzer-Panchal, *Reproducible Research* course, Pixi pages: <https://amrei-bp.github.io/Reproducible_Research/course_environments.html>
+- NBIS, *Conda* tutorial (with its Pixi extra section): <https://nbisweden.github.io/workshop-reproducible-research/pages/conda.html>
+- Grüning B et al. (2018). Bioconda: sustainable and comprehensive software distribution for the life sciences. *Nat Methods* 15:475–476. <https://doi.org/10.1038/s41592-018-0046-7>

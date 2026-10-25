@@ -1,0 +1,66 @@
+---
+title: "Frequently asked questions"
+toc: true
+---
+
+## Setup and computers
+
+**I have Windows. Can I take part?** Yes, through WSL2 (a real Linux inside
+Windows) or GitHub Codespaces. Three tools of the pipeline (`bwa`, `samtools`,
+`bcftools`) have no Windows builds, so native Windows only works for the
+report and notebook lessons. See [setup](pages/00-setup.qmd).
+
+**My laptop is old or locked down.** Use a Codespace (setup, step 7). The free
+quota (about 60 hours a month on a 2-core machine) is enough for the course if
+you stop codespaces when you are done.
+
+**How much disk space do I need?** About 10 GB free: roughly 4 GB of software
+environments for the example project, 0.5 GB of data and results, and Pixi's
+package cache. [Take-down](pages/B-take-down.qmd) frees it afterwards.
+
+**I have never used a terminal. Is that a problem?** No. The lessons give
+every command, but they go faster if `cd`, `ls` and pipes are familiar. Spend
+an hour on [C Bash 101](pages/C-bash.qmd) before lesson 02; it ends with
+longer shell tutorials, from Data Carpentry and Software Carpentry, if you
+want more.
+
+**Do I need administrator rights?** Not for Pixi or anything it installs. Only
+WSL2 (Windows) and Docker need them, once.
+
+## Tools
+
+**Why Pixi and not Conda?** Pixi uses the same packages (conda-forge,
+bioconda), but keeps the environment in the project, always writes a lock
+file for every platform, and runs tasks. That makes "rebuild exactly what I
+used" one command. Conda is still covered:
+[05b Pixi and Conda compared](pages/05b-conda-comparison.qmd).
+
+**Why Python and not R?** To keep one language across Quarto, Jupyter and the
+helper scripts. Everything in the course works the same with R: Quarto runs
+R, and Pixi installs R packages from conda-forge.
+
+**Why both Snakemake and Nextflow?** They are the two main workflow managers
+in bioinformatics; you will meet both. Snakemake is taught in full; Nextflow
+gets an introduction and a home tutorial on the same pipeline, so you can
+compare them, and their results are identical.
+
+**Do I need to understand the genomics?** No. The variant-calling steps come
+from the Data Carpentry lesson and are treated as a given pipeline. The course
+is about making any analysis reproducible.
+
+## The course material
+
+**Can I use this material in my own teaching?** Yes: text and slides are
+CC BY 4.0 and code is MIT. Credit the workshop and the sources it adapts
+([Sources and credits](pages/credits.qmd)), and say what you changed.
+
+**I found a mistake.** Please open an issue or a pull request on the
+[GitHub repository](https://github.com/khan-lab/cbio7501-f26).
+
+**How are the tutorials tested?** Every shell command in a tutorial is
+marked in the source and run by `pixi run test-tutorials` in a fresh folder,
+lesson after lesson, as a learner would. GitHub Actions runs them on Linux and
+macOS after every change and every Monday, including the Git and Docker steps
+(Linux); the [latest runs](https://github.com/khan-lab/cbio7501-f26/actions)
+show whether they pass today. Steps that need your own accounts (GitHub web
+pages, Zenodo) or a cluster are not tested automatically.

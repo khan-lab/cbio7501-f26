@@ -1,0 +1,4 @@
+sample	strain	generation	population	mutator	cit	fastq_1	fastq_2
+SRR2589044	REL2181A	5000	Ara-3	None	unknown	data/raw/fastq/SRR2589044_1.trim.sub.fastq	data/raw/fastq/SRR2589044_2.trim.sub.fastq
+SRR2584863	REL7179B	15000	Ara-3	None	unknown	data/raw/fastq/SRR2584863_1.trim.sub.fastq	data/raw/fastq/SRR2584863_2.trim.sub.fastq
+SRR2584866	REL11365	50000	Ara-3	plus	plus	data/raw/fastq/SRR2584866_1.trim.sub.fastq	data/raw/fastq/SRR2584866_2.trim.sub.fastq

@@ -1,0 +1,29 @@
+{
+  "name": "CBIO7501 reproducible research",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "8gb"
+  },
+  "mounts": [
+    "source=${localWorkspaceFolderBasename}-pixi,target=${containerWorkspaceFolder}/.pixi,type=volume"
+  ],
+  "postCreateCommand": "sudo chown vscode .pixi && pixi install --locked && pixi install --locked --all --manifest-path tutorials/ltee-project/pixi.toml",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "quarto.quarto",
+        "ms-toolsai.jupyter",
+        "ms-python.python",
+        "snakemake.snakemake-lang",
+        "nextflow.nextflow"
+      ]
+    }
+  }
+}

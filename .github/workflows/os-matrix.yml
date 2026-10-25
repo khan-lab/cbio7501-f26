@@ -1,0 +1,51 @@
+# Do the Pixi environments and tasks work on Linux, macOS and Windows?
+# Not run yet: written during the unattended build, needs a push to run.
+name: OS matrix
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * 1"   # Mondays: catch upstream breakage before class
+
+jobs:
+  pixi-tasks:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7
+      - uses: prefix-dev/setup-pixi@v0.11.2
+        with:
+          pixi-version: v0.83.0
+          locked: true
+
+      - name: Website builds
+        run: |
+          pixi run check-credits
+          pixi run render
+
+      - name: LTEE project, report environment (all platforms)
+        run: pixi install --locked --manifest-path tutorials/ltee-project/pixi.toml --environment default
+
+      - name: LTEE project, pipeline environment (Linux and macOS only, no win-64 builds of bwa, samtools, bcftools)
+        if: runner.os != 'Windows'
+        run: pixi install --locked --manifest-path tutorials/ltee-project/pixi.toml --environment pipeline
+
+      - name: Project template generates and installs
+        run: |
+          cd "$RUNNER_TEMP"
+          pixi exec --spec cookiecutter --spec git -- cookiecutter --no-input "$GITHUB_WORKSPACE" \
+            --directory templates/cookiecutter-repro-project project_name="CI test project"
+          cd ci-test-project
+          pixi install
+          pixi run check
+          pixi run reproduce
+          pixi exec cffconvert --validate -i CITATION.cff

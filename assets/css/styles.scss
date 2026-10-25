@@ -1,0 +1,253 @@
+/*-- scss:rules --*/
+// Shared rules for the light and dark site themes. Colors come from the
+// tokens in theme-light.scss and theme-dark.scss.
+
+// ---- Type -------------------------------------------------------------
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3, h4, .h1, .h2, .h3, .h4 { letter-spacing: -0.018em; }
+h1, .h1 { letter-spacing: -0.028em; }
+#quarto-content h2 {
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-top: 2.6rem;
+}
+#quarto-content h3 { margin-top: 2rem; }
+::selection { background: rgba($primary, 0.18); }
+
+// Links in text: colored and underlined, so they are not told apart by
+// color alone.
+main a:not(.btn):not(.nav-link):not(.sidebar-link):not(.anchorjs-link):not(.footnote-ref) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: rgba($primary, 0.4);
+  &:hover { text-decoration-color: $primary; }
+}
+
+// ---- Title block --------------------------------------------------------
+#title-block-header { margin-bottom: 1.5rem; }
+.quarto-title h1.title {
+  font-size: 2.35rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.quarto-title .subtitle {
+  color: $muted;
+  font-size: 1.2rem;
+  font-weight: 450;
+  line-height: 1.45;
+  margin-top: 0.4rem;
+}
+#title-block-header .description { color: $muted; font-size: 1rem; line-height: 1.6; }
+.quarto-page-breadcrumbs { font-size: 0.85rem; }
+
+// ---- Navbar, sidebar, table of contents, footer ----------------------------
+.navbar {
+  border-bottom: 1px solid $border-subtle;
+  box-shadow: none;
+}
+.navbar-title { font-weight: 650; letter-spacing: -0.015em; }
+.navbar .nav-link { font-weight: 500; font-size: 0.94rem; }
+.navbar .nav-link.active { color: $primary !important; }
+
+#quarto-sidebar { border-right: 1px solid $border-subtle; }
+.sidebar-navigation .sidebar-item { font-size: 0.92rem; }
+.sidebar-navigation .sidebar-link {
+  border-radius: 6px;
+  padding: 0.22rem 0.55rem;
+}
+.sidebar-navigation .sidebar-link:hover { background: rgba($primary, 0.06); }
+.sidebar-navigation .sidebar-link.active {
+  background: rgba($primary, 0.1);
+  font-weight: 600;
+}
+.sidebar-navigation .sidebar-item-section > .sidebar-item-container .menu-text {
+  font-weight: 600;
+  color: $headings-color;
+  line-height: 1.35;
+}
+
+#TOC, #quarto-margin-sidebar { font-size: 0.86rem; }
+#toc-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $muted;
+}
+#TOC .nav-link.active { color: $primary; font-weight: 600; }
+
+.nav-footer {
+  border-top: 1px solid $border-subtle;
+  font-size: 0.84rem;
+  color: $muted;
+}
+
+// ---- Code -------------------------------------------------------------------
+div.sourceCode, pre.sourceCode {
+  background-color: $surface;
+  border: 1px solid $border-subtle;
+  border-radius: 10px;
+}
+div.sourceCode pre.sourceCode { border: 0; }
+div.sourceCode pre { padding: 0.85rem 1rem; }
+pre code { font-size: 0.85rem; line-height: 1.6; }
+:not(pre) > code {
+  background: $surface-strong;
+  border-radius: 5px;
+  padding: 0.1em 0.38em;
+  font-size: 0.86em;
+  color: $code-color;
+}
+a > code, a:hover > code { color: inherit; }
+
+// Expected output (```text blocks): outlined, not filled, so it reads as
+// "what you see", not "what you type".
+main pre.text {
+  background: transparent;
+  border: 1px dashed $border-strong;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: $body-color;
+}
+// Commands that must fail (Break it exercises).
+div.sourceCode:has(pre.expect-fail) { border-left: 4px solid $danger; }
+
+// File-name tab on blocks that learners save as files.
+div.code-with-filename .code-with-filename-file {
+  background: $surface-strong !important;
+  border: 1px solid $border-subtle;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  padding: 0.4rem 1rem;
+}
+div.code-with-filename .code-with-filename-file pre {
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  font-family: $font-family-monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: $muted;
+}
+.code-with-filename div.sourceCode {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.code-copy-button { border-radius: 6px; }
+
+// ---- Tables -----------------------------------------------------------------
+main table { font-size: 0.94rem; }
+main .table > :not(caption) > * > * { padding: 0.55rem 0.75rem; }
+main .table > thead > tr > th {
+  font-weight: 600;
+  color: $headings-color;
+  border-bottom: 1px solid $border-strong;
+  white-space: nowrap;
+}
+main .table > tbody > tr:last-child > * { border-bottom: 0; }
+table.lesson-table td, table.lesson-table th { vertical-align: top; }
+
+// ---- Callouts, panels, details --------------------------------------------
+.callout {
+  border-radius: 12px;
+  border-top: 1px solid $border-subtle !important;
+  border-right: 1px solid $border-subtle !important;
+  border-bottom: 1px solid $border-subtle !important;
+  border-left-width: 4px !important;   // its color comes from the callout type
+  box-shadow: none;
+  overflow: hidden;
+}
+.callout.callout-titled .callout-header { background: transparent !important; }
+.panel-tabset .nav-tabs { border-bottom-color: $border-subtle; }
+.panel-tabset .nav-tabs .nav-link { font-weight: 500; color: $muted; }
+.panel-tabset .nav-tabs .nav-link.active {
+  color: $headings-color;
+  background: $body-bg;
+  border-color: $border-subtle $border-subtle $body-bg;
+}
+.panel-tabset .tab-content { border-color: $border-subtle !important; }
+details { border: 1px solid $border-subtle; border-radius: 10px; padding: 0.5rem 1rem; }
+details > summary { font-weight: 600; cursor: pointer; }
+
+// ---- Figures ------------------------------------------------------------------
+.quarto-figure img, figure img { border-radius: 10px; }
+.figure-caption, figcaption { color: $muted; font-size: 0.88rem; }
+.fig-credit { color: $muted; font-size: 0.82rem; }
+
+// ---- "At a glance" box at the top of each tutorial ---------------------------
+.at-a-glance {
+  background: $surface;
+  border: 1px solid $border-subtle;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+  font-size: 0.94rem;
+}
+.at-a-glance ul { list-style: none; padding: 0; margin: 0; }
+.at-a-glance li { padding: 0.28rem 0; border-bottom: 1px solid $border-subtle; }
+.at-a-glance li:last-child { border-bottom: 0; }
+.at-a-glance p { margin-bottom: 0.25rem; }
+.at-a-glance strong { color: $headings-color; font-weight: 600; }
+
+// Attribution box made by assets/filters/adapted-from.lua: present but quiet.
+.adapted-from { font-size: 0.9rem; }
+
+// ---- Buttons and home page -----------------------------------------------
+.btn { border-radius: 8px; font-weight: 600; padding: 0.5rem 1rem; }
+.hero { padding: 0.5rem 0 1.25rem; }
+.hero .kicker {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $primary;
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.3rem);
+  font-weight: 750;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  margin: 0.5rem 0 1rem;
+}
+.hero .lead { display: block; color: $muted; font-size: 1.22rem; font-weight: 400; line-height: 1.5; max-width: 42rem; margin-bottom: 1.25rem; }
+.hero .btn { margin: 0.35rem 0.5rem 0.35rem 0; }
+.hero a.btn { text-decoration: none; }
+
+main .grid { margin-bottom: 1.75rem; }
+.feature-card {
+  height: 100%;
+  border: 1px solid $border-subtle;
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  background: $body-bg;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.feature-card:hover { border-color: rgba($primary, 0.45); box-shadow: 0 6px 20px $shadow-color; }
+.feature-card h3 {
+  font-size: 1.05rem;
+  margin: 0 0 0.4rem !important;
+}
+.feature-card p { margin-bottom: 0.4rem; color: $body-color; font-size: 0.95rem; }
+.feature-card p:last-child { margin-bottom: 0; }
+
+// Screenshots: a thin frame so white pages do not melt into the background.
+main img.bordered { border: 1px solid $border-subtle; box-shadow: 0 6px 20px $shadow-color; }
+
+// Code shows the characters you type: JetBrains Mono's ligatures would draw
+// >= as one sign and == as a long bar.
+code, pre, kbd, samp { font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }
+
+// Cheat sheets (body class from cheatsheets/_metadata.yml): more space between
+// sections. Column widths come from the dashes in each table's second line.
+body.cheatsheet main h2 { margin-top: 2.2rem; }
+
+// Previous and next lesson links at the bottom of each page: bold, so they read as navigation.
+.page-navigation .nav-page .nav-page-text { font-weight: 700; }

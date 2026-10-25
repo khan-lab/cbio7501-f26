@@ -1,0 +1,52 @@
+# Software environment of this project. Edit it with `pixi add <package>`;
+# Pixi records the exact versions it installed in pixi.lock (commit both).
+[workspace]
+name = "ltee-project"
+description = "Variant calling on three E. coli samples from the Long-Term Evolution Experiment"
+authors = ["Ada Lovelace <ada@example.org>"]
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+version = "0.1.0"
+
+[dependencies]
+python = "3.13.*"
+quarto = ">=1.9"
+jupyterlab = ">=4"
+ipykernel = ">=7"
+pandas = ">=2"
+matplotlib = ">=3.9"
+papermill = ">=2.6"   # Quarto needs it for report parameters (-P)
+pyyaml = ">=6.0.3,<7"
+
+[tasks]
+check = { cmd = "python --version && quarto --version", description = "Check that the tools work" }
+# `reproduce` must rebuild every result from the raw data with one command.
+# The lessons replace this placeholder with real steps.
+download = { cmd = "python scripts/download_data.py", description = "Download the raw data and verify checksums" }
+report = { cmd = "quarto render reports/ltee-report.qmd", depends-on = ["run-snakemake"], description = "Render the Quarto report" }
+reproduce = [{ task = "report" }]
+
+[feature.pipeline]
+platforms = ["linux-64", "osx-arm64", "osx-64"]
+
+[feature.pipeline.dependencies]
+fastqc = ">=0.13.0,<0.14"
+multiqc = ">=1.35,<2"
+bwa = ">=0.7.19,<0.8"
+samtools = ">=1.24,<2"
+bcftools = ">=1.24,<2"
+snakemake = ">=9.27.1,<10"
+graphviz = ">=14.1.2,<15"
+snakefmt = ">=2.1.0,<3"
+nextflow = ">=26.10.3,<27"
+
+[feature.pipeline.tasks]
+qc = { cmd = "mkdir -p results/qc/fastqc && fastqc --quiet --threads 2 --outdir results/qc/fastqc data/raw/fastq/*.fastq && multiqc --force -o results/qc/multiqc results/qc/fastqc", depends-on = ["download"], description = "FastQC on each FASTQ file, then a MultiQC summary" }
+run-snakemake = { cmd = "snakemake --cores 4", depends-on = ["download"], description = "Run the pipeline with Snakemake" }
+variant-calling = { cmd = "bash scripts/run_variant_calling.sh 2 results/shell-script", depends-on = ["download"], description = "Shell-script version of the pipeline (results in results/shell-script/)" }
+compare-to-shell = { cmd = "python scripts/compare_vcfs.py results/shell-script/vcf results/vcf", depends-on = ["variant-calling", "run-snakemake"], description = "Check that the shell script and Snakemake give the same variant calls" }
+run-nextflow = { cmd = "nextflow run workflow/nextflow/main.nf -params-file config/config.yaml", depends-on = ["download"], description = "Run the pipeline with Nextflow (results in results/nextflow/)" }
+compare-workflows = { cmd = "python scripts/compare_vcfs.py results/vcf results/nextflow/vcf", depends-on = ["run-snakemake", "run-nextflow"], description = "Check that Snakemake and Nextflow give the same variant calls" }
+
+[environments]
+pipeline = ["pipeline"]

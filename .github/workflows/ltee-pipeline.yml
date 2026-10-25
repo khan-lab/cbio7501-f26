@@ -1,0 +1,48 @@
+# Run the LTEE example pipeline end to end from a clean clone: download and
+# verify the data, then Snakemake and Nextflow, then check both give the same
+# variant calls, then render the report.
+# Not run yet: written during the unattended build, needs a push to run.
+name: LTEE pipeline
+
+on:
+  push:
+    branches: [main]
+    paths: ["tutorials/ltee-project/**", ".github/workflows/ltee-pipeline.yml"]
+  pull_request:
+    paths: ["tutorials/ltee-project/**", ".github/workflows/ltee-pipeline.yml"]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
+
+jobs:
+  pipeline:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: tutorials/ltee-project
+    steps:
+      - uses: actions/checkout@v7
+      - uses: prefix-dev/setup-pixi@v0.11.2
+        with:
+          pixi-version: v0.83.0
+          manifest-path: tutorials/ltee-project/pixi.toml
+          environments: default pipeline
+          locked: true
+      - name: Snakemake and Nextflow agree
+        run: pixi run compare-workflows
+      - name: Whole project reproduces (pipeline and report)
+        run: pixi run reproduce
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: ltee-results-${{ matrix.os }}
+          path: |
+            tutorials/ltee-project/results/qc/multiqc/
+            tutorials/ltee-project/results/vcf/
+            tutorials/ltee-project/results/stats/
+            tutorials/ltee-project/reports/*.html
+          retention-days: 14

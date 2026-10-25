@@ -1,0 +1,34 @@
+---
+title: "Contents"
+subtitle: "All lessons, with their slides and tutorials"
+toc: false
+---
+
+Lessons are grouped by topic and numbered in the order they build on each
+other: the LTEE project you create in lesson 02 grows with every lesson after
+it, and each tutorial lists what it needs at the top. When each lesson is
+taught is in the schedules: [7-week course](schedule-course.qmd) and
+[workshop](schedule-workshop.qmd).
+
+| Lesson | Topic | Slides | Tutorial | In short |
+|--------|-------|:------:|:--------:|----------|
+| 00 Setup | Getting started | | [tutorial](pages/00-setup.qmd) | Pixi, Git, GitHub, WSL2 or Codespaces |
+| 01 Reproducibility and open science | Introduction | [slides](lectures/01-introduction/01-introduction.qmd) | [tutorial](pages/01-introduction.qmd) | definitions, evidence, five pillars, open science; audit a paper |
+| 02 Project organization | Project organization and data management | [slides](lectures/02-project-organization/02-project-organization.qmd) | [tutorial](pages/02-project-organization.qmd) | sketch a layout, generate the project from the template |
+| 03 Data management and FAIR | Project organization and data management | [slides](lectures/03-data-management/03-data-management.qmd) | [tutorial](pages/03-data-management.qmd) | FAIR and CARE, data availability; download, checksums, metadata |
+| 04 Git and GitHub | Version control | [slides](lectures/04-git/04-git.qmd) | [tutorial](pages/04-git.qmd) | history, branches, pull requests, a check on every push |
+| 05 Pixi | Software environments | [slides](lectures/05-pixi/05-pixi.qmd) | [tutorial](pages/05-pixi.qmd) | manifest and lock file, tasks, features, the pipeline; GitHub reruns it |
+| 05b Pixi and Conda compared | Software environments | | [tutorial](pages/05b-conda-comparison.qmd) | command table, import and export |
+| 06 Jupyter | Notebooks and reports | [slides](lectures/06-jupyter/06-jupyter.qmd) | [tutorial](pages/06-jupyter.qmd) | notebooks that run top to bottom |
+| 07 Quarto | Notebooks and reports | [slides](lectures/07-quarto/07-quarto.qmd) | [tutorial](pages/07-quarto.qmd) | a report computed from the data |
+| 08 Containers | Containers | [slides](lectures/08-containers/08-containers.qmd) | [tutorial](pages/08-containers.qmd) | Docker image from the lock file; Apptainer |
+| 09 Snakemake | Workflows | [slides](lectures/09-snakemake/09-snakemake.qmd) | [tutorial](pages/09-snakemake.qmd) | the pipeline as rules; the analysis question |
+| 10 Nextflow | Workflows | [slides](lectures/10-nextflow/10-nextflow.qmd) | [tutorial](pages/10-nextflow.qmd) | the same pipeline, the same answer |
+| 11 Documentation | Documentation and sharing | [slides](lectures/11-documentation/11-documentation.qmd) | [tutorial](pages/11-documentation.qmd) | README, licenses, citation |
+| 12 Putting it all together | Documentation and sharing | [slides](lectures/12-putting-it-together/12-putting-it-together.qmd) | [tutorial](pages/12-putting-it-together.qmd) | swap and reproduce, release with a DOI |
+| A Markdown | Extras | | [reference](pages/A-markdown.qmd) | the text format of everything |
+| B Take-down | Extras | | [tutorial](pages/B-take-down.qmd) | free disk space, remove tools |
+| C Bash 101 | Extras | | [tutorial](pages/C-bash.qmd) | practice for the command line: files, pipes, loops, a first script |
+| S1 Package and share your tool | Extras (optional) | | [tutorial](pages/S1-packaging.qmd) | pyproject, conda recipe, local channel |
+
+Also: [cheat sheets](cheatsheets/index.qmd) · [the LTEE example project](pages/ltee-project.qmd) · [glossary](pages/glossary.qmd) · [quiz banks](quizzes/index.qmd) · [capstone rubric](assessment/capstone-rubric.qmd) · [sources and credits](pages/credits.qmd)

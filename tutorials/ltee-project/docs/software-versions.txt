@@ -1,0 +1,18 @@
+Name        Version  Build                     Size  Kind   Source
+bcftools    1.24     h6bd33b9_4          808.16 KiB  conda  https://conda.anaconda.org/bioconda
+bwa         0.7.19   hba9b596_1          217.48 KiB  conda  https://conda.anaconda.org/bioconda
+fastqc      0.13.0   hdfd78af_0           12.37 MiB  conda  https://conda.anaconda.org/bioconda
+graphviz    14.1.2   hec8c438_0            2.12 MiB  conda  https://conda.anaconda.org/conda-forge
+ipykernel   7.4.0    pyhdba7688_0        139.66 KiB  conda  https://conda.anaconda.org/conda-forge
+jupyterlab  4.6.4    pyhd8ed1ab_0         12.75 MiB  conda  https://conda.anaconda.org/conda-forge
+matplotlib  3.11.2   py313h8db8848_1      14.64 KiB  conda  https://conda.anaconda.org/conda-forge
+multiqc     1.35     pyhdfd78af_2          4.06 MiB  conda  https://conda.anaconda.org/bioconda
+nextflow    26.10.3  h2a3209d_0           40.95 MiB  conda  https://conda.anaconda.org/bioconda
+pandas      2.3.3    py313h7d16b84_2      13.26 MiB  conda  https://conda.anaconda.org/conda-forge
+papermill   2.7.0    pyhd8ed1ab_0         69.24 KiB  conda  https://conda.anaconda.org/conda-forge
+python      3.13.17  hb59dee6_100_cp313   11.40 MiB  conda  https://conda.anaconda.org/conda-forge
+pyyaml      6.0.3    py313h65a2061_1     184.34 KiB  conda  https://conda.anaconda.org/conda-forge
+quarto      1.9.38   h2349ac6_0           24.64 MiB  conda  https://conda.anaconda.org/conda-forge
+samtools    1.24     h36b3a25_2          446.30 KiB  conda  https://conda.anaconda.org/bioconda
+snakefmt    2.1.0    pyhdfd78af_0         49.94 KiB  conda  https://conda.anaconda.org/bioconda
+snakemake   9.27.1   hdfd78af_0           11.11 KiB  conda  https://conda.anaconda.org/bioconda

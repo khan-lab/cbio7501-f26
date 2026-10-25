@@ -1,0 +1,90 @@
+---
+title: "Documentation and sharing"
+subtitle: "Cheat sheet for lessons 11 and 12"
+---
+
+## Seven questions a README answers
+
+1. What is this project about?
+2. Is there a publication related to it?
+3. What is in this repository?
+4. What hardware does it need?
+5. How do I reproduce the analyses? (one command: `pixi run reproduce`)
+6. What outputs should I expect?
+7. How can I contact the authors or discuss the project?
+
+See [lesson 11, section 1](../pages/11-documentation.qmd#what-a-reader-needs-to-know).
+
+## Files a reader looks for
+
+| File | What it says |
+|------------|------------------------|
+| `README.md` | the seven answers |
+| `LICENSE` | what others may do with your work |
+| `CITATION.cff` | how to cite it (GitHub shows a *Cite this repository* button) |
+| `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` | how to take part |
+| `docs/software-versions.txt` | the exact software, from the lock file |
+
+## Licenses
+
+| Material | Common choice |
+|------------|------------------------|
+| Code | MIT, BSD-3-Clause or Apache-2.0 (permissive); GPL-3.0 (copyleft) |
+| Text, figures, slides | CC BY 4.0 |
+| Data | CC0 or CC BY 4.0 |
+| Avoid for open research | Creative Commons "NC" and "ND" licenses |
+
+You can only license what you own. See [section 4](../pages/11-documentation.qmd#licenses-what-others-may-do).
+
+## Commands
+
+| What you want | Command |
+|------------|------------------------|
+| How much disk space the project needs | `du -sh .pixi/envs/* data/raw results` |
+| Check `CITATION.cff` | `pixi exec cffconvert --validate -i CITATION.cff` |
+| The citation as APA or BibTeX | `pixi exec cffconvert -i CITATION.cff -f apalike` (or `-f bibtex`) |
+| Software versions for the README | `pixi list -e pipeline --explicit > docs/software-versions.txt` |
+| A picture of the workflow | `pixi run -e pipeline snakemake --rulegraph > docs/rulegraph.dot`, then `pixi run -e pipeline dot -Tsvg docs/rulegraph.dot -o docs/rulegraph.svg` |
+| Test it like a stranger would | `git clone git@github.com:USER/REPO.git FOLDER`, then in it `pixi install --locked` and `pixi run reproduce` |
+| Tag the version you release | `git tag -a v1.0.0 -m "MESSAGE"`, then `git push origin v1.0.0` |
+
+## A minimal `CITATION.cff`
+
+```{.yaml}
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "LTEE variant calling"
+type: software
+authors:
+  - given-names: "Ada"
+    family-names: "Lovelace"
+    orcid: "https://orcid.org/0000-0002-1825-0097"
+repository-code: "https://github.com/ada-lovelace/ltee-project"
+license: MIT
+version: 1.0.0
+date-released: "2026-12-01"
+```
+
+An ORCID iD must be the full URL. See [section 5](../pages/11-documentation.qmd#a-citation-file).
+
+## A release with a DOI (Zenodo)
+
+1. Log in to Zenodo with GitHub (practise on <https://sandbox.zenodo.org/> first).
+2. In Zenodo's *GitHub* page, press *Sync* and switch on your repository.
+3. Check that `CITATION.cff` is valid: Zenodo takes the title, authors and license from it.
+4. Tag and push the version, then on GitHub: *Releases → Draft a new release*, pick the tag, *Publish release*.
+5. Copy the DOI and its badge from Zenodo into the README and `CITATION.cff`.
+
+See [lesson 12, section 3](../pages/12-putting-it-together.qmd#release-and-archive-on-zenodo), and the
+[checklist for your next project](../pages/12-putting-it-together.qmd#a-checklist-for-your-next-project).
+
+## Official cheat sheets and references
+
+There is no official cheat sheet for documenting and releasing research
+code. The official references for each part:
+
+- Citation File Format, *Guide to the schema* (every `CITATION.cff` key): <https://github.com/citation-file-format/citation-file-format/blob/main/schema-guide.md>
+- GitHub Docs, *Referencing and citing content* (Zenodo and GitHub releases): <https://docs.github.com/en/repositories/archiving-a-github-repository/referencing-and-citing-content>
+- Zenodo, *GitHub integration*: <https://help.zenodo.org/docs/github/>
+- choosealicense.com, software licenses in plain language (from GitHub): <https://choosealicense.com/>
+- cffconvert, the validator used above: <https://github.com/citation-file-format/cffconvert>

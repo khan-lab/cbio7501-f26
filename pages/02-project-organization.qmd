@@ -1,0 +1,408 @@
+---
+title: "02 Project organization"
+subtitle: "Sketch a project by hand, then generate one from a template and understand every folder"
+description: "Plan the folders of the LTEE project on paper, compare with published advice, generate the project with Cookiecutter, and practise file naming and relative paths."
+adapted_from:
+  - title: "FAIR in (biological) practice: Working with files"
+    url: https://carpentries-incubator.github.io/fair-bio-practice/09-files-organization.html
+    authors: "Tomasz Zieliński, Andrés Romanowski and contributors (The Carpentries Incubator)"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 513e1d5 (2025-01-28)"
+    changes: "Naming rules condensed; the sorting exercise rewritten with LTEE file names; the folder discussion replaced by our template."
+  - title: "Tools for Reproducible Research: Managing your data (lecture)"
+    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html
+    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Used the 'which sample file is the latest?' example and the idea of comparing several project layouts."
+test:
+  needs: []
+  timeout: 1800
+---
+
+::: {.at-a-glance}
+- **Time:** 80 minutes in class, together with the [lesson 03 hands-on](03-data-management.qmd), or about 60 minutes alone.
+- **Slides:** [Project organization](../lectures/02-project-organization/02-project-organization.qmd)
+- **You need:** [lesson 00](00-setup.qmd) done (Pixi installed), paper and a pen.
+- **You will have:** the `ltee-project` folder that every later lesson builds on.
+:::
+
+## Overview
+
+Everyone who has worked on a project for a few months knows the folder full of
+`final.csv`, `final_v2.csv` and `final_USE_THIS.csv`. A good layout prevents
+that. It is not one of the five pillars of computational reproducibility
+(literate programming, version control, environment control, data sharing,
+documentation; Ziemann et al. 2023), but each pillar is easier when files are
+where everyone expects them. In this lesson you first design a layout yourself, then
+compare it with published advice, then generate one from a template so you
+can see every choice the template makes for you.
+
+The running example is the **LTEE project**: variant calling on three samples
+of *E. coli* from Richard Lenski's Long-Term Evolution Experiment, taken at
+5,000, 15,000 and 50,000 generations. You do not need to know any genomics:
+treat the analysis as a given pipeline. What matters is how the project is
+organized and whether someone else can rerun it.
+
+### Learning outcomes
+
+After this lesson you can:
+
+1. **Create** a new analysis project from a template with one command and say what belongs in each folder.
+2. **Separate** raw data, derived data, code and results so that raw data is never modified and results can be deleted and rebuilt.
+3. **Name** files so they sort correctly and can be read by people and programs.
+4. **Write** scripts with paths relative to the project folder, and show why absolute paths break.
+
+Each outcome is checked by a step below; the last one by the *Break it* exercise.
+
+### Prerequisites
+
+[Lesson 00](00-setup.qmd): Pixi works (`pixi --version`). Basic shell: `cd`, `ls`, `mkdir`.
+
+## 1. Sketch first (10 minutes, on paper)
+
+Before you look at any template, design the project yourself. You will
+analyze sequencing data for three samples. The analysis needs:
+
+- six FASTQ files (two per sample), downloaded from figshare;
+- a reference genome, downloaded from NCBI;
+- a table describing the samples (generation, strain, file names);
+- a few scripts and, later, a Snakemake and a Nextflow pipeline;
+- the software environment (Pixi files);
+- outputs: quality-control reports, alignments, variant calls, plots;
+- a report that explains the results;
+- a README, a license and a citation file.
+
+On paper, draw the folders you would create and put each item in one. Mark
+which files you would **never edit by hand** and which you could **delete and
+rebuild**.
+
+::: {.callout-note title="Think, pair, share (5 minutes)"}
+Compare your sketch with a neighbor. Where did you disagree? Which file was
+hardest to place? Keep your sketch: you will compare it with the template in
+step 4.
+:::
+
+## 2. What others recommend
+
+Two short papers are the classic advice for organizing computational biology
+projects. Read the key points below; the full papers are in *Further reading*.
+
+**Noble (2009), "A quick guide to organizing computational biology projects":**
+
+- one folder per project, with the same layout every time;
+- separate folders for `data`, `src` (code), `bin` (compiled tools), `results` and `doc`;
+- raw data stays as it was received; everything else is made from it by code;
+- a dated lab notebook (`results/2009-01-15/`) records what you did and why;
+- a "driver" script reruns the whole analysis.
+
+**Wilson et al. (2017), "Good enough practices in scientific computing":**
+
+- put each project in its own directory, named after the project;
+- put text documents in `doc/`, raw data and metadata in `data/`, files
+  generated during cleanup and analysis in `results/`, source code in `src/`;
+- name all files to reflect their content or function;
+- keep raw data read-only, and create the data you analyse with code.
+
+Both agree on the main rule: **raw data in, code in the middle, results out,
+and results can always be regenerated.**
+
+## 3. Generate the project from the template
+
+A *template* creates the same, well-thought-out layout every time, so you do
+not have to remember it. We use [Cookiecutter](https://cookiecutter.readthedocs.io/),
+run through Pixi, so you do not need to install it.
+
+Create a folder for this course and go into it:
+
+```{.bash .run}
+mkdir -p ~/cbio7501
+cd ~/cbio7501
+```
+
+Run the template. Cookiecutter asks a few questions; press Enter to keep the
+value in brackets. Use `ltee-project` as the folder name:
+
+```{.bash .norun}
+pixi exec --spec cookiecutter --spec git -- \
+  cookiecutter gh:khan-lab/cbio7501-f26 --directory templates/cookiecutter-repro-project
+```
+
+```text
+  [1/12] Project name (a few words) (LTEE variant calling):
+  [2/12] Folder and repository name (lowercase, dashes) (ltee-variant-calling): ltee-project
+  [3/12] One sentence: what does this project do? (A reproducible analysis project): Variant calling on LTEE E. coli samples
+  [4/12] Your given name(s) (Your): Ada
+  ...
+```
+
+::: {.callout-tip title="Same thing, without the questions"}
+You can give all answers on the command line. This is what the course tests
+run; use your own name and ORCID iD:
+
+```{.bash .run}
+pixi exec --spec cookiecutter --spec git -- \
+  cookiecutter --no-input gh:khan-lab/cbio7501-f26 --directory templates/cookiecutter-repro-project \
+  project_name="LTEE variant calling" project_slug="ltee-project" \
+  short_description="Variant calling on three E. coli samples from the Long-Term Evolution Experiment" \
+  author_given_names="Ada" author_family_names="Lovelace" author_email="ada@example.org" \
+  github_username="ada-lovelace" license="MIT"
+```
+:::
+
+Expected output ends with:
+
+```text
+Created ltee-project/
+
+Next steps:
+  cd ltee-project
+  pixi install            # create the environment and pixi.lock
+  pixi run check          # check that the tools work
+```
+
+(Not now: you create the environment in [lesson 05](05-pixi.qmd).)
+
+## 4. Walk through the layout
+
+List the folders:
+
+```{.bash .run}
+cd ~/cbio7501/ltee-project
+find . -type d | sort
+```
+
+```text
+.
+./.github
+./.github/workflows
+./config
+./containers
+./data
+./data/processed
+./data/raw
+./docs
+./envs
+./metadata
+./notebooks
+./reports
+./results
+./scripts
+./workflow
+```
+
+Every folder has a `README.md` that says what goes in it. Read two of them:
+
+```{.bash .run}
+cat data/raw/README.md
+cat results/README.md
+```
+
+The main `README.md` has a table of all folders. Here is the logic in one picture:
+
+```text
+  data/raw/  ──code──►  data/processed/  ──code──►  results/  ──►  reports/
+  (read-only,           (derived,                   (figures,      (Quarto
+   downloaded)           rebuildable)                tables)        report)
+       ▲                                                  ▲
+  metadata/  (what each file is, where it came from, checksums)
+  scripts/, workflow/, config/  (the code and its parameters)
+  pixi.toml + pixi.lock  (the software)
+```
+
+::: {.callout-note title="Compare with your sketch (5 minutes)"}
+Go through your paper sketch. For each difference, decide: is the template
+better, is your version better, or is it a matter of taste? Two points worth
+discussing:
+
+- The template has **no** `final/` folder and no dated `results/2026-10-27/`
+  folders (Noble's lab notebook). Results are regenerated by code; history is
+  kept by Git (lesson 04).
+- `metadata/` is separate from `data/`: it is small, written by people and
+  committed to Git, while `data/` is large, downloaded and not committed.
+:::
+
+### What else the template created
+
+```{.bash .run}
+ls -a
+cat pixi.toml
+```
+
+- `pixi.toml`: the software this project needs (Python, Quarto, Jupyter,
+  pandas, matplotlib). You learn how it works in [lesson 05](05-pixi.qmd).
+- `.gitignore`: tells Git ([lesson 04](04-git.qmd)) not to track raw data,
+  results and the installed environment.
+- `LICENSE` and `CITATION.cff`: how others may reuse and cite the project
+  (lesson 11).
+- `.github/workflows/reproduce.yml`: a check that reruns the project on a
+  fresh computer every time you push (from lesson 04; it gets real work in
+  lesson 05).
+
+## 5. Name files so that they sort and explain themselves
+
+A good file name is readable by people, easy for programs to parse, and sorts
+in a useful order. Rules we follow in this course:
+
+- no spaces or special characters; use `-` or `_`;
+- dates as `YYYY-MM-DD` (ISO 8601), so they sort in time order;
+- numbers with leading zeros (`s01`, `s02`, ..., `s12`);
+- the most important part first (the sample ID, if you look files up by sample);
+- the same parts in the same order in every name, with the abbreviations
+  explained in `metadata/README.md`;
+- a version number only for things you release (`v001`); everything else is versioned by Git.
+
+The LTEE files follow these rules already: `SRR2584863_1.trim.sub.fastq` is
+run `SRR2584863`, read 1 of the pair, trimmed, subsampled.
+
+### Try it yourself
+
+1. These names were sorted alphabetically by a computer. What problems do
+   you see?
+
+   ```text
+   12-10-2026 alignment SRR2589044.bam
+   2026-10-13_SRR2584866_aligned.bam
+   2026-10-9_SRR2584863_aligned.bam
+   Final results (use this).xlsx
+   SRR2584863_aligned_v2.bam
+   sample1.bam
+   sample10.bam
+   sample2.bam
+   ```
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   - Two date formats; `12-10-2026` is ambiguous (December or October?) and does not sort.
+   - `2026-10-9` lacks a leading zero, so it sorts *after* `2026-10-13`.
+   - Spaces and brackets break shell commands unless quoted.
+   - `sample10` sorts between `sample1` and `sample2` (no leading zeros).
+   - `_v2` and "use this" are manual version control; use Git instead.
+   - The sample ID moves around, so you cannot list all files of a sample with one pattern.
+
+   A consistent version: `SRR2584863.aligned.sorted.bam`, `SRR2584866.aligned.sorted.bam`,
+   `SRR2589044.aligned.sorted.bam`, made by code in `results/bam/`.
+   :::
+
+2. Which name in each group follows the rules best?
+
+   a) `variant counts 5Aug2026.csv` b) `variant-counts_2026-08-05.csv` c) `counts.csv`
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   b): no spaces, ISO date, says what is inside. c) is too vague; a) has spaces
+   and a date that does not sort.
+   :::
+
+## 6. Start the README now
+
+A README written on day one is a plan; one written at the end is a chore. Open
+`README.md` in your editor and fill in the *Data* section. You can copy this:
+
+```markdown
+## Data
+
+Raw reads: a subset (175,000 read pairs per sample) of three *E. coli* clones
+from the Long-Term Evolution Experiment (population Ara-3, generations 5,000,
+15,000 and 50,000), prepared by Data Carpentry:
+<https://doi.org/10.6084/m9.figshare.7726454> (file `sub.tar.gz`, CC0).
+Reference genome: *E. coli* B str. REL606, GenBank CP000819.1 (NCBI).
+Details, sample sheet and checksums are in `metadata/`.
+```
+
+You will download the data and write the sample sheet in the
+[lesson 03 hands-on](03-data-management.qmd#hands-on).
+
+## Break it: absolute paths
+
+A script that only works in one folder on one laptop is not reproducible. See
+it fail. First write a tiny script that reads a file through an **absolute**
+path (the full path on *your* computer, which the shell fills in with `$PWD`):
+
+```{.bash .run}
+cd ~/cbio7501/ltee-project
+echo "print(open('$PWD/metadata/README.md').readline())" > scripts/first_line_absolute.py
+cat scripts/first_line_absolute.py
+pixi exec python scripts/first_line_absolute.py
+```
+
+It works. Now do what a colleague does when they download your project: put
+it in a different folder. Here we just rename the project folder:
+
+```{.bash .run}
+cd ~/cbio7501
+mv ltee-project ltee-project-copy
+cd ltee-project-copy
+```
+
+```{.bash .expect-fail}
+pixi exec python scripts/first_line_absolute.py
+```
+
+```text
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/ada/cbio7501/ltee-project/metadata/README.md'
+```
+
+The fix is a **relative** path, which works wherever the project folder is, as
+long as you run scripts from the project folder:
+
+```{.python filename="scripts/first_line.py" .write}
+print(open("metadata/README.md").readline())
+```
+
+```{.bash .run}
+pixi exec python scripts/first_line.py
+```
+
+Clean up and rename the folder back:
+
+```{.bash .run}
+rm scripts/first_line_absolute.py scripts/first_line.py
+cd ~/cbio7501
+mv ltee-project-copy ltee-project
+cd ltee-project
+```
+
+::: {.callout-note}
+Paths like `C:\Users\ada\Desktop\data.csv` or `/Users/ada/...` in shared code
+are one of the most common reasons a project fails for someone else. In every
+later lesson, run commands from the project folder and use relative paths.
+:::
+
+## Troubleshooting
+
+| Problem | What to do |
+|---------|------------|
+| `pixi: command not found` | Do [lesson 00](00-setup.qmd) first, then open a new terminal. |
+| `git: command not found` or "Unable to clone" | Cookiecutter downloads the template with Git. Keep `--spec git` in the command, or install Git (lesson 00). |
+| `Error: "ltee-project" directory already exists` | You ran the template twice. Remove or rename the old folder, or answer with another folder name. |
+| `ERROR: 'My Project' is not a good folder name` | The folder name must be lowercase with dashes, e.g. `ltee-project`. |
+| The questions look stuck | Cookiecutter is waiting for your answer: type it and press Enter. |
+| Windows: the files are not visible in Explorer | You are working inside WSL2: run `explorer.exe .` in the project folder. |
+
+## Apply it to your own mini-analysis
+
+From this lesson on you also work on a small analysis of your own (the
+capstone). Generate a second project for it with the same template, from
+`~/cbio7501`, with your own project name. Then, in its `README.md`, write one
+paragraph: the question, the data (source, size, license) and what you expect
+to produce. This is your project proposal.
+
+## Key points
+
+- Decide the layout before the first file arrives; use the same layout in every project.
+- Raw data is read-only and downloaded by code; derived data and results are rebuilt by code.
+- A template saves time, but know why each folder is there.
+- Name files so they sort and can be parsed: no spaces, ISO dates, leading zeros, consistent order.
+- Use paths relative to the project folder; absolute paths break on any other computer.
+
+## Further reading
+
+- Cheat sheet: [Project and data](../cheatsheets/project-and-data.qmd), with links to the official cheat sheets and references.
+- Noble WS (2009). A quick guide to organizing computational biology projects. *PLoS Comput Biol* 5:e1000424. <https://doi.org/10.1371/journal.pcbi.1000424>
+- Wilson G, Bryan J, Cranston K, Kitzes J, Nederbragt L, Teal TK (2017). Good enough practices in scientific computing. *PLoS Comput Biol* 13:e1005510. <https://doi.org/10.1371/journal.pcbi.1005510>
+- The Carpentries Incubator, *FAIR in (biological) practice*, episode "Working with files": <https://carpentries-incubator.github.io/fair-bio-practice/09-files-organization.html>
+- Our template and its README: `templates/cookiecutter-repro-project/` in the course repository.
+- Two other templates we learned from: [mkrapp/cookiecutter-reproducible-science](https://github.com/mkrapp/cookiecutter-reproducible-science) and [bios259/cookie-for-reproducible-research](https://github.com/bios259/cookie-for-reproducible-research).

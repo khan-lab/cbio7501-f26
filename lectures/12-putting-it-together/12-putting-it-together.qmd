@@ -1,0 +1,156 @@
+---
+title: "Putting it all together"
+subtitle: "CBIO7501 · Lesson 12"
+adapted_from:
+  - title: "Tools for Reproducible Research: Putting it all together (lecture)"
+    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html
+    authors: "NBIS"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Summary of practices condensed and updated for Pixi; merged in: the 'take control of each component' figure (NBIS, CC BY 4.0), habits for projects, data and code as one slide, 'what is reasonable for your project' with NBIS's minimal / good / great levels, and the alternatives slides as one table (Jujutsu described without the 'by Google' attribution). Swap-and-reproduce and release added. Not reused: the cartoons (origin unclear or not CC BY), logos, and the NBIS drop-in slide."
+sources:
+  - "Week 1 slides 97 (Zenodo homework) and 98 (checklist) are the basis; the checklist is updated for Pixi."
+  - "Ziemann M, Poulain P, Bora A (2023). The five pillars of computational reproducibility. *Brief Bioinform* 24:bbad375. <https://doi.org/10.1093/bib/bbad375>"
+  - "Sandve GK et al. (2013). Ten simple rules for reproducible computational research. *PLoS Comput Biol* 9:e1003285. <https://doi.org/10.1371/journal.pcbi.1003285>"
+  - "Figure 'Take control of each part': NBIS, *Tools for Reproducible Research*, CC BY 4.0."
+---
+
+## Today you will
+
+- reproduce a classmate's project from a clean clone, with only its README
+- report what worked, what did not, and the one fix that helps most
+- release your project with a DOI
+- take a checklist into your next project
+
+## Take control of each part
+
+![](../../assets/images/nbis/reproducibility_overview.png){fig-alt="Diagram: data and code go into a workflow that runs in a software environment and produces results such as reports and figures." width="70%" fig-align="center"}
+
+[Figure: NBIS, *Tools for Reproducible Research*, CC BY 4.0]{.fig-credit}
+
+Data, code, environment, workflow, results: you now have a tool for each.
+
+## The five pillars, revisited
+
+| Pillar | Your LTEE project |
+|--------|-------------------|
+| Literate programming | `reports/ltee-report.qmd`, `notebooks/` |
+| Version control and sharing | Git, GitHub, pull requests, releases |
+| Environment control | `pixi.toml` + `pixi.lock`, `containers/Dockerfile` |
+| Persistent data sharing | figshare + NCBI, checksums in `metadata/` |
+| Documentation | README, CITATION.cff, decisions log |
+
+Glue: Snakemake/Nextflow and the *Reproduce* GitHub Action.
+
+## The real test
+
+> Can someone else get your results, from your repository alone,
+> without asking you?
+
+Today that someone is your neighbor.
+
+## Swap and reproduce: the rules {.prompt-slide}
+
+::: {.prompt}
+**60 minutes.**
+
+1. Clone your partner's capstone into a new folder
+2. Use **only** the repository: no questions, no looking over shoulders
+3. Fill in the [reproduce report](../../assessment/reproduce-report-template.qmd) as an issue on their repository
+4. 15 minutes: read both reports together; agree on one fix each
+:::
+
+## What usually goes wrong
+
+- A file that only exists on the author's laptop (`git status` shows `??`)
+- `pixi.toml` changed, `pixi.lock` not committed
+- Data downloaded by hand, not by a script
+- An absolute path, or a command missing from the README
+- Results that differ, and nobody wrote down what to expect
+
+Most of these turn the *Reproduce* check red **before** anyone else tries.
+
+## Release: a version with a DOI
+
+```{.text}
+git tag v1.0.0 ──► GitHub release ──► Zenodo archives it ──► DOI
+                                         (title, authors, license from CITATION.cff)
+```
+
+- Practise on sandbox.zenodo.org first
+- New release, new version DOI; the concept DOI always points to the latest
+
+## Habits to keep
+
+:::: {.columns}
+::: {.column width="33%"}
+**Projects**
+
+- one folder per project, from raw data to results
+- one Git repository per project
+- data and results stay out of Git
+- commit often
+:::
+::: {.column width="33%"}
+**Data**
+
+- raw data read-only
+- no hand-edited copies: script every change
+- backups in more than one place
+- deposit raw data early
+:::
+::: {.column width="33%"}
+**Code**
+
+- nothing by hand that code can do
+- scripts, reports and workflows connect raw data to results
+- settings in a config file, not in the code
+:::
+::::
+
+## What is reasonable for **your** next project?
+
+| Level | Practices |
+|-------|-----------|
+| **Minimal**: reproducible code and environment, from day one | template, Git + GitHub, raw data read-only and scripted, `pixi.toml`/`pixi.lock` committed |
+| **Good**: structured and documented | Quarto report or notebooks under Git, Pixi tasks or Snakemake, CI reproduce check, README + CITATION.cff |
+| **Great**: the full environment, connected in a workflow | containers built from the lock file, Snakemake or Nextflow (nf-core on clusters), releases with DOIs |
+
+: {tbl-colwidths="[30,70]"}
+
+## Every tool has alternatives
+
+| Job | This course | Alternatives |
+|-----|-------------|--------------|
+| version control | Git | Jujutsu (Git-compatible), Mercurial, Subversion |
+| environments | Pixi | Conda / Mamba, pip and uv (Python only), apt / brew (system) |
+| workflows | Snakemake, Nextflow | Make, CWL and WDL, Galaxy (web interface) |
+| literate programming | Quarto, Jupyter | R Markdown, Marimo (reactive Python notebooks) |
+| containers | Docker, Apptainer | Podman, virtual machines (VirtualBox) |
+
+: {tbl-colwidths="[22,24,54]"}
+
+The ideas transfer: a record of changes, a pinned environment, an automated
+pipeline, a document computed from data.
+
+## Quiz {.quiz-slide}
+
+::: {.quiz}
+1. Your partner's clone fails, yours works. Most likely cause? (a) their laptop (b) something on your laptop is not committed (c) GitHub
+2. What does a Zenodo release give you that a GitHub repository does not? (a) a website (b) a permanent archive with a DOI (c) CI
+:::
+
+::: {.notes}
+Answers: 1 b; 2 b.
+:::
+
+## Recap
+
+- Reproducibility is tested by someone else, from a clean clone
+- CI catches most failures before your colleague does
+- Release + Zenodo = a citable, permanent version
+- Start your next project with the checklist, not at the end
+
+**Now:** [tutorial 12](../../pages/12-putting-it-together.qmd) and the [capstone rubric](../../assessment/capstone-rubric.qmd).

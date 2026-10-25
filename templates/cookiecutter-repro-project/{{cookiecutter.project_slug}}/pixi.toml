@@ -1,0 +1,24 @@
+# Software environment of this project. Edit it with `pixi add <package>`;
+# Pixi records the exact versions it installed in pixi.lock (commit both).
+[workspace]
+name = "{{ cookiecutter.project_slug }}"
+description = "{{ cookiecutter.short_description }}"
+authors = ["{{ cookiecutter.author_given_names }} {{ cookiecutter.author_family_names }} <{{ cookiecutter.author_email }}>"]
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+version = "0.1.0"
+
+[dependencies]
+python = "3.13.*"
+quarto = ">=1.9"
+jupyterlab = ">=4"
+ipykernel = ">=7"
+pandas = ">=2"
+matplotlib = ">=3.9"
+papermill = ">=2.6"   # Quarto needs it for report parameters (-P)
+
+[tasks]
+check = { cmd = "python --version && quarto --version", description = "Check that the tools work" }
+# `reproduce` must rebuild every result from the raw data with one command.
+# The lessons replace this placeholder with real steps.
+reproduce = { cmd = "python -c \"print('Nothing to reproduce yet: add your steps to the reproduce task in pixi.toml')\"", description = "Rebuild all results from raw data" }

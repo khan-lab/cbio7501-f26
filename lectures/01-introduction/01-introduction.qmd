@@ -1,0 +1,338 @@
+---
+title: "On the art of reproducible and open science"
+subtitle: "CBIO7501 · Lesson 01"
+adapted_from:
+  - title: "On the Art of Reproducible & Open Science (Week 1 deck, slides 5 to 40 and 71 to 83)"
+    url: https://github.com/khan-lab/cbio7501-f26
+    authors: "Aziz Khan"
+    license: "Own work"
+    accessed: 2026-10-24
+    changes: "Condensed from about 50 slides to a 25-minute deck, rebuilt in Quarto from the slide-by-slide reuse map (the original deck was not available as source); third-party photos and screenshots replaced by links with a one-line description; the Cancer Biology numbers and the Excel case corrected; animation builds removed."
+  - title: "Tools for Reproducible Research: Introduction (lecture)"
+    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/introduction/introduction.html
+    authors: "NBIS"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Merged in: the studies of computational reproducibility (Trisovic 2022; Samuel and Mietchen 2024, first author corrected), Freedman 2015, the Open Science Collaboration quote, the 'parts of an analysis' figure (NBIS, CC BY 4.0), the decent / good / great slides for data, code and environment, and 'What's in it for me?'. Not reused: teacher photos, the PhD Comics strip and journal screenshots (not CC BY)."
+sources:
+  - "Baker M (2016). 1,500 scientists lift the lid on reproducibility. *Nature* 533:452–454. <https://doi.org/10.1038/533452a>"
+  - "Freedman LP, Cockburn IM, Simcoe TS (2015). The economics of reproducibility in preclinical research. *PLoS Biol* 13:e1002165. <https://doi.org/10.1371/journal.pbio.1002165>"
+  - "Trisovic A, Lau MK, Pasquier T, Crosas M (2022). A large-scale study on research code quality and execution. *Sci Data* 9:60. <https://doi.org/10.1038/s41597-022-01143-6>"
+  - "Samuel S, Mietchen D (2024). Computational reproducibility of Jupyter notebooks from biomedical publications. *GigaScience* 13:giad113. <https://doi.org/10.1093/gigascience/giad113>"
+  - "Figure 'Every analysis has the same parts' and the decent / good / great levels: NBIS, *Tools for Reproducible Research*, CC BY 4.0. <https://nbisweden.github.io/workshop-reproducible-research/>"
+  - "Stodden V, Seiler J, Ma Z (2018). An empirical analysis of journal policy effectiveness for computational reproducibility. *PNAS* 115:2584–2589. <https://doi.org/10.1073/pnas.1708290115>"
+  - "Open Science Collaboration (2015). Estimating the reproducibility of psychological science. *Science* 349:aac4716. <https://doi.org/10.1126/science.aac4716>"
+  - "Errington TM et al. (2021). Investigating the replicability of preclinical cancer biology. *eLife* 10:e71601. <https://doi.org/10.7554/eLife.71601>; Challenges for assessing replicability in preclinical cancer biology. *eLife* 10:e67995. <https://doi.org/10.7554/eLife.67995>"
+  - "Amaral OB et al. (2019). The Brazilian Reproducibility Initiative. *eLife* 8:e41602. <https://doi.org/10.7554/eLife.41602>"
+  - "National Academies of Sciences, Engineering, and Medicine (2019). *Reproducibility and Replicability in Science*. <https://doi.org/10.17226/25303>"
+  - "The Turing Way: definitions of reproducible, replicable, robust and generalisable research (CC BY 4.0; figure linked, not embedded): <https://book.the-turing-way.org/reproducible-research/overview/overview-definitions>"
+  - "Peng RD (2011). Reproducible research in computational science. *Science* 334:1226–1227. <https://doi.org/10.1126/science.1213847>"
+  - "Munafò MR et al. (2017). A manifesto for reproducible science. *Nat Hum Behav* 1:0021. <https://doi.org/10.1038/s41562-016-0021>"
+  - "Markowetz F (2015). Five selfish reasons to work reproducibly. *Genome Biol* 16:274. <https://doi.org/10.1186/s13059-015-0850-7>"
+  - "Baggerly KA, Coombes KR (2009). Deriving chemosensitivity from cell lines: forensic bioinformatics and reproducible research in high-throughput biology. *Ann Appl Stat* 3:1309–1334."
+  - "Ziemann M, Poulain P, Bora A (2023). The five pillars of computational reproducibility. *Brief Bioinform* 24:bbad375. <https://doi.org/10.1093/bib/bbad375>"
+  - "Piwowar HA, Day RS, Fridsma DB (2007). Sharing detailed research data is associated with increased citation rate. *PLoS ONE* 2:e308. <https://doi.org/10.1371/journal.pone.0000308>"
+  - "Photos and news pages shown in the Week 1 deck (Stapel portrait, news front pages, journal screenshots) are third-party material and are not reproduced; they are described in words here."
+---
+
+## By the end of this lesson you can
+
+- tell reproducible, replicable, robust and generalisable apart
+- name the main causes of irreproducible research, technical and human
+- explain the five pillars of computational reproducibility
+- judge how a study handles its data, code and environment (decent, good, great)
+- argue for open science, and answer the usual concerns
+- make your own work more open, starting now
+
+## It starts with a story
+
+::: {.linked-figure}
+**Diederik Stapel**, social psychologist: invented data for years; his
+fraud was uncovered in 2011 and 58 of his papers were retracted (Retraction
+Watch leaderboard). *The original lecture slides showed his portrait and press coverage;
+those images are not ours to share.*
+:::
+
+. . .
+
+Fraud is rare. Most irreproducible research comes from honest people, under
+pressure ("publish or perish"), with messy files, undocumented steps and
+software nobody can reinstall.
+
+## How big is the problem?
+
+- **Survey of 1,576 researchers** (Baker 2016): more than 70% had tried
+  and failed to reproduce another scientist's experiment; 90% saw a "slight"
+  or "significant" crisis
+- **Cost** (Freedman et al. 2015): more than half of preclinical research is
+  not reproducible, about **US$28 billion a year** in the US alone
+- **Psychology** (Open Science Collaboration 2015): 100 studies repeated;
+  97% of the originals had significant results, **36%** of the replications;
+  effects were half as large
+- **Cancer biology** (Errington et al. 2021): planned 193 experiments from 53
+  papers; could repeat only **50 experiments from 23 papers**. Median effect
+  size **85% smaller**; **46%** of effects (51 of 112) replicated by at least
+  three of five criteria. Data to compute effect sizes was public for 4 of 193
+  experiments
+- **Brazil**: a nationwide multi-lab replication of biomedical methods (Amaral et al. 2019)
+
+## Computational research is no exception
+
+| Study | What was checked | Result |
+|-------|------------------|--------|
+| Stodden et al. 2018 | 204 papers in *Science* | data and code obtained for 44%, findings reproduced for **26%** |
+| Trisovic et al. 2022 | over 9,000 R files on Harvard Dataverse | **74%** failed on the first run, 56% after automatic clean-up |
+| Samuel & Mietchen 2024 | 22,578 Python notebooks from biomedical papers | **1,203** ran without errors; 879 gave the published results |
+
+: {tbl-colwidths="[24,36,40]"}
+
+The usual reasons: a missing package, a variable defined somewhere else, a
+file expected in a folder that is not there.
+
+## Why it matters {.center}
+
+> Innovation points out paths that are possible; replication points out paths
+> that are likely; progress relies on both.
+
+[Open Science Collaboration (2015), *Science* 349:aac4716]{.quote-source}
+
+## Words matter
+
+The Turing Way's 2 × 2 (figure linked, see Sources):
+
+| | Same data | Different data |
+|-|-----------|----------------|
+| **Same analysis** | **Reproducible** | **Replicable** |
+| **Different analysis** | **Robust** | **Generalisable** |
+
+NASEM (2019): *reproducibility* = same data and code, same result;
+*replicability* = new data, consistent result. This course is mostly about the
+first, which is the minimum: if your own analysis cannot be rerun, nothing
+else can be checked.
+
+## A spectrum, not a yes/no
+
+```{.text}
+publication only → + code → + code and data → + linked and executable → full replication
+   (not reproducible)                                                     (gold standard)
+```
+
+After Peng (2011). Every step to the right lets a reader check more.
+
+## Where the research cycle breaks
+
+```{.text}
+hypothesis → design → data collection → analysis → interpretation → publication
+     ▲   HARKing        low power          p-hacking                    publication bias
+     └──────────────────────────────────────────────────────────────────┘
+```
+
+Questionable practices at each step (after Munafò et al. 2017, figure 1;
+linked in Sources).
+
+## Five selfish reasons (Markowetz 2015)
+
+1. It helps you avoid disaster
+2. It makes it easier to write papers
+3. It helps reviewers see it your way
+4. It enables continuity of your work
+5. It helps to build your reputation
+
+## What's in it for you?
+
+:::: {.columns}
+::: {.column width="33%"}
+**Before** the project
+
+- a clear structure
+- scope and limits thought through early
+:::
+::: {.column width="33%"}
+**During**
+
+- rerun everything after a change, in minutes
+- easier work with collaborators
+- the methods section half writes itself
+:::
+::: {.column width="33%"}
+**After**
+
+- others, and future you, pick it up quickly
+- more visible, more reusable work
+:::
+::::
+
+## When it goes wrong in bioinformatics
+
+**Duke, 2006 to 2011.** Genomic signatures to pick chemotherapy for patients,
+used in clinical trials. Baggerly and Coombes tried to reproduce them and
+found, among other errors, gene lists shifted by one row and sample labels
+swapped. Trials were stopped; papers were retracted.
+
+. . .
+
+**England, October 2020.** Thousands of positive COVID-19 tests were missed
+for about a week: results were gathered in Excel's **old `.xls` format, which
+holds at most 65,536 rows** per sheet (the current `.xlsx` holds 1,048,576).
+Rows beyond the limit were silently dropped.
+
+*(News and journal pages from the original lecture slides are not reproduced; see Sources.)*
+
+## Think, pair, share {.prompt-slide}
+
+::: {.prompt}
+**5 minutes.** Share a time when you could not rerun an analysis: yours or
+someone else's. What was missing? Who was "to blame": the person, the lab, the
+journal, the incentives?
+:::
+
+## What affects reproducibility?
+
+| Kind | Examples |
+|------|----------|
+| Technical | software versions, operating systems, hardware, randomness, lost data |
+| Human | undocumented steps, manual edits, file chaos, people leaving |
+| Design and statistics | low power, flexible analysis, selective reporting |
+| Incentives | novelty over rigor, no credit for data or code |
+
+## Machine learning and AI
+
+- Same code, different GPU or seed: different model
+- Data leakage between training and test sets inflates results
+- Models and training data often not shared
+- Generative AI in research and review: new questions about what is disclosed and checked
+
+AI is also a tool *for* reproducibility: explaining code, writing tests and
+documentation. Check what it writes.
+
+## Every analysis has the same parts
+
+![](../../assets/images/nbis/reproducibility_overview.png){fig-alt="Diagram: data and code go into a workflow that runs in a software environment and produces results such as reports and figures." width="72%" fig-align="center"}
+
+[Figure: NBIS, *Tools for Reproducible Research*, CC BY 4.0]{.fig-credit}
+
+[Data (lesson 03) · code (04, 06, 07) · environment (05, 08) · workflow (09, 10) · shared results (11, 12)]{.small .muted}
+
+## How are you handling your data?
+
+::: {.fragment}
+**Decent:** available on request; all metadata needed for the results available
+:::
+
+::: {.fragment}
+**Good:** raw data in a public repository; any preprocessing done by scripts,
+never by hand
+:::
+
+::: {.fragment}
+**Great:** a section or repository that helps others reproduce it; open,
+machine-readable formats (`.csv`, not `.xls`)
+:::
+
+## How are you handling your code?
+
+::: {.fragment}
+**Decent:** the code from processed data to results is available on request
+:::
+
+::: {.fragment}
+**Good:** all code from raw data to results is public, with versions (tags,
+releases)
+:::
+
+::: {.fragment}
+**Great:** documented, with instructions to reproduce the results; seeds
+recorded for random methods
+:::
+
+## How are you handling your environment?
+
+::: {.fragment}
+**Decent:** the key programs are named in the methods
+:::
+
+::: {.fragment}
+**Good:** every program is listed, **with its version**
+:::
+
+::: {.fragment}
+**Great:** files or instructions that rebuild the whole environment (a lock
+file, a container)
+:::
+
+::: {.fragment}
+[Tutorial 01 turns these levels into an audit of a published paper.]{.muted}
+:::
+
+## The five pillars (Ziemann et al. 2023)
+
+1. **Literate programming**: code and text together (Quarto, Jupyter)
+2. **Code version control and sharing**: Git, GitHub
+3. **Compute environment control**: Pixi, containers
+4. **Persistent data sharing**: repositories, identifiers, checksums
+5. **Documentation**: README, citation, licenses
+
+The rest of this course is one lesson per pillar, on one example project.
+
+## When should you worry about reproducibility?
+
+. . .
+
+**All the time.** It is cheapest on day one and most expensive the week
+before submission.
+
+## Open science
+
+- **Open access** to papers
+- **Open data**, FAIR and CARE (lesson 03)
+- **Open source** code
+- **Open methods**: protocols, preregistration
+- **Open peer review** and open educational resources (like this course)
+
+## Why open?
+
+- Others can check, reuse and build on your work
+- Shared data is cited more: in one study of 85 cancer microarray trials,
+  publicly available data was associated with **69% more citations**
+  (Piwowar et al. 2007)
+- Funders and journals increasingly require it
+
+## Concerns, and answers
+
+| Concern | Answer |
+|---------|--------|
+| "I will be scooped" | A DOI and a public date establish priority; preprints help |
+| "Nobody credits data and code" | Cite them (CITATION.cff, DOIs); they count increasingly |
+| "Patient privacy" | Controlled access for sensitive data; share code and metadata (lesson 03) |
+| "It is extra work" | Less work than redoing an analysis you cannot rerun |
+| "It hurts my career" | Open work is easier to find, evaluate and reuse |
+
+## Think, pair, share {.prompt-slide}
+
+::: {.prompt}
+**3 minutes.** Human genomic data: what could you share openly from a study of
+200 patients? What only under controlled access? (We return to this in lesson 03.)
+:::
+
+## Quiz {.quiz-slide}
+
+::: {.quiz}
+1. Same data, same code, same result: is that reproducible or replicable?
+2. In the Cancer Biology project, how many of the 193 planned experiments were repeated? (a) 193 (b) 120 (c) 50
+3. Which is **not** one of the five pillars? (a) literate programming (b) environment control (c) peer review (d) documentation
+:::
+
+::: {.notes}
+Answers: 1 reproducible; 2 c (from 23 papers); 3 c.
+:::
+
+## Recap
+
+- Reproducible ≠ replicable; reproducibility is the minimum
+- Most failures are honest: files, steps and software nobody can recover
+- Five pillars: literate programming, version control, environments, data sharing, documentation
+- Open science helps others and you; FAIR is not the same as open
+
+**Self-paced:** [tutorial 01](../../pages/01-introduction.qmd), audit a paper's data and code.

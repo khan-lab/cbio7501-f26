@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use or adapt these materials, please cite them as below."
+title: "Reproducible and Open Science (CBIO7501): open workshop materials"
+abstract: >-
+  Hands-on lessons on reproducible and open computational research (project
+  organization, data management, Quarto, Jupyter, Git, Pixi, containers,
+  Snakemake, Nextflow, documentation and publishing), built around one
+  variant-calling project on the E. coli Long-Term Evolution Experiment.
+type: software
+authors:
+  - given-names: "Aziz"
+    family-names: "Khan"
+    affiliation: "Mohamed bin Zayed University of Artificial Intelligence (MBZUAI)"
+repository-code: "https://github.com/khan-lab/cbio7501-f26"
+url: "https://khan-lab.github.io/cbio7501-f26/"
+license:
+  - CC-BY-4.0
+  - MIT
+version: 0.1.0
+keywords:
+  - reproducibility
+  - open science
+  - bioinformatics
+  - teaching
+  - Pixi
+  - Snakemake
+  - Nextflow

@@ -1,0 +1,715 @@
+---
+title: "03 Data management and FAIR"
+subtitle: "Get the LTEE data the reproducible way: recorded source, verified checksums, metadata, read-only"
+description: "FAIR and CARE principles and data availability, then hands-on: download the LTEE data, verify it against the provider's checksums, record checksums and metadata, and protect raw data."
+adapted_from:
+  - title: "FAIR in (biological) practice: Being FAIR"
+    url: https://carpentries-incubator.github.io/fair-bio-practice/03-being-fair.html
+    authors: "Tomasz Zieliński, Andrés Romanowski and contributors (The Carpentries Incubator)"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 513e1d5 (2025-01-28)"
+    changes: "Kept the exercise of judging a Zenodo record against FAIR (the Scotland wastewater dataset, as on Week 1 slide 93); FAIR summary rewritten; added an LTEE version of the exercise."
+  - title: "Tools for Reproducible Research: Managing your data (lecture)"
+    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html
+    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Used the 'data mismanagement in practice' table and the data management plan checklist, shortened."
+  - title: "Data Carpentry Wrangling Genomics: Background and metadata"
+    url: https://datacarpentry.github.io/wrangling-genomics/01-background.html
+    authors: "Data Carpentry contributors"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit d965cc4 (2025-07-18)"
+    changes: "Sample metadata for the three Ara-3 clones copied into our sample sheet; download commands adapted, with checksum checks added."
+test:
+  needs: [02-project-organization]
+  timeout: 1800
+---
+
+::: {.at-a-glance}
+- **Time:** Part A (concepts) 25 minutes, self-paced or in the lecture; Part B (hands-on) 40 minutes, after [lesson 02](02-project-organization.qmd).
+- **Slides:** [Data management and FAIR](../lectures/03-data-management/03-data-management.qmd)
+- **You need:** the `ltee-project` folder from [lesson 02](02-project-organization.qmd); about 500 MB of free disk space.
+- **You will have:** the LTEE raw data in `data/raw/`, verified, read-only and described in `metadata/`.
+:::
+
+## Overview
+
+Code can be rerun only if the data it ran on can be found, downloaded and
+checked. This lesson has two parts. Part A covers the ideas:
+FAIR and CARE, data availability statements and sensitive data. Part B is the
+hands-on: you get the LTEE data into your project in a way that anyone can
+repeat and check.
+
+### Learning outcomes
+
+After this lesson you can:
+
+1. **Download** raw data from a recorded source and **verify** it against the provider's checksum.
+2. **Record** checksums and metadata (sources, sample sheet, data dictionary) so that anyone can check they have exactly your data.
+3. **Assess** a dataset record against the FAIR principles and **write** a data availability statement for your own project.
+4. **Decide** what can and cannot be shared openly for a given dataset, including human genomic data, and **ask** who benefits and who decides, with the CARE principles.
+
+Outcomes 1 and 2 are checked by `sha256sum -c` passing on your files; 3 and 4 by the exercises.
+
+## Part A: concepts
+
+### Data in real life
+
+A familiar story, from the NBIS course:
+
+| Stage | Raw data | Metadata |
+|-------|----------|----------|
+| Data acquisition | arrives in an awkward, proprietary format | in the researcher's lab notebook |
+| Analysis | converted to a format of choice; the original files and the conversion settings are lost | hard-coded in analysis scripts |
+| First submission | | mailed back and forth in ever-changing spreadsheets |
+| Review | lives on a cluster until the project expires | |
+| Second submission | ends on an external hard drive | pasted as a PDF table in the supplement |
+| Publication | "Data available upon request" | |
+
+How well does "available upon request" work? Gabelica, Bojčić and Puljak
+(2022) asked the authors of 1,792 papers whose data availability statement
+said data were available on request: 93% did not answer or declined, and only
+123 (6.8%) shared the data.
+
+### FAIR in one table
+
+The FAIR principles (Wilkinson et al. 2016) describe data that machines and
+people can use:
+
+| | Means | In practice |
+|-|-------|-------------|
+| **F**indable | the data has a persistent identifier and rich metadata, and is indexed | a DOI (Zenodo, figshare) or an accession (SRA, ENA) |
+| **A**ccessible | it can be retrieved with an open, standard protocol, and the metadata stays even if the data cannot be shared | an HTTPS download; controlled access with a clear procedure |
+| **I**nteroperable | it uses open formats and shared vocabularies | FASTQ, VCF, CSV/TSV; ontology terms for species, tissues |
+| **R**eusable | it has a clear license, provenance and enough description to be reused | CC0 or CC BY; a README; how the data was made |
+
+FAIR is not the same as open: human genomic data can be FAIR (findable,
+described, with a clear access procedure) without being open.
+
+### CARE in one table
+
+FAIR is about the data: can people and machines find and use it? It does not
+ask who the data comes from, who decides how it is used, or who benefits. The
+**CARE Principles for Indigenous Data Governance** (Global Indigenous Data
+Alliance, 2019; Carroll et al. 2020) ask exactly this, for data from and about
+Indigenous Peoples: about their people, lands, resources and knowledge. In
+biology that includes human genomes and health records, and also samples of
+plants, animals and microbes collected on Indigenous lands.
+
+| | Means | In practice |
+|-|-------|-------------|
+| **C**ollective benefit | the data is used in ways that benefit the communities it comes from: inclusive development, better governance, fair outcomes | benefits agreed at the start; results returned in a form the community can use |
+| **A**uthority to control | Indigenous Peoples' rights and interests in their data are recognized, and they take part in deciding how it is governed | community agreement as well as individual consent; the community has a say in who gets access |
+| **R**esponsibility | those who work with the data are accountable to the people it comes from, and build lasting, respectful relationships | report back how the data was used; support local skills in data and analysis |
+| **E**thics | the rights and wellbeing of Indigenous Peoples come first, at every stage of the data's life | weigh harms to the group, not only to individuals; record limits on future use in the metadata |
+
+Each principle has three sub-principles; the full text is on the
+[GIDA website](https://www.gida-global.org/careprinciples). CARE does not
+replace FAIR; the two are meant to be applied together ("Be FAIR and CARE").
+FAIR makes data usable; CARE asks *for whom* and *who decides*.
+
+A dataset can be FAIR and still fail CARE. DNA samples that members of the
+Havasupai Tribe in Arizona gave for a study of type 2 diabetes were later used
+in several other genetic studies, which the Tribe found out about afterwards.
+The Tribe sued the university in 2004; the case was settled in 2010, and the
+samples were returned (Garrison 2013).
+
+### Exercise A1: is this dataset FAIR? (think, pair, share; 5 minutes)
+
+Open the Zenodo record **"SARS-CoV-2 RNA levels in Scotland's wastewater"**:
+<https://doi.org/10.5281/zenodo.6339631>. For each letter of FAIR, find one
+thing in the record that meets it, and one thing that could be better. Then
+compare with your neighbor.
+
+::: {.callout-tip collapse="true" title="Some answers"}
+- **F**: a DOI (the link you used is the *concept* DOI, which always points to
+  the latest version), a title, authors, keywords and a description.
+- **A**: the files download over HTTPS without an account.
+- **I**: data in CSV with a documented layout; the record links to the GitHub
+  repository with the code and to the paper in *Scientific Data*.
+- **R**: CC BY 4.0 license; versions are kept (V1.2 at the time of writing); a
+  README describes files and columns.
+- Could be better: you tell us! (For example, are sampling sites described
+  with standard identifiers?)
+:::
+
+### Exercise A2: how FAIR is the LTEE data?
+
+Our data comes from the figshare record
+<https://doi.org/10.6084/m9.figshare.7726454> (Data Carpentry Genomics
+Curriculum Example Data). Look at it. Is it FAIR? What would you need to know
+to reuse `sub.tar.gz` that the record does not tell you?
+
+::: {.callout-tip collapse="true" title="Some answers"}
+DOI and version (F), HTTPS download (A), standard FASTQ files (I) and a CC0
+license (R) are good. But the record does not say which reads are in
+`sub.tar.gz`, how they were trimmed and subsampled, or which sample is which
+generation: that is in the Data Carpentry lesson text and its metadata file.
+The record does give its md5 checksums (in the figshare API). This is why we
+write our own `metadata/` files below.
+
+CARE asks little of this dataset: the reads come from laboratory strains of
+*E. coli*. That changes as soon as samples come from people or from their
+lands, as in the next exercise.
+:::
+
+### Exercise A3: FAIR, but CARE? (5 minutes)
+
+A team collects gut microbiome samples in a remote Indigenous community, with
+each donor's written consent. To be as FAIR as possible, they plan to put all
+reads in the Sequence Read Archive (SRA), open to everyone, with rich metadata
+that includes the name of the village. Is the plan FAIR? Which CARE principles
+does it miss, and what would you change?
+
+::: {.callout-tip collapse="true" title="Some answers"}
+- **FAIR:** yes: accessions, open download, standard formats, rich metadata.
+- **Authority to control:** individual consent is not community agreement.
+  Who decides about future uses of the data, such as studies the donors never
+  heard of?
+- **Collective benefit:** what does the community get back: results it can
+  use, training, a share in what the research leads to?
+- **Ethics:** the village name in open metadata can expose the whole
+  community, for example to stigma about its health, even when no individual
+  is named. Gut samples also contain human DNA: the human reads should be
+  removed before upload.
+- **Responsibility:** plan how results are reported back, in a form and
+  language the community can use.
+- What to change: agree on data governance with the community before
+  collecting; record the agreed limits in the metadata and the data
+  availability statement; consider controlled access with the community in
+  the access decision.
+:::
+
+### Data availability statements
+
+Most journals ask for a data availability statement (DAS). Compare:
+
+- *Weak:* "Data are available from the corresponding author upon reasonable request."
+- *Strong:* "Raw reads are in the NCBI Sequence Read Archive under BioProject
+  PRJNA295606 (runs SRR2589044, SRR2584863, SRR2584866). The subset used here
+  is on figshare, <https://doi.org/10.6084/m9.figshare.7726454> (CC0). Code and
+  environment: <https://github.com/…> (MIT), archived at Zenodo (DOI …)."
+
+### Sensitive data: what can be shared?
+
+Not all data can be open. Human genomic data can identify a person (and their
+relatives) even without names, so it is shared under **controlled access**
+(for example dbGaP in the US or the European Genome-phenome Archive), as the
+participants' consent allows. What you *can* usually share openly: the code,
+the environment, the metadata schema, summary statistics that cannot be traced
+to a person, and a description of how to apply for access.
+
+::: {.callout-note title="Discuss (5 minutes)"}
+A study sequences 200 patients with a rare disease. Which of these can go on
+GitHub or Zenodo, and which cannot: the FASTQ files; the variant calls; the
+analysis code; the `pixi.lock` file; allele frequencies per variant across the
+cohort; the sample sheet with age, sex and hospital? What would you write in
+the DAS?
+:::
+
+### A data management plan in six questions
+
+Funders often ask for a data management plan. It answers: what data will you
+collect or reuse, in which formats; how much storage you need, short and long
+term; how you describe the data (metadata); legal and ethical limits (consent,
+sensitive data, agreements with communities under CARE); where the data will be deposited and under which license; and
+who is responsible. Write it at the start and update it.
+
+## Part B: hands-on {#hands-on}
+
+You will do by hand what the project will later do with one command (lesson
+05 turns these steps into a Pixi task). Work in the project folder:
+
+```{.bash .run}
+cd ~/cbio7501/ltee-project
+```
+
+### 1. Write down where the data comes from
+
+Before you download anything, record the source. Create
+`metadata/sources.tsv` (tab-separated; copy the block with the copy button):
+
+```{.text filename="metadata/sources.tsv" .write}
+name	url	md5	unpack	dest
+ltee_subset	https://ndownloader.figshare.com/files/14418248	e1294a9201359d4341856bcc735929d3	tar	data/raw/fastq
+rel606_reference	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/017/985/GCA_000017985.1_ASM1798v1/GCA_000017985.1_ASM1798v1_genomic.fna.gz	84ac547b7fa22c6291aa519f2d1ce444	none	data/raw/reference/ecoli_rel606.fasta.gz
+```
+
+The `md5` column holds the checksums published by the providers: figshare
+lists them for each file of the record, and NCBI has a `md5checksums.txt`
+file in each assembly folder. We copied them on 2026-10-24.
+
+### 2. Download the reads and check them
+
+::: {.panel-tabset group="os"}
+
+#### macOS / Linux / WSL2
+
+```{.bash .run}
+curl -L --fail --retry 5 --retry-all-errors -o data/raw/sub.tar.gz https://ndownloader.figshare.com/files/14418248
+```
+
+#### Windows PowerShell
+
+```powershell
+curl.exe -L --fail --retry 5 -o data/raw/sub.tar.gz https://ndownloader.figshare.com/files/14418248
+```
+
+:::
+
+`-L` follows redirects (figshare sends you on to its storage server), `--fail`
+stops on an HTTP error instead of saving the error page, and `--retry 5
+--retry-all-errors` tries again when the connection drops, which happens
+more often than you would think.
+
+The file is 115 MB. Check that it is exactly the file figshare published, by
+comparing its md5 checksum with the one in `sources.tsv`:
+
+::: {.panel-tabset group="os"}
+
+#### macOS / Linux / WSL2
+
+```{.bash .run}
+echo "e1294a9201359d4341856bcc735929d3  data/raw/sub.tar.gz" | md5sum -c -
+```
+
+```text
+data/raw/sub.tar.gz: OK
+```
+
+On macOS before 14 (Sonoma) there is no `md5sum`; use `md5 data/raw/sub.tar.gz`
+and compare the two values by eye.
+
+#### Windows PowerShell
+
+```powershell
+(Get-FileHash data/raw/sub.tar.gz -Algorithm MD5).Hash.ToLower()
+```
+
+Compare with `e1294a9201359d4341856bcc735929d3`.
+
+:::
+
+Unpack it into `data/raw/fastq/` and delete the archive:
+
+```{.bash .run}
+tar -xzf data/raw/sub.tar.gz -C data/raw
+mv data/raw/sub data/raw/fastq
+rm data/raw/sub.tar.gz
+ls -lh data/raw/fastq
+```
+
+```text
+-rw-r--r--  1 ada  staff    58M Jul  7  2018 SRR2584863_1.trim.sub.fastq
+-rw-r--r--  1 ada  staff    52M Jul  7  2018 SRR2584863_2.trim.sub.fastq
+...
+```
+
+Look inside one file. Each read takes four lines: name, sequence, `+`, quality:
+
+```{.bash .run}
+head -4 data/raw/fastq/SRR2584863_1.trim.sub.fastq
+```
+
+### 3. Download the reference genome and check it
+
+```{.bash .run}
+mkdir -p data/raw/reference
+curl -L --fail --retry 5 --retry-all-errors -o data/raw/reference/ecoli_rel606.fasta.gz \
+  https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/017/985/GCA_000017985.1_ASM1798v1/GCA_000017985.1_ASM1798v1_genomic.fna.gz
+echo "84ac547b7fa22c6291aa519f2d1ce444  data/raw/reference/ecoli_rel606.fasta.gz" | md5sum -c -
+gunzip -c data/raw/reference/ecoli_rel606.fasta.gz | head -1
+```
+
+```text
+data/raw/reference/ecoli_rel606.fasta.gz: OK
+>CP000819.1 Escherichia coli B str. REL606, complete genome
+```
+
+We keep the file compressed in `data/raw/`, exactly as NCBI serves it. The
+pipeline writes an uncompressed copy to `data/processed/` later.
+
+### 4. Record checksums of the files you keep
+
+The provider's md5 proved the *downloads* were right. Now record a checksum
+of every raw file you keep, so that anyone (including you, in a year) can
+check they have exactly the same data. We use SHA-256, a stronger checksum
+than md5.
+
+For your own data you would create the file with
+`sha256sum data/raw/fastq/*.fastq data/raw/reference/*.gz > metadata/checksums.sha256`.
+For the LTEE data, use the values we recorded for the course, so you can check
+your files against ours:
+
+```{.text filename="metadata/checksums.sha256" .write}
+242282451273246c6b01cf97b9689d8fd90e4aac6c4cf53d87ebe2f01303b452  data/raw/fastq/SRR2584863_1.trim.sub.fastq
+df1eebd154c22e50f6117f15131d479a4f3cd73d0fa5e43ef73a2dce516b2e86  data/raw/fastq/SRR2584863_2.trim.sub.fastq
+f8aceb43636667de5cbeb32e8ee770af3b25f3a48c56e8d03e3db2a53aaafecc  data/raw/fastq/SRR2584866_1.trim.sub.fastq
+1dd761222aaa567c06f92caa163bd74ff39aa4d9b8b794a1120e66cf8048ba7d  data/raw/fastq/SRR2584866_2.trim.sub.fastq
+bfb3940f1e046f7e207f796613a926fc1a74d544416a0ade936744de9c341abb  data/raw/fastq/SRR2589044_1.trim.sub.fastq
+5f997fa47b1ba227528ee1cbc26e83745a0c4eb8047c62bf0722279f72792952  data/raw/fastq/SRR2589044_2.trim.sub.fastq
+070a03fc2e2813853d5327608ee3ebcb4b0b2fe7faa239169921b3362b24adfa  data/raw/reference/ecoli_rel606.fasta.gz
+```
+
+Check all files at once:
+
+```{.bash .run}
+sha256sum -c metadata/checksums.sha256
+```
+
+```text
+data/raw/fastq/SRR2584863_1.trim.sub.fastq: OK
+...
+data/raw/reference/ecoli_rel606.fasta.gz: OK
+```
+
+(Older macOS: `shasum -a 256 -c metadata/checksums.sha256`.)
+
+### 5. Make raw data read-only
+
+```{.bash .run}
+chmod a-w data/raw/fastq/* data/raw/reference/*
+ls -l data/raw/fastq | head -3
+```
+
+```text
+-r--r--r--  1 ada  staff  60318527 Jul  7  2018 SRR2584863_1.trim.sub.fastq
+```
+
+The `r--r--r--` means nobody can write to the file, including you and your
+scripts. A bug that tries to overwrite raw data now fails loudly instead of
+silently destroying it. (We protect the files, not the folders, so you can
+still delete and download a file again. `rm` asks before it deletes a
+read-only file; `rm -f` does not ask.)
+
+### 6. Describe the samples
+
+A sample sheet links file names to what they mean. The values come from the
+Data Carpentry lesson's metadata (Tenaillon et al. 2016). Create
+`metadata/samples.tsv`:
+
+```{.text filename="metadata/samples.tsv" .write}
+sample	strain	generation	population	mutator	cit	fastq_1	fastq_2
+SRR2589044	REL2181A	5000	Ara-3	None	unknown	data/raw/fastq/SRR2589044_1.trim.sub.fastq	data/raw/fastq/SRR2589044_2.trim.sub.fastq
+SRR2584863	REL7179B	15000	Ara-3	None	unknown	data/raw/fastq/SRR2584863_1.trim.sub.fastq	data/raw/fastq/SRR2584863_2.trim.sub.fastq
+SRR2584866	REL11365	50000	Ara-3	plus	plus	data/raw/fastq/SRR2584866_1.trim.sub.fastq	data/raw/fastq/SRR2584866_2.trim.sub.fastq
+```
+
+And explain every column in `metadata/README.md` (replace the template text):
+
+```{.markdown filename="metadata/README.md" .write}
+# metadata
+
+Files that describe the raw data. They are small, written by hand and committed.
+
+## sources.tsv
+
+Where each raw file comes from. Columns: `name`; `url` (download link);
+`md5` (checksum published by the provider: figshare record 7726454 and
+NCBI's md5checksums.txt, copied 2026-10-24); `unpack` (`tar` = unpack the
+archive, `none` = keep the file as is); `dest` (where it goes in the project).
+
+## checksums.sha256
+
+SHA-256 checksum of every raw file we keep. Check with
+`sha256sum -c metadata/checksums.sha256`.
+
+## samples.tsv
+
+One row per sample.
+
+| Column | Meaning |
+|--------|---------|
+| sample | SRA run accession, also used in all file names |
+| strain | LTEE clone name (REL…) |
+| generation | generation at which the clone was frozen |
+| population | LTEE population (all Ara-3 here) |
+| mutator | hypermutability status (`None` or `plus`) |
+| cit | can use citrate (`plus`) or not known (`unknown`) |
+| fastq_1, fastq_2 | read 1 and read 2 FASTQ files, relative to the project folder |
+
+Source of the sample information: Data Carpentry, *Wrangling Genomics*,
+`Ecoli_metadata_composite.csv` (CC BY 4.0), from Tenaillon et al. 2016,
+*Nature* 536:165, <https://doi.org/10.1038/nature18959>. Runs are in NCBI
+BioProject PRJNA295606.
+```
+
+Check that the sample sheet points at files that exist:
+
+```{.bash .run}
+cut -f7,8 metadata/samples.tsv | tail -n +2 | tr '\t' '\n' | xargs ls -l
+```
+
+### 7. Automate it
+
+You now know every step: download from the recorded source, check the
+provider's checksum, unpack, check your own checksums, protect the files.
+A script can do all of that in one command, reading the two files you wrote
+(`metadata/sources.tsv` and `metadata/checksums.sha256`), so the knowledge
+lives in the project and not in your memory. Save this as
+`scripts/download_data.py` (you do not need to understand every line):
+
+```{.python filename="scripts/download_data.py" .write}
+"""Download the LTEE example data and check that it is exactly what we expect.
+
+Reads   metadata/sources.tsv        where each file comes from, provider md5
+Checks  metadata/checksums.sha256   sha256 of every raw file we keep
+Writes  data/raw/fastq/*.fastq and data/raw/reference/ecoli_rel606.fasta.gz,
+        then makes them read-only (raw data is never edited).
+
+Run it again at any time: files that are already present and correct are
+not downloaded again. Use --verify-only to check without downloading.
+Works on Linux, macOS and Windows (only the Python standard library).
+"""
+
+import argparse
+import csv
+import hashlib
+import http.client
+import os
+import shutil
+import stat
+import sys
+import tarfile
+import tempfile
+import time
+import urllib.request
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+SOURCES = ROOT / "metadata" / "sources.tsv"
+CHECKSUMS = ROOT / "metadata" / "checksums.sha256"
+
+
+def digest(path, algorithm):
+    h = hashlib.new(algorithm)
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def expected_sha256():
+    expected = {}
+    for line in CHECKSUMS.read_text().splitlines():
+        if line.strip():
+            value, name = line.split(maxsplit=1)
+            expected[name.strip().lstrip("*")] = value
+    return expected
+
+
+def verify(expected):
+    """Return the files that are missing or have the wrong checksum."""
+    bad = []
+    for name, value in expected.items():
+        path = ROOT / name
+        if not path.exists():
+            bad.append((name, "missing"))
+        elif digest(path, "sha256") != value:
+            bad.append((name, "checksum differs"))
+    return bad
+
+
+def download(url, dest, attempts=3):
+    print(f"  downloading {url}", flush=True)
+    request = urllib.request.Request(url, headers={"User-Agent": "curl/8 (cbio7501 ltee-project)"})
+    for attempt in range(1, attempts + 1):
+        try:
+            # timeout: give up if the server sends nothing for 60 s
+            with urllib.request.urlopen(request, timeout=60) as response, open(dest, "wb") as out:
+                total = int(response.headers.get("Content-Length") or 0)
+                done, shown = 0, -1
+                while chunk := response.read(1 << 20):
+                    out.write(chunk)
+                    done += len(chunk)
+                    if total and done * 10 // total > shown:  # progress every 10%
+                        shown = done * 10 // total
+                        print(f"  {done / 1e6:.0f} of {total / 1e6:.0f} MB", flush=True)
+            return
+        except (OSError, http.client.HTTPException) as err:  # network hiccup: wait and try again
+            if attempt == attempts:
+                raise
+            print(f"  attempt {attempt} failed ({err}); retrying in {5 * attempt} s")
+            time.sleep(5 * attempt)
+
+
+def fetch(source, tmp):
+    archive = Path(tmp) / source["name"]
+    download(source["url"], archive)
+    md5 = digest(archive, "md5")
+    if md5 != source["md5"]:
+        sys.exit(f"ERROR {source['name']}: md5 {md5} does not match the provider's {source['md5']}")
+    print(f"  md5 matches the provider ({md5})", flush=True)
+    dest = ROOT / source["dest"]
+    if source["unpack"] == "tar":
+        dest.mkdir(parents=True, exist_ok=True)
+        with tarfile.open(archive) as tar:
+            for member in tar.getmembers():
+                if member.isfile():
+                    member.name = Path(member.name).name  # drop the sub/ folder
+                    tar.extract(member, dest, filter="data")
+    else:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(archive, dest)
+
+
+def make_read_only(expected):
+    for name in expected:
+        path = ROOT / name
+        mode = path.stat().st_mode
+        os.chmod(path, mode & ~(stat.S_IWUSR | stat.S_IWGRP | stat.S_IWOTH))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--verify-only", action="store_true", help="only check the files")
+    args = parser.parse_args()
+
+    expected = expected_sha256()
+    bad = verify(expected)
+    if bad and not args.verify_only:
+        with open(SOURCES, newline="") as fh:
+            sources = list(csv.DictReader(fh, delimiter="\t"))
+        # temporary files go inside the project, on the same disk as the data
+        with tempfile.TemporaryDirectory(dir=ROOT / "data") as tmp:
+            for source in sources:
+                targets = [n for n, _ in bad if n.startswith(source["dest"])]
+                if targets:
+                    print(f"{source['name']}: {len(targets)} file(s) to fetch", flush=True)
+                    for name in expected:  # remove read-only leftovers from this source
+                        path = ROOT / name
+                        if name.startswith(source["dest"]) and path.exists():
+                            os.chmod(path, stat.S_IWUSR | stat.S_IRUSR)
+                            path.unlink()
+                    fetch(source, tmp)
+        bad = verify(expected)
+
+    for name, problem in bad:
+        print(f"FAILED {name}: {problem}")
+    if bad:
+        sys.exit(f"{len(bad)} of {len(expected)} raw files are missing or changed")
+    make_read_only(expected)
+    print(f"OK: all {len(expected)} raw files present, sha256 verified, read-only")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+It only uses Python's standard library, so `pixi exec` can run it before the
+project has its own environment. Check your files with it:
+
+```{.bash .run}
+pixi exec python scripts/download_data.py --verify-only
+```
+
+```text
+OK: all 7 raw files present, sha256 verified, read-only
+```
+
+Without `--verify-only` it downloads whatever is missing or wrong, and does
+nothing if all is well. In [lesson 05](05-pixi.qmd) it becomes the
+`download` task of the pipeline, and a GitHub Action uses it to get the data
+on a fresh computer.
+
+### 8. Write the data availability statement
+
+Add a "Data availability" paragraph to your `README.md`, based on the strong
+example in Part A. It should say where the raw data is (with identifiers),
+under which license, and how the derived data can be regenerated.
+
+## Break it: when raw data changes
+
+Checksums are only useful if you check them. Let us damage a raw file and see
+who notices. First, the read-only protection: try to append one byte to the
+reference genome.
+
+```{.bash .expect-fail}
+printf 'x' >> data/raw/reference/ecoli_rel606.fasta.gz
+```
+
+```text
+bash: data/raw/reference/ecoli_rel606.fasta.gz: Permission denied
+```
+
+Now do what a careless script (or a sync tool, or a failing disk) might do:
+remove the protection and change the file.
+
+```{.bash .run}
+chmod u+w data/raw/reference/ecoli_rel606.fasta.gz
+printf 'x' >> data/raw/reference/ecoli_rel606.fasta.gz
+ls -l data/raw/reference/
+```
+
+Nothing looks wrong: the name, the size (one byte more) and the date look
+plausible. The checksum check notices:
+
+```{.bash .expect-fail}
+sha256sum -c metadata/checksums.sha256
+```
+
+```text
+data/raw/reference/ecoli_rel606.fasta.gz: FAILED
+sha256sum: WARNING: 1 computed checksum did NOT match
+```
+
+Repair it the reproducible way: download again from the recorded source and
+check again.
+
+```{.bash .run}
+rm -f data/raw/reference/ecoli_rel606.fasta.gz
+curl -L --fail --retry 5 --retry-all-errors -o data/raw/reference/ecoli_rel606.fasta.gz \
+  https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/017/985/GCA_000017985.1_ASM1798v1/GCA_000017985.1_ASM1798v1_genomic.fna.gz
+sha256sum -c metadata/checksums.sha256
+chmod a-w data/raw/reference/ecoli_rel606.fasta.gz
+```
+
+## Troubleshooting
+
+| Problem | What to do |
+|---------|------------|
+| `curl: (22) The requested URL returned error: 403` | figshare sometimes refuses unusual requests. Use exactly the command above (a normal download, `-L` to follow redirects). If it persists, download in the browser from the DOI page and move the file into `data/raw/`. |
+| The NCBI download is very slow, stalls, or ends with `curl: (18) transfer closed` | NCBI's server can be slow at times: while writing this lesson we saw 16 KB/s and a dropped connection. The `--retry` options try again; if it still fails, run the command again later. Then check the md5 again: a partial file must never stay in `data/raw/`. |
+| `md5sum: command not found` (older macOS) | Use `md5 FILE` and `shasum -a 256 -c metadata/checksums.sha256`. |
+| `FAILED` for a FASTQ file | The download was incomplete or the file was changed. Delete it with `rm -rf data/raw/fastq`, then repeat step 2. |
+| `tar: Error opening archive` | The download did not finish: check the md5 again and download again. |
+| Copy-paste of `.tsv` files lost the tabs | Some editors turn tabs into spaces. Use the copy button on the code block, or check with `cat -t metadata/samples.tsv` (tabs show as `^I`). |
+| Windows: `Get-FileHash` prints upper case | Compare ignoring case, or use `.ToLower()` as shown. |
+
+## Apply it to your own mini-analysis
+
+For your own project: write `metadata/sources.tsv` (or a README section) for
+your data, with identifiers and licenses; download it with commands, not by
+clicking; record checksums; make it read-only; and write a draft data
+availability statement. If your data cannot be shared, write what *can* be
+shared and how others could apply for access.
+
+## Key points
+
+- "Available upon request" rarely works; share data with a persistent identifier and a license.
+- FAIR means findable, accessible, interoperable and reusable; it is not the same as open.
+- CARE (collective benefit, authority to control, responsibility, ethics) complements FAIR: for data from Indigenous Peoples and their lands, ask who benefits and who decides.
+- Record the source of every raw file before you download it, and download with commands.
+- Verify downloads with the provider's checksum; record your own checksums for every raw file you keep.
+- Make raw data read-only; describe it in a sample sheet and a data dictionary.
+- Sensitive data can still be FAIR: share metadata, code and access procedures.
+
+## Further reading
+
+- Cheat sheet: [Project and data](../cheatsheets/project-and-data.qmd), with links to the official cheat sheets and references.
+- Wilkinson MD et al. (2016). The FAIR Guiding Principles for scientific data management and stewardship. *Sci Data* 3:160018. <https://doi.org/10.1038/sdata.2016.18>
+- Global Indigenous Data Alliance, *CARE Principles for Indigenous Data Governance*: <https://www.gida-global.org/careprinciples>
+- Carroll SR et al. (2020). The CARE Principles for Indigenous Data Governance. *Data Sci J* 19:43. <https://doi.org/10.5334/dsj-2020-043>
+- Carroll SR, Herczog E, Hudson M, Russell K, Stall S (2021). Operationalizing the CARE and FAIR Principles for Indigenous data futures. *Sci Data* 8:108. <https://doi.org/10.1038/s41597-021-00892-0>
+- Garrison NA (2013). Genomic justice for Native Americans: impact of the Havasupai case on genetic research. *Sci Technol Human Values* 38:201–223. <https://doi.org/10.1177/0162243912470009>
+- Gabelica M, Bojčić R, Puljak L (2022). Many researchers were not compliant with their published data sharing statement: a mixed-methods study. *J Clin Epidemiol* 150:33–41. <https://doi.org/10.1016/j.jclinepi.2022.05.019>
+- The Carpentries Incubator, *FAIR in (biological) practice*: <https://carpentries-incubator.github.io/fair-bio-practice/>
+- Data Carpentry, *Wrangling Genomics*, background on the LTEE data: <https://datacarpentry.github.io/wrangling-genomics/01-background.html>
+- Tenaillon O et al. (2016). Tempo and mode of genome evolution in a 50,000-generation experiment. *Nature* 536:165–170. <https://doi.org/10.1038/nature18959>

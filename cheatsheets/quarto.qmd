@@ -1,0 +1,95 @@
+---
+title: "Quarto"
+subtitle: "Cheat sheet for lesson 07"
+---
+
+## Render
+
+| What you want | Command |
+|------------|------------------------|
+| Render one document | `pixi run quarto render reports/ltee-report.qmd` |
+| Render the documents listed in `_quarto.yml` | `pixi run quarto render` |
+| Preview in the browser, re-rendered on every save | `pixi run quarto preview reports/first.qmd` (stop: `Ctrl-C`) |
+| Change a parameter for one render | `pixi run quarto render reports/ltee-report.qmd -P max_reads:2000` |
+| Another format | add `--to typst` (PDF), `--to docx` (Word) or `--to revealjs` (slides) |
+| Render a Jupyter notebook, running it first | `pixi run quarto render notebooks/NOTEBOOK.ipynb --execute` |
+| Render as part of the pipeline | `pixi task add report "quarto render reports/ltee-report.qmd" --depends-on download`, then `pixi run report` |
+
+See [lesson 07, sections 3 and 6 to 9](../pages/07-quarto.qmd#your-first-quarto-document).
+
+## The document header
+
+```{.yaml}
+---
+title: "Mutations in the Long-Term Evolution Experiment"
+author: "Ada Lovelace"
+date: today
+format:
+  html:
+    embed-resources: true   # one self-contained HTML file
+    toc: true
+    code-fold: true
+execute:
+  warning: false
+bibliography: references.bib
+jupyter: python3
+---
+```
+
+## Code cells and their options
+
+````{.markdown}
+```{{python}}
+#| label: fig-quality
+#| fig-cap: "Mean base quality along the reads."
+#| fig-alt: "Line plot of mean quality against position in the read ..."
+fig, ax = plt.subplots()
+```
+````
+
+- `#| label: fig-NAME` or `tbl-NAME`: a numbered figure or table, cited in the text as `@fig-NAME`
+- `fig-cap`, `tbl-cap`: the caption
+- `fig-alt`: alt text, what the figure shows, for screen readers
+- `echo: false`: hide the code, keep the output
+- `include: false`: hide code and output; the cell still runs
+- `eval: false`: show the code without running it
+- `tags: [parameters]`: the cell whose values `-P` can change
+
+Each option goes on its own `#|` line at the top of the cell.
+
+## In the text
+
+| What you want | Write |
+|------------|------------------------|
+| Cite a figure or table | `@fig-quality`, `@tbl-samples` |
+| Cite a paper from `references.bib` | `[@tenaillon2016]` |
+| Where the reference list goes | `::: {#refs}` and `:::` on the next line |
+| A call-out box | `::: {.callout-note}` ... `:::` (also `-tip`, `-warning`, `-important`) |
+
+A value computed when the report renders, never typed (inline code):
+
+```{.markdown}
+Each file has `{python} f"{n_reads:,}"` reads.
+```
+
+More Markdown on the [Markdown cheat sheet](markdown.qmd).
+
+## `_quarto.yml` for a project
+
+```{.yaml}
+project:
+  execute-dir: project   # code runs from the project folder
+  render:
+    - reports/*.qmd      # what a plain `quarto render` renders
+```
+
+Without it, code runs in the folder of the document, and Quarto may pick up
+settings from a folder above. See [section 2](../pages/07-quarto.qmd#tell-quarto-where-the-project-is).
+
+## Official cheat sheets and references
+
+- **Quarto cheat sheet**, from Posit, who make Quarto (web page and PDF; some examples use R and RStudio, most of it applies to Python): <https://rstudio.github.io/cheatsheets/html/quarto.html>, PDF: <https://rstudio.github.io/cheatsheets/quarto.pdf>
+- Quarto, *Guide*: <https://quarto.org/docs/guide/>
+- Quarto, *Using Python*: <https://quarto.org/docs/computations/python.html>
+- Quarto reference, *Code cells: Jupyter* (every `#|` option): <https://quarto.org/docs/reference/cells/cells-jupyter.html>
+- Quarto reference, *HTML options* (every header option for HTML): <https://quarto.org/docs/reference/formats/html.html>

@@ -1,0 +1,192 @@
+# LTEE variant calling with Snakemake.
+#
+# Steps and tool options follow Data Carpentry "Wrangling Genomics"
+# (variant calling episode, CC BY 4.0,
+# https://datacarpentry.github.io/wrangling-genomics/04-variant_calling.html),
+# with FastQC and MultiQC added at the start. The Nextflow version in
+# workflow/nextflow/main.nf runs the same steps with the same options.
+#
+# Run from the project folder:  pixi run run-snakemake
+# (or: pixi run -e pipeline snakemake --cores 4)
+
+import csv
+
+
+configfile: "config/config.yaml"
+
+
+with open(config["samples"]) as fh:
+    SAMPLES = {row["sample"]: row for row in csv.DictReader(fh, delimiter="\t")}
+
+GENOME = "data/processed/reference/ecoli_rel606.fasta"
+
+
+wildcard_constraints:
+    sample="|".join(SAMPLES),
+    read="1|2",
+    depth=r"\d+",
+
+
+rule prepare_reference:
+    input:
+        config["reference_gz"],
+    output:
+        GENOME,
+    shell:
+        "gunzip -c {input} > {output}"
+
+
+rule bwa_index:
+    input:
+        GENOME,
+    output:
+        multiext(GENOME, ".amb", ".ann", ".bwt", ".pac", ".sa"),
+    log:
+        "results/logs/bwa_index.log",
+    shell:
+        "bwa index {input} 2> {log}"
+
+
+rule bwa_mem:
+    input:
+        genome=GENOME,
+        index=rules.bwa_index.output,
+        r1=lambda wc: SAMPLES[wc.sample]["fastq_1"],
+        r2=lambda wc: SAMPLES[wc.sample]["fastq_2"],
+    output:
+        temp("results/sam/{sample}.aligned.sam"),
+    log:
+        "results/logs/bwa_mem/{sample}.log",
+    threads: 4
+    params:
+        extra=config["bwa_extra"] or "",  # an empty setting means no extra options
+    shell:
+        "bwa mem -t {threads} {params.extra} {input.genome} {input.r1} {input.r2} > {output} 2> {log}"
+
+
+rule sam_to_bam:
+    input:
+        "results/sam/{sample}.aligned.sam",
+    output:
+        temp("results/bam/{sample}.aligned.bam"),
+    shell:
+        "samtools view -S -b {input} > {output}"
+
+
+rule sort_bam:
+    input:
+        "results/bam/{sample}.aligned.bam",
+    output:
+        "results/bam/{sample}.aligned.sorted.bam",
+    shell:
+        "samtools sort -o {output} {input}"
+
+
+rule index_bam:
+    input:
+        "results/bam/{sample}.aligned.sorted.bam",
+    output:
+        "results/bam/{sample}.aligned.sorted.bam.bai",
+    shell:
+        "samtools index {input}"
+
+
+rule flagstat:
+    input:
+        "results/bam/{sample}.aligned.sorted.bam",
+    output:
+        "results/stats/{sample}.flagstat.txt",
+    shell:
+        "samtools flagstat {input} > {output}"
+
+
+rule mpileup:
+    input:
+        genome=GENOME,
+        bam="results/bam/{sample}.aligned.sorted.bam",
+        bai="results/bam/{sample}.aligned.sorted.bam.bai",
+    output:
+        temp("results/bcf/{sample}_raw.bcf"),
+    log:
+        "results/logs/mpileup/{sample}.log",
+    shell:
+        "bcftools mpileup -O b -o {output} -f {input.genome} {input.bam} 2> {log}"
+
+
+rule call:
+    input:
+        "results/bcf/{sample}_raw.bcf",
+    output:
+        "results/bcf/{sample}_variants.vcf",
+    shell:
+        "bcftools call --ploidy 1 -m -v -o {output} {input}"
+
+
+rule filter:
+    input:
+        "results/bcf/{sample}_variants.vcf",
+    output:
+        "results/vcf/{sample}_final_variants.vcf",
+    params:
+        min_depth=config["min_depth"],
+    shell:
+        "vcfutils.pl varFilter -d {params.min_depth} {input} > {output}"
+
+
+rule variant_stats:
+    input:
+        "results/vcf/{sample}_final_variants.vcf",
+    output:
+        "results/stats/{sample}.bcftools-stats.txt",
+    shell:
+        "bcftools stats {input} > {output}"
+
+
+rule fastqc:
+    input:
+        lambda wc: SAMPLES[wc.sample][f"fastq_{wc.read}"],
+    output:
+        html="results/qc/fastqc/{sample}_{read}.trim.sub_fastqc.html",
+        zip="results/qc/fastqc/{sample}_{read}.trim.sub_fastqc.zip",
+    log:
+        "results/logs/fastqc/{sample}_{read}.log",
+    shell:
+        "fastqc --quiet --outdir results/qc/fastqc {input} > {log} 2>&1"
+
+
+rule multiqc:
+    input:
+        expand(
+            "results/qc/fastqc/{sample}_{read}.trim.sub_fastqc.zip",
+            sample=SAMPLES,
+            read=["1", "2"],
+        ),
+    output:
+        "results/qc/multiqc/multiqc_report.html",
+    log:
+        "results/logs/multiqc.log",
+    shell:
+        "multiqc --force -o results/qc/multiqc {input} > {log} 2>&1"
+
+
+rule depth_sensitivity:
+    input:
+        "results/bcf/{sample}_variants.vcf",
+    output:
+        "results/sensitivity/{sample}_d{depth}.vcf",
+    shell:
+        "vcfutils.pl varFilter -d {wildcards.depth} {input} > {output}"
+
+
+rule all:
+    default_target: True
+    input:
+        "results/qc/multiqc/multiqc_report.html",
+        expand("results/vcf/{sample}_final_variants.vcf", sample=SAMPLES),
+        expand("results/stats/{sample}.flagstat.txt", sample=SAMPLES),
+        expand("results/stats/{sample}.bcftools-stats.txt", sample=SAMPLES),
+        expand(
+            "results/sensitivity/{sample}_d{depth}.vcf",
+            sample=SAMPLES,
+            depth=config["sensitivity_depths"],
+        ),

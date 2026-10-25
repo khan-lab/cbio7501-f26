@@ -1,0 +1,66 @@
+---
+title: "Markdown"
+subtitle: "Cheat sheet for appendix A (used in READMEs, Quarto and notebooks)"
+---
+
+## Text
+
+| You write | You get |
+|------------|------------------------|
+| `# Title`, `## Section`, `### Subsection` | headings (one `#` per document, sections from `##`) |
+| a blank line | a new paragraph (a single line break is ignored) |
+| `*italic*`, `**bold**`, `~~struck~~` | *italic*, **bold**, ~~struck~~ |
+| `` `code` `` | `code` |
+| `[text](https://quarto.org)` | a link: [text](https://quarto.org) |
+| `<https://quarto.org>` | a bare link: <https://quarto.org> |
+| `![Alt text](results/figure.png)` | an image; the alt text says what it shows |
+| `> A quotation.` | a block quote |
+
+## Lists and code
+
+````{.markdown}
+- a bullet
+- another bullet
+  - two spaces in: a sub-bullet
+
+1. numbered
+2. list
+
+```bash
+pixi run reproduce
+```
+````
+
+Leave a blank line before lists, code blocks, tables and headings. Give code
+blocks a language (`bash`, `python`, `yaml`).
+
+## Tables
+
+```{.markdown}
+| Sample     | Generation | Variants |
+|------------|-----------:|---------:|
+| SRR2589044 |      5,000 |       10 |
+| SRR2584866 |     50,000 |      775 |
+```
+
+In the second line, `---:` aligns right and `:---:` centres. Tables made from
+data belong in code ([Quarto](quarto.qmd)), not typed.
+
+## What Quarto adds
+
+```{.markdown}
+::: {.callout-note}
+A box that draws attention. Also callout-tip, -warning, -important.
+:::
+
+See @fig-quality and @tbl-reads.      (cross-references to labelled cells)
+As shown by @tenaillon2016.           (a citation from references.bib)
+```
+
+See [appendix A](../pages/A-markdown.qmd#what-quarto-adds) and the [Quarto cheat sheet](quarto.qmd).
+
+## Official cheat sheets and references
+
+- **CommonMark quick reference**, from the CommonMark project that standardizes Markdown (with a 10-minute tutorial): <https://commonmark.org/help/>
+- Quarto, *Markdown Basics*: <https://quarto.org/docs/authoring/markdown-basics.html>
+- GitHub Docs, *Basic writing and formatting syntax* (Markdown in READMEs, issues and pull requests): <https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax>

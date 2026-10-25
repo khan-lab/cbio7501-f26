@@ -1,0 +1,161 @@
+/*-- scss:defaults --*/
+// Slide theme: same fonts and colors as the light site theme.
+$surface: #f6f7f9;
+$border-subtle: #e4e7ec;
+$border-strong: #cfd4dc;
+$muted: #5b6475;
+$accent: #2156c5;
+$accent-quiz: #b4470c;
+
+$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+$body-bg: #ffffff;
+$body-color: #1e293b;
+$link-color: $accent;
+$text-muted: $muted;
+$presentation-font-size-root: 32px;
+$presentation-line-height: 1.4;
+$presentation-heading-font: $font-family-sans-serif;
+$presentation-heading-color: #0f172a;
+$presentation-heading-font-weight: 700;
+$presentation-heading-letter-spacing: -0.025em;
+$presentation-heading-text-transform: none;
+$presentation-h2-font-size: 1.55em;
+$presentation-h3-font-size: 1.15em;
+$presentation-title-slide-text-align: left;
+$code-block-bg: $surface;
+$code-block-border-color: $border-subtle;
+$code-block-font-size: 0.6em;
+$code-color: #0f172a;
+$code-bg: $surface;
+$selection-bg: rgba(33, 86, 197, 0.18);
+
+// Mermaid diagrams: a system font (already loaded when Mermaid measures the
+// labels, so nothing is clipped) and the theme's colors.
+$mermaid-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$mermaid-bg-color: #ffffff;
+$mermaid-fg-color: #1e293b;
+$mermaid-fg-color--lighter: #5b6475;
+$mermaid-fg-color--lightest: #cfd4dc;
+$mermaid-node-bg-color: rgba(33, 86, 197, 0.08);
+$mermaid-node-fg-color: #0f172a;
+$mermaid-edge-color: #5b6475;
+$mermaid-label-bg-color: #ffffff;
+$mermaid-label-fg-color: #1e293b;
+
+/*-- scss:rules --*/
+.reveal { -webkit-font-smoothing: antialiased; }
+.reveal .slides section h2 { margin-bottom: 0.7em; }
+.reveal .slides section h3 { color: $accent; }
+.reveal strong { font-weight: 650; color: #0f172a; }
+.reveal ul li, .reveal ol li { margin-bottom: 0.3em; }
+.reveal ul ul li { font-size: 0.85em; color: $muted; margin-bottom: 0.15em; }
+
+// Title slide: a short accent bar, left-aligned title, muted subtitle.
+#title-slide { text-align: left; }
+#title-slide::before {
+  content: "";
+  display: block;
+  width: 3.2em;
+  height: 0.22em;
+  border-radius: 0.11em;
+  background: $accent;
+  margin-bottom: 0.9em;
+}
+#title-slide .title { font-size: 2.1em; line-height: 1.1; letter-spacing: -0.035em; }
+#title-slide .subtitle { color: $muted; font-weight: 500; font-size: 0.95em; margin-top: 0.5em; }
+#title-slide .quarto-title-author-name, #title-slide .date { color: $muted; font-size: 0.75em; }
+
+// Section-divider slides: `## Title {.section-slide}`
+.reveal .slides section.section-slide h2 {
+  font-size: 2em;
+  margin-top: 25%;
+  border-left: 0.18em solid $accent;
+  padding-left: 0.5em;
+}
+
+// Chrome
+.reveal .slide-number { font-size: 0.45em; color: $muted; background: transparent; }
+.reveal .footer { font-size: 0.42em !important; color: $muted; }
+.reveal .progress { color: $accent; height: 4px; }
+
+// Code
+.reveal pre {
+  border: 1px solid $border-subtle;
+  border-radius: 12px;
+  box-shadow: none;
+}
+.reveal pre code { padding: 0.7em 0.9em; line-height: 1.5; }
+.reveal :not(pre) > code {
+  background: $surface;
+  border: 1px solid $border-subtle;
+  border-radius: 0.25em;
+  padding: 0.02em 0.25em;
+  font-size: 0.88em;
+}
+
+// Tables
+.reveal table { font-size: 0.72em; border-collapse: collapse; }
+.reveal table th { color: #0f172a; font-weight: 650; border-bottom: 2px solid $border-strong; }
+.reveal table td { border-bottom: 1px solid $border-subtle; }
+
+// Figures and their credit lines (third-party figures need a visible credit)
+.reveal img { border-radius: 10px; }
+.reveal .fig-credit, .reveal figcaption { font-size: 0.45em; color: $muted; }
+.reveal .muted { color: $muted; }
+.reveal .small { font-size: 0.75em; }
+
+// Quotes
+.reveal blockquote {
+  width: 100%;
+  margin: 0.6em 0;
+  padding: 0.1em 0 0.1em 0.9em;
+  background: transparent;
+  box-shadow: none;
+  border-left: 6px solid $accent;
+  font-style: normal;
+  font-size: 1.2em;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+}
+.reveal blockquote p { margin: 0; }
+.reveal .quote-source { display: block; color: $muted; font-size: 0.8em; margin-left: 1.2em; }
+
+// Boxes used across decks
+.reveal .prompt, .reveal .quiz, .reveal .linked-figure, .reveal .key-box {
+  border-radius: 14px;
+  padding: 0.55em 0.95em;
+}
+.reveal .prompt {
+  background: rgba(33, 86, 197, 0.06);
+  border: 1px solid rgba(33, 86, 197, 0.25);
+  border-left: 6px solid $accent;
+}
+.reveal .quiz {
+  background: rgba(180, 71, 12, 0.06);
+  border: 1px solid rgba(180, 71, 12, 0.25);
+  border-left: 6px solid $accent-quiz;
+}
+.reveal .key-box {
+  background: $surface;
+  border: 1px solid $border-subtle;
+}
+.reveal .linked-figure {
+  border: 2px dashed $border-strong;
+  background: $surface;
+  font-size: 0.8em;
+}
+.reveal .sources-slide li { margin-bottom: 0.4em; font-size: 0.85em; }
+.reveal table + p { margin-top: 0.9em; }
+
+// Mermaid: quiet subgraph boxes; let labels overflow their measured box.
+.reveal svg .cluster rect { fill: #f8f9fb !important; stroke: #cfd4dc !important; }
+.reveal svg .node rect, .reveal svg .node path { fill: #eaf0fb !important; stroke: #8fa6d6 !important; }
+.reveal svg foreignObject { overflow: visible; }
+.reveal img.bordered { border: 1px solid #e4e7ec; box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08); }
+.reveal .code-tight pre code { font-size: 0.86em; line-height: 1.4; }
+
+// Code shows the characters you type: no JetBrains Mono ligatures (>= as one sign).
+.reveal code, .reveal pre { font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }

@@ -1,0 +1,443 @@
+---
+title: "11 Documentation"
+subtitle: "Make the LTEE project understandable, citable and reusable by a stranger"
+description: "A README that answers the seven questions a reader has; licenses for code, text and data; a valid CITATION.cff; contributing and conduct files; software versions recorded from the lock file. The finished LTEE project is the worked example."
+adapted_from:
+  - title: "Tools for Reproducible Research: Documentation and reproducibility"
+    url: https://nbisweden.github.io/workshop-reproducible-research/pages/documentation.html
+    authors: "NBIS (Erik Fasterius, John Sundh and contributors)"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Kept the seven questions a README should answer and the advice on structure, hardware, reproduction and outputs; applied to the LTEE project, with licenses, CITATION.cff, contributing and conduct files, software versions and a Break it added."
+test:
+  needs: [10-nextflow]
+  timeout: 1800
+---
+
+::: {.at-a-glance}
+- **Time:** 80 minutes.
+- **Slides:** [Documentation](../lectures/11-documentation/11-documentation.qmd)
+- **You need:** the `ltee-project` after [lesson 10](10-nextflow.qmd).
+- **You will have:** a README a stranger can follow, a license for each kind of material, a valid `CITATION.cff`, and `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`.
+:::
+
+## Overview
+
+Git, Pixi, containers and workflows make an analysis *rerunnable*. Whether
+anyone *does* rerun it, cite it or build on it depends on the documentation:
+what the project is, where the data is, how to run it, what to expect, how to
+cite it, and what others may do with it. Documentation is the fifth of the
+five pillars of computational reproducibility (Ziemann et al. 2023), and like
+the others it is written during the project, not at the end.
+
+Our worked example is the LTEE project you have built since lesson 02 from the
+course template: every file in it has a reason, and this lesson fills in the
+parts a reader sees first.
+
+### Learning outcomes
+
+After this lesson you can:
+
+1. **Write** a README that answers the seven questions a reader has (what, publication, contents, hardware, how to reproduce, outputs, contact).
+2. **Choose and apply** licenses for code, text and data, and **explain** what each allows.
+3. **Write** a valid `CITATION.cff` and **produce** a citation from it.
+4. **Add** contributing and code-of-conduct files, and **record** software versions from the lock file.
+
+Checks: `cffconvert --validate` passes (outcome 3); a classmate reproduces
+your project from the README alone in [lesson 12](12-putting-it-together.qmd)
+(outcome 1).
+
+## 1. What a reader needs to know
+
+The NBIS course lists seven questions a README must answer:
+
+1. What is this project about?
+2. Is there a publication related to it?
+3. What is in this repository?
+4. What hardware does it need?
+5. How do I reproduce the analyses?
+6. What outputs should I expect?
+7. How can I contact the authors or discuss the project?
+
+Look at your current README:
+
+```{.bash .run}
+cd ~/cbio7501/ltee-project
+cat README.md
+```
+
+The template answered 3 (the folder table) and part of 5. Answer the rest
+with what you now know about the project.
+
+```{.bash .run-ci}
+git switch -c lesson-11-documentation
+```
+
+## 2. Measure before you write
+
+"Runs on a laptop" is not a hardware requirement. Measure: disk space of the
+environments, the data and the results.
+
+```{.bash .run}
+du -sh .pixi/envs/* data/raw results
+```
+
+On our test laptop (Apple M4 Max, 2026-10-24) the environments took 3.6 GB,
+the raw data 332 MB and the results 199 MB; the whole Snakemake workflow took
+31 seconds on 4 cores, with at most 440 MB of memory (measured with
+`/usr/bin/time -l` on macOS, `/usr/bin/time -v` on Linux).
+
+## 3. The README
+
+Replace `README.md` with this version and adapt the names, the numbers you
+measured and the contact line. Keep it short: link to details instead of
+repeating them.
+
+````{.markdown filename="README.md" .write}
+# LTEE variant calling
+
+Variant calling on three *E. coli* clones from population Ara-3 of Richard
+Lenski's Long-Term Evolution Experiment (LTEE), frozen at 5,000, 15,000 and
+50,000 generations. Question: how many mutations accumulated, and is the
+answer robust to the minimum read depth used to filter variant calls?
+
+Built as the example project of the CBIO7501 Reproducible and Open Science
+workshop. The analysis steps follow the Data Carpentry lesson *Wrangling
+Genomics* (CC BY 4.0).
+
+Author: Ada Lovelace (ORCID [0000-0002-1825-0097](https://orcid.org/0000-0002-1825-0097))
+
+## Publication
+
+None yet. The data and biology are from Tenaillon et al. (2016), *Nature*
+536:165–170, <https://doi.org/10.1038/nature18959>.
+
+## Reproduce the results
+
+Requirements: [Pixi](https://pixi.prefix.dev/latest/) and an internet
+connection. Linux or macOS (on Windows use WSL2: `bwa`, `samtools` and
+`bcftools` have no Windows builds). No other installation is needed.
+
+```bash
+git clone https://github.com/ada-lovelace/ltee-project.git
+cd ltee-project
+pixi run reproduce
+```
+
+`pixi run reproduce` installs the exact software versions in `pixi.lock`,
+downloads the raw data and checks its checksums, runs the Snakemake workflow
+and renders the report. A GitHub Action runs the same command on every push.
+
+Other entry points: `pixi run run-nextflow` (the same pipeline in Nextflow),
+`pixi run compare-workflows` (checks that both give identical variant calls),
+`pixi task list` (all tasks).
+
+A container image of the pipeline environment can be built from
+`containers/Dockerfile` (see the comments in that file).
+
+## Hardware
+
+Any laptop from the last few years. Measured on 2026-10-24 (Apple M4 Max,
+4 cores): about 4 GB of disk for the software environments, 330 MB for the
+raw data and 200 MB for the results; the workflow takes under a minute and
+less than 1 GB of memory.
+
+## Outputs
+
+| Path | Content |
+|------|---------|
+| `reports/ltee-report.html` | The report: data, read quality, variants, the depth sensitivity analysis, software versions |
+| `results/qc/multiqc/multiqc_report.html` | Read quality summary |
+| `results/vcf/` | Filtered variant calls per sample (minimum depth from `config/config.yaml`) |
+| `results/sensitivity/` | Variant calls at each depth in `sensitivity_depths` |
+| `results/stats/` | Alignment (`flagstat`) and variant (`bcftools stats`) statistics |
+
+Expected filtered variants at minimum depth 2: SRR2589044 10, SRR2584863 25,
+SRR2584866 775.
+
+## Data
+
+Raw reads: a subset of three runs prepared by Data Carpentry, figshare,
+<https://doi.org/10.6084/m9.figshare.7726454> (file `sub.tar.gz`, CC0).
+Original runs in NCBI BioProject PRJNA295606. Reference: *E. coli* B str.
+REL606, GenBank CP000819.1. Sources, provider checksums and our checksums are
+in `metadata/`; the data is not stored in this repository.
+
+## Repository contents
+
+See the table in `docs/structure.md` (each folder also has its own README).
+
+## Cite
+
+See `CITATION.cff` (GitHub: "Cite this repository").
+
+## License
+
+Code: MIT (`LICENSE`). Report text and figures: CC BY 4.0. The raw data is
+CC0 (see Data).
+
+## Contact
+
+Questions and problems: open an issue on GitHub. Contributions: see
+`CONTRIBUTING.md`. Everyone taking part follows `CODE_OF_CONDUCT.md`.
+````
+
+The folder table from the template moves to `docs/structure.md`, so the README
+stays short. Save it there:
+
+````{.markdown filename="docs/structure.md" .write}
+# Project structure
+
+| Folder | What goes in it | Rule |
+|--------|-----------------|------|
+| `data/raw/` | Raw data, downloaded by `scripts/download_data.py` | Read-only, not committed |
+| `data/processed/` | Data derived from raw data (decompressed, indexed reference) | Rebuilt by the workflow |
+| `metadata/` | Sample sheet, data sources, checksums, data dictionary | Committed |
+| `scripts/` | Download, comparison and helper code | Committed |
+| `config/` | Workflow settings (`config.yaml`), shared by Snakemake and Nextflow | Committed |
+| `workflow/` | `Snakefile` and `nextflow/` | Committed |
+| `notebooks/` | Exploration (`explore-reads.ipynb`), outputs cleared | Committed |
+| `reports/` | Quarto report source and bibliography | Source committed, HTML not |
+| `results/` | Everything the workflow produces | Rebuilt, not committed |
+| `docs/` | This file, the decision log | Committed |
+| `envs/` | Conda exports of the Pixi environments | Generated |
+| `containers/` | `Dockerfile` and `apptainer.def`, built from `pixi.lock` | Committed |
+| `.github/workflows/` | The reproduce-from-a-clean-clone check | Committed |
+````
+
+## 4. Licenses: what others may do
+
+Without a license, others may read your public code but not legally reuse it.
+Pick licenses deliberately, one per kind of material:
+
+| Material | Common choice | What it allows |
+|----------|---------------|----------------|
+| Code | MIT, BSD-3-Clause, Apache-2.0 (permissive); GPL-3.0 (copyleft: derived code must stay open under the GPL) | Permissive: reuse anywhere, keep the notice |
+| Text, figures, slides | CC BY 4.0 | Reuse and adapt with credit |
+| Data | CC0 (no conditions) or CC BY 4.0 | CC0 is easiest to combine with other data |
+| Things to avoid for open research | "NC" (non-commercial) and "ND" (no derivatives) Creative Commons licenses | They block much reuse, including some teaching and journals |
+
+The template put the license you chose in `LICENSE` (MIT by default):
+
+```{.bash .run}
+head -3 LICENSE
+```
+
+The README says which license covers what (code MIT, report text CC BY 4.0,
+data CC0 from its provider). You may only license what you own: the LTEE data
+keeps the license figshare gives it, and the Data Carpentry steps keep their
+credit. [choosealicense.com](https://choosealicense.com/) explains the
+software licenses in plain language.
+
+## 5. A citation file
+
+`CITATION.cff` tells people and machines how to cite the project; GitHub turns
+it into a "Cite this repository" button and Zenodo reads it for its record
+(lesson 12). Replace the template's version with a complete one (use your own
+name and ORCID iD; this example uses ORCID's documentation test ID):
+
+```{.yaml filename="CITATION.cff" .write}
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "LTEE variant calling"
+abstract: "Variant calling on three E. coli clones from the Long-Term Evolution Experiment, with a sensitivity analysis of the variant filter."
+type: software
+authors:
+  - given-names: "Ada"
+    family-names: "Lovelace"
+    email: "ada@example.org"
+    orcid: "https://orcid.org/0000-0002-1825-0097"
+repository-code: "https://github.com/ada-lovelace/ltee-project"
+license: MIT
+version: 0.1.0
+date-released: "2026-12-01"
+keywords:
+  - reproducibility
+  - variant calling
+  - Long-Term Evolution Experiment
+references:
+  - type: article
+    title: "Tempo and mode of genome evolution in a 50,000-generation experiment"
+    authors:
+      - family-names: "Tenaillon"
+        given-names: "Olivier"
+      - name: "et al."
+    journal: "Nature"
+    volume: 536
+    start: 165
+    end: 170
+    year: 2016
+    doi: "10.1038/nature18959"
+```
+
+Check it, and see what a citation made from it looks like:
+
+```{.bash .run}
+pixi exec cffconvert --validate -i CITATION.cff
+pixi exec cffconvert -i CITATION.cff -f apalike
+pixi exec cffconvert -i CITATION.cff -f bibtex
+```
+
+## 6. Contributing and conduct
+
+Two short files tell others how to take part. `CONTRIBUTING.md`:
+
+```{.markdown filename="CONTRIBUTING.md" .write}
+# Contributing
+
+Thank you for helping. This is a small research project, so the process is simple:
+
+1. Open an issue describing the problem or idea before larger changes.
+2. Fork the repository, make a branch, and check that `pixi run reproduce`
+   still works on your computer.
+3. Open a pull request. The *Reproduce* check must pass before merging.
+
+Please keep raw data out of Git (`data/raw/` is downloaded by
+`scripts/download_data.py`), commit `pixi.toml` and `pixi.lock` together, and
+record analysis decisions in `docs/decisions.md`.
+```
+
+`CODE_OF_CONDUCT.md`: most projects adopt an existing code rather than write
+their own. Point to the Contributor Covenant and say who to contact:
+
+```{.markdown filename="CODE_OF_CONDUCT.md" .write}
+# Code of conduct
+
+Everyone taking part in this project (issues, pull requests, discussions)
+follows the Contributor Covenant, version 3.0:
+<https://www.contributor-covenant.org/version/3/0/code_of_conduct/>.
+
+Report unacceptable behaviour to ada@example.org. Reports are handled
+confidentially.
+```
+
+## 7. Software versions, for humans
+
+`pixi.lock` records every package for machines. For a methods section or a
+reviewer, list the versions you actually used. Pixi prints them; keep the list
+with the documentation:
+
+```{.bash .run}
+pixi list -e pipeline --explicit > docs/software-versions.txt
+grep -E "^(bwa|samtools|bcftools|fastqc|multiqc|snakemake|nextflow|python|quarto) " docs/software-versions.txt
+```
+
+```text
+bcftools    1.24     ...
+bwa         0.7.19   ...
+...
+```
+
+The report prints its own key versions (lesson 07), so the methods and the
+results can never disagree.
+
+## 8. Comments and the workflow picture
+
+Documentation also lives in the code: the header comments of the Snakefile and
+`main.nf` say where the steps come from, `config/config.yaml` explains every
+setting, and `docs/decisions.md` records why. Add the rule graph to the docs:
+
+```{.bash .run}
+pixi run -e pipeline snakemake --rulegraph > docs/rulegraph.dot
+pixi run -e pipeline dot -Tsvg docs/rulegraph.dot -o docs/rulegraph.svg
+```
+
+(If Graphviz says `Format: "svg" not recognized`, run `pixi run -e pipeline dot -c`
+once, as in lesson 09.)
+
+## Break it: a citation file GitHub cannot read
+
+A typo in `CITATION.cff` silently removes the "Cite this repository" button.
+Introduce one (an ORCID iD without the `https://orcid.org/` part):
+
+```{.bash .run}
+cp CITATION.cff CITATION.cff.bak
+sed 's|orcid: "https://orcid.org/0000-0002-1825-0097"|orcid: "0000-0002-1825-0097"|' CITATION.cff.bak > CITATION.cff
+grep orcid CITATION.cff
+```
+
+```{.bash .expect-fail}
+pixi exec cffconvert --validate -i CITATION.cff
+```
+
+```text
+jsonschema.exceptions.ValidationError: '0000-0002-1825-0097' does not match 'https://orcid\\.org/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]{1}'
+On instance['orcid']:
+```
+
+Restore it, and validate again:
+
+```{.bash .run}
+mv CITATION.cff.bak CITATION.cff
+pixi exec cffconvert --validate -i CITATION.cff
+```
+
+Validate the citation file in CI too, so a typo cannot slip in unnoticed (one
+more step in `.github/workflows/reproduce.yml`, see Try it yourself).
+
+## Try it yourself
+
+1. Add a step to `.github/workflows/reproduce.yml` that validates `CITATION.cff`.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   After the "Install Pixi" step:
+   ```yaml
+         - name: Citation file is valid
+           run: pixi exec cffconvert --validate -i CITATION.cff
+   ```
+   :::
+
+2. A reader asks: "Which version of samtools made Figure 2?" Where in your
+   project is the answer? Give two places.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `pixi.lock` (exact package and checksum, per platform) and
+   `docs/software-versions.txt` (human-readable); the report also prints key
+   versions. With the Git commit of the report, the answer is exact.
+   :::
+
+## Save your work
+
+```{.bash .run-ci}
+git add README.md docs/structure.md docs/software-versions.txt docs/rulegraph.svg CITATION.cff CONTRIBUTING.md CODE_OF_CONDUCT.md
+git commit -m "Document the project: README, citation, contributing and conduct"
+git push -u origin lesson-11-documentation
+```
+
+Open the pull request, check the "Cite this repository" button on the branch
+page, and merge.
+
+## Troubleshooting
+
+| Problem | What to do |
+|---------|------------|
+| No "Cite this repository" button on GitHub | `CITATION.cff` must be in the repository root, on the default branch, and valid: run `cffconvert --validate`. |
+| `cffconvert: command not found` | Run it through Pixi: `pixi exec cffconvert ...`. |
+| Unsure which license to pick | Code: MIT unless your institution or funder says otherwise. Text: CC BY 4.0. Ask your library or tech-transfer office for anything with patents or personal data. |
+| The README commands no longer work | Documentation must be tested like code: rerun the README's commands in a fresh clone (lesson 12 does this with a classmate). |
+
+## Apply it to your own mini-analysis
+
+Write your capstone README with the seven sections, add `CITATION.cff` and
+validate it, choose licenses for code, text and data (and check you may share
+your data at all), and add `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`.
+
+## Key points
+
+- A README answers seven questions: what, publication, contents, hardware, how to reproduce, outputs, contact.
+- Measure hardware needs; state the one command that reproduces everything.
+- License code, text and data separately; you can only license what you own.
+- `CITATION.cff` makes the project citable on GitHub and Zenodo; validate it.
+- Software versions come from the lock file, not from memory.
+
+## Further reading
+
+- Cheat sheet: [Documentation and sharing](../cheatsheets/sharing.qmd), with links to the official cheat sheets and references.
+- NBIS, *Documentation and reproducibility*: <https://nbisweden.github.io/workshop-reproducible-research/pages/documentation.html>
+- Citation File Format: <https://citation-file-format.github.io/>
+- Choose a license: <https://choosealicense.com/>; Creative Commons licenses: <https://creativecommons.org/share-your-work/cclicenses/>
+- Contributor Covenant: <https://www.contributor-covenant.org/>
+- Lee BD (2018). Ten simple rules for documenting scientific software. *PLoS Comput Biol* 14:e1006561. <https://doi.org/10.1371/journal.pcbi.1006561>
+- Ziemann M, Poulain P, Bora A (2023). The five pillars of computational reproducibility. *Brief Bioinform* 24:bbad375. <https://doi.org/10.1093/bib/bbad375>

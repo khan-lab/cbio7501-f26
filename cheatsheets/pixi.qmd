@@ -1,0 +1,129 @@
+---
+title: "Pixi"
+subtitle: "Cheat sheet for lessons 05 and 05b"
+---
+
+## Start and add software
+
+| What you want | Command |
+|------------|------------------------|
+| A new workspace with the bioinformatics channels | `pixi init NAME -c conda-forge -c bioconda` |
+| Add packages (updates `pixi.toml` and `pixi.lock`) | `pixi add samtools bcftools` |
+| Add with a version limit | `pixi add "samtools>=1.24"` |
+| Add to a feature (tools for some platforms only) | `pixi add --feature pipeline bwa samtools` |
+| Remove a package | `pixi remove bwa` |
+| Start from a Conda `environment.yml` | `pixi init --import environment.yml NAME` |
+
+See [lesson 05, section 2](../pages/05-pixi.qmd#a-practice-workspace-manifest-and-lock-file).
+
+## Run
+
+| What you want | Command |
+|------------|------------------------|
+| Run a command in the project's environment | `pixi run samtools --version` |
+| Run it in another environment | `pixi run -e pipeline samtools --version` |
+| Open a shell in the environment (leave with `exit`) | `pixi shell` |
+| Run a tool once, without adding it to the project | `pixi exec --spec cookiecutter -- cookiecutter ...` |
+| ... from Bioconda, in an exact version | `pixi exec -c conda-forge -c bioconda --spec "fastqc==0.12.1" -- fastqc --help` |
+
+See [section 3](../pages/05-pixi.qmd#pixi-run-and-pixi-shell).
+
+## See what you have
+
+| What you want | Command |
+|------------|------------------------|
+| Installed packages | `pixi list` (another environment: `pixi list -e pipeline`) |
+| Why a package is there | `pixi tree samtools` |
+| Exact versions, for the README | `pixi list -e pipeline --explicit > docs/software-versions.txt` |
+
+## The lock file
+
+| What you want | Command |
+|------------|------------------------|
+| Write or update `pixi.lock` without installing | `pixi lock` |
+| Rebuild exactly what the lock file says | `pixi install --locked` |
+| Delete the installed environments (`.pixi/envs/`) | `pixi clean` |
+| Newer versions within the limits in `pixi.toml` | `pixi update` |
+| Raise the limits to the newest versions | `pixi upgrade` |
+
+See [section 4](../pages/05-pixi.qmd#prove-it-rebuild-from-the-lock-file). Commit `pixi.toml` and `pixi.lock` together.
+
+## Platforms, features and environments
+
+| What you want | Command |
+|------------|------------------------|
+| Give a feature its own platforms | `pixi workspace platform add --feature pipeline linux-64 osx-arm64 osx-64` |
+| Make an environment from a feature | `pixi workspace environment add pipeline --feature pipeline` |
+
+See [section 7](../pages/05-pixi.qmd#features-and-environments).
+
+## Tasks
+
+| What you want | Command |
+|------------|------------------------|
+| List the tasks | `pixi task list` |
+| Add a task | `pixi task add download "python scripts/download_data.py" --description "TEXT"` |
+| Add a task to a feature, after another task | `pixi task add --feature pipeline qc "COMMAND" --depends-on download` |
+| One task that runs others | `pixi task alias reproduce qc variant-calling report` |
+| Remove a task | `pixi task remove reproduce` (a feature's task: `--feature pipeline`) |
+| Run a task | `pixi run reproduce` |
+
+See [section 8](../pages/05-pixi.qmd#tasks-for-the-pipeline).
+
+## Your own tools, everywhere
+
+| What you want | Command |
+|------------|------------------------|
+| Install a tool for yourself, outside any project | `pixi global install cookiecutter` |
+| List them | `pixi global list` |
+
+See [section 9](../pages/05-pixi.qmd#personal-tools-with-pixi-global).
+
+## For Conda users
+
+| What you want | Command |
+|------------|------------------------|
+| An `environment.yml` from an environment | `pixi workspace export conda-environment -e pipeline envs/pipeline.yml` |
+| Exact Conda specs, one file per platform | `pixi workspace export conda-explicit-spec -e pipeline envs/explicit` |
+
+The full Conda-to-Pixi command table is in [lesson 05b](../pages/05b-conda-comparison.qmd#the-command-table).
+
+## `pixi.toml` at a glance
+
+```{.toml}
+[workspace]
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+
+[dependencies]                 # the default environment
+python = "3.13.*"
+quarto = ">=1.9"
+
+[tasks]
+download = { cmd = "python scripts/download_data.py", description = "Download and verify the raw data" }
+reproduce = [{ task = "report" }]
+
+[feature.pipeline]             # tools that do not run on Windows
+platforms = ["linux-64", "osx-arm64", "osx-64"]
+
+[feature.pipeline.dependencies]
+samtools = ">=1.24,<2"
+
+[feature.pipeline.tasks]
+qc = { cmd = "fastqc ...", depends-on = ["download"] }
+
+[environments]
+pipeline = ["pipeline"]
+```
+
+## Official cheat sheets and references
+
+Pixi has no official cheat sheet. Its command reference lists every command
+and option, and Pixi installs the same packages as Conda, so the Conda cheat
+sheet maps over:
+
+- **Pixi command reference**: <https://pixi.prefix.dev/latest/reference/cli/pixi/>
+- Pixi, *Switching from Conda*: <https://pixi.prefix.dev/latest/switching_from/conda/>
+- Pixi, *Advanced tasks*: <https://pixi.prefix.dev/latest/workspace/advanced_tasks/>
+- Pixi, *Multiple environments*: <https://pixi.prefix.dev/latest/workspace/multi_environment/>
+- **Conda cheat sheet**, from the Conda project: <https://docs.conda.io/projects/conda/en/latest/user-guide/cheatsheet.html>

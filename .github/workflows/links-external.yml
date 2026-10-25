@@ -1,0 +1,19 @@
+# Weekly check of external links (papers, tools, data). Internal links are
+# checked on every push by website.yml.
+name: External links
+
+on:
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: prefix-dev/setup-pixi@v0.11.2
+        with:
+          pixi-version: v0.83.0
+          locked: true
+      - run: pixi run check-links-online

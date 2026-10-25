@@ -1,0 +1,7 @@
+# Lock files are generated: no 3-way merges, collapsed in diffs
+pixi.lock merge=binary linguist-language=YAML linguist-generated=true -diff
+# Shell scripts must keep LF line endings, also on Windows checkouts
+*.sh text eol=lf
+*.smk text eol=lf
+Snakefile text eol=lf
+*.nf text eol=lf

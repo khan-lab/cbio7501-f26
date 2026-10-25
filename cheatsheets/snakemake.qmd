@@ -1,0 +1,76 @@
+---
+title: "Snakemake"
+subtitle: "Cheat sheet for lesson 09"
+---
+
+## Run
+
+In the LTEE project, Snakemake is in the `pipeline` environment: put
+`pixi run -e pipeline` in front of each command (or use the task:
+`pixi run run-snakemake`).
+
+| What you want | Command |
+|------------|------------------------|
+| Dry run: what would run, and why | `snakemake -n` (summary only: `-n --quiet`; show the commands: `-n -p`) |
+| Make everything in `rule all`, with 4 cores | `snakemake -c 4` |
+| Make one file | `snakemake -c 4 results/bam/SRR2584863.aligned.sorted.bam.bai` |
+| Change a setting for one run | `snakemake -c 4 --config bwa_extra=""` |
+| Draw the job graph | `snakemake --dag dot TARGET > results/dag.dot`, then `dot -Tsvg results/dag.dot -o results/dag.svg` |
+| Draw the rule graph | `snakemake --rulegraph > results/rulegraph.dot`, then `dot -Tsvg ...` |
+| Format the Snakefile / check the format | `snakefmt workflow/Snakefile` / `snakefmt --check workflow/Snakefile` |
+| Check for common mistakes | `snakemake --lint` |
+| Run on a cluster with a profile | `snakemake --profile profiles/karakoram` |
+
+See [lesson 09, sections 2, 5 and 12](../pages/09-snakemake.qmd#a-toy-workflow-first).
+
+## A rule
+
+```{.python}
+rule bwa_mem:
+    input:
+        genome=GENOME,
+        r1=lambda wc: SAMPLES[wc.sample]["fastq_1"],   # an input function
+        r2=lambda wc: SAMPLES[wc.sample]["fastq_2"],
+    output:
+        temp("results/sam/{sample}.aligned.sam"),     # {sample} is a wildcard
+    log:
+        "results/logs/bwa_mem/{sample}.log",
+    threads: 4
+    params:
+        extra=config["bwa_extra"],
+    shell:
+        "bwa mem -t {threads} {params.extra} {input.genome} {input.r1} {input.r2} > {output} 2> {log}"
+```
+
+## Building blocks
+
+| Write | What it does |
+|------------|------------------------|
+| `configfile: "config/config.yaml"`, then `config["min_depth"]` | settings in YAML, out of the code |
+| `{sample}` in `output:` | a wildcard, filled in from the file you ask for |
+| `expand("results/vcf/{sample}_final_variants.vcf", sample=SAMPLES)` | a list of files, one per sample |
+| `rule all:` with `default_target: True` | the files a plain `snakemake` makes |
+| `temp("FILE")` | delete the file once no rule needs it |
+| `log:` | a file for the tool's messages |
+| `threads: 4` and `{threads}` | how many cores the rule may use |
+| `rules.bwa_index.output` | the output of another rule |
+| `multiext(GENOME, ".amb", ".bwt")` | one name with several endings |
+| `wildcard_constraints:` | what a wildcard may match |
+
+See [sections 3 to 9](../pages/09-snakemake.qmd#settings-first-the-config-file).
+
+## When does a job rerun?
+
+When its output is missing, or older than an input (**mtime**), or when the
+rule's **code**, **params**, set of **input** files or **software
+environment** changed since the output was made. Ask with `snakemake -n`: it
+prints the reason for each job. See [rerun triggers](../pages/09-snakemake.qmd#rerun-triggers).
+
+## Official cheat sheets and references
+
+Snakemake has no official cheat sheet. The closest official references:
+
+- Snakemake, *Command line interface* (every option): <https://snakemake.readthedocs.io/en/stable/executing/cli.html>
+- Snakemake, *Snakefiles and Rules* (every rule keyword): <https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html>
+- Snakemake, *Basics: an example workflow* (the official tutorial): <https://snakemake.readthedocs.io/en/stable/tutorial/basics.html>
+- The Snakemake workflow template: <https://github.com/snakemake-workflows/snakemake-workflow-template>

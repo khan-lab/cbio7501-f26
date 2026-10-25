@@ -1,0 +1,367 @@
+---
+title: "00 Setup and pre-course"
+subtitle: "Get Pixi, Git and a GitHub account working before the hands-on lessons"
+description: "Install Pixi (and through it everything else), set up Git and GitHub, and check that your laptop is ready. Windows users work in WSL2. GitHub Codespaces is the fallback."
+adapted_from:
+  - title: "Tools for Reproducible Research: Pre-course setup"
+    url: https://nbisweden.github.io/workshop-reproducible-research/home_precourse.html
+    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Pixi replaces the Conda, Snakemake, Nextflow, Quarto and Jupyter installs (everything comes from Pixi); WSL2 and Codespaces notes rewritten; Git configuration and SSH key steps shortened."
+  - title: "Introduction to Pixi: Setup"
+    url: https://carpentries-incubator.github.io/pixi-introduction/
+    authors: "Matthew Feickert and The Carpentries Incubator contributors"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit b88a073 (2026-10-05)"
+    changes: "Kept the install and shell-completion commands and the idea of installing Git with `pixi global`; added a version pin, a telemetry note and a setup check."
+test:
+  needs: []
+  timeout: 1800
+---
+
+::: {.at-a-glance}
+- **Time:** 30 to 60 minutes, at home, before the first hands-on lesson ([lesson 02](02-project-organization.qmd)).
+- **You need:** a laptop (macOS, Linux or Windows 10/11) with 10 GB free disk space, and an internet connection.
+- **You will have:** Pixi, Git and a GitHub account, and a cache of the software we use in class.
+:::
+
+## Overview
+
+In this course almost all software comes from one tool, **Pixi**. You install
+Pixi once; Pixi then installs Python, Quarto, Jupyter, the bioinformatics
+tools, Snakemake and Nextflow *inside each project*, at the exact versions the
+project asks for. That is the main idea of the course in one sentence: the
+project, not your laptop, decides which software it runs with.
+
+**Learning outcome.** After this page you can install Pixi on your own
+computer and use it to run a program you never installed (`pixi exec`). The
+setup check at the end proves it.
+
+### Choose your setup
+
+| Your computer | What you do |
+|---------------|-------------|
+| macOS (Apple silicon or Intel) | Work in the **Terminal** app. Follow the *macOS / Linux* tabs. |
+| Linux | Work in your terminal. Follow the *macOS / Linux* tabs. |
+| Windows 10 or 11 | Install **WSL2** with Ubuntu (step 1), then work in the Ubuntu terminal and follow the *macOS / Linux* tabs. |
+| Nothing works, or a locked-down computer | Use **GitHub Codespaces** in the browser (step 7). |
+
+Why WSL2 on Windows? Several tools we use (`bwa`, `samtools`, `bcftools`)
+are not built for Windows at all. We checked on 2026-10-24: conda-forge and
+bioconda have Linux and macOS builds of these tools, but no Windows (`win-64`)
+builds. Inside WSL2 your laptop runs a real Linux, so everything works.
+
+## 1. Windows only: install WSL2
+
+Open **PowerShell as Administrator** (right-click, "Run as administrator") and run:
+
+```powershell
+wsl --install -d Ubuntu
+```
+
+Restart when asked. Ubuntu then opens and asks you to choose a Linux user name
+and password (they do not need to match your Windows ones). From now on,
+**open "Ubuntu" from the Start menu** whenever this course says "terminal",
+and follow the *macOS / Linux* instructions.
+
+::: {.callout-tip}
+Keep your course files inside Linux (for example `~/cbio7501`), not under
+`/mnt/c/...`: it is much faster. To see your Linux files in Windows Explorer,
+run `explorer.exe .` in the Ubuntu terminal.
+:::
+
+Microsoft's guide: <https://learn.microsoft.com/windows/wsl/install>.
+
+## 2. Open a terminal
+
+- **macOS:** Applications → Utilities → Terminal.
+- **Linux:** your terminal application.
+- **Windows:** the Ubuntu (WSL2) app from step 1.
+
+Check which shell you have; the answer is usually `bash` or `zsh`:
+
+```{.bash .run}
+echo "$SHELL"
+```
+
+New to the terminal? [C Bash 101](C-bash.qmd) is an hour of practice with the
+commands the lessons use. Do it before lesson 02.
+
+## 3. Install Pixi
+
+::: {.panel-tabset group="os"}
+
+### macOS / Linux (and WSL2)
+
+```{.bash .norun}
+curl -fsSL https://pixi.sh/install.sh | sh
+```
+
+The installer puts `pixi` in `~/.pixi/bin` and adds that folder to your
+`PATH` in `~/.bashrc` or `~/.zshrc`. **Close the terminal and open a new
+one** so the change takes effect.
+
+### Windows (native PowerShell, optional)
+
+You do not need this if you work in WSL2. For completeness:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm -useb https://pixi.sh/install.ps1 | iex"
+```
+
+:::
+
+Check that it works:
+
+```{.bash .run}
+pixi --version
+```
+
+Expected output (your version can be newer):
+
+```text
+pixi 0.83.0
+```
+
+::: {.callout-note title="Telemetry: what the installer sends"}
+The install script sends one anonymous "installation ping" to prefix.dev, the
+company behind Pixi. To opt out, set `PIXI_NO_TELEMETRY=1` before installing:
+`curl -fsSL https://pixi.sh/install.sh | PIXI_NO_TELEMETRY=1 sh`.
+Details: <https://pixi.sh/latest/reference/telemetry/>.
+:::
+
+::: {.callout-note title="Already have Pixi?"}
+Update it with `pixi self-update`. Anything from version 0.60 on works with
+this course; we test with 0.83.0.
+:::
+
+### Optional: tab completion
+
+Tab completion saves typing. Add one line to your shell's start-up file, then
+open a new terminal:
+
+::: {.panel-tabset group="shell"}
+
+### bash
+
+```{.bash .norun}
+echo 'eval "$(pixi completion --shell bash)"' >> ~/.bashrc
+```
+
+### zsh (macOS default)
+
+```{.bash .norun}
+echo 'autoload -Uz compinit && compinit' >> ~/.zshrc
+echo 'eval "$(pixi completion --shell zsh)"' >> ~/.zshrc
+```
+
+:::
+
+## 4. Run software you never installed
+
+This is the first taste of Pixi. `pixi exec` downloads a program into a
+temporary environment and runs it. Nothing is installed on your system:
+
+```{.bash .run}
+pixi exec python --version
+pixi exec --spec "quarto>=1.9" quarto --version
+```
+
+The first run takes a minute (it downloads packages); the second run of the
+same command is fast because Pixi keeps a cache.
+
+## 5. Git and GitHub
+
+### Install Git
+
+Check whether you already have Git (version 2.28 or newer):
+
+```{.bash .run}
+git --version
+```
+
+If the command is not found, install Git with Pixi. `pixi global` installs a
+tool for your user, outside any project:
+
+```{.bash .norun}
+pixi global install git
+```
+
+::: {.callout-note}
+On macOS, `git --version` may offer to install Apple's "command line developer
+tools". Accept, or use `pixi global install git` instead.
+:::
+
+### Tell Git who you are
+
+Use the same email address as on GitHub. Replace the example values:
+
+```{.bash .run-ci}
+git config --global user.name "Ada Lovelace"
+git config --global user.email "ada@example.org"
+git config --global init.defaultBranch main
+```
+
+The last line makes new repositories start on a branch called `main`, as on
+GitHub.
+
+### Create a GitHub account and an SSH key
+
+1. Create a free account at <https://github.com/signup> if you do not have one.
+   As a student you can also ask for the free
+   [GitHub Education](https://education.github.com/) benefits.
+2. GitHub needs a key, not a password, when you upload from the terminal.
+   Follow GitHub's two short guides:
+   [generate an SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+   and [add it to your account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
+3. Test the connection. The answer should greet you by your user name:
+
+```{.bash .norun}
+ssh -T git@github.com
+```
+
+## 6. Docker (needed for lesson 08) {#docker}
+
+Install Docker before [lesson 08](08-containers.qmd):
+
+- macOS and Windows: [Docker Desktop](https://docs.docker.com/get-started/get-docker/).
+  On Windows, turn on "Use the WSL 2 based engine" so Docker works inside Ubuntu.
+- Linux: [Docker Engine](https://docs.docker.com/engine/install/) and the
+  [post-install steps](https://docs.docker.com/engine/install/linux-postinstall/)
+  so you can run Docker without `sudo`.
+
+Check it:
+
+```{.bash .norun}
+docker run --rm hello-world
+```
+
+A free [Docker Hub](https://hub.docker.com/) account is optional; in lesson
+08 we push images to the GitHub Container Registry with your GitHub account.
+
+## 7. The fallback: GitHub Codespaces
+
+If installing fails, or your computer does not let you install software, use
+a Codespace: a Linux computer in the browser with Pixi already installed.
+
+1. Open <https://github.com/khan-lab/cbio7501-f26>.
+2. Click **Code** → **Codespaces** → **Create codespace on main**.
+3. Wait a few minutes the first time. You get VS Code in the browser with a
+   terminal at the bottom.
+
+::: {.callout-warning title="Codespaces is free only up to a monthly quota"}
+On 2026-10-24 GitHub's billing page listed, for free personal accounts, **120
+core-hours of compute and 15 GB-month of storage per month** (GitHub Pro: 180
+core-hours, 20 GB-month). Our codespace uses a 2-core machine, so that is
+about **60 hours a month**. Stop your codespace when you are done (it stops by
+itself after 30 minutes idle), and delete old ones at
+<https://github.com/codespaces>. Without a payment method on file, GitHub
+blocks use once the quota is used up; it resets each month.
+:::
+
+## 8. Fill the cache before class
+
+Classroom Wi-Fi gets slow when 30 laptops download the same 2 GB at once. Run
+this at home: it downloads the main tools of the course into Pixi's cache (it
+runs `samtools` once to show it worked).
+
+```{.bash .run}
+pixi exec -c conda-forge -c bioconda \
+  --spec fastqc --spec multiqc --spec bwa --spec samtools --spec bcftools \
+  -- samtools --version
+```
+
+Expected output starts with:
+
+```text
+samtools 1.24
+Using htslib 1.24
+```
+
+On native Windows (not WSL2) this command fails: there are no Windows builds of
+these tools. That is expected; use WSL2.
+
+## 9. Setup check
+
+Run the check and keep the output; your instructor may ask for it.
+
+```{.bash .run}
+echo "== setup check $(date +%F)"
+uname -sm
+pixi --version
+pixi exec python --version
+pixi exec --spec "quarto>=1.9" quarto --version
+git --version
+```
+
+### Try it yourself
+
+1. Run `pixi exec cowpy "Hello from Pixi"`. Which package did Pixi download,
+   and did it install anything on your system?
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   Pixi guessed the package `cowpy` from the command name, downloaded it (and
+   Python) into a temporary environment in its cache, and ran it. Nothing was
+   added to your `PATH`; the next time you type `cowpy` without `pixi exec`,
+   it is not found.
+   :::
+
+2. Run `pixi info`. Where is Pixi's cache on your computer, and how big might
+   it get?
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   The line `Cache dir` shows it (on macOS `~/Library/Caches/rattler/cache`,
+   on Linux `~/.cache/rattler/cache`). It grows with every package version
+   you use, easily to several GB. `pixi clean cache` empties it (see
+   [B Take-down](B-take-down.qmd)).
+   :::
+
+## Break it: what "command not found" means
+
+Your shell finds programs by looking in the folders listed in `PATH`. Run
+`pixi` with a `PATH` that does not contain Pixi's folder:
+
+```{.bash .expect-fail}
+env PATH=/usr/bin:/bin pixi --version
+```
+
+```text
+env: pixi: No such file or directory
+```
+
+Nothing is broken: Pixi is still installed, the shell just does not look in
+`~/.pixi/bin`. This is why the installer asks you to open a new terminal, and
+why `pixi run` matters later: it puts the project's tools on `PATH` for one
+command only.
+
+## Troubleshooting
+
+| Problem | What to do |
+|---------|------------|
+| `pixi: command not found` right after installing | Open a new terminal. If it persists, add `export PATH="$HOME/.pixi/bin:$PATH"` to `~/.bashrc` or `~/.zshrc`. |
+| `curl: (6) Could not resolve host` in WSL2 | WSL2 lost its DNS settings. Restart WSL with `wsl --shutdown` in PowerShell and open Ubuntu again. If it persists, ask in class. |
+| Downloads time out or are very slow | Try again later or from another network; for a whole class, use the prefetch in step 8 at home. University proxies may need `https_proxy` set. |
+| First run of anything on macOS is slow | macOS scans new programs once. Optional: System Settings → Privacy & Security → Developer Tools, add your terminal app. |
+| `No space left on device` | Free space or empty Pixi's cache with `pixi clean cache`. |
+| `samtools` fails on Windows | Expected: no Windows builds. Use WSL2 or Codespaces. |
+| Codespace does not start: quota used | Wait for the monthly reset, use WSL2, or ask the instructor for the lab machines. |
+
+## Key points
+
+- Install Pixi once; projects install everything else through it.
+- `pixi exec` runs a tool from a temporary environment without installing it.
+- Windows users work in WSL2 (Linux), because key tools have no Windows builds.
+- Codespaces is the fallback, within a monthly free quota.
+- "Command not found" means "not on `PATH`", not "broken".
+
+## Further reading
+
+- Pixi documentation: <https://pixi.prefix.dev/latest/>
+- The Carpentries Incubator, *Introduction to Pixi*: <https://carpentries-incubator.github.io/pixi-introduction/>
+- GitHub Docs, *Connecting to GitHub with SSH*: <https://docs.github.com/en/authentication/connecting-to-github-with-ssh>
+- Microsoft, *Install WSL*: <https://learn.microsoft.com/windows/wsl/install>

@@ -1,0 +1,56 @@
+/*-- scss:defaults --*/
+// Light theme tokens. Contrast on white: body text 14.6:1, muted 6.0:1,
+// links 6.6:1, quiz accent 5.5:1 (WCAG AA needs 4.5:1).
+
+// Custom tokens, used by styles.scss
+$surface: #f6f7f9;          // code blocks, boxes
+$surface-strong: #eef0f4;   // file-name tabs, table heads
+$border-subtle: #e4e7ec;
+$border-strong: #cfd4dc;
+$muted: #5b6475;
+$accent-quiz: #b4470c;
+$shadow-color: rgba(15, 23, 42, 0.07);
+
+// Bootstrap and Quarto
+$body-bg: #ffffff;
+$body-color: #1e293b;
+$headings-color: #0f172a;
+$primary: #154677;
+$secondary: $muted;
+//$secondary: #E5C687;
+$success: #0f7a55;
+$info: #2156c5;
+$warning: #a15c07;
+$danger: #b42318;
+$link-color: $primary;
+$border-color: $border-subtle;
+$table-border-color: $border-subtle;
+
+//$navbar-bg: #ffffff;
+$navbar-bg: #E5C687;
+$navbar-fg: #334155;
+$navbar-hl: $primary;
+$sidebar-bg: #ffffff;
+$sidebar-fg: #475569;
+$sidebar-hl: $primary;
+$footer-bg: #ffffff;
+$footer-fg: $muted;
+
+$code-color: #0f172a;
+$code-bg: $surface;
+$code-block-bg: $surface;
+
+// Typography (shared with the dark theme: keep in sync)
+$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+$font-size-root: 16px;
+$line-height-base: 1.68;
+$headings-font-weight: 650;
+$headings-line-height: 1.25;
+$h1-font-size: 2.2rem;
+$h2-font-size: 1.55rem;
+$h3-font-size: 1.22rem;
+$h4-font-size: 1.05rem;
+$border-radius: 0.5rem;
+$link-decoration: none;
+$link-hover-decoration: underline;

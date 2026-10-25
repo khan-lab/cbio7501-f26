@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 430" role="img" aria-labelledby="t d">
+  <title id="t">Channels, processes and tasks in Nextflow</title>
+  <desc id="d">An input channel holds three items, one per LTEE sample: SRR2589044, SRR2584863 and SRR2584866, each with its two read files. The ALIGN process runs one task per item, each task in its own folder under work/. The tasks emit sorted BAM files into an output channel that feeds the next process.</desc>
+  <!-- Own work, CBIO7501, CC BY 4.0 -->
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#5b6475"/>
+    </marker>
+    <style>
+      text { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; fill: #0f172a; }
+      .t { font-size: 22px; font-weight: 650; }
+      .s { font-size: 16px; fill: #5b6475; }
+      .c { font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 15px; fill: #1e293b; }
+      .e { stroke: #5b6475; stroke-width: 2; fill: none; }
+      .d { stroke: #5b6475; stroke-width: 2; fill: none; stroke-dasharray: 5 5; }
+    </style>
+  </defs>
+
+  <!-- input channel -->
+  <text class="t" x="40" y="70">Channel</text>
+  <text class="s" x="40" y="94">one item per sample</text>
+  <rect x="30" y="120" width="300" height="230" rx="16" fill="#fff4e5" stroke="#e0b46a" stroke-width="2"/>
+  <rect x="50" y="140" width="260" height="56" rx="10" fill="#ffffff" stroke="#e0b46a"/>
+  <text class="c" x="66" y="174">(SRR2589044, [r1, r2])</text>
+  <rect x="50" y="207" width="260" height="56" rx="10" fill="#ffffff" stroke="#e0b46a"/>
+  <text class="c" x="66" y="241">(SRR2584863, [r1, r2])</text>
+  <rect x="50" y="274" width="260" height="56" rx="10" fill="#ffffff" stroke="#e0b46a"/>
+  <text class="c" x="66" y="308">(SRR2584866, [r1, r2])</text>
+
+  <!-- process -->
+  <text class="t" x="440" y="70">Process ALIGN</text>
+  <text class="s" x="440" y="94">one task per item, each in its own folder</text>
+  <rect x="430" y="120" width="380" height="230" rx="16" fill="#eaf0fb" stroke="#8fa6d6" stroke-width="2"/>
+  <rect x="456" y="140" width="328" height="56" rx="10" fill="#ffffff" stroke="#8fa6d6"/>
+  <text class="c" x="472" y="164">task 1</text>
+  <text class="c" x="472" y="186" style="fill:#5b6475">work/3f/9a2c1…/</text>
+  <rect x="456" y="207" width="328" height="56" rx="10" fill="#ffffff" stroke="#8fa6d6"/>
+  <text class="c" x="472" y="231">task 2</text>
+  <text class="c" x="472" y="253" style="fill:#5b6475">work/b7/02d4e…/</text>
+  <rect x="456" y="274" width="328" height="56" rx="10" fill="#ffffff" stroke="#8fa6d6"/>
+  <text class="c" x="472" y="298">task 3</text>
+  <text class="c" x="472" y="320" style="fill:#5b6475">work/c1/7e0f3…/</text>
+
+  <!-- output channel -->
+  <text class="t" x="910" y="70">Output channel</text>
+  <text class="s" x="910" y="94">to the next process</text>
+  <rect x="900" y="120" width="270" height="230" rx="16" fill="#e8f5ee" stroke="#7cbf9e" stroke-width="2"/>
+  <rect x="920" y="140" width="230" height="56" rx="10" fill="#ffffff" stroke="#7cbf9e"/>
+  <text class="c" x="936" y="174">SRR2589044 .bam</text>
+  <rect x="920" y="207" width="230" height="56" rx="10" fill="#ffffff" stroke="#7cbf9e"/>
+  <text class="c" x="936" y="241">SRR2584863 .bam</text>
+  <rect x="920" y="274" width="230" height="56" rx="10" fill="#ffffff" stroke="#7cbf9e"/>
+  <text class="c" x="936" y="308">SRR2584866 .bam</text>
+
+  <text class="s" x="600" y="398" text-anchor="middle">The three tasks are independent, so they can run at the same time.</text>
+  <!-- arrows into tasks -->
+  <path class="d" d="M314 168 H452" marker-end="url(#a)"/>
+  <path class="d" d="M314 235 H452" marker-end="url(#a)"/>
+  <path class="d" d="M314 302 H452" marker-end="url(#a)"/>
+
+  <!-- arrows out -->
+  <path class="d" d="M786 168 H918" marker-end="url(#a)"/>
+  <path class="d" d="M786 235 H918" marker-end="url(#a)"/>
+  <path class="d" d="M786 302 H918" marker-end="url(#a)"/>
+
+</svg>

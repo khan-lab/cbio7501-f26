@@ -1,0 +1,98 @@
+---
+title: "Git and GitHub"
+subtitle: "Cheat sheet for lesson 04"
+---
+
+## Set up once
+
+| What you want | Command |
+|------------|------------------------|
+| Check that Git works | `git --version` |
+| Your name and email, written into every commit | `git config --global user.name "NAME"` and `git config --global user.email "EMAIL"` |
+| Call the first branch `main` | `git config --global init.defaultBranch main` |
+
+See [lesson 04, section 1](../pages/04-git.qmd#is-git-set-up) and [lesson 00](../pages/00-setup.qmd#git-and-github) for the SSH key.
+
+## Track changes
+
+| What you want | Command |
+|------------|------------------------|
+| Start tracking a project | `git init` |
+| What changed, what is staged? | `git status` (one line per file: `git status --short`) |
+| Why is a file not listed? | `git check-ignore -v FILE` |
+| Show changes you have not staged | `git diff` |
+| Stage one file, or everything | `git add FILE`, `git add .` |
+| Record the staged changes | `git commit -m "MESSAGE"` |
+| Stage and commit every changed tracked file | `git commit -am "MESSAGE"` (does not add new files) |
+| Delete a file and stage the deletion | `git rm FILE` |
+
+Taught in [lesson 04, sections 2 to 4](../pages/04-git.qmd#start-tracking-the-project).
+
+## Look back
+
+| What you want | Command |
+|------------|------------------------|
+| One line per commit | `git log --oneline` |
+| The commits that changed one file | `git log --oneline -- FILE` |
+| All branches as a graph | `git log --oneline --graph --all` |
+| What the last commit changed | `git show --stat HEAD` |
+| Get files back as they were one commit ago | `git restore --source=HEAD~1 FILE` |
+
+See [section 5](../pages/04-git.qmd#browse-the-history) and the [*Break it*](../pages/04-git.qmd#break-it-delete-your-work-then-get-it-back).
+
+## Branches
+
+| What you want | Command |
+|------------|------------------------|
+| Make a branch and switch to it | `git switch -c BRANCH` |
+| Switch to another branch | `git switch main` |
+| Merge a branch into the one you are on | `git merge BRANCH` |
+| Delete a merged branch | `git branch -d BRANCH` |
+| Finish a merge conflict | edit the files (remove the `<<<<<<<`, `=======`, `>>>>>>>` lines), then `git add FILE` and `git commit -m "MESSAGE"` |
+
+See [sections 7 and 8](../pages/04-git.qmd#branches).
+
+## GitHub
+
+| What you want | Command |
+|------------|------------------------|
+| Connect your project to a new GitHub repository | `git remote add origin git@github.com:USER/REPO.git` |
+| Push a branch the first time | `git push -u origin BRANCH` |
+| Push and pull later | `git push`, `git pull` |
+| Copy a repository to your computer | `git clone git@github.com:USER/REPO.git FOLDER` |
+| Pull request | push a branch, then *Compare & pull request* on GitHub; merge when the *Reproduce* check is green |
+
+See [section 6](../pages/04-git.qmd#put-the-project-on-github) and [section 10](../pages/04-git.qmd#pull-requests-and-the-reproduce-check).
+
+## Tags
+
+| What you want | Command |
+|------------|------------------------|
+| Name the current commit | `git tag -a v1.0.0 -m "MESSAGE"` |
+| Push the tag to GitHub | `git push origin v1.0.0` |
+| List tags | `git tag` |
+
+See [section 9](../pages/04-git.qmd#tags); releases with a DOI are in [lesson 12](../pages/12-putting-it-together.qmd#release-and-archive-on-zenodo).
+
+## `.gitignore`, as in the template
+
+```{.gitignore}
+# Environments: rebuilt from pixi.lock
+.pixi/*
+# Downloaded data, except its README
+data/raw/**
+!data/raw/README.md
+# Rebuilt by code
+results/**
+reports/*.html
+```
+
+Commit what people write; ignore what programs download or rebuild. A `#`
+starts a comment only at the beginning of a line.
+
+## Official cheat sheets and references
+
+- **Git cheat sheet**, from the Git project: <https://git-scm.com/cheat-sheet>
+- **GitHub Git cheat sheet** (web page and PDF, several languages): <https://training.github.com/downloads/github-git-cheat-sheet/>
+- *Pro Git*, the free book from the Git project: <https://git-scm.com/book/en/v2>
+- GitHub Docs, *About pull requests*: <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests>

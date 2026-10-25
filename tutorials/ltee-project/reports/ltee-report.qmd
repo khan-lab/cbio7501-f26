@@ -1,0 +1,210 @@
+---
+title: "Mutations in the Long-Term Evolution Experiment"
+subtitle: "Variant calling on three *E. coli* clones from population Ara-3"
+author: "Ada Lovelace"
+date: today
+format:
+  html:
+    embed-resources: true
+    toc: true
+    code-fold: true
+    code-tools: true
+execute:
+  warning: false
+bibliography: references.bib
+jupyter: python3
+---
+
+## Question
+
+How many mutations did *E. coli* accumulate over 50,000 generations of the
+Long-Term Evolution Experiment [@tenaillon2016], and is that answer robust to
+how strictly we filter the variant calls?
+
+## Data
+
+```{python}
+#| tags: [parameters]
+# Number of reads per file used for the length, GC and quality summaries.
+# Change it without editing the report: quarto render ... -P max_reads:5000
+max_reads = 10000
+```
+
+```{python}
+#| label: setup
+import sys
+
+import matplotlib
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from scripts.fastq_stats import quality_by_position, summarize
+
+samples = pd.read_csv("metadata/samples.tsv", sep="\t")
+fastq_files = list(samples["fastq_1"]) + list(samples["fastq_2"])
+```
+
+We use a subset of the reads prepared by Data Carpentry [@dc_data]: three
+clones of population Ara-3, frozen at generations
+`{python} ", ".join(f"{g:,}" for g in samples["generation"])`
+(@tbl-samples).
+
+```{python}
+#| label: tbl-samples
+#| tbl-cap: "The three LTEE clones in this project."
+samples[["sample", "strain", "generation", "mutator", "cit"]]
+```
+
+## Reads
+
+```{python}
+#| label: tbl-reads
+#| tbl-cap: "Reads per FASTQ file. Length, GC content and mean base quality are computed on the first reads of each file (parameter `max_reads`)."
+reads = pd.DataFrame([summarize(f, max_reads) for f in sorted(fastq_files)])
+reads.round(1)
+```
+
+Each file has `{python} f"{reads['reads'].min():,}"` reads, so each sample has
+`{python} f"{reads['reads'].min():,}"` read pairs. The mean read length is
+`{python} f"{reads['mean_length'].mean():.0f}"` bases because the reads were
+trimmed before subsampling. @fig-quality shows that base quality stays high
+along the reads.
+
+```{python}
+#| label: fig-quality
+#| fig-cap: "Mean base quality along the reads (first `max_reads` reads of each file). Colour shows the sample, line style the read of the pair."
+#| fig-alt: "Line plot of mean Phred quality against position in the read, six lines (three samples, read 1 solid and read 2 dashed). Quality starts near 32, peaks near 39 around position 15, falls to about 33 by position 80 and stays there to position 150, with a brief dip near position 102. All six files follow the same shape."
+colors = ["#2a78d6", "#eb6834", "#1baf7a"]  # one per sample, in generation order
+fig, ax = plt.subplots(figsize=(7, 4.2))
+for color, (_, row) in zip(colors, samples.sort_values("generation").iterrows()):
+    for read, style in [("fastq_1", "-"), ("fastq_2", "--")]:
+        quality_by_position(row[read], max_reads).plot(
+            ax=ax, color=color, linestyle=style, linewidth=1.5,
+            label=f"{row['sample']} (gen. {row['generation']:,}) read {read[-1]}")
+ax.set_xlabel("Position in read (bases)")
+ax.set_ylabel("Mean Phred quality")
+ax.grid(alpha=0.3)
+ax.legend(fontsize=7, ncol=3, frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.18))
+fig.tight_layout()
+plt.show()
+```
+
+## Variants
+
+The pipeline (`workflow/Snakefile`, lesson 09) aligns the reads to the
+*E. coli* REL606 reference, calls variants with bcftools and filters them
+with `vcfutils.pl varFilter`, following the Data Carpentry lesson. Settings
+come from `config/config.yaml`; the [MultiQC report](../results/qc/multiqc/multiqc_report.html)
+summarizes the read quality.
+
+```{python}
+#| label: setup-variants
+import yaml
+
+config = yaml.safe_load(open("config/config.yaml"))
+
+
+def count_variants(path):
+    with open(path) as fh:
+        return sum(1 for line in fh if not line.startswith("#"))
+
+
+def percent_mapped(path):
+    for line in open(path):
+        if " mapped (" in line and "primary" not in line:
+            return float(line.split("(")[1].split("%")[0])
+
+
+def stats_value(path, key):
+    for line in open(path):
+        if line.startswith("SN") and key in line:
+            return int(line.rstrip().split("\t")[-1])
+
+
+variants = samples[["sample", "generation", "mutator"]].copy()
+variants["mapped_percent"] = [percent_mapped(f"results/stats/{s}.flagstat.txt") for s in variants["sample"]]
+variants["variants"] = [count_variants(f"results/vcf/{s}_final_variants.vcf") for s in variants["sample"]]
+variants["snps"] = [stats_value(f"results/stats/{s}.bcftools-stats.txt", "number of SNPs:") for s in variants["sample"]]
+variants["indels"] = [stats_value(f"results/stats/{s}.bcftools-stats.txt", "number of indels:") for s in variants["sample"]]
+variants = variants.sort_values("generation")
+```
+
+Almost all reads map to the reference
+(`{python} f"{variants['mapped_percent'].min():.2f}"`% or more per sample).
+With a minimum read depth of `{python} config["min_depth"]`, the number of
+filtered variants rises from `{python} int(variants["variants"].iloc[0])` at
+generation 5,000 to `{python} int(variants["variants"].iloc[-1])` at generation
+50,000 (@tbl-variants). The last clone is a hypermutator, which explains the
+jump [@tenaillon2016].
+
+```{python}
+#| label: tbl-variants
+#| tbl-cap: "Mapped reads and filtered variants per clone (minimum read depth from `config/config.yaml`)."
+variants
+```
+
+### Does the answer depend on the depth threshold?
+
+The mean read depth of these subsets is about 10, so the default minimum depth
+of 2 keeps variants supported by very few reads. @fig-sensitivity shows the
+counts for the thresholds in `config["sensitivity_depths"]`.
+
+```{python}
+#| label: fig-sensitivity
+#| fig-cap: "Filtered variants per clone at four minimum read depths. Darker lines are stricter thresholds; the y axis is logarithmic."
+#| fig-alt: "Line chart of the number of filtered variants (log scale) against generation (5,000, 15,000, 50,000) for minimum depths 2, 5, 10 and 15. All four lines rise with generation, steeply between 15,000 and 50,000. Stricter thresholds give fewer variants: at generation 50,000 about 775 at depth 2 and about 120 at depth 15."
+depths = config["sensitivity_depths"]
+sens = pd.DataFrame(
+    [{"sample": s, "generation": g, "depth": d,
+      "variants": count_variants(f"results/sensitivity/{s}_d{d}.vcf")}
+     for s, g in zip(variants["sample"], variants["generation"]) for d in depths])
+ramp = ["#86b6ef", "#5598e7", "#2a78d6", "#184f95"]  # one blue, light to dark = lenient to strict
+fig, ax = plt.subplots(figsize=(6.5, 3.8))
+nudge = [6, -6, 0, 0]  # points; keeps the labels of close lines apart
+for color, d, dy in zip(ramp, depths, nudge):
+    part = sens[sens["depth"] == d].sort_values("generation")
+    ax.plot(part["generation"], part["variants"], marker="o", markersize=6,
+            linewidth=2, color=color, label=f"min depth {d}")
+    ax.annotate(f"d={d}", (part["generation"].iloc[-1], part["variants"].iloc[-1]),
+                xytext=(8, dy), textcoords="offset points", va="center", fontsize=8)
+ax.set_yscale("log")
+ax.set_xlabel("Generation")
+ax.set_ylabel("Filtered variants")
+generations = sorted(sens["generation"].unique())
+ax.set_xticks(generations, [f"{g:,}" for g in generations])
+ax.set_xlim(right=max(generations) * 1.12)
+ax.grid(alpha=0.3)
+ax.legend(fontsize=8, frameon=False)
+fig.tight_layout()
+plt.show()
+```
+
+```{python}
+#| label: tbl-sensitivity
+#| tbl-cap: "The data behind the figure: filtered variants per clone and minimum depth."
+table = sens.pivot(index=["sample", "generation"], columns="depth", values="variants").sort_index(level="generation")
+ratios = table.iloc[-1] / table.iloc[-2]  # 50,000 vs 15,000 generations, per depth
+table
+```
+
+**Decision.** We report minimum depth `{python} config["min_depth"]` as the
+main result, to stay comparable with the Data Carpentry lesson, and we keep
+the sensitivity analysis in the report. The conclusion (mutations accumulate
+over the generations, and the 50,000-generation mutator clone has
+`{python} f"{ratios.min():.0f}"` to `{python} f"{ratios.max():.0f}"` times as many
+as the 15,000-generation clone) holds at every threshold we tried. See
+`docs/decisions.md`.
+
+## Software
+
+```{python}
+#| label: versions
+print(f"Python {sys.version.split()[0]}, pandas {pd.__version__}, matplotlib {matplotlib.__version__}")
+```
+
+The exact versions of every package are in `pixi.lock`.
+
+## References
+
+::: {#refs}
+:::

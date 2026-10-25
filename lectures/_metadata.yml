@@ -1,0 +1,24 @@
+# Shared settings for every lecture deck in lectures/<topic>/<topic>.qmd
+format:
+  revealjs:
+    theme: [default, ../../assets/css/slides.scss]
+    css: ../../assets/css/fonts.css
+    highlight-style: github
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    slide-number: true
+    progress: true
+    hash: true
+    transition: none
+    chalkboard: false
+    incremental: false
+    code-copy: true
+    footer: "CBIO7501 Reproducible and Open Science · CC BY 4.0"
+    link-external-newwindow: true
+    preview-links: false
+    lang: en
+author: "Aziz Khan"
+execute:
+  echo: true
+  eval: false

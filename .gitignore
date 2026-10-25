@@ -1,0 +1,57 @@
+# Build-only folders from the unattended build (never commit)
+.tools/
+.cache/
+.scratch/
+.upstream/
+
+# Planning docs
+planning/
+.claude/
+INSTALL.txt
+
+*.pdf
+*.pptx
+week1-source/
+
+# Pixi environments
+.pixi/*
+!.pixi/config.toml
+
+# Quarto
+/.quarto/
+/_site/
+/_freeze/
+**/*.quarto_ipynb
+**/*_files/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Workflow managers
+.snakemake/
+.nextflow/
+.nextflow.log*
+work/
+
+# Tutorial outputs when running the reference LTEE project in place
+tutorials/ltee-project/data/raw/*
+!tutorials/ltee-project/data/raw/README.md
+tutorials/ltee-project/data/reference/*
+!tutorials/ltee-project/data/reference/README.md
+tutorials/ltee-project/data/processed/*
+!tutorials/ltee-project/data/processed/README.md
+tutorials/ltee-project/results/*
+!tutorials/ltee-project/results/README.md
+
+# OS and editors
+.DS_Store
+.vscode/
+.idea/
+
+# Quizzes
+quizzes/*.qmd
+
+README.proposed.md
+SETUP.proposed.md

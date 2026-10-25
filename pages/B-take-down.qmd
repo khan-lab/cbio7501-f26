@@ -1,0 +1,123 @@
+---
+title: "B Take-down"
+subtitle: "Free the disk space the course used, and remove the tools if you want to"
+description: "Remove project environments, Pixi's cache, global tools and Pixi itself; workflow-manager leftovers; Docker images; Codespaces. Keep what you need: your repositories."
+adapted_from:
+  - title: "Tools for Reproducible Research: Take-down"
+    url: https://nbisweden.github.io/workshop-reproducible-research/pages/take-down.html
+    authors: "NBIS"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Conda replaced by Pixi (following Pixi's own uninstall steps); Snakemake, Nextflow and Docker sections kept and adapted to the LTEE project; Codespaces added."
+test:
+  needs: []
+---
+
+::: {.at-a-glance}
+- **Time:** 10 minutes.
+- **Before you start:** everything you want to keep is pushed to GitHub (`git status` is clean, `git log origin/main` shows your commits). Deleting a project folder deletes its Git history too.
+:::
+
+## How much space did the course take?
+
+```{.bash .run}
+pixi info | grep -i "cache"
+```
+
+```{.bash .norun}
+du -sh ~/cbio7501/*
+```
+
+On our test laptop: about 3.6 GB of environments for the LTEE project, 0.5 GB
+of data and results, and several GB in Pixi's shared package cache.
+
+## 1. Project environments
+
+Each project keeps its environments in its own `.pixi/` folder. Remove them;
+`pixi install` rebuilds them from `pixi.lock` whenever you need them again:
+
+```{.bash .norun}
+cd ~/cbio7501/ltee-project
+pixi clean
+```
+
+Do the same in your capstone project and in the practice folders
+(`pixi-practice`, `conda-comparison/from-conda`).
+
+## 2. Workflow and analysis leftovers
+
+Everything here is rebuilt by `pixi run reproduce`:
+
+```{.bash .norun}
+cd ~/cbio7501/ltee-project
+rm -rf results/* data/processed/* .snakemake work .nextflow .nextflow.log*
+```
+
+Keep `results/README.md` and `data/processed/README.md` (they are committed;
+`git status` shows if you deleted them, and `git restore` brings them back).
+
+## 3. Pixi's package cache
+
+All projects share one cache of downloaded packages. Emptying it frees the most
+space; the next `pixi install` downloads again:
+
+```{.bash .norun}
+pixi clean cache
+```
+
+Lesson 05b also used micromamba, which has its own cache:
+`pixi exec micromamba clean --all --yes`.
+
+## 4. Global tools and Pixi itself
+
+```{.bash .run}
+pixi global list
+```
+
+```{.bash .norun}
+pixi global uninstall cookiecutter
+```
+
+To remove Pixi completely (from the Pixi documentation's uninstall steps):
+empty the cache (step 3), clean your workspaces (step 1), then
+
+```{.bash .norun}
+rm -r ~/.pixi
+```
+
+and delete the line that adds `~/.pixi/bin` to your `PATH` in `~/.bashrc` or
+`~/.zshrc` (on Windows, remove `%UserProfile%\.pixi\bin` from the `PATH`
+environment variable).
+
+## 5. Docker
+
+Images take a lot of space. Remove what you no longer need:
+
+```{.bash .norun}
+docker image ls
+docker image rm ltee-project:0.1.0
+docker system prune          # stopped containers, unused networks, build cache; read the prompt
+```
+
+To uninstall Docker Desktop, use its *Troubleshoot → Uninstall* menu (macOS,
+Windows) or your package manager (Linux).
+
+## 6. Codespaces
+
+Codespaces count against your monthly storage quota while they exist, even when
+stopped. Delete the ones you do not need at <https://github.com/codespaces>.
+
+## What to keep
+
+- Your GitHub repositories (`ltee-project`, your capstone): they are your
+  portfolio and the record of your work.
+- Your Zenodo records: they cannot be deleted anyway, which is the point.
+- `pixi.toml` and `pixi.lock` in every project: with them, everything above
+  comes back with one command.
+
+## Further reading
+
+- Pixi documentation, *Installation* (includes uninstalling): <https://pixi.prefix.dev/latest/installation/>
+- Docker documentation, *Prune unused Docker objects*: <https://docs.docker.com/engine/manage-resources/pruning/>

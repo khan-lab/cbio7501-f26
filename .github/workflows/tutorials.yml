@@ -1,0 +1,57 @@
+# Run the tutorials as tests: every code block marked .run (and, on Linux,
+# .run-ci: Git and Docker steps) is executed in a fresh folder, lesson by
+# lesson, in teaching order. See scripts/test_tutorials.py.
+# Not run yet: written during the unattended build, needs a push to run.
+name: Tutorials
+
+on:
+  push:
+    branches: [main]
+    paths: ["pages/**", "templates/**", "tests/**", "scripts/test_tutorials.py", ".github/workflows/tutorials.yml"]
+  pull_request:
+    paths: ["pages/**", "templates/**", "tests/**", "scripts/test_tutorials.py", ".github/workflows/tutorials.yml"]
+  workflow_dispatch:
+    inputs:
+      pages:
+        description: "Pages to test (space-separated stems, e.g. 05-pixi); empty = all"
+        required: false
+        default: ""
+  schedule:
+    - cron: "0 3 * * 1"
+
+jobs:
+  tutorials:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            flags: "--ci"          # Git writes and Docker run here
+          - os: macos-latest
+            flags: ""              # no Docker on macOS runners
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v7
+      - uses: prefix-dev/setup-pixi@v0.11.2
+        with:
+          pixi-version: v0.83.0
+          locked: true
+      - name: Git identity for the Git lesson
+        run: |
+          git config --global user.name "CBIO7501 CI"
+          git config --global user.email "ci@example.org"
+      - name: Run the tutorials
+        env:
+          CBIO7501_TEST_WORKDIR: ${{ runner.temp }}/tutorial-runs
+          PIXI_NO_TELEMETRY: "1"
+        run: pixi run test-tutorials ${{ matrix.flags }} ${{ github.event.inputs.pages }}
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: tutorial-logs-${{ matrix.os }}
+          path: |
+            ${{ runner.temp }}/tutorial-runs/*/run.log
+            ${{ runner.temp }}/tutorial-runs/*/run.sh
+            ${{ runner.temp }}/tutorial-runs/summary.json
+          retention-days: 14

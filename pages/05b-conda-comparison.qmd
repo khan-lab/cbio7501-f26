@@ -1,0 +1,291 @@
+---
+title: "05b Pixi and Conda compared"
+subtitle: "Same packages, different workflow: translate, convert, export, and know when Conda is fine"
+description: "A fair comparison of Pixi and Conda/Mamba: command table, importing an environment.yml, exporting a Pixi environment for Conda users, explicit specs, and what each tool does and does not guarantee."
+adapted_from:
+  - title: "Tools for Reproducible Research: Controlling your environment with Conda"
+    url: https://nbisweden.github.io/workshop-reproducible-research/pages/conda.html
+    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "The Conda commands of the NBIS tutorial (create, install, activate, environment files, export) are condensed into a command table next to their Pixi equivalents; the hands-on converts and exports the LTEE environment."
+  - title: "Introduction to Pixi: Backwards compatibility with conda"
+    url: https://carpentries-incubator.github.io/pixi-introduction/backwards-compatibility.html
+    authors: "Matthew Feickert and The Carpentries Incubator contributors"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit b88a073 (2026-10-05)"
+    changes: "Kept the export to conda environment files and explicit specs and building a Conda environment from them; used micromamba through pixi exec; added a wrong-platform Break it."
+test:
+  needs: [05-pixi]
+  timeout: 2400
+---
+
+::: {.at-a-glance}
+- **Time:** 40 minutes, at home (in class only if there is time: this is early in the cut order).
+- **You need:** the `ltee-project` after [lesson 05](05-pixi.qmd); about 3 GB free disk space for the Conda copy of the environment (deleted at the end).
+- **You will have:** a Conda environment file for people who do not use Pixi, in your project's `envs/` folder.
+:::
+
+## Overview
+
+[Conda](https://docs.conda.io/) (and its faster drop-in, Mamba) is the tool
+most bioinformaticians learned first, and the NBIS course this workshop builds
+on still teaches it first. Pixi installs **the same packages from the same
+channels** (conda-forge, bioconda); what differs is the workflow around them.
+You will meet Conda in papers, in lab servers and inside workflow managers, so
+you need to read both and convert between them.
+
+This page tries to be fair: Pixi is our main tool because of its lock files
+and tasks, not because Conda is bad.
+
+### Learning outcomes
+
+After this page you can:
+
+1. **Translate** everyday Conda commands into Pixi commands and back.
+2. **Convert** an existing `environment.yml` into a Pixi workspace.
+3. **Export** a Pixi environment so that a Conda or Mamba user can build it, and **build** it.
+4. **Explain** what an environment file, an explicit spec and a lock file each guarantee.
+
+## The command table
+
+| What you want | Conda / Mamba | Pixi |
+|---------------|---------------|------|
+| New environment | `conda create -n ltee -c conda-forge -c bioconda samtools` | `pixi init -c conda-forge -c bioconda` then `pixi add samtools` |
+| Add a package | `conda install -n ltee bwa` | `pixi add bwa` |
+| Remove a package | `conda remove -n ltee bwa` | `pixi remove bwa` |
+| Use the environment | `conda activate ltee` | `pixi shell` |
+| Run one command | `conda run -n ltee samtools --version` | `pixi run samtools --version` |
+| See what is installed | `conda list -n ltee` | `pixi list` |
+| Share the environment | `conda env export --from-history > environment.yml` | commit `pixi.toml` and `pixi.lock` |
+| Exact versions | `conda list --explicit > spec.txt` (one platform), or the separate `conda-lock` tool | `pixi.lock`, automatic, every platform |
+| Rebuild it elsewhere | `conda env create -f environment.yml` | `pixi install --locked` |
+| Update | `conda update -n ltee --all` | `pixi update` (within limits) or `pixi upgrade` (raise limits) |
+| Delete it | `conda env remove -n ltee` | `pixi clean` (or delete `.pixi/`) |
+| Where it lives | one central folder for all environments (`~/miniforge3/envs/`) | inside the project (`.pixi/envs/`) |
+| Named commands | not built in (use a Makefile or scripts) | `[tasks]` and `pixi run TASK` |
+
+## 1. From `environment.yml` to Pixi
+
+A labmate sends you the environment file they used for a variant-calling
+analysis. Make a folder for this page and save the file there:
+
+```{.bash .run}
+mkdir -p ~/cbio7501/conda-comparison
+cd ~/cbio7501/conda-comparison
+```
+
+```{.yaml filename="environment.yml" .write}
+name: variant-calling
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.13
+  - samtools=1.24
+  - bcftools=1.24
+```
+
+Turn it into a Pixi workspace and run a tool from it:
+
+```{.bash .run}
+pixi init --import environment.yml from-conda
+cd from-conda
+cat pixi.toml
+pixi run bcftools --version | head -1
+```
+
+```toml
+[workspace]
+channels = ["conda-forge", "bioconda"]
+name = "variant-calling"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.13.*"
+samtools = "1.24.*"
+bcftools = "1.24.*"
+```
+
+Pixi kept the channels and versions (`samtools=1.24` in Conda means
+`1.24.*`) and created a lock file. Add your other platforms with
+`pixi workspace platform add linux-64 ...` before you share it.
+
+## 2. From Pixi to Conda: an environment file
+
+Now the other direction: a collaborator uses Conda and wants to run your LTEE
+pipeline. Export the `pipeline` environment into your project's `envs/`
+folder (the template made it for this):
+
+```{.bash .run}
+cd ~/cbio7501/ltee-project
+pixi workspace export conda-environment -e pipeline envs/pipeline.yml
+cat envs/pipeline.yml
+```
+
+```yaml
+name: pipeline
+channels:
+- conda-forge
+- bioconda
+- nodefaults
+dependencies:
+- fastqc >=0.13.0,<0.14
+- multiqc >=1.35,<2
+- bwa >=0.7.19,<0.8
+- samtools >=1.24,<2
+- bcftools >=1.24,<2
+- python 3.13.*
+- quarto >=1.9
+...
+```
+
+Notice what it contains: the **ranges** from `pixi.toml`, not the exact
+versions from `pixi.lock`. A Conda user who builds it next year may get newer
+versions within those ranges.
+
+Build it the way a Conda user would. We use
+[micromamba](https://mamba.readthedocs.io/) (a small, standalone Mamba) through
+`pixi exec`, so you do not have to install Conda; with Conda the command is
+`conda env create -p ./conda-env -f envs/pipeline.yml`. This takes a few
+minutes and about 2.5 GB:
+
+```{.bash .run}
+pixi exec micromamba create -y -p ./conda-env -f envs/pipeline.yml
+pixi exec micromamba run -p ./conda-env samtools --version | head -1
+pixi exec micromamba run -p ./conda-env fastqc --version
+```
+
+```text
+samtools 1.24
+FastQC v0.13.0
+```
+
+::: {.callout-note}
+With Conda, tools only work inside the activated environment: FastQC needs
+the environment's Java. Calling `./conda-env/bin/fastqc` directly fails with
+"Unable to locate a Java Runtime" on macOS. `micromamba run` (like `conda run`
+or `conda activate`) sets the environment up first, as `pixi run` does.
+:::
+
+## 3. Exact versions for Conda users: explicit specs
+
+To give a Conda user the *exact* packages, export **explicit specs** from the
+lock file. There is one file per platform, each a plain list of package URLs
+with checksums:
+
+```{.bash .run}
+pixi workspace export conda-explicit-spec -e pipeline envs/explicit
+ls envs/explicit
+head -4 envs/explicit/pipeline_linux-64_conda_spec.txt
+```
+
+```text
+pipeline_linux-64_conda_spec.txt  pipeline_osx-64_conda_spec.txt  pipeline_osx-arm64_conda_spec.txt
+# Generated by `pixi workspace export`
+# platform: linux-64
+@EXPLICIT
+https://conda.anaconda.org/conda-forge/linux-64/libgomp-16.2.0-he0feb66_7.conda#d904c7ddd95e026254b4b80808ee9e12
+```
+
+A Conda user builds the exact environment with
+`conda create -p ./env --file envs/explicit/pipeline_linux-64_conda_spec.txt`.
+This is what the NBIS course does for its students.
+
+## Break it: the right file for the wrong computer
+
+Explicit specs are per platform, and nothing stops you from using the wrong
+one. Build an environment from the spec of a platform that is **not** yours:
+
+```{.bash .run}
+if [ "$(uname)" = "Darwin" ]; then other=linux-64; else other=osx-arm64; fi
+echo "this computer is $(uname), using the spec for $other"
+pixi exec micromamba create -y -p ./wrong-env -f envs/explicit/pipeline_${other}_conda_spec.txt
+```
+
+It "works": the packages download and install without a single warning. Now
+use it:
+
+```{.bash .expect-fail}
+pixi exec micromamba run -p ./wrong-env samtools --version
+```
+
+```text
+.../wrong-env/bin/samtools: cannot execute binary file
+```
+
+The programs were built for another operating system. `pixi.lock` cannot be
+used this way by mistake: it holds all platforms, and Pixi picks the one that
+matches your computer. Clean up both Conda copies (5 GB):
+
+```{.bash .run}
+rm -rf ./conda-env ./wrong-env
+```
+
+## What each file guarantees
+
+| File | Who writes it | Pins | Platforms |
+|------|---------------|------|-----------|
+| `environment.yml` (hand-written or `--from-history`) | you | what you asked for, often loosely | any (solved again on each machine) |
+| `conda env export` without `--from-history` | Conda | exact versions **and builds** of one machine | only that platform; often fails elsewhere |
+| explicit spec (`--explicit`) | Conda or Pixi | exact files and checksums | one file per platform |
+| `pixi.lock` | Pixi | exact files and checksums | every platform in the manifest, in one file |
+
+None of them pins the hardware, the operating system's own libraries, the
+data, or that the channels will still serve the packages in ten years
+([lesson 05](05-pixi.qmd#prove-it-rebuild-from-the-lock-file)).
+
+## Where Conda is still a good choice
+
+- **Your lab or cluster already runs on it.** Shared Conda environments on a
+  server, or HPC modules built with Conda, are fine to keep using.
+- **Workflow managers speak Conda.** Snakemake's `conda:` directive and
+  Nextflow's `conda` profile take `environment.yml` files; nf-core pipelines
+  ship them. The export in step 2 is how you connect a Pixi project to them
+  ([lesson 09](09-snakemake.qmd), [lesson 10](10-nextflow.qmd)).
+- **One quick, throwaway environment** for trying a tool: either works
+  (`pixi exec` is the Pixi way).
+- **Lock files exist for Conda too**, through [conda-lock](https://conda.github.io/conda-lock/).
+
+And Pixi's honest downsides: it is young and still changes often (version
+0.x; commands are renamed now and then), each project has its own copy of its
+environment (our pipeline environment is 2.4 GB; the shared package cache
+avoids downloading twice), and fewer tutorials and Stack Overflow answers
+exist than for Conda.
+
+## Troubleshooting
+
+| Problem | What to do |
+|---------|------------|
+| `pixi init --import` fails on `pip:` entries | Pixi imports Conda packages; add PyPI packages afterwards with `pixi add --pypi NAME`. |
+| A Conda colleague's `environment.yml` has build strings (`samtools=1.24=h36b3a25_2`) | It came from `conda env export` on one platform. Remove the build strings (the part after the second `=`) before importing. |
+| `micromamba: command not found` | Run it through Pixi as shown: `pixi exec micromamba ...`. |
+| Disk full after this page | `rm -rf ./conda-env ./wrong-env`, and `pixi exec micromamba clean --all -y` to empty micromamba's cache. |
+
+## Apply it to your own mini-analysis
+
+Export your capstone's environment with `pixi workspace export
+conda-environment` into `envs/`, and mention in your README that Conda users
+can build it from there.
+
+## Key points
+
+- Pixi and Conda use the same packages and channels; Pixi adds per-project environments, automatic lock files for all platforms, and tasks.
+- `pixi init --import environment.yml` converts a Conda environment; `pixi workspace export` goes the other way.
+- An exported `environment.yml` carries ranges; explicit specs carry exact packages for one platform; `pixi.lock` carries exact packages for all platforms.
+- Conda is still fine for shared servers and workflow-manager integrations.
+
+## Further reading
+
+- Cheat sheet: [Pixi](../cheatsheets/pixi.qmd), with links to the official cheat sheets and references.
+- NBIS, *Controlling your environment with Conda*: <https://nbisweden.github.io/workshop-reproducible-research/pages/conda.html>
+- The Carpentries Incubator, *Introduction to Pixi*, episode "Backwards compatibility with conda": <https://carpentries-incubator.github.io/pixi-introduction/backwards-compatibility.html>
+- Pixi documentation, *Exporting*: <https://pixi.prefix.dev/latest/reference/cli/pixi/workspace/export/>
+- conda-lock: <https://conda.github.io/conda-lock/>

@@ -1,0 +1,8 @@
+# Quarto settings for this project (lesson 07).
+project:
+  # Run code in reports and notebooks from the project folder, so paths like
+  # "metadata/samples.tsv" work everywhere, as in the scripts.
+  execute-dir: project
+  # `quarto render` without a file name renders only the reports.
+  render:
+    - reports/*.qmd

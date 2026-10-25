@@ -1,0 +1,48 @@
+# Build the website, check credits and internal links, deploy to GitHub Pages.
+# Structure adapted from NBIS workshop-reproducible-research
+# (.github/workflows/build-and-deploy-website.yml, CC BY 4.0); uses Pixi
+# instead of a Docker build image.
+name: Website
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: prefix-dev/setup-pixi@v0.11.2
+        with:
+          pixi-version: v0.83.0
+          locked: true
+      - name: Credits check (every adapted source is on the credits page)
+        run: pixi run check-credits
+      - name: Render
+        run: pixi run render
+      - name: Internal link check
+        run: pixi run check-links
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site/
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

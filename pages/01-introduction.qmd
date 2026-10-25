@@ -1,0 +1,192 @@
+---
+title: "01 Reproducibility and open science"
+subtitle: "Self-paced: audit how reproducible and open a published study really is"
+description: "Key ideas of the lesson in one page, then a hands-on audit of a paper's data, code and environment against the five pillars and FAIR, with a worked example."
+adapted_from:
+  - title: "On the Art of Reproducible & Open Science (Week 1 deck)"
+    url: https://github.com/khan-lab/cbio7501-f26
+    authors: "Aziz Khan"
+    license: "CC BY 4.0"
+    accessed: 2026-10-24
+    changes: "The ideas of slides 5 to 40 and 71 to 83 summarized in text; the audit exercise extends the FAIR exercise of slide 93 and the data availability examples of slide 85."
+  - title: "Tools for Reproducible Research: Introduction (lecture)"
+    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/introduction/introduction.html
+    authors: "NBIS"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Its 'how are you handling your data, code and environment' levels (decent, good, great) became the audit rubric, with FAIR, licensing and documentation rows added. Its overview figure of an analysis is used unchanged."
+test:
+  needs: []
+  timeout: 900
+---
+
+::: {.at-a-glance}
+- **Time:** 45 minutes, at home, after the lecture (or on its own, starting from the key ideas below).
+- **Slides:** [Reproducibility and open science](../lectures/01-introduction/lectures/01-introduction/Lecture1_Reproducibility.pdf)
+- **You need:** a web browser; a paper from your field (or use the worked example); Pixi for the *Break it* step.
+- **You will have:** an audit of one paper's data, code and environment, which you can turn into the "related work" of your capstone README.
+:::
+
+## Overview
+
+The lecture asked *why* reproducibility and openness matter. This page turns the
+ideas into a skill you will use all your career: looking at a published study
+and judging, in half an hour, whether you could check or reuse its results.
+
+### Learning outcome
+
+After this page you can **audit** a published study's data, code and
+computational environment against the five pillars of computational
+reproducibility and the FAIR principles, and **point to** the single change
+that would help a reader most.
+
+Check: your written audit of one paper, with evidence (links) for every row.
+
+## 1. Key ideas, in one page
+
+- **Words.** *Reproducible*: same data, same analysis, same result.
+  *Replicable*: new data, same analysis, consistent result. *Robust*: same data,
+  different analysis. *Generalisable*: new data, new analysis (The Turing Way;
+  NASEM 2019). Reproducibility is the minimum.
+- **Size of the problem.** In a survey of about 1,500 researchers (Baker 2016)
+  more than 70% had failed to reproduce someone else's experiment. For
+  computational papers in *Science*, code and data could be obtained for 44%
+  and results reproduced for 26% (Stodden et al. 2018). The Reproducibility
+  Project: Cancer Biology planned 193 experiments from 53 papers and could
+  repeat 50 from 23; the data needed to compute effect sizes was public for 4
+  of the 193 (Errington et al. 2021).
+- **Causes.** Mostly honest: undocumented steps, manual edits, missing data or
+  code, software that changed, incentives that reward novelty over care. Fraud
+  exists but is rare.
+- **The five pillars** (Ziemann et al. 2023): literate programming, code
+  version control and sharing, compute environment control, persistent data
+  sharing, documentation.
+- **Open science**: open access, open data (FAIR), open code, open methods. It
+  helps others check and reuse your work and helps you (shared data is cited
+  more: Piwowar et al. 2007). FAIR is not the same as open: sensitive data can
+  be FAIR under controlled access.
+
+![Every analysis has the same parts: data and code go into a workflow, which runs in a software environment and produces results. The audit below checks each part. Figure: NBIS, *Tools for Reproducible Research*, CC BY 4.0.](../assets/images/nbis/reproducibility_overview.png){fig-alt="Diagram: data and code go into a workflow that runs in a software environment and produces results such as reports and figures." width="85%"}
+
+## 2. The audit rubric
+
+For each row, look for evidence in the paper (data and code availability
+statements, methods, supplement) and in what it links to. Score each row:
+**missing**, **decent**, **good** or **great**. The decent, good and great
+levels for data, code and environment follow the NBIS course.
+
+| Row | Decent | Good | Great |
+|-----|--------|------|-------|
+| **Data** | available on request; metadata needed for the results available | raw data in a public repository; preprocessing done by scripts, not by hand | a section or repository that helps reproduction; open, machine-readable formats (CSV, not XLS) |
+| **Code** | code from processed data available on request | all code from raw data public, with versions (tags, releases) | documented, with instructions to reproduce; seeds recorded for random methods |
+| **Environment** | key programs named in the methods | all programs **with versions** listed | instructions or files that rebuild the whole environment (lock file, container) |
+| **FAIR** | findable: a persistent identifier (DOI, accession) | accessible over a standard protocol, interoperable formats | reusable: license, provenance, rich metadata |
+| **License** | some license somewhere | licenses for data and code stated | appropriate licenses (e.g. CC0/CC BY data, MIT/BSD/GPL code) |
+| **Documentation** | a README exists | the README says how to run things, in which order | one command or a workflow reproduces the results, and someone has checked |
+
+## 3. Worked example: SARS-CoV-2 in Scotland's wastewater
+
+The dataset you judged against FAIR in [lesson 03](03-data-management.qmd):
+
+- Paper: Scorza LCT, Cameron GJ, Murray-Williams R, Findlay D, et al. (2022).
+  SARS-CoV-2 RNA levels in Scotland's wastewater. *Scientific Data* 9:713.
+  <https://doi.org/10.1038/s41597-022-01788-3>
+- Data: Zenodo, <https://doi.org/10.5281/zenodo.6339631> (CC BY 4.0)
+- Code: GitHub, <https://github.com/BioRDM/COVID-Wastewater-Scotland>
+
+What we found (checked 2026-10-24):
+
+| Row | Score | Evidence |
+|-----|-------|----------|
+| Data | **great** | Curated data on Zenodo with a DOI, as CSV; the curation from the original agency data is done by scripts (`src/data_transformations/`) |
+| Code | **good to great** | All curation and figure code public on GitHub, with tagged releases (`RC-1.2.0` to `RC-1.2.2`); the README lists the order in which to run the scripts |
+| Environment | **decent** | `Installation.R` installs the R packages (`sgo`, `tidyr`, `lubridate`, `tidyverse`) but pins no versions, and the R version is not given. Rerun in five years, the packages will be different |
+| FAIR | **great** | DOI with versions (V1.2), CSV, README, linked paper and code |
+| License | **good** | CC BY 4.0 for the data, and the repository's `LICENCE` is also CC BY 4.0; a software license (MIT, BSD) would be the usual choice for the code |
+| Documentation | **good** | README per folder; `CITATION.cff`, `.zenodo.json` and a `CHANGELOG.md` in the repository |
+
+**The one change that would help most:** record the environment: the R
+version and package versions, ideally in a lock file (for R, for example with
+`renv`, or with Pixi from conda-forge). Everything else is unusually good:
+this is a model to learn from, not a bad example.
+
+## 4. Your turn
+
+1. Pick a paper: one you cite in your own work, or one from the reading list.
+   A recent paper in a journal with a data and code policy makes a fair test.
+2. Copy the template below into a file (for example `docs/audit.md` in your
+   capstone project, once you create it in lesson 02).
+3. Fill in every row, with **a link or quotation as evidence**. "Data
+   available on request" counts as decent at best.
+4. Write the single change that would help a reader most.
+5. Optional: try to get one number from the paper's data or code. How long did
+   it take? What stopped you?
+
+```{.markdown filename="audit.md" .write}
+# Reproducibility audit
+
+Paper: <!-- authors, year, title, journal, DOI -->
+Audited by: <!-- name --> on <!-- date -->
+
+| Row | Score (missing / decent / good / great) | Evidence (links, quotes) |
+|-----|------------------------------------------|--------------------------|
+| Data | | |
+| Code | | |
+| Environment | | |
+| FAIR | | |
+| License | | |
+| Documentation | | |
+
+The one change that would help most:
+
+Could I reproduce one number? How long did it take, and what stopped me?
+```
+
+## Break it: a link that changes under you
+
+A DOI should point to *one thing*. Zenodo gives two kinds: a **concept DOI**
+for "the latest version" and a **version DOI** for one exact version. The
+Scotland dataset's concept DOI is `10.5281/zenodo.6339631`. Ask Zenodo what it
+resolves to today:
+
+```{.bash .run}
+pixi exec python -c "
+import json, urllib.request
+r = json.load(urllib.request.urlopen('https://zenodo.org/api/records/6339631'))
+print('concept DOI:', r['conceptdoi'])
+print('resolves to:', r['doi'], '- version', r['metadata']['version'], '- published', r['metadata']['publication_date'])
+"
+```
+
+```text
+concept DOI: 10.5281/zenodo.6339631
+resolves to: 10.5281/zenodo.6349579 - version V1.2 - published 2022-03-12
+```
+
+If a paper cites the concept DOI and the authors publish V1.3 next year, the
+same link silently gives readers different data. For a result, cite the
+**version** DOI (and record checksums, as you will in lesson 03).
+
+## Apply it to your own mini-analysis
+
+Before lesson 02, where your capstone starts, audit one paper close to the
+analysis you plan for it. What did its authors share that you could build on, and what will
+you share better? Keep the audit: it becomes part of your project's README.
+
+## Key points
+
+- Reproducible (same data, same analysis) is the minimum; replicable, robust and generalisable go further.
+- Most irreproducibility is honest: missing data, code, environment or documentation.
+- Audit data, code and environment separately; the environment is the row most often missing.
+- Cite exact versions: version DOIs, tags, lock files.
+
+## Further reading
+
+- Ziemann M, Poulain P, Bora A (2023). The five pillars of computational reproducibility. *Brief Bioinform* 24:bbad375. <https://doi.org/10.1093/bib/bbad375>
+- Markowetz F (2015). Five selfish reasons to work reproducibly. *Genome Biol* 16:274. <https://doi.org/10.1186/s13059-015-0850-7>
+- Munafò MR et al. (2017). A manifesto for reproducible science. *Nat Hum Behav* 1:0021. <https://doi.org/10.1038/s41562-016-0021>
+- Stodden V, Seiler J, Ma Z (2018). An empirical analysis of journal policy effectiveness for computational reproducibility. *PNAS* 115:2584–2589. <https://doi.org/10.1073/pnas.1708290115>
+- The Turing Way, *Guide for reproducible research*: <https://book.the-turing-way.org/reproducible-research/reproducible-research>
+- National Academies of Sciences, Engineering, and Medicine (2019). *Reproducibility and Replicability in Science*. <https://doi.org/10.17226/25303>

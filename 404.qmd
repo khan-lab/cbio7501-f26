@@ -1,0 +1,7 @@
+---
+title: "Page not found"
+toc: false
+sidebar: false
+---
+
+This page does not exist. Try the [contents](/contents.qmd) or the search box.

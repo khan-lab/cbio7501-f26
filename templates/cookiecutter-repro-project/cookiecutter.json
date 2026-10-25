@@ -1,0 +1,33 @@
+{
+  "project_name": "LTEE Project",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-').replace('_', '-') }}",
+  "short_description": "A reproducible analysis project for LTEE variant calling",
+  "author_given_names": "Your",
+  "author_family_names": "Name",
+  "author_email": "you@example.org",
+  "author_orcid": "0000-0000-0000-0000",
+  "github_username": "your-github-username",
+  "license": ["MIT", "BSD-3-Clause", "Apache-2.0", "CC-BY-4.0", "Decide later"],
+  "primary_language": ["Python", "R"],
+  "include_workflow_stubs": ["yes", "no"],
+  "include_container_stubs": ["yes", "no"],
+  "__year": "{% now 'utc', '%Y' %}",
+  "__prompts__": {
+    "project_name": "Project name (a few words)",
+    "project_slug": "Folder and repository name (lowercase, dashes)",
+    "short_description": "One sentence: what does this project do?",
+    "author_given_names": "Your given name(s)",
+    "author_family_names": "Your family name(s)",
+    "author_email": "Your email",
+    "author_orcid": "Your ORCID iD (https://orcid.org), or leave the zeros",
+    "github_username": "Your GitHub username",
+    "license": "License for the code in this project",
+    "primary_language": "Main analysis language",
+    "include_workflow_stubs": "Add a workflow/ folder for Snakemake and Nextflow (lessons 09 and 10)?",
+    "include_container_stubs": "Add a containers/ folder with a Dockerfile and Apptainer recipe (lesson 08)?"
+  },
+  "_copy_without_render": [
+    ".github/workflows/*.yml",
+    ".licenses/cc-by-4.0.txt"
+  ]
+}

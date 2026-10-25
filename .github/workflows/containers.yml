@@ -1,0 +1,95 @@
+# Lesson 08 test: build the LTEE image from pixi.lock, run the pipeline in it,
+# and check it gives the same variant calls as without a container.
+# Then convert the image for Apptainer.
+# Not run yet: written during the unattended build (Docker was not allowed
+# locally), needs a push to run.
+name: Containers
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tutorials/ltee-project/containers/**"
+      - "tutorials/ltee-project/pixi.*"
+      - "templates/cookiecutter-repro-project/**/containers/**"
+      - ".github/workflows/containers.yml"
+  pull_request:
+    paths:
+      - "tutorials/ltee-project/containers/**"
+      - "tutorials/ltee-project/pixi.*"
+      - "templates/cookiecutter-repro-project/**/containers/**"
+      - ".github/workflows/containers.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "0 7 * * 1"
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tutorials/ltee-project
+    steps:
+      - uses: actions/checkout@v7
+      - uses: prefix-dev/setup-pixi@v0.11.2
+        with:
+          pixi-version: v0.83.0
+          manifest-path: tutorials/ltee-project/pixi.toml
+          locked: true
+      - name: Download and verify the data (on the host)
+        run: pixi run download
+      - name: Build the image from pixi.lock
+        run: |
+          docker build --platform linux/amd64 -f containers/Dockerfile \
+            --build-arg ENV_NAME=pipeline -t ltee-project:ci .
+          docker image inspect ltee-project:ci --format '{{.Id}}'
+      - name: Same tool versions in the image as in pixi.lock
+        run: |
+          docker run --rm ltee-project:ci samtools --version | head -1 | tee image.txt
+          pixi run -e pipeline samtools --version | head -1 | tee host.txt
+          diff image.txt host.txt
+      - name: Run variant calling inside the container
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/work -w /work ltee-project:ci \
+            bash scripts/run_variant_calling.sh
+          mkdir -p ../container-vcf && cp results/vcf/*_final_variants.vcf ../container-vcf/
+      - name: Run variant calling on the host and compare
+        run: |
+          pixi run variant-calling   # writes to results/shell-script/
+          pixi run python scripts/compare_vcfs.py results/shell-script/vcf ../container-vcf
+      - name: Bind-mount mistake fails (lesson 08 Break it)
+        run: |
+          if docker run --rm ltee-project:ci bash scripts/run_variant_calling.sh; then
+            echo "expected a failure without the bind mount"; exit 1
+          fi
+      - name: Save the image for the next job
+        run: docker save ltee-project:ci | gzip > ../ltee-project-ci.tar.gz
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ltee-image
+          path: ltee-project-ci.tar.gz
+          retention-days: 3
+
+  apptainer:
+    # Apptainer from conda-forge, run unprivileged. Ubuntu 24.04 runners may
+    # restrict unprivileged user namespaces (AppArmor); if this job fails for
+    # that reason, it says nothing about the lesson. Untested.
+    needs: docker
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          name: ltee-image
+      - uses: prefix-dev/setup-pixi@v0.11.2
+        with:
+          pixi-version: v0.83.0
+          run-install: false
+      - name: Convert and run with Apptainer
+        run: |
+          gunzip ltee-project-ci.tar.gz
+          pixi exec apptainer --version
+          pixi exec apptainer build ltee-project.sif docker-archive://ltee-project-ci.tar
+          pixi exec apptainer exec ltee-project.sif samtools --version
+          pixi exec apptainer run ltee-project.sif fastqc --version

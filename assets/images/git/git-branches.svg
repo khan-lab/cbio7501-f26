@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 1078.86 544.31">
+  <!-- Generator: Adobe Illustrator 30.8.2, SVG Export Plug-In . SVG Version: 2.1.4 Build 7)  -->
+  <defs>
+    <style>
+      .st0, .st1, .st2, .st3, .st4 {
+        fill: none;
+      }
+
+      .st5 {
+        fill: url(#dots);
+      }
+
+      .st6, .st7, .st8, .st9 {
+        fill: #0c2945;
+      }
+
+      .st7, .st10, .st1, .st2, .st3, .st11 {
+        stroke-linecap: round;
+      }
+
+      .st7, .st10, .st4, .st11 {
+        stroke-width: 2.5px;
+      }
+
+      .st7, .st12, .st13, .st14, .st15, .st1 {
+        stroke: #0c2945;
+      }
+
+      .st8, .st16, .st17, .st9, .st18, .st19, .st20, .st21, .st22 {
+        isolation: isolate;
+      }
+
+      .st8, .st17, .st9, .st18, .st21 {
+        font-family: Helvetica-Bold, Helvetica;
+        font-weight: 700;
+      }
+
+      .st8, .st21 {
+        font-size: 15px;
+      }
+
+      .st16, .st17, .st9 {
+        font-size: 16px;
+      }
+
+      .st16, .st23, .st21, .st13, .st14, .st24, .st22 {
+        fill: #e6c787;
+      }
+
+      .st16, .st20 {
+        font-family: Helvetica, Helvetica;
+      }
+
+      .st17 {
+        fill: #f7f8f9;
+      }
+
+      .st25 {
+        fill: #fff;
+        stroke: #231f20;
+      }
+
+      .st18 {
+        font-size: 21px;
+      }
+
+      .st10, .st24, .st3 {
+        stroke: #8db7e6;
+      }
+
+      .st26, .st12 {
+        fill: #8db7e6;
+      }
+
+      .st12, .st14, .st15 {
+        stroke-width: 3px;
+      }
+
+      .st20 {
+        fill: #232528;
+        font-size: 12px;
+      }
+
+      .st13, .st24 {
+        stroke-width: 5px;
+      }
+
+      .st15 {
+        fill: #f4f7fb;
+      }
+
+      .st1, .st2, .st3 {
+        stroke-width: 6px;
+      }
+
+      .st2, .st4, .st11 {
+        stroke: #e6c787;
+      }
+
+      .st22 {
+        opacity: .16;
+      }
+    </style>
+    <pattern id="dots" x="0" y="0" width="28" height="28" patternTransform="translate(-15.6599 16964.9086)" patternUnits="userSpaceOnUse" viewBox="0 0 28 28">
+      <g>
+        <rect class="st0" width="28" height="28"/>
+        <g>
+          <rect class="st0" width="28" height="28"/>
+          <circle class="st22" cx="14" cy="14" r="1.6"/>
+        </g>
+      </g>
+    </pattern>
+  </defs>
+  <rect class="st5" y="-68.76" width="1078.86" height="544.31" rx="28" ry="28"/>
+  <g>
+    <path class="st2" d="M53.34,203.4h910"/>
+    <path class="st3" d="M193.34,203.4c60,0,80,130,140,130h280c70,0,80-130,140-130"/>
+    <path class="st1" d="M333.34,203.4c60,0,80-130,140-130h140c150,0,190,130,300,130"/>
+  </g>
+  <g>
+    <circle class="st14" cx="53.34" cy="203.4" r="14"/>
+    <circle class="st14" cx="193.34" cy="203.4" r="14"/>
+    <circle class="st14" cx="333.34" cy="203.4" r="14"/>
+  </g>
+  <circle class="st24" cx="753.34" cy="203.4" r="17"/>
+  <circle class="st13" cx="913.34" cy="203.4" r="17"/>
+  <g>
+    <circle class="st12" cx="333.34" cy="333.4" r="14"/>
+    <circle class="st12" cx="473.34" cy="333.4" r="14"/>
+    <circle class="st12" cx="613.34" cy="333.4" r="14"/>
+  </g>
+  <g>
+    <circle class="st15" cx="473.34" cy="73.4" r="14"/>
+    <circle class="st15" cx="613.34" cy="73.4" r="14"/>
+  </g>
+  <g>
+    <path class="st7" d="M613.34,56.72v-11.32"/>
+    <path class="st10" d="M613.34,349.84v13.56"/>
+    <path class="st11" d="M473.34,349.84v13.56"/>
+  </g>
+  <g>
+    <path class="st6" d="M557.34,17.4h112c7.73,0,14,6.27,14,14h0c0,7.73-6.27,14-14,14h-112c-7.73,0-14-6.27-14-14h0c0-7.73,6.27-14,14-14Z"/>
+    <g class="st19">
+      <text class="st17" transform="translate(571.56 36.4)"><tspan x="0" y="0">fix-ref-path</tspan></text>
+    </g>
+    <path class="st26" d="M565.34,363.4h96c7.73,0,14,6.27,14,14h0c0,7.73-6.27,14-14,14h-96c-7.73,0-14-6.27-14-14h0c0-7.73,6.27-14,14-14Z"/>
+    <g class="st19">
+      <text class="st9" transform="translate(572.89 382.4)"><tspan x="0" y="0">add-fastqc</tspan></text>
+    </g>
+    <path class="st23" d="M997.34,189.4h48c7.73,0,14,6.27,14,14h0c0,7.73-6.27,14-14,14h-48c-7.73,0-14-6.27-14-14h0c0-7.73,6.27-14,14-14h0Z"/>
+    <g class="st19">
+      <text class="st9" transform="translate(1002.6682 208.4009)"><tspan x="0" y="0">main</tspan></text>
+    </g>
+  </g>
+  <path class="st11" d="M963.34,203.4h20"/>
+  <path class="st4" d="M453.34,363.4h40c7.73,0,14,6.27,14,14h0c0,7.73-6.27,14-14,14h-40c-7.73,0-14-6.27-14-14h0c0-7.73,6.27-14,14-14Z"/>
+  <g class="st19">
+    <text class="st21" transform="translate(452.09 382.4)"><tspan x="0" y="0">HEAD</tspan></text>
+  </g>
+  <g>
+    <circle class="st25" cx="215.34" cy="285.4" r="14"/>
+    <g class="st19">
+      <text class="st8" transform="translate(211.17 290.4)"><tspan x="0" y="0">1</tspan></text>
+    </g>
+    <circle class="st25" cx="473.34" cy="291.4" r="14"/>
+    <g class="st19">
+      <text class="st8" transform="translate(469.17 296.4)"><tspan x="0" y="0">2</tspan></text>
+    </g>
+    <circle class="st25" cx="753.34" cy="159.4" r="14"/>
+    <g class="st19">
+      <text class="st8" transform="translate(749.17 164.4)"><tspan x="0" y="0">3</tspan></text>
+    </g>
+  </g>
+  <g>
+    <g>
+      <circle class="st25" cx="27.34" cy="449.4" r="14"/>
+      <g class="st19">
+        <text class="st8" transform="translate(23.17 454.4)"><tspan x="0" y="0">1</tspan></text>
+      </g>
+      <g class="st19">
+        <text class="st18" transform="translate(53.34 456.4)"><tspan x="0" y="0">Branch</tspan></text>
+      </g>
+      <g class="st19">
+        <text class="st16" transform="translate(13.34 491.4)"><tspan x="0" y="0">git switch -c add-fastqc</tspan></text>
+      </g>
+    </g>
+    <g>
+      <circle class="st25" cx="407.34" cy="449.4" r="14"/>
+      <g class="st19">
+        <text class="st8" transform="translate(403.17 454.4)"><tspan x="0" y="0">2</tspan></text>
+      </g>
+      <g class="st19">
+        <text class="st18" transform="translate(433.34 456.4)"><tspan x="0" y="0">Commit</tspan></text>
+      </g>
+      <g class="st19">
+        <text class="st16" transform="translate(393.34 491.4)"><tspan x="0" y="0">git commit -m &quot;Add FastQC&quot;</tspan></text>
+      </g>
+    </g>
+    <g>
+      <circle class="st25" cx="787.34" cy="449.4" r="14"/>
+      <g class="st19">
+        <text class="st8" transform="translate(783.17 454.4)"><tspan x="0" y="0">3</tspan></text>
+      </g>
+      <g class="st19">
+        <text class="st18" transform="translate(813.34 456.4)"><tspan x="0" y="0">Merge</tspan></text>
+      </g>
+      <g class="st19">
+        <text class="st16" transform="translate(773.34 491.4)"><tspan x="0" y="0">git merge add-fastqc</tspan></text>
+      </g>
+    </g>
+  </g>
+  <text class="st20" transform="translate(13.34 511.67)"><tspan x="0" y="0">A new label on the same commit. Nothing is copied.</tspan></text>
+  <text class="st20" transform="translate(393.34 511.67)"><tspan x="0" y="0">Only your branch label moves. main stays where it was.</tspan></text>
+  <text class="st20" transform="translate(773.34 511.67)"><tspan x="0" y="0">On GitHub, a pull request does this, after a review.</tspan></text>
+</svg>

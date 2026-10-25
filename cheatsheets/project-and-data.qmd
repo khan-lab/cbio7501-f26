@@ -1,0 +1,105 @@
+---
+title: "Project and data"
+subtitle: "Cheat sheet for lessons 02 and 03"
+---
+
+## Start a project
+
+| What you want | Command |
+|------------|------------------------|
+| Make a project from the course template (it asks you questions) | `pixi exec --spec cookiecutter --spec git -- cookiecutter gh:khan-lab/cbio7501-f26 --directory templates/cookiecutter-repro-project` |
+| The same without questions | add `--no-input` and the answers as `key="value"`, e.g. `project_slug="ltee-project" license="MIT"` |
+
+```{.bash}
+find . -type d | sort      # see the folders it made
+```
+
+Taught in [lesson 02, section 3](../pages/02-project-organization.qmd#generate-the-project-from-the-template).
+
+## Where things go
+
+| Folder or file | What goes in it | In Git? |
+|----------------|-----------------|---------|
+| `data/raw/` | downloaded data: read-only, never edited | no (only its README) |
+| `data/processed/` | data made from the raw data by code | no |
+| `metadata/` | sample sheet, data sources, checksums | yes |
+| `scripts/` | code, run from the project folder | yes |
+| `config/`, `workflow/` | settings, and the Snakemake and Nextflow workflows | yes |
+| `notebooks/` | Jupyter notebooks for exploring, outputs cleared | yes |
+| `reports/` | the Quarto report | yes (not the rendered HTML) |
+| `results/` | everything code makes: delete and rebuild any time | no (only its README) |
+| `docs/` | notes, decision log, project structure | yes |
+| `envs/`, `containers/` | Conda export files, Dockerfile, Apptainer recipe | yes (not saved images) |
+| `pixi.toml`, `pixi.lock` | the software: what you asked for, and exactly what was installed | yes |
+
+: {tbl-colwidths="[25,55,20]"}
+
+See [lesson 02, section 4](../pages/02-project-organization.qmd#walk-through-the-layout).
+
+## Rules worth keeping
+
+- Run everything from the project folder, with paths relative to it (`metadata/samples.tsv`, never `/Users/ada/...`).
+- Raw data is downloaded by code and read-only; processed data and results are rebuilt by code.
+- Name files so they sort and can be read by programs: no spaces, ISO dates (`2026-10-25`), leading zeros (`sample-01`), the same order of parts every time.
+- Start the README on day one.
+
+## Get and check data
+
+| What you want | Command |
+|------------|------------------------|
+| Download a file, retrying on network errors | `curl -L --fail --retry 5 --retry-all-errors -o FILE URL` |
+| Unpack a `.tar.gz` archive | `tar -xzf FILE.tar.gz -C FOLDER` |
+| Look at the first read of a FASTQ file | `head -4 FILE.fastq` |
+| Record checksums of the files you keep | `sha256sum data/raw/fastq/*.fastq data/raw/reference/*.gz > metadata/checksums.sha256` |
+| Check every file against them | `sha256sum -c metadata/checksums.sha256` (older macOS: `shasum -a 256 -c ...`) |
+| Make raw data read-only | `chmod a-w data/raw/fastq/* data/raw/reference/*` |
+| Make one file writable again, to replace it | `chmod u+w FILE` |
+| Download and verify everything, the project's way | `pixi exec python scripts/download_data.py` (from lesson 05: `pixi run download`) |
+| Only verify | `pixi exec python scripts/download_data.py --verify-only` |
+
+```{.bash}
+# Check a download against the MD5 its provider published (two spaces before the file name)
+echo "MD5  FILE" | md5sum -c -
+# Look into a gzipped file
+gunzip -c FILE.gz | head -1
+```
+
+Taught in [lesson 03, Part B](../pages/03-data-management.qmd#hands-on).
+
+## FAIR in one line each
+
+| | In practice |
+|-|-------------|
+| **F**indable | a persistent identifier (a DOI from Zenodo or figshare, an SRA or ENA accession) and rich metadata |
+| **A**ccessible | an open, standard download (HTTPS), or a clear procedure for controlled access |
+| **I**nteroperable | open formats (FASTQ, VCF, CSV/TSV) and shared vocabularies |
+| **R**eusable | a license (CC0 or CC BY), provenance, and a README that says how the data was made |
+
+FAIR is not the same as open. See [lesson 03, Part A](../pages/03-data-management.qmd#fair-in-one-table).
+
+## CARE in one line each
+
+For data from Indigenous Peoples and their lands, used together with FAIR:
+
+| | In practice |
+|-|-------------|
+| **C**ollective benefit | the communities the data comes from benefit from its use; results go back to them |
+| **A**uthority to control | community agreement as well as individual consent; the community has a say in access |
+| **R**esponsibility | report back how the data was used; build lasting relationships |
+| **E**thics | weigh harms to the group, not only to individuals; record limits on future use in the metadata |
+
+FAIR asks whether data can be used; CARE asks for whom and who decides. See
+[lesson 03, Part A](../pages/03-data-management.qmd#care-in-one-table).
+
+## Official cheat sheets and references
+
+There is no official cheat sheet for organizing projects or managing data.
+These are the references the lessons build on:
+
+- Cookiecutter, *Usage* (how templates are found and filled in): <https://cookiecutter.readthedocs.io/en/stable/usage.html>
+- The course template and its README: <https://github.com/khan-lab/cbio7501-f26/tree/main/templates/cookiecutter-repro-project>
+- Wilson G et al. (2017). Good enough practices in scientific computing. *PLoS Comput Biol* 13:e1005510. <https://doi.org/10.1371/journal.pcbi.1005510>
+- Wilkinson MD et al. (2016). The FAIR Guiding Principles for scientific data management and stewardship. *Sci Data* 3:160018. <https://doi.org/10.1038/sdata.2016.18>
+- Global Indigenous Data Alliance, *CARE Principles for Indigenous Data Governance*: <https://www.gida-global.org/careprinciples>
+- Carroll SR et al. (2020). The CARE Principles for Indigenous Data Governance. *Data Sci J* 19:43. <https://doi.org/10.5334/dsj-2020-043>
+- The Carpentries Incubator, *FAIR in (biological) practice*: <https://carpentries-incubator.github.io/fair-bio-practice/>

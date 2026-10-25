@@ -1,0 +1,617 @@
+---
+title: "07 Quarto"
+subtitle: "A report in which every number and figure is computed from the data, every time"
+description: "Write a Quarto report for the LTEE project in Python: text, code, tables, figures, cross-references, inline values, parameters, citations, HTML and PDF output."
+adapted_from:
+  - title: "Tools for Reproducible Research: Working with Quarto"
+    url: https://nbisweden.github.io/workshop-reproducible-research/pages/quarto.html
+    authors: "NBIS (Erik Fasterius, John Sundh and contributors)"
+    license: "CC BY 4.0"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    accessed: 2026-10-24
+    version: "commit 1bce220 (2026-10-23)"
+    changes: "Python only (NBIS uses R and the Palmer penguins); the example is the LTEE data report, built step by step in the learner's project; Pixi instead of Conda; added project-relative paths, parameters with -P, a Typst PDF, a Break it exercise on hidden state, and a report task that GitHub reruns on every push."
+test:
+  needs: [06-jupyter]
+  timeout: 2400
+---
+
+::: {.at-a-glance}
+- **Time:** about 2 hours in class: sections 1 to 3 (40 minutes), then 4 to 9 (80 minutes); the extras at the end at home.
+- **Slides:** [Quarto](../lectures/07-quarto/07-quarto.qmd)
+- **You need:** the `ltee-project` after [lesson 05](05-pixi.qmd): data downloaded, environments installed, on GitHub.
+- **You will have:** `reports/ltee-report.qmd`, a report that rebuilds itself from the data, its HTML and PDF versions, and a `report` task that GitHub reruns on every push.
+:::
+
+## Overview
+
+Copying numbers and figures from an analysis into a Word document breaks the
+link between the result and the code that made it. The next time the data
+changes, the document is silently wrong. **Literate programming** keeps text
+and code in one file: the document is *rendered* by running the code, so
+every number, table and figure in it comes from the data at render time.
+
+A notebook ([lesson 06](06-jupyter.qmd)) is where you explore; a report is
+what you share, and it has to be right every time it is built.
+[Quarto](https://quarto.org/) is a tool for this. A Quarto document (`.qmd`)
+is Markdown text with code cells. Quarto runs the cells (here with Python,
+through Jupyter) and turns the result into HTML, PDF, Word, slides or
+websites. This website and its slides are Quarto documents too.
+
+### Learning outcomes
+
+After this lesson you can:
+
+1. **Write** a Quarto document that mixes Markdown text with Python cells, and **render** it from the command line.
+2. **Generate** every table, figure and number in a report from the data, with captions, cross-references and inline values instead of typed numbers.
+3. **Change** a report's settings with parameters and output formats without editing its code.
+4. **Explain** why a report that renders in a fresh session is more trustworthy than a notebook you ran by hand, and show it with a failing render.
+
+Checks: your `reports/ltee-report.qmd` renders with one command on a fresh
+clone (outcomes 1 to 3), and the *Break it* render fails for the reason you
+predicted (outcome 4).
+
+### Prerequisites
+
+Lessons [02](02-project-organization.qmd), [03](03-data-management.qmd#hands-on),
+[04](04-git.qmd) and [05](05-pixi.qmd). Basic Python (variables, functions, `import`, a little pandas). Markdown: see
+[appendix A](A-markdown.qmd) for a one-page summary.
+
+## 1. The project's environment
+
+Everything this lesson needs is already in your project's **default**
+environment ([lesson 05](05-pixi.qmd)): Python, Quarto, Jupyter, pandas and
+matplotlib, pinned in `pixi.lock`. Start a branch and check that Quarto works:
+
+```{.bash .run}
+cd ~/cbio7501/ltee-project
+```
+
+```{.bash .run-ci}
+git switch -c lesson-07-quarto
+```
+
+```{.bash .run}
+pixi run check
+```
+
+```text
+Python 3.13.17
+1.9.38
+```
+
+## 2. Tell Quarto where the project is
+
+A file called `_quarto.yml` marks a folder as a Quarto project and holds
+settings for every document in it. We need one setting: by default Quarto runs
+a document's code in the folder of the document, here `reports/`. That would
+break our rule from [lesson 02](02-project-organization.qmd) that paths are
+relative to the *project* folder. Create `_quarto.yml` in the project folder:
+
+```{.yaml filename="_quarto.yml" .write}
+# Quarto settings for this project (lesson 07).
+project:
+  # Run code in reports and notebooks from the project folder, so paths like
+  # "metadata/samples.tsv" work everywhere, as in the scripts.
+  execute-dir: project
+  # `quarto render` without a file name renders only the reports.
+  render:
+    - reports/*.qmd
+```
+
+::: {.callout-note title="Why before the first document?"}
+Without its own `_quarto.yml`, Quarto looks for one in the folders *above*
+your project and may use a stranger's settings (we hit this while testing this
+lesson, when the project was inside another Quarto website).
+:::
+
+## 3. Your first Quarto document
+
+Create `reports/first.qmd` in your editor with this content:
+
+````{.markdown filename="reports/first.qmd" .write}
+---
+title: "My first Quarto document"
+format: html
+---
+
+This is **Markdown**: *italics*, `code`, [links](https://quarto.org) and lists:
+
+- one
+- two
+
+## A code cell
+
+```{{python}}
+import datetime
+print("This report was rendered on", datetime.date.today())
+```
+````
+
+The block between the `---` lines is the **YAML header**: settings for the
+whole document (`key: value`). The part in ```` ```{python} ```` fences is a
+**code cell**: Quarto runs it and puts the code and its output in the result.
+
+Render it:
+
+```{.bash .run}
+pixi run quarto render reports/first.qmd
+```
+
+```text
+Output created: first.html
+```
+
+Open `reports/first.html` in your browser (double-click it, or `open
+reports/first.html` on macOS, `xdg-open` on Linux, `explorer.exe` in WSL2).
+
+::: {.callout-tip title="The first render is slow"}
+The very first render in a new environment can take one to two minutes
+(Python and Jupyter compile and cache files; macOS also scans new programs).
+Later renders take a few seconds.
+:::
+
+::: {.callout-note title="Live preview"}
+While you write, `pixi run quarto preview reports/first.qmd` opens the
+document in your browser and re-renders each time you save. Stop it with
+`Ctrl-C`. (Not run in our tests because it keeps running.)
+
+```{.bash .norun}
+pixi run quarto preview reports/first.qmd
+```
+:::
+
+## 4. A helper module for the report
+
+The report needs a few small functions to summarize FASTQ files. (In the
+notebook of [lesson 06](06-jupyter.qmd) you read the reads with a loop in a
+cell; that is fine for exploring, not for code you reuse.) Code that does real
+work belongs in `scripts/`, where it can be reused and tested. The report only
+calls it. Create `scripts/fastq_stats.py`:
+
+```{.python filename="scripts/fastq_stats.py" .write}
+"""Small summaries of FASTQ files, used by the LTEE report.
+
+Only the Python standard library and pandas are needed. Quality scores are
+Phred+33 (Illumina 1.8+), as in the LTEE files.
+"""
+
+from itertools import islice
+from pathlib import Path
+
+import pandas as pd
+
+
+def read_fastq(path, max_reads=None):
+    """Yield (sequence, quality string) for each read, up to max_reads."""
+    with open(path) as fh:
+        records = iter(lambda: list(islice(fh, 4)), [])
+        for i, lines in enumerate(records):
+            if max_reads is not None and i >= max_reads:
+                return
+            yield lines[1].rstrip("\n"), lines[3].rstrip("\n")
+
+
+def count_reads(path):
+    """Number of reads in a FASTQ file (four lines per read)."""
+    with open(path) as fh:
+        return sum(1 for _ in fh) // 4
+
+
+def summarize(path, max_reads=20000):
+    """Read count (all reads) and length, GC and quality (first max_reads reads)."""
+    lengths, gc, quality = [], 0, 0
+    for seq, qual in read_fastq(path, max_reads):
+        lengths.append(len(seq))
+        gc += seq.count("G") + seq.count("C")
+        quality += sum(ord(c) - 33 for c in qual)
+    bases = sum(lengths)
+    return {
+        "file": Path(path).name,
+        "reads": count_reads(path),
+        "mean_length": bases / len(lengths),
+        "gc_percent": 100 * gc / bases,
+        "mean_quality": quality / bases,
+    }
+
+
+def quality_by_position(path, max_reads=20000):
+    """Mean Phred quality at each read position (1-based)."""
+    totals, counts = [], []
+    for _, qual in read_fastq(path, max_reads):
+        for i, c in enumerate(qual):
+            if i == len(totals):
+                totals.append(0)
+                counts.append(0)
+            totals[i] += ord(c) - 33
+            counts[i] += 1
+    return pd.Series([t / n for t, n in zip(totals, counts)],
+                     index=range(1, len(totals) + 1), name=Path(path).name)
+```
+
+Try it from the project folder:
+
+```{.bash .run}
+pixi run python -c "from scripts.fastq_stats import summarize; print(summarize('data/raw/fastq/SRR2584863_1.trim.sub.fastq', 1000))"
+```
+
+```text
+{'file': 'SRR2584863_1.trim.sub.fastq', 'reads': 175000, 'mean_length': ..., 'gc_percent': ..., 'mean_quality': ...}
+```
+
+## 5. Build the LTEE report, step by step
+
+### 5a. Header, question and data table
+
+Create `reports/ltee-report.qmd`:
+
+````{.markdown filename="reports/ltee-report.qmd" .write}
+---
+title: "Mutations in the Long-Term Evolution Experiment"
+subtitle: "Variant calling on three *E. coli* clones from population Ara-3"
+author: "Ada Lovelace"
+date: today
+format:
+  html:
+    embed-resources: true
+    toc: true
+    code-fold: true
+    code-tools: true
+execute:
+  warning: false
+bibliography: references.bib
+jupyter: python3
+---
+
+## Question
+
+How many mutations did *E. coli* accumulate over 50,000 generations of the
+Long-Term Evolution Experiment [@tenaillon2016], and is that answer robust to
+how strictly we filter the variant calls?
+
+## Data
+
+```{{python}}
+#| tags: [parameters]
+# Number of reads per file used for the length, GC and quality summaries.
+# Change it without editing the report: quarto render ... -P max_reads:5000
+max_reads = 10000
+```
+
+```{{python}}
+#| label: setup
+import sys
+
+import matplotlib
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from scripts.fastq_stats import quality_by_position, summarize
+
+samples = pd.read_csv("metadata/samples.tsv", sep="\t")
+fastq_files = list(samples["fastq_1"]) + list(samples["fastq_2"])
+```
+
+We use a subset of the reads prepared by Data Carpentry [@dc_data]: three
+clones of population Ara-3, frozen at generations
+`{python} ", ".join(f"{g:,}" for g in samples["generation"])`
+(@tbl-samples).
+
+```{{python}}
+#| label: tbl-samples
+#| tbl-cap: "The three LTEE clones in this project."
+samples[["sample", "strain", "generation", "mutator", "cit"]]
+```
+````
+
+What is new here:
+
+- `format: html:` options: `embed-resources: true` puts images and styles
+  inside the HTML file (one file to email or archive); `toc` adds a table of
+  contents; `code-fold` hides the code behind "Code" buttons.
+- `#|` lines at the top of a cell are **cell options**. `label: tbl-samples`
+  plus `tbl-cap` makes a numbered table that the text cites with `@tbl-samples`.
+- `` `{python} expression` `` in the text is **inline code**: the generation
+  numbers come from `samples.tsv`, not from your keyboard.
+- `[@tenaillon2016]` is a **citation**, looked up in `references.bib`.
+
+The citations need the bibliography file. Create `reports/references.bib`:
+
+```{.bibtex filename="reports/references.bib" .write}
+@article{tenaillon2016,
+  author  = {Tenaillon, Olivier and Barrick, Jeffrey E. and Ribeck, Noah and Deatherage, Daniel E. and Blanchard, Jeffrey L. and Dasgupta, Aurko and Wu, Gabriel C. and Wielgoss, S{\'e}bastien and Cruveiller, St{\'e}phane and M{\'e}digue, Claudine and Schneider, Dominique and Lenski, Richard E.},
+  title   = {Tempo and mode of genome evolution in a 50,000-generation experiment},
+  journal = {Nature},
+  year    = {2016},
+  volume  = {536},
+  pages   = {165--170},
+  doi     = {10.1038/nature18959}
+}
+
+@misc{dc_data,
+  author       = {Tenaillon, Olivier and Barrick, Jeffrey E. and Ribeck, Noah and others},
+  title        = {Data Carpentry Genomics Curriculum Example Data},
+  year         = {2019},
+  publisher    = {figshare},
+  howpublished = {Dataset, version 3},
+  doi          = {10.6084/m9.figshare.7726454.v3}
+}
+```
+
+Render and look at the result:
+
+```{.bash .run}
+pixi run quarto render reports/ltee-report.qmd
+```
+
+### 5b. A table computed from the reads
+
+Add a section that summarizes every FASTQ file. Paste this at the end of
+`reports/ltee-report.qmd`:
+
+````{.markdown filename="reports/ltee-report.qmd" .append}
+
+## Reads
+
+```{{python}}
+#| label: tbl-reads
+#| tbl-cap: "Reads per FASTQ file. Length, GC content and mean base quality are computed on the first reads of each file (parameter `max_reads`)."
+reads = pd.DataFrame([summarize(f, max_reads) for f in sorted(fastq_files)])
+reads.round(1)
+```
+
+Each file has `{python} f"{reads['reads'].min():,}"` reads, so each sample has
+`{python} f"{reads['reads'].min():,}"` read pairs. The mean read length is
+`{python} f"{reads['mean_length'].mean():.0f}"` bases because the reads were
+trimmed before subsampling. @fig-quality shows that base quality stays high
+along the reads.
+````
+
+### 5c. A figure with a caption and alt text
+
+````{.markdown filename="reports/ltee-report.qmd" .append}
+
+```{{python}}
+#| label: fig-quality
+#| fig-cap: "Mean base quality along the reads (first `max_reads` reads of each file). Colour shows the sample, line style the read of the pair."
+#| fig-alt: "Line plot of mean Phred quality against position in the read, six lines (three samples, read 1 solid and read 2 dashed). Quality starts near 32, peaks near 39 around position 15, falls to about 33 by position 80 and stays there to position 150, with a brief dip near position 102. All six files follow the same shape."
+colors = ["#2a78d6", "#eb6834", "#1baf7a"]  # one per sample, in generation order
+fig, ax = plt.subplots(figsize=(7, 4.2))
+for color, (_, row) in zip(colors, samples.sort_values("generation").iterrows()):
+    for read, style in [("fastq_1", "-"), ("fastq_2", "--")]:
+        quality_by_position(row[read], max_reads).plot(
+            ax=ax, color=color, linestyle=style, linewidth=1.5,
+            label=f"{row['sample']} (gen. {row['generation']:,}) read {read[-1]}")
+ax.set_xlabel("Position in read (bases)")
+ax.set_ylabel("Mean Phred quality")
+ax.grid(alpha=0.3)
+ax.legend(fontsize=7, ncol=3, frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.18))
+fig.tight_layout()
+plt.show()
+```
+````
+
+`fig-alt` is the text a screen reader reads instead of the image. Describe
+what the figure shows, not just its title. We also use line style as well as
+colour, so the figure works for readers who cannot tell the colours apart.
+
+### 5d. Software versions and references
+
+````{.markdown filename="reports/ltee-report.qmd" .append}
+
+## Software
+
+```{{python}}
+#| label: versions
+print(f"Python {sys.version.split()[0]}, pandas {pd.__version__}, matplotlib {matplotlib.__version__}")
+```
+
+The exact versions of every package are in `pixi.lock`.
+
+## References
+
+::: {#refs}
+:::
+````
+
+Render the full report and open `reports/ltee-report.html`:
+
+```{.bash .run}
+pixi run quarto render reports/ltee-report.qmd
+```
+
+Check that you see: two numbered tables, one numbered figure with its caption,
+the generation numbers and read counts in the text, and a reference list.
+
+::: {.callout-note title="Where the variant results go"}
+The report stops at the reads for now. In [lesson 09](09-snakemake.qmd) the
+pipeline produces variant calls, and you add a *Variants* section that answers
+the question at the top.
+:::
+
+## 6. Change the report without editing it: parameters
+
+The cell tagged `parameters` holds settings. Override one when rendering:
+
+```{.bash .run}
+pixi run quarto render reports/ltee-report.qmd -P max_reads:2000
+```
+
+The tables and figure now use 2,000 reads per file. Nothing in the file
+changed, and the next normal render uses 10,000 again.
+(Quarto uses the `papermill` package for this; the template put it in your
+`pixi.toml`.)
+
+## 7. Other formats
+
+The same source makes a PDF. Quarto uses [Typst](https://typst.app/), which
+comes with Quarto, so you do not need LaTeX:
+
+```{.bash .run}
+pixi run quarto render reports/ltee-report.qmd --to typst
+ls reports/
+```
+
+```text
+first.html  ltee-report.html  ltee-report.pdf  ltee-report.qmd  references.bib
+```
+
+Other formats: `--to docx` (Word), `--to revealjs` (slides; our course slides
+are Quarto documents). Each format has its own options in the header; see the
+[Quarto guide](https://quarto.org/docs/guide/).
+
+## 8. Notebooks too
+
+Quarto renders Jupyter notebooks as well as `.qmd` files. If you did
+[lesson 06](06-jupyter.qmd), render your notebook. With `--execute` Quarto
+first runs every cell in a fresh kernel, and it uses the `#|` cell options
+that Jupyter ignored, so the histogram gets its caption and alt text:
+
+```{.bash .run}
+pixi run quarto render notebooks/explore-reads.ipynb --execute
+grep -o 'alt="Histogram[^"]*"' notebooks/explore-reads.html
+```
+
+`--execute` also saved the outputs inside the notebook file. Clear them again
+before you commit, as in lesson 06, and delete the rendered copy:
+
+```{.bash .run}
+pixi run jupyter nbconvert --clear-output --inplace notebooks/explore-reads.ipynb
+rm -rf notebooks/explore-reads.html notebooks/explore-reads_files
+```
+
+## 9. Make the report part of `reproduce`
+
+The report should be rebuilt whenever the analysis is, on your laptop and on
+GitHub. Add a task for it, and add it to `reproduce`:
+
+```{.bash .run}
+pixi task add report "quarto render reports/ltee-report.qmd" --depends-on download --description "Render the Quarto report"
+pixi task remove reproduce
+pixi task alias reproduce qc variant-calling report
+pixi task list
+pixi run report
+```
+
+`report` runs in the `default` environment, so it also works on Windows; `qc`
+and `variant-calling` run in `pipeline`. Commit the report, its helper module
+and settings, push, and open a pull request:
+
+```{.bash .run-ci}
+git add _quarto.yml scripts/fastq_stats.py reports/ltee-report.qmd reports/references.bib pixi.toml pixi.lock
+git commit -m "Add the LTEE data report and render it in reproduce"
+git push -u origin lesson-07-quarto
+```
+
+The *Reproduce* check now also renders the report on a fresh machine, and
+keeps the HTML for 7 days (*Summary* → *Artifacts*). When it is green, merge.
+
+```{.bash .run-ci}
+git switch main
+git merge lesson-07-quarto
+git push
+```
+
+## Try it yourself
+
+1. Add a sentence to the *Reads* section that gives the mean GC content of
+   all files, computed inline, with one decimal.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `` The mean GC content is `{python} f"{reads['gc_percent'].mean():.1f}"`%. ``
+   (About 50%, as expected for *E. coli*.)
+   :::
+
+2. Make the code of the setup cell invisible in the report but keep its
+   output and effects.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   Add `#| echo: false` as the second line of the cell. To hide a cell and its
+   output completely, use `#| include: false`. `#| eval: false` shows the
+   code without running it.
+   :::
+
+3. Render `reports/first.qmd` to Word.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `pixi run quarto render reports/first.qmd --to docx`
+   :::
+
+## Break it: hidden state
+
+When you work interactively (in a Python console or a notebook, as in the
+out-of-order notebook of lesson 06) you build up
+*state*: variables you defined ten minutes ago, perhaps in a cell you since
+deleted. A report that only works with that state cannot be reproduced. Quarto
+protects you: every render starts a **new** Python session and runs the cells
+from top to bottom.
+
+Create a report that uses a variable it never defines, as if `samples` had
+been created earlier in your console:
+
+````{.markdown filename="reports/broken.qmd" .write}
+---
+title: "Broken on purpose"
+format: html
+jupyter: python3
+---
+
+```{{python}}
+print(len(samples), "samples")
+```
+````
+
+Predict what happens, then render:
+
+```{.bash .expect-fail}
+pixi run quarto render reports/broken.qmd
+```
+
+```text
+NameError: name 'samples' is not defined
+```
+
+The render fails. That is good: an error now is better than a report that
+only works on your laptop, today. Delete the file:
+
+```{.bash .run}
+rm reports/broken.qmd reports/first.qmd reports/first.html
+```
+
+## Troubleshooting
+
+| Problem | What to do |
+|---------|------------|
+| `pixi: command not found` | See [lesson 00](00-setup.qmd). |
+| `FileNotFoundError: metadata/samples.tsv` | `_quarto.yml` with `execute-dir: project` is missing or not in the project folder (step 2). Run Quarto from the project folder. |
+| `ModuleNotFoundError: No module named 'scripts'` | Same cause: code runs from the wrong folder. Check `_quarto.yml`. |
+| `Jupyter is not available in this Python installation` | You ran `quarto` outside the project environment. Use `pixi run quarto ...` from the project folder. |
+| A cell shows as code but does not run | The fence must be ```` ```{python} ```` with curly braces, starting at the beginning of a line. |
+| `The papermill package is required for processing --execute-params` | Your `pixi.toml` was made from an older template. Run `pixi add papermill` once. |
+| Cross-reference shows `?@fig-quality` | The label must start with `fig-` (figures) or `tbl-` (tables) and match exactly. |
+| The first render takes minutes | Normal the first time in a new environment; later renders are fast. |
+| Windows (native): the report renders but the data is missing | Do the hands-on of lesson 03 first; on Windows, prefer WSL2. |
+
+## Apply it to your own mini-analysis
+
+Start a Quarto report in your own project's `reports/` folder (add the same
+`_quarto.yml`). Write the question as the first section, load your data with a
+path relative to the project folder, and make one table and one figure with
+labels, captions and alt text. Render it with `pixi run quarto render`, and
+add it to your project's `reproduce` task.
+
+## Key points
+
+- A Quarto document is Markdown plus code cells; rendering runs the code and builds the output.
+- Every number, table and figure in a report should be computed when it renders, never typed.
+- Labels and captions give numbered, cross-referenced tables and figures; `fig-alt` makes figures accessible.
+- Parameters and output formats change the report without editing it.
+- Each render starts a fresh session, so hidden state cannot sneak in.
+
+## Further reading
+
+- Cheat sheet: [Quarto](../cheatsheets/quarto.qmd), with links to the official cheat sheets and references.
+- Quarto guide: <https://quarto.org/docs/guide/> and the Python tutorial: <https://quarto.org/docs/get-started/hello/jupyter.html>
+- NBIS, *Working with Quarto* (R examples): <https://nbisweden.github.io/workshop-reproducible-research/pages/quarto.html>
+- Knuth DE (1984). Literate programming. *The Computer Journal* 27:97–111. <https://doi.org/10.1093/comjnl/27.2.97>
+- Ziemann M, Poulain P, Bora A (2023). The five pillars of computational reproducibility (pillar 1: literate programming). *Brief Bioinform* 24:bbad375. <https://doi.org/10.1093/bib/bbad375>
