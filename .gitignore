@@ -9,10 +9,6 @@ planning/
 .claude/
 INSTALL.txt
 
-*.pdf
-*.pptx
-week1-source/
-
 # Pixi environments
 .pixi/*
 !.pixi/config.toml
