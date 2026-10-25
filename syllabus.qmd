@@ -51,8 +51,7 @@ By the end of the course you can:
 Hands-on: short slides, then tutorials on one shared example (the
 [LTEE project](pages/ltee-project.qmd)), and from Week 2 a small analysis of
 your own that becomes the capstone, assessed with the
-[capstone rubric](assessment/capstone-rubric.qmd). In-class quizzes use the
-[quiz banks](quizzes/index.qmd).
+[capstone rubric](assessment/capstone-rubric.qmd).
 
 ## Readings
 
