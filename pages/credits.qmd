@@ -16,8 +16,8 @@ cheat sheets and setup instructions) is open in the
 
 The Stanford course was developed and taught with help from:
 
-- **Co-instructors:** Clemens, Standord Medcine
-- **Teaching assistants:** Alvina, Brenon
+- **Co-instructors:** Clemens - Standord University
+- **Teaching assistants:** Alvina, Brennan - Standord University
 
 We thank them, and the students in that first and second cohort whose questions and
 feedback shaped the material.
@@ -45,17 +45,6 @@ adapts a source that is missing from this page.
 
 ## 1. Adapted material
 
-### Week 1 deck: On the Art of Reproducible & Open Science {#week1}
-
-Aziz Khan, CBIO7501 Week 1 lectures (Fall 2026); own work, CC BY 4.0 for the
-author's text. Repository: <https://github.com/khan-lab/cbio7501-f26>. The
-deck was available to us only as a PDF, so lessons 01, 02, 03, 11 and 12 were
-rebuilt in Quarto from its slide-by-slide reuse map, in our own words. Its
-third-party images (press photos, journal and news pages, comics) are not
-reproduced; the decks describe and link them instead. Corrections made: the
-Cancer Biology numbers (50 experiments from 23 papers, 46% success by at least
-three criteria), the order of the Excel row limits, Singularity → Apptainer,
-and `pixi.toml`/`pixi.lock` in the checklist.
 
 ### NBIS: Tools for Reproducible Research {#nbis}
 
@@ -67,56 +56,6 @@ Site <https://nbisweden.github.io/workshop-reproducible-research/>, repository
 License: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 Version used: commit `1bce220` (2026-10-23), read 2026-10-24.
 
-The structure of this site (a short lecture plus a self-contained tutorial
-per topic, built with Quarto) and the site skeleton come from NBIS. Our lessons
-are numbered in CBIO7501's teaching order, which differs a little from NBIS's
-(Jupyter comes before Quarto, and containers after both); the table maps each
-NBIS page to our lesson. Pages we adapted, and what we changed:
-
-| NBIS page | Our lesson | What we changed |
-|-----------|------------|-----------------|
-| Pre-course setup, <https://nbisweden.github.io/workshop-reproducible-research/home_precourse.html> | [00 Setup](00-setup.qmd) | Pixi installs everything; WSL2 and Codespaces notes rewritten |
-| Managing your data (lecture), <https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html> | [02 Project organization](02-project-organization.qmd) and [03 Data management](03-data-management.qmd) (tutorials and slides) | "Which file is the latest?" example with LTEE names; layouts compared with our template; data management plan and discussion questions merged into the 03 slides |
-| Working with Quarto (tutorial), <https://nbisweden.github.io/workshop-reproducible-research/pages/quarto.html> | [07 Quarto](07-quarto.qmd) | Python only; the LTEE data report built step by step; Pixi; project-relative paths, parameters, Typst PDF, Break it on hidden state |
-| Making reports with Quarto (lecture), <https://nbisweden.github.io/workshop-reproducible-research/lectures/quarto/quarto.html> | [07 Quarto slides](../lectures/07-quarto/07-quarto.qmd) | Python LTEE example instead of R (with a screenshot of our report); merged: the overview figure, document anatomy, rendering, output formats, Quarto vs R Markdown |
-| Working with Jupyter (tutorial), <https://nbisweden.github.io/workshop-reproducible-research/pages/jupyter.html> | [06 Jupyter](06-jupyter.qmd) | Shortened to a 40-minute lab; LTEE reads; Pixi; kept nbconvert and Quarto rendering; added clearing outputs and an out-of-order Break it |
-| Jupyter (lecture), <https://nbisweden.github.io/workshop-reproducible-research/lectures/jupyter/jupyter.html> | [06 Jupyter slides](../lectures/06-jupyter/06-jupyter.qmd) | Reproducibility message on the LTEE notebook; merged: what Jupyter is (NBIS screenshot), text-code-output, magics, sharing, and the Quarto vs Jupyter table of the reports wrap-up |
-| Version control with Git (tutorial), <https://nbisweden.github.io/workshop-reproducible-research/pages/git.html> | [04 Git and GitHub](04-git.qmd) | The learner's LTEE project instead of a toy example; same order; added pull requests, a decision-log conflict, a restore Break it and a first GitHub Action |
-| Version control with Git (lecture), <https://nbisweden.github.io/workshop-reproducible-research/lectures/git/git.html> | [04 Git slides](../lectures/04-git/04-git.qmd) | Kept the nomenclature, the three steps and "Git is versatile", with NBIS's two Git figures; added GitHub, pull requests and Actions |
-| Controlling your environment with Conda (tutorial), <https://nbisweden.github.io/workshop-reproducible-research/pages/conda.html> | [05 Pixi](05-pixi.qmd), [05b Conda comparison](05b-conda-comparison.qmd) | Pixi becomes the main path; Conda commands condensed into a comparison table; its Pixi extra section informed lesson 05 |
-| Working with containers (tutorial), <https://nbisweden.github.io/workshop-reproducible-research/pages/containers.html> | [08 Containers](08-containers.qmd) | Image built from `pixi.lock`; Apptainer only on Linux, WSL2 or a cluster; provenance and a bind-mount Break it added |
-| Working with containers (lecture), <https://nbisweden.github.io/workshop-reproducible-research/lectures/containers/containers.html> | [08 Containers slides](../lectures/08-containers/08-containers.qmd) | Merged: CAMI benchmarks, the different-OS example, mounting, what to put in a container, Docker vs Apptainer (Singularity history checked); image/container figure redrawn by us |
-| Snakemake (tutorial), <https://nbisweden.github.io/workshop-reproducible-research/pages/snakemake.html> | [09 Snakemake](09-snakemake.qmd) | Same teaching sequence; the MRSA workflow is replaced by the LTEE pipeline built rule by rule; one Pixi environment; comparison with the shell script; threads Break it; analysis question |
-| Snakemake (lecture), <https://nbisweden.github.io/workshop-reproducible-research/lectures/snakemake/snakemake.html> | [09 Snakemake slides](../lectures/09-snakemake/09-snakemake.qmd) | Merged: why workflow managers, the reproducible-and-scalable figures, the Snakemake mindset, targets, anatomy of a rule (on our `bwa_mem` rule), per-rule software, command line; our rule graph instead of the MRSA graphs |
-| Nextflow (tutorial), <https://nbisweden.github.io/workshop-reproducible-research/pages/nextflow.html> | [10 Nextflow](10-nextflow.qmd) | Same teaching order and workflow outputs; the MRSA workflow replaced by the LTEE pipeline; typed params and the shared config file; Pixi; cross-tool comparison; launch-directory Break it |
-| Nextflow (lecture), <https://nbisweden.github.io/workshop-reproducible-research/lectures/nextflow/nextflow.html> | [10 Nextflow slides](../lectures/10-nextflow/10-nextflow.qmd) | A 40-minute introduction; merged: features, channels / processes / tasks (diagram redrawn by us), anatomy of a process and a workflow (our code), running Nextflow, Snakemake vs Nextflow (with the workflow wrap-up) |
-| Documentation and reproducibility (tutorial), <https://nbisweden.github.io/workshop-reproducible-research/pages/documentation.html> | [11 Documentation](11-documentation.qmd) | Seven README questions applied to the LTEE project; licenses, CITATION.cff, contributing/conduct files, software versions, Break it added |
-| Documentation and reproducibility (lecture), <https://nbisweden.github.io/workshop-reproducible-research/lectures/documentation/documentation.html> | [11 Documentation slides](../lectures/11-documentation/11-documentation.qmd) | Seven questions and "good documentation" kept; file checklist and license spectrum from Week 1 added |
-| Putting it all together (lecture), <https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html> | [12 Putting it all together](12-putting-it-together.qmd) (tutorial and slides), [02 slides](../lectures/02-project-organization/02-project-organization.qmd) | Practices condensed into a checklist updated for Pixi; merged: the overview figure, habits, minimal / good / great, alternatives as one table; "treasure your data" and "organise your coding" also in the 02 slides; swap-and-reproduce, release and Zenodo added |
-| Introduction (lecture), <https://nbisweden.github.io/workshop-reproducible-research/lectures/introduction/introduction.html> | [01 Introduction](01-introduction.qmd) (tutorial and slides) | Its decent/good/great levels for data, code and environment became the audit rubric (and three slides), with FAIR, license and documentation rows added; merged into the slides: the computational reproducibility studies (checked on PubMed), Freedman 2015, the overview figure, "What's in it for me?" |
-| Managing software environments with Conda (lecture), <https://nbisweden.github.io/workshop-reproducible-research/lectures/conda/conda.html> | [05 Pixi slides](../lectures/05-pixi/05-pixi.qmd) | Package / dependency / environment and channels redrawn for the LTEE tools (real counts from our lock file); Conda commands as a comparison table; Conda, Anaconda, Miniconda, Miniforge |
-| Markdown, <https://nbisweden.github.io/workshop-reproducible-research/pages/markdown.html> | [A Markdown](A-markdown.qmd) | Toy example with NBIS's rendering of it; extended with tables, alt text and Quarto features |
-| Take-down, <https://nbisweden.github.io/workshop-reproducible-research/pages/take-down.html> | [B Take-down](B-take-down.qmd) | Conda replaced by Pixi; Codespaces added |
-
-Website code we adapted: `_quarto.yml` structure, the GitHub Actions website
-workflow and the devcontainer (Pixi version and base image updated).
-
-**Figures from NBIS**, copied unchanged from the same commit (CC BY 4.0; each
-place that shows one gives the credit line):
-
-| Figure | NBIS file | Where we use it |
-|--------|-----------|-----------------|
-| The parts of an analysis | `pages/images/reproducibility_overview.png` | slides 01, 07, 12; tutorial 01 |
-| Git: working copy, staging area, repository | `pages/images/git_overview_local.png` | slides 04, tutorial 04 |
-| Git: local and remote repositories | `pages/images/git_overview_remote.png` | slides 04, tutorial 04 |
-| Reproducible ... and scalable workflows | `lectures/snakemake/images/repr_scal_1.png`, `repr_scal_2.png` | slides 09 |
-| JupyterLab launcher | `pages/images/jupyterlab_dashboard.png` | slides 06, tutorial 06 |
-| Rendered Markdown example | `pages/images/markdown-example.png` | tutorial A |
-
-Not reused: photos of NBIS teachers, tool logos, comic strips and journal
-screenshots (not CC BY), a screenshot showing a person's GitHub account, and
-figures whose origin we could not establish (the Nextflow channel and process
-figure and the image-and-container figure were redrawn by us instead).
 
 ### The Carpentries Incubator: Introduction to Pixi {#pixi-intro}
 
@@ -126,12 +65,6 @@ License: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (lesson
 template CC BY 4.0, The Carpentries). Version used: commit `b88a073`
 (2026-10-05).
 
-| Episode | Our lesson | What we changed |
-|---------|------------|-----------------|
-| Setup | [00 Setup](00-setup.qmd) | Kept install and completion commands; added version pin, telemetry note, setup check |
-| The pattern of one learner repository with a branch and pull request per episode | [04 Git and GitHub](04-git.qmd) and every later lesson | Applied to the LTEE project |
-| Introduction to Pixi (manifest, lock file, add/run/shell, tasks, multi-platform, features and environments, global tools) | [05 Pixi](05-pixi.qmd) and its slides | Same order; LTEE pipeline with bioconda tools; added the win-64 failure, cross-environment tasks, drift demo, HPC notes |
-| Backwards compatibility with conda, <https://carpentries-incubator.github.io/pixi-introduction/backwards-compatibility.html> | [05b Conda comparison](05b-conda-comparison.qmd) | Export to environment files and explicit specs; micromamba via `pixi exec`; wrong-platform Break it |
 
 ### Amrei Binzer-Panchal: Reproducible Research course {#amrei}
 
@@ -139,9 +72,6 @@ template CC BY 4.0, The Carpentries). Version used: commit `b88a073`
 <https://github.com/amrei-bp/Reproducible_Research>. License: MIT,
 Copyright (c) 2026 Amrei. Version used: commit `015364a` (2026-10-22).
 
-| Page | Our lesson | What we changed |
-|------|------------|-----------------|
-| Introduction to Pixi (course environments), <https://amrei-bp.github.io/Reproducible_Research/course_environments.html> | [05 Pixi](05-pixi.qmd) | Minimal flow (init with conda-forge and bioconda, add, run, shell) and HPC notes (`srun ... pixi run`, `pixi shell` on clusters), rewritten for the LTEE project |
 
 ### The Carpentries Incubator: FAIR in (biological) practice {#fair-bio}
 
@@ -152,11 +82,6 @@ License: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 Version used: commit `513e1d5` (2025-01-28). Cite as: Zieliński T, Romanowski A, et al.,
 "FAIR in (biological) practice", 2022.
 
-| Episode | Our lesson | What we changed |
-|---------|------------|-----------------|
-| Working with files, <https://carpentries-incubator.github.io/fair-bio-practice/09-files-organization.html> | [02 Project organization](02-project-organization.qmd) (tutorial and slides) | Naming rules condensed; sorting exercise rewritten with LTEE file names |
-| Being FAIR, <https://carpentries-incubator.github.io/fair-bio-practice/03-being-fair.html> | [03 Data management](03-data-management.qmd) (tutorial and slides) | Kept the FAIR exercise on the Scotland wastewater Zenodo record (as on Week 1 slide 93); added an LTEE version |
-
 ### Data Carpentry: Wrangling Genomics {#dc-genomics}
 
 Data Carpentry contributors; lesson editors include Erin Becker, Fotis
@@ -166,18 +91,6 @@ Psomopoulos, Taylor Reiter, Jason Williams and Josh Herr.
 License: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), Copyright
 © The Carpentries. Version used: commit `d965cc4` (2025-07-18).
 
-The LTEE example pipeline follows the lesson's variant-calling steps and tool
-options exactly (`bwa index`, `bwa mem`, `samtools view/sort/index/flagstat`,
-`bcftools mpileup/call`, `vcfutils.pl varFilter`, `bcftools stats`) and adapts
-its `run_variant_calling.sh` script. We added FastQC and MultiQC at the start,
-a minimum-depth parameter for the analysis question, and Snakemake and
-Nextflow versions of the same steps.
-
-| Page | Our use |
-|------|---------|
-| Variant calling, <https://datacarpentry.github.io/wrangling-genomics/04-variant_calling.html> | Pipeline steps and options; the rules of [09 Snakemake](09-snakemake.qmd) and processes of [10 Nextflow](10-nextflow.qmd) |
-| Automation, <https://datacarpentry.github.io/wrangling-genomics/05-automation.html> | `scripts/run_variant_calling.sh` |
-| Background and metadata, <https://datacarpentry.github.io/wrangling-genomics/01-background.html> | Sample sheet (`metadata/samples.tsv`) and download commands in [03 Data management](03-data-management.qmd) |
 
 ### Pixi documentation: container example (code) {#pixi-docs}
 
@@ -291,16 +204,14 @@ Readings are listed in each lesson under *Further reading*. The core list:
 
 ## 7. People
 
-Workshop author: Aziz Khan (MBZUAI). Contributions welcome through issues and
-pull requests on GitHub.
+Workshop author: Aziz Khan (MBZUAI). 
 
 Thanks to the authors of every lesson listed above: this workshop would not
 exist without their open material.
 
 ## 8. How to cite and reuse this workshop
 
-Cite the workshop with the information in `CITATION.cff` (a Zenodo DOI will
-be added at the first release).
+Cite the workshop with the information in `CITATION.cff`.
 
 License: text and slides [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/),
 code [MIT](https://opensource.org/license/mit). Adapted parts keep the license

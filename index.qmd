@@ -101,7 +101,7 @@ protects you from.
 
 This course began as a mini-course at Stanford Biosciences
 ([BIOS259, Winter 2024](https://github.com/asntech/bios259-w24/)), developed and/or taught with
-Alvina, Clemens and Brenon. See [Sources and credits](pages/credits.qmd) for the
+Alvina, Clemens and Brennan. See [Sources and credits](pages/credits.qmd) for the
 full list.
 
 This workshop adapts and extends open lessons from [NBIS](https://nbisweden.github.io/), 
