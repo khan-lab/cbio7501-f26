@@ -119,12 +119,12 @@ website:
               href: pages/ltee-project.qmd
             - text: "Glossary"
               href: pages/glossary.qmd
-        - section: "Assessment"
-          contents:
-            - text: "Quiz banks"
-              href: quizzes/index.qmd
-            - text: "Capstone rubric"
-              href: assessment/capstone-rubric.qmd
+        #- section: "Assessment"
+        #  contents:
+        #    - text: "Quiz banks"
+        #      href: quizzes/index.qmd
+        #    - text: "Capstone rubric"
+        #      href: assessment/capstone-rubric.qmd
         - section: "Cheat sheets"
           href: cheatsheets/index.qmd
           contents:
