@@ -37,6 +37,11 @@ task fails. Go there and read:
 Run `bash .command.sh` in that folder to repeat the error by hand. See
 [section 5](../pages/10-nextflow.qmd#look-at-a-task).
 
+*Task requirement exceeds available CPUs*: a process asks for more CPUs
+than the computer has. In `nextflow.config`, inside `process {}`:
+`resourceLimits = [cpus: Runtime.runtime.availableProcessors()]` lowers the
+request instead. See [troubleshooting](../pages/10-nextflow.qmd#troubleshooting).
+
 ## A process
 
 ```{.groovy}

@@ -397,6 +397,9 @@ workflow.output.mode = 'copy'
 
 process {
     cpus = 1
+    // Never ask for more CPUs than this computer has: ALIGN asks for 4,
+    // a Codespace has 2. A larger request is lowered to this limit.
+    resourceLimits = [cpus: Runtime.runtime.availableProcessors()]
 }
 ```
 
@@ -784,6 +787,8 @@ What is new compared with the QC-only version:
   gives it four threads, and `${task.cpus}` passes them to `bwa mem`. The
   `bwa_extra` parameter (`-K 10000000`) keeps the result independent of the
   thread count, as in [lesson 09](09-snakemake.qmd#break-it-threads-change-the-answer).
+  On a computer with fewer than four CPUs, `resourceLimits` in
+  `nextflow.config` lowers the request to what the computer has.
 - **`FILTER_VARIANTS`** gets the threshold as an input (`val min_depth`), not
   by reading `params` inside the process: processes only see what they are
   given.
@@ -935,6 +940,7 @@ Open and merge the pull request as usual.
 | `Java ... not found` or `UnsupportedClassVersionError` | Nextflow uses the Java in the Pixi environment; do not run a system Nextflow. |
 | Syntax errors after copying old examples | Nextflow 26 uses the strict parser: no `Channel.` (use `channel.`), no `shell:` sections, params in a `params {}` block. `nextflow lint` lists the problems. |
 | `does not exist` for input files | Launch from the project folder (Break it). |
+| `Task requirement exceeds available CPUs` | A process asks for more CPUs than the computer has (`ALIGN` asks for 4). Keep the `resourceLimits` line in `nextflow.config`: it lowers the request to the number of CPUs. |
 | Results are links into `work/` | Set `workflow.output.mode = 'copy'` in `nextflow.config`. |
 | A task fails | Go to the work folder Nextflow prints; read `.command.err`; run `bash .command.sh`. |
 | Disk fills up | `nextflow clean -f -before RUN_NAME` (names from `nextflow log`), or delete `work/` (you lose the cache, not the results). |

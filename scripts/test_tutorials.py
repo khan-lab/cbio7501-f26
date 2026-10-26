@@ -347,6 +347,12 @@ def main() -> int:
         print(f"--- {stem}: {r['status']} in {r['seconds']} s (log: {r['workdir']}/run.log)", flush=True)
         for u in r["unmarked"]:
             print(f"    unmarked shell block: {u}")
+        log = Path(r["workdir"]) / "run.log"
+        if r["status"] != "pass" and log.exists():
+            # the end of the log names the failing block (">>> page.qmd:line"),
+            # so CI shows it without downloading the logs
+            tail = log.read_text(errors="replace").splitlines()[-40:]
+            print(f"--- last {len(tail)} lines of the log:", *tail, "--- end of log", sep="\n", flush=True)
     failed = [r for r in results if r["status"] != "pass"]
     (base / "summary.json").write_text(json.dumps(results, indent=2))
     print(f"test_tutorials: {len(results) - len(failed)} passed, {len(failed)} failed; summary in {base}/summary.json")
