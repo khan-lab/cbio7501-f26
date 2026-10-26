@@ -12,11 +12,12 @@ This repository holds two kinds of material, under two licenses.
 Parts of this workshop are adapted from other open lessons. Those parts keep
 their original license and credit:
 
-- Every adapted page says so in an "Adapted from" box at the bottom of the
-  page (source, authors, license, link, what we changed), and in its
-  `adapted_from:` front matter.
-- The [Sources and credits](pages/credits.qmd) page lists every source, the
-  data, the software and the figures we link to.
+- The [Sources and credits](pages/credits.qmd) page lists every source
+  (authors, link, license, version), the data, the software and the figures
+  we link to. Every page of the site links to it from its footer, and every
+  slide deck ends with a Sources slide.
+- Every adapted page records its sources in its `adapted_from:` front matter
+  (source, authors, license, link, what we changed).
 - We only adapt material under licenses that allow it (CC BY 4.0, MIT, BSD).
   Material under a non-commercial or share-alike license (for example the
   Seqera Nextflow training, CC BY-NC-SA 4.0) and material whose license we

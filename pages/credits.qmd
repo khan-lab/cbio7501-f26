@@ -27,14 +27,14 @@ adds Pixi as the main environment tool, the *E. coli* LTEE project as one
 running example, a Snakemake and Nextflow pipeline, and a Quarto site with
 tested tutorials.
 
-This version is desgined in a workshop-style and it reuses and adapts open material from many people. This page
-lists all of it. Each adapted page also has an **Adapted from** box at the
-bottom, and each slide deck ends with a **Sources** slide.
+This version is designed in a workshop-style and it reuses and adapts open material from many people. This page
+lists all of it, and every page links here from its footer. Each slide deck
+also ends with a **Sources** slide.
 
 How we reuse (see `LICENSES.md` in the repository):
 
-- Material under CC BY 4.0, CC0, MIT or BSD licenses is adapted with
-  attribution, and we say what we changed.
+- Material under CC BY 4.0, CC0, MIT or BSD licenses is adapted, with
+  changes, and credited on this page.
 - Material under a non-commercial or share-alike license, or whose license
   we could not confirm, is **linked, not copied**.
 - Third-party figures (journal pages, press photos, comics) are linked with a

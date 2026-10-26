@@ -1,10 +1,12 @@
 --[[
-Turns the `adapted_from:` and `sources:` front matter of a page into
-attribution that cannot be forgotten:
+Turns the `adapted_from:` and `sources:` front matter of a deck into
+attribution that cannot be forgotten: RevealJS decks get a final "Sources"
+slide (adapted material first, then the `sources:` list: papers, figures we
+link to, data).
 
-* HTML pages get an "Adapted from" callout at the bottom.
-* RevealJS decks get a final "Sources" slide (adapted material first, then
-  the `sources:` list: papers, figures we link to, data).
+On HTML pages `adapted_from:` is a record only: nothing is shown on the page.
+Adapted material is credited on pages/credits.qmd, which every page links to
+from its footer.
 
 Front matter shape (see CONTRIBUTING.md):
 
@@ -131,23 +133,6 @@ function Pandoc(doc)
     doc.blocks:insert(pandoc.BulletList(items))
     doc.blocks:insert(pandoc.Para(footer))
     return doc
-  end
-
-  if quarto.doc.is_format("html") and #adapted > 0 then
-    local body = pandoc.Blocks({})
-    body:insert(pandoc.Para(pandoc.Inlines(
-      "Parts of this page are adapted from the material below. The original authors do not endorse this adaptation.")))
-    local items = {}
-    for _, entry in ipairs(adapted) do
-      table.insert(items, entry_blocks(entry))
-    end
-    body:insert(pandoc.BulletList(items))
-    local footer = pandoc.Inlines("Our changes and additions are CC BY 4.0 (text) and MIT (code). See ")
-    footer:insert(credits_link())
-    footer:insert(pandoc.Str("."))
-    body:insert(pandoc.Para(footer))
-    doc.blocks:insert(pandoc.Div(body,
-      pandoc.Attr("adapted-from", { "callout-note", "adapted-from" }, { title = "Adapted from" })))
   end
   return doc
 end

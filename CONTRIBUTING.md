@@ -24,7 +24,7 @@ pixi run check-links     # internal links in the rendered site
 | `tutorials/ltee-project/` | the finished example project (as after lesson 12) |
 | `templates/cookiecutter-repro-project/` | the project template used in lesson 02 |
 | `scripts/` | `test_tutorials.py` |
-| `assets/filters/adapted-from.lua` | turns `adapted_from:` front matter into attribution |
+| `assets/filters/adapted-from.lua` | turns `adapted_from:` and `sources:` front matter into the Sources slide at the end of each deck (on pages, `adapted_from:` is a record only) |
 | `assets/shortcodes/pixi-version.lua` | `{{< pixi-version >}}`: the Pixi version in the footer (Quarto's `{{< version >}}` gives Quarto's) |
 | `assets/css/` | the look: `theme-light.scss` and `theme-dark.scss` (color tokens), `styles.scss` (site), `slides.scss` (decks), `fonts.css` |
 | `assets/fonts/` | Inter and JetBrains Mono, served from the site (SIL OFL 1.1) |

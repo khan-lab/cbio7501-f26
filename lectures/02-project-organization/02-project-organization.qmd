@@ -198,7 +198,6 @@ ltee-project/
 ├── reports/
 ├── results/
 ├── docs/
-├── envs/
 └── .github/workflows/reproduce.yml
 ```
 :::
