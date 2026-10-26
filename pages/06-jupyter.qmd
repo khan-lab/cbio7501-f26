@@ -17,7 +17,7 @@ test:
 ---
 
 ::: {.at-a-glance}
-- **Time:** 40 minutes in class, then a lab on your own mini-analysis.
+- **Time:** 40 minutes in class, then a lab on your own project.
 - **Slides:** [Jupyter](../lectures/06-jupyter/06-jupyter.qmd)
 - **You need:** the `ltee-project` after [lesson 05](05-pixi.qmd): data downloaded, environments installed, on GitHub.
 - **You will have:** `notebooks/explore-reads.ipynb`, which runs from top to bottom on a fresh kernel.
@@ -431,7 +431,7 @@ rm -f notebooks/out-of-order.ipynb notebooks/out-of-order.html
 | `Port 8888 is already in use` | Another Jupyter is running; Jupyter picks the next port automatically. Use the link it prints. |
 | The notebook file is several MB | It contains outputs: clear them (step 5). |
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
 Explore your own data in `notebooks/` of your capstone project: load it, look
 at its size and a few summaries, make one quick plot. Then run it with

@@ -169,7 +169,7 @@ If a paper cites the concept DOI and the authors publish V1.3 next year, the
 same link silently gives readers different data. For a result, cite the
 **version** DOI (and record checksums, as you will in lesson 03).
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
 Before lesson 02, where your capstone starts, audit one paper close to the
 analysis you plan for it. What did its authors share that you could build on, and what will

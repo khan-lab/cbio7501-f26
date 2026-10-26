@@ -20,10 +20,13 @@ page maps lessons to weeks.
 | 6 | Workflows and automation | [09 Snakemake](pages/09-snakemake.qmd) §1–5 | [09](pages/09-snakemake.qmd) §6–11 | LTEE pipeline in Snakemake (70) + [10 Nextflow](pages/10-nextflow.qmd) intro (40) | [10 Nextflow](pages/10-nextflow.qmd) full tutorial; nf-core demo |
 | 7 | Publishing, archiving, open practice | [11 Documentation](pages/11-documentation.qmd) | [12](pages/12-putting-it-together.qmd): swap and reproduce | Final presentations (can move a week later) | Fixes from the reproduce report; release with a DOI; optional [S1](pages/S1-packaging.qmd) |
 
-**Capstone thread.** From Week 2, the last 15 to 20 minutes of each lab apply
-that week's tool to your own mini-analysis (each tutorial ends with *Apply it
-to your own mini-analysis*). The capstone is assessed with the
-[rubric](assessment/capstone-rubric.qmd).
+**Two projects.** In the hands-on parts of the lessons you build the LTEE
+project; you hand in its GitHub repository and the Zenodo DOI of its release
+after Week 7 (40% of the grade, [what to hand in](assessment/ltee-project.qmd)).
+From Week 2, the last 15 to 20 minutes of each lab apply that week's tool to
+your capstone: your own research project, separate from the LTEE project (each
+tutorial ends with *Apply it to your own project*; 30% of the grade, assessed
+with the [rubric](assessment/capstone-rubric.qmd)).
 
 **If a week runs long**, cut in this order: optional HPC steps, Jupyter, the
 Conda comparison (already at home), the Nextflow introduction (shrink to a

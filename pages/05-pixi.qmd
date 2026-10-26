@@ -615,7 +615,7 @@ exactly the feedback a reviewer would give.
 | Downloads are slow in class | Run `pixi install --all` at home; the cache makes later installs fast. |
 | Disk is full | `pixi clean` removes this project's environments; `pixi clean cache` empties the shared cache ([B Take-down](B-take-down.qmd)). |
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
 In your own project: add the tools your analysis needs with `pixi add` (use a
 feature if a tool is missing on a platform you list), make your steps tasks,

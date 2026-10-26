@@ -62,6 +62,15 @@ SRR2584863 25, SRR2584866 775. The Data Carpentry lesson reports 10, 25 and
 | [09](09-snakemake.qmd), [10](10-nextflow.qmd) | Snakemake and Nextflow workflows, the variants section of the report |
 | [11](11-documentation.qmd), [12](12-putting-it-together.qmd) | README, license, citation; release with a DOI |
 
+## Handing it in
+
+Your own `ltee-project` counts for **40%** of the course grade. When you have
+finished lesson 12, hand in the address of its GitHub repository and the
+Zenodo DOI of its release. [LTEE project](../assessment/ltee-project.qmd)
+lists what the repository should show and how it is checked. Your capstone,
+on your own research project, is assessed separately
+([capstone rubric](../assessment/capstone-rubric.qmd), 30%).
+
 ## The finished project
 
 A complete copy of the project, as it looks after lesson 12, is in the course

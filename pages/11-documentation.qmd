@@ -418,7 +418,7 @@ page, and merge.
 | Unsure which license to pick | Code: MIT unless your institution or funder says otherwise. Text: CC BY 4.0. Ask your library or tech-transfer office for anything with patents or personal data. |
 | The README commands no longer work | Documentation must be tested like code: rerun the README's commands in a fresh clone (lesson 12 does this with a classmate). |
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
 Write your capstone README with the seven sections, add `CITATION.cff` and
 validate it, choose licenses for code, text and data (and check you may share

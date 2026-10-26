@@ -334,7 +334,7 @@ Open a pull request and merge it as usual.
 | `apptainer: command not found` | Apptainer is Linux-only: use WSL2, a Linux machine or the cluster, where it is often a module (`module load apptainer`). |
 | `FATAL: ... user namespaces` (Apptainer) | Your Linux system blocks unprivileged user namespaces; ask the administrator. |
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
 Build an image of your own project's environment with the same Dockerfile
 (`--build-arg ENV_NAME=` the environment your analysis uses), run your

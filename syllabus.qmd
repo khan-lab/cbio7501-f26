@@ -48,10 +48,17 @@ By the end of the course you can:
 
 ## How the course works
 
-Hands-on: short slides, then tutorials on one shared example (the
-[LTEE project](pages/ltee-project.qmd)), and from Week 2 a small analysis of
-your own that becomes the capstone, assessed with the
-[capstone rubric](assessment/capstone-rubric.qmd).
+Hands-on: short slides, then tutorials on one shared example, the
+[LTEE project](pages/ltee-project.qmd). From Week 2 you also apply each tool
+to your own research project, the capstone. Two projects are assessed:
+
+| Project | What it is | Share of the grade | Assessed with |
+|---------|------------|-------------------:|---------------|
+| LTEE project | the project you build in the hands-on parts of the lessons, on GitHub, released with a Zenodo DOI | 40% | [what to hand in](assessment/ltee-project.qmd) |
+| Capstone | your own existing research project (or a manageable part of it), separate from the LTEE project; public, or private and shared with the instructor; no DOI needed | 30% | [capstone rubric](assessment/capstone-rubric.qmd) |
+
+The rest of the grade, the deadlines and the policies are in the official
+syllabus.
 
 ## Readings
 

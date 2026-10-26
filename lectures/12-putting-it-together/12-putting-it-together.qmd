@@ -21,7 +21,7 @@ sources:
 
 - reproduce a classmate's project from a clean clone, with only its README
 - report what worked, what did not, and the one fix that helps most
-- release your project with a DOI
+- release your `ltee-project` with a DOI
 - take a checklist into your next project
 
 ## Take control of each part
@@ -81,6 +81,8 @@ git tag v1.0.0 ──► GitHub release ──► Zenodo archives it ──► D
 
 - Practise on sandbox.zenodo.org first
 - New release, new version DOI; the concept DOI always points to the latest
+- `ltee-project`: public, real Zenodo DOI, hand it in
+- Capstone: a GitHub release is enough; private (shared with the instructor) is fine; sandbox DOI optional
 
 ## Habits to keep
 
@@ -153,4 +155,4 @@ Answers: 1 b; 2 b.
 - Release + Zenodo = a citable, permanent version
 - Start your next project with the checklist, not at the end
 
-**Now:** [tutorial 12](../../pages/12-putting-it-together.qmd) and the [capstone rubric](../../assessment/capstone-rubric.qmd).
+**Now:** [tutorial 12](../../pages/12-putting-it-together.qmd), the [LTEE project hand-in](../../assessment/ltee-project.qmd) and the [capstone rubric](../../assessment/capstone-rubric.qmd).

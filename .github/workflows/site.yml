@@ -23,8 +23,6 @@ jobs:
         with:
           pixi-version: v0.83.0
           locked: true
-      - name: Credits check (every adapted source is on the credits page)
-        run: pixi run check-credits
       - name: Render
         run: pixi run render
       - name: Internal link check

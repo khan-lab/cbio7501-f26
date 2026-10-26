@@ -592,7 +592,7 @@ rm reports/broken.qmd reports/first.qmd reports/first.html
 | The first render takes minutes | Normal the first time in a new environment; later renders are fast. |
 | Windows (native): the report renders but the data is missing | Do the hands-on of lesson 03 first; on Windows, prefer WSL2. |
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
 Start a Quarto report in your own project's `reports/` folder (add the same
 `_quarto.yml`). Write the question as the first section, load your data with a

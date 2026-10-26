@@ -99,14 +99,12 @@ protects you from.
 
 ## Built on open material
 
-This course began as a mini-course at Stanford Biosciences
-([BIOS259, Winter 2024](https://github.com/asntech/bios259-w24/)), developed and/or taught with
-Alvina, Clemens and Brennan. See [Sources and credits](pages/credits.qmd) for the
-full list.
+This course began as a [mini-course at Stanford Biosciences](https://explorecourses.stanford.edu/search?q=BIOS+259&view=catalog&page=0&filter-coursestatus-Active=on&collapse=&academicYear=20232024)
+([BIOS259, Winter 2024](https://github.com/asntech/bios259-w24/)), developed by Aziz Khan and taught with the help of
+Alvina, Clemens and Brennan.
 
-This workshop adapts and extends open lessons from [NBIS](https://nbisweden.github.io/), 
+The material adapts and extends open lessons from [NBIS](https://nbisweden.github.io/), 
 [The carpentry](https://software-carpentry.org), [The Data Carpentry](https://datacarpentry.org/) and many more. See [Sources and credits](pages/credits.qmd).
 
 Text and slides: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-Code: [MIT](https://opensource.org/license/mit). Created by Aziz Khan
-(MBZUAI) for CBIO7501.
+Code: [MIT](https://opensource.org/license/mit). Developed and maintianed by [Aziz Khan](https://github.com/asntech/), [Computational Biology and Cancer Regulatory Genomics (CBCRG)](https://khanlab.bio), MBZUAI.

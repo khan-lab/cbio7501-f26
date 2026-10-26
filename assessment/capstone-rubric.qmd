@@ -1,7 +1,7 @@
 ---
 title: "Capstone rubric"
-subtitle: "A reproducible project on your own small analysis"
-description: "How the capstone (30% of the course grade) is assessed: seven areas, each tied to checks that students can run themselves, with the reproduce-from-a-clean-clone check at the centre."
+subtitle: "Your own research project, made reproducible"
+description: "How the capstone (30% of the course grade) is assessed: your own research project, separate from the LTEE project, in seven areas, each tied to checks that students can run themselves, with the reproduce-from-a-clean-clone check at the centre."
 toc: true
 ---
 
@@ -9,11 +9,31 @@ toc: true
 The weights within the capstone are to be confirm.
 :::
 
+## What the capstone is
+
+The capstone is **your own research project**: an existing or ongoing
+analysis of yours, or one manageable part of it (for example one dataset and
+the analysis behind one result). You apply to it what each lesson teaches. It
+counts for **30%** of the course grade.
+
+It is separate from the LTEE project: a different repository, your own data
+and question. The LTEE project, which you build in the lessons, is assessed
+on its own ([LTEE project](ltee-project.qmd), 40%).
+
 ## What you hand in
 
-A GitHub repository with your mini-analysis (started in lesson 02, one tool
-added per lesson, [lesson 12](../pages/12-putting-it-together.qmd)), a release
-of the version you hand in, and the reproduce report your partner filed on it.
+A GitHub repository with your project (set up in
+[lesson 02](../pages/02-project-organization.qmd), with each lesson's tool
+applied to it, up to [lesson 12](../pages/12-putting-it-together.qmd)), a
+release of the version you hand in, and the reproduce report your partner
+filed on it.
+
+The repository can be **public or private**. If it is private, add the
+instructor as a collaborator (and your partner, for the swap session in
+lesson 12). A Zenodo DOI is not required for the capstone: if you want to try
+the release steps on it, the
+[Zenodo sandbox](https://sandbox.zenodo.org/) is fine. (The real Zenodo DOI
+is required for the [LTEE project](ltee-project.qmd).)
 
 ## How it is assessed
 
@@ -41,7 +61,7 @@ to `.github/workflows/reproduce.yml` in your repository.
 | **Automation** | 15 | One command (`pixi run reproduce`) runs everything, through Pixi tasks or a workflow (Snakemake or Nextflow); settings in a config file, not in code. | checker; reading |
 | **Literate report** | 10 | A Quarto report (or notebook rendered with Quarto) in which every number, table and figure is computed when it renders; figures have captions and alt text; software versions shown. | reading |
 | **Version control** | 10 | A history of small, described commits; work merged through pull requests; a tagged release. | GitHub history |
-| **Documentation and openness** | 10 | README answers the seven questions; LICENSE (code) and stated licenses for text and data; valid `CITATION.cff`; data availability statement; release archived with a DOI. | checker; reading |
+| **Documentation and openness** | 10 | README answers the seven questions; LICENSE (code) and stated licenses for text and data; valid `CITATION.cff`; data availability statement. No DOI needed (a Zenodo sandbox DOI is fine). | checker; reading |
 
 ## Levels, for each area
 
@@ -59,6 +79,8 @@ environment* either, because nobody can check them.
 - The size or novelty of the analysis. A small, honest analysis that anyone
   can rerun beats an impressive one that nobody can.
 - Acceptance of anything by conda-forge, Bioconda or a journal ([S1](../pages/S1-packaging.qmd) is optional).
+- Whether the repository is public, or archived on Zenodo: unpublished
+  research can stay private, shared with the instructor.
 - Sharing data you may not share: if your data is sensitive, use public or
   simulated data of the same shape for the reproducible version, and say so in
   the README.

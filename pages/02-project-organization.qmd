@@ -382,13 +382,17 @@ later lesson, run commands from the project folder and use relative paths.
 | The questions look stuck | Cookiecutter is waiting for your answer: type it and press Enter. |
 | Windows: the files are not visible in Explorer | You are working inside WSL2: run `explorer.exe .` in the project folder. |
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
-From this lesson on you also work on a small analysis of your own (the
-capstone). Generate a second project for it with the same template, from
-`~/cbio7501`, with your own project name. Then, in its `README.md`, write one
-paragraph: the question, the data (source, size, license) and what you expect
-to produce. This is your project proposal.
+From this lesson on you also work on your capstone: your own research
+project, separate from the LTEE project
+([capstone rubric](../assessment/capstone-rubric.qmd)). Choose an existing or
+ongoing analysis of yours, or one manageable part of it, such as one dataset
+and the analysis behind one result. Generate a project for it with the same
+template, from `~/cbio7501`, with your own project name, and copy your
+existing scripts into `scripts/` (your data comes in lesson 03). Then, in its
+`README.md`, write one paragraph: the question, the data (source, size,
+license) and what you expect to produce. This is your project proposal.
 
 ## Key points
 

@@ -9,7 +9,6 @@ You need [Pixi](https://pixi.prefix.dev/latest/). From the repository folder:
 ```bash
 pixi run render          # build the website into _site/
 pixi run preview         # live preview while you edit
-pixi run check-credits   # every adapted source is on the credits page
 pixi run check-links     # internal links in the rendered site
 ```
 
@@ -19,11 +18,12 @@ pixi run check-links     # internal links in the rendered site
 |------|---------|
 | `pages/NN-topic.qmd` | tutorials, numbered in teaching order (the credits page maps each to its NBIS source) |
 | `lectures/NN-topic/NN-topic.qmd` | slide decks (RevealJS); shared settings in `lectures/_metadata.yml` |
-| `quizzes/`, `assessment/` | quiz banks, capstone rubric, reproduce report, checker |
+| `assessment/` | LTEE project hand-in, capstone rubric, reproduce report, checker |
+| `quizzes/` | quiz banks: kept out of Git and off the website for now (`.gitignore`, `_quarto.yml`); only `quizzes/index.qmd` is tracked |
 | `cheatsheets/` | one cheat sheet per tool; `_metadata.yml` gives them their table layout |
 | `tutorials/ltee-project/` | the finished example project (as after lesson 12) |
 | `templates/cookiecutter-repro-project/` | the project template used in lesson 02 |
-| `scripts/` | `test_tutorials.py`, `check_credits.py` |
+| `scripts/` | `test_tutorials.py` |
 | `assets/filters/adapted-from.lua` | turns `adapted_from:` front matter into attribution |
 | `assets/shortcodes/pixi-version.lua` | `{{< pixi-version >}}`: the Pixi version in the footer (Quarto's `{{< version >}}` gives Quarto's) |
 | `assets/css/` | the look: `theme-light.scss` and `theme-dark.scss` (color tokens), `styles.scss` (site), `slides.scss` (decks), `fonts.css` |
@@ -36,7 +36,7 @@ pixi run check-links     # internal links in the rendered site
 Follow the structure of the existing pages: at-a-glance box, overview and
 learning outcomes (at "apply" level, each tied to a check), numbered steps
 with expected output, *Try it yourself* with folded solutions, a *Break it*
-exercise, troubleshooting, *Apply it to your own mini-analysis*, key points,
+exercise, troubleshooting, *Apply it to your own project*, key points,
 further reading. Use OS tabs where commands differ.
 
 Lessons, decks and quizzes do not name weeks or weekdays, so they work for the
@@ -99,9 +99,9 @@ workflows ran, is the test log in `docs/BUILD_LOG.md`.
 - Only adapt material under CC BY, CC0, MIT or BSD licenses; link anything
   else (for example the Seqera training, CC BY-NC-SA).
 - Add an `adapted_from:` entry to the page's front matter (title, url,
-  authors, license, accessed, version, changes) and list the same URL on
-  `pages/credits.qmd`; `pixi run check-credits` fails otherwise. Pages that are
-  entirely our own say `adapted_from: []`.
+  authors, license, accessed, version, changes) and credit the source on
+  `pages/credits.qmd`. Pages that are entirely our own say
+  `adapted_from: []`.
 - Decks list papers and linked figures under `sources:`; the filter builds the
   final Sources slide.
 - Embed a third-party figure only if its license allows it (CC BY, CC0):

@@ -31,4 +31,4 @@ taught is in the schedules: [7-week course](schedule-course.qmd) and
 | C Bash 101 | Extras | | [tutorial](pages/C-bash.qmd) | practice for the command line: files, pipes, loops, a first script |
 | S1 Package and share your tool | Extras (optional) | | [tutorial](pages/S1-packaging.qmd) | pyproject, conda recipe, local channel |
 
-Also: [cheat sheets](cheatsheets/index.qmd) · [the LTEE example project](pages/ltee-project.qmd) · [glossary](pages/glossary.qmd) · [quiz banks](quizzes/index.qmd) · [capstone rubric](assessment/capstone-rubric.qmd) · [sources and credits](pages/credits.qmd)
+Also: [cheat sheets](cheatsheets/index.qmd) · [the LTEE example project](pages/ltee-project.qmd) · [glossary](pages/glossary.qmd) · [LTEE project hand-in](assessment/ltee-project.qmd) · [capstone rubric](assessment/capstone-rubric.qmd) · [sources and credits](pages/credits.qmd)

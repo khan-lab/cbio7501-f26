@@ -1,5 +1,6 @@
-"""Check a capstone project for the items of the capstone rubric that a
-program can check. It does not grade: it lists evidence for the grader.
+"""Check a project (a capstone, or a student's ltee-project) for the items of
+the rubric that a program can check. It does not grade: it lists evidence
+for the grader.
 
 Usage (from the course repository):
     pixi run check-capstone path/to/clone-of-student-project
@@ -89,11 +90,16 @@ def main():
             cff_note = f"not valid YAML: {err}"
     check("Openness", cff_ok, "CITATION.cff (validate fully with `pixi exec cffconvert --validate`)", cff_note)
     # Only a Zenodo DOI counts: the README also cites papers and data by DOI.
+    # Required for the ltee-project; optional for a capstone, where a sandbox
+    # DOI (10.5072) is fine.
     release_dois = sorted(set(re.findall(r"10\.5281/zenodo\.\d+", readme)))
-    check("Openness", bool(release_dois), "release DOI (Zenodo) in README", ", ".join(release_dois))
+    sandbox_dois = sorted(set(re.findall(r"10\.5072/zenodo\.\d+", readme)))
+    evidence = ", ".join(release_dois + [d + " (sandbox)" for d in sandbox_dois])
+    check("Openness", bool(release_dois or sandbox_dois),
+          "release DOI in README (ltee-project: Zenodo; capstone: optional, sandbox fine)", evidence)
 
     width = max(len(c[2]) for c in checks)
-    print(f"Capstone checks for {root}\n")
+    print(f"Project checks for {root}\n")
     for area, ok, item, evidence in checks:
         print(f"{ok:4s} {area:16s} {item:<{width}}  {evidence}")
     passed = sum(1 for c in checks if c[1] == "yes")

@@ -505,10 +505,12 @@ push.
 | The Reproduce check fails with `lock file not up-to-date` | `pixi.lock` is missing or older than `pixi.toml`: run `pixi lock`, commit `pixi.lock`, push. |
 | The Reproduce check fails on GitHub but works on your laptop | Something is on your laptop that is not in the repository. That is the point of the check: read its log. |
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
 Put your own project under Git and on GitHub the same way: commit the data
-download script, not the data, and open one pull request. In lesson 05 you give
+download script, not the data, and open one pull request. The repository can
+be private if your research is not public yet; add the instructor as a
+collaborator. In lesson 05 you give
 its `reproduce` task real work.
 
 ## Key points

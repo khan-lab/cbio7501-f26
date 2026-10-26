@@ -683,7 +683,7 @@ chmod a-w data/raw/reference/ecoli_rel606.fasta.gz
 | Copy-paste of `.tsv` files lost the tabs | Some editors turn tabs into spaces. Use the copy button on the code block, or check with `cat -t metadata/samples.tsv` (tabs show as `^I`). |
 | Windows: `Get-FileHash` prints upper case | Compare ignoring case, or use `.ToLower()` as shown. |
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
 For your own project: write `metadata/sources.tsv` (or a README section) for
 your data, with identifiers and licenses; download it with commands, not by

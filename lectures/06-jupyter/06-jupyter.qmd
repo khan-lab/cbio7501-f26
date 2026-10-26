@@ -165,4 +165,4 @@ Answers: 1 b; 2 b.
 - Clear outputs before committing
 - Explore in notebooks, reuse in scripts, report in Quarto
 
-**Now:** [tutorial 06](../../pages/06-jupyter.qmd), then your own mini-analysis.
+**Now:** [tutorial 06](../../pages/06-jupyter.qmd), then your own project.

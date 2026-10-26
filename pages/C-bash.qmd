@@ -543,7 +543,7 @@ every time, and never put spaces in file names
 | A command runs forever | `Ctrl-C` stops it. |
 | You pressed Enter on `rm` too soon | The file is gone unless it was committed to Git. That is one reason to use Git. |
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
 Open a terminal in the folder of your own data. Answer three questions with
 the commands from this page: how many files are there, how many lines does

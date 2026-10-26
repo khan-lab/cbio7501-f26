@@ -19,9 +19,6 @@ adapted_from:
     changes: "Swapped the example for the LTEE project."
 sources:
   - "Baker M (2016). 1,500 scientists lift the lid on reproducibility. *Nature* 533:452. <https://doi.org/10.1038/533452a>"
-
-scripts/check_credits.py checks that every adapted_from url is listed on
-pages/credits.qmd.
 ]]
 
 local stringify = pandoc.utils.stringify

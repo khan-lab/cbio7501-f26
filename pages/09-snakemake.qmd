@@ -1049,7 +1049,7 @@ on the cluster. (Not tested in this build: no cluster access.)
 | `dot: command not found` | `pixi add --feature pipeline graphviz` and use `pixi run -e pipeline dot ...`. |
 | `Format: "svg" not recognized` | Run `pixi run -e pipeline dot -c` once (section 1); repeat after reinstalling the environment. |
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
 Turn your `reproduce` steps into a Snakefile: one rule per step, a config file
 for settings, a sample sheet if you have several inputs, a target rule, and a

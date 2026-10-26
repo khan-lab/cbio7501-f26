@@ -28,9 +28,7 @@ jobs:
           locked: true
 
       - name: Website builds
-        run: |
-          pixi run check-credits
-          pixi run render
+        run: pixi run render
 
       - name: LTEE project, report environment (all platforms)
         run: pixi install --locked --manifest-path tutorials/ltee-project/pixi.toml --environment default

@@ -176,7 +176,7 @@ the one your field and your collaborators use.
 ## Think, pair, share {.prompt-slide}
 
 ::: {.prompt}
-**3 minutes.** For your own mini-analysis: Pixi tasks only, Snakemake,
+**3 minutes.** For your own project: Pixi tasks only, Snakemake,
 Nextflow, or an nf-core pipeline? Why?
 :::
 

@@ -269,7 +269,7 @@ exist than for Conda.
 | `micromamba: command not found` | Run it through Pixi as shown: `pixi exec micromamba ...`. |
 | Disk full after this page | `rm -rf ./conda-env ./wrong-env`, and `pixi exec micromamba clean --all -y` to empty micromamba's cache. |
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
 Export your capstone's environment with `pixi workspace export
 conda-environment` into `envs/`, and mention in your README that Conda users

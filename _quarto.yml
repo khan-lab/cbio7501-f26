@@ -17,7 +17,7 @@ project:
     - pages/*.qmd
     - lectures/*/*.qmd
     #- quizzes/*.qmd
-    #- assessment/*.qmd
+    - assessment/*.qmd
     - cheatsheets/*.qmd
   resources:
     - assets/fonts/
@@ -47,8 +47,6 @@ website:
         href: syllabus.qmd
       - text: "FAQ"
         href: faq.qmd
-      - text: "Credits"
-        href: pages/credits.qmd
     right:
       - icon: github
         href: "https://github.com/khan-lab/cbio7501-f26"
@@ -119,12 +117,14 @@ website:
               href: pages/ltee-project.qmd
             - text: "Glossary"
               href: pages/glossary.qmd
-        #- section: "Assessment"
-        #  contents:
+        - section: "Assessment"
+          contents:
         #    - text: "Quiz banks"
         #      href: quizzes/index.qmd
-        #    - text: "Capstone rubric"
-        #      href: assessment/capstone-rubric.qmd
+            - text: "LTEE project (40%)"
+              href: assessment/ltee-project.qmd
+            - text: "Capstone (30%)"
+              href: assessment/capstone-rubric.qmd
         - section: "Cheat sheets"
           href: cheatsheets/index.qmd
           contents:

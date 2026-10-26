@@ -40,9 +40,6 @@ How we reuse (see `LICENSES.md` in the repository):
 - Third-party figures (journal pages, press photos, comics) are linked with a
   short description, not embedded.
 
-A check (`pixi run check-credits`) fails the website build if a page says it
-adapts a source that is missing from this page.
-
 ## 1. Adapted material
 
 
@@ -101,7 +98,7 @@ Copyright (c) 2023, prefix.dev GmbH, [BSD 3-Clause License](https://github.com/p
 Changes: the environment name is a build argument, `PATH` is set for
 Apptainer, and the project is mounted at run time instead of copied in.
 
-## 2. Recommended resources (linked, not copied)
+## 2. Recommended resources
 
 | Resource | License as we read it (2026-10-24) | Why we only link |
 |----------|-----------------------------------|------------------|

@@ -939,7 +939,7 @@ Open and merge the pull request as usual.
 | A task fails | Go to the work folder Nextflow prints; read `.command.err`; run `bash .command.sh`. |
 | Disk fills up | `nextflow clean -f -before RUN_NAME` (names from `nextflow log`), or delete `work/` (you lose the cache, not the results). |
 
-## Apply it to your own mini-analysis
+## Apply it to your own project
 
 Optional: port one or two steps of your own analysis to Nextflow, with the
 same config file as your Snakefile, and compare the outputs of the two. Or
