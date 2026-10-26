@@ -2,15 +2,8 @@
 title: "A Markdown"
 subtitle: "The one-page reference for the text you write in READMEs, Quarto reports and notebooks"
 description: "Markdown syntax used in this course: headings, emphasis, lists, links, images with alt text, code, tables, and the Quarto additions (callouts, cross-references, citations)."
-adapted_from:
-  - title: "Tools for Reproducible Research: Markdown"
-    url: https://nbisweden.github.io/workshop-reproducible-research/pages/markdown.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Kept the idea of a short primer and the toy example, with NBIS's rendering of it (screenshot used unchanged); added tables, images with alt text, code blocks and the Quarto features used in lessons 07 and 11."
+sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Markdown*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/pages/markdown.html>"
 test:
   needs: []
 ---

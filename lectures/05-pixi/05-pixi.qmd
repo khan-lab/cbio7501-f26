@@ -1,23 +1,9 @@
 ---
 title: "Reproducible environments with Pixi"
 subtitle: "CBIO7501 · Lesson 05"
-adapted_from:
-  - title: "Introduction to Pixi"
-    url: https://carpentries-incubator.github.io/pixi-introduction/
-    authors: "Matthew Feickert and The Carpentries Incubator contributors"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    changes: "Manifest vs lock file and features-as-building-blocks explanations, condensed and applied to the LTEE project."
-  - title: "Tools for Reproducible Research: Managing software environments with Conda (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/conda/conda.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-25
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Merged in: the 'recreate the system' message, package / dependency / environment and channel diagrams (redrawn for samtools and the LTEE tools, with real counts from our lock file), the Conda command line as a comparison table, and 'Conda, Anaconda, Miniconda, Miniforge'. The comic and the Conda logo were not reused."
 sources:
+  - "**Adapted from:** *Introduction to Pixi*, Matthew Feickert and The Carpentries Incubator contributors. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/pixi-introduction/>"
+  - "**Adapted from:** *Tools for Reproducible Research: Managing software environments with Conda (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/conda/conda.html>"
   - "Week 1 slides 57 to 61 (dependency hell, Conda/Bioconda/Mamba/Lmod, Pixi intro) are the opener; the xkcd comic on slide 58 is linked in class, not embedded (non-commercial license)."
   - "Pixi documentation: <https://pixi.prefix.dev/latest/>"
   - "Grüning B et al. (2018). Bioconda. *Nat Methods* 15:475–476. <https://doi.org/10.1038/s41592-018-0046-7>"

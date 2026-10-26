@@ -1,16 +1,8 @@
 ---
 title: "Documentation, licenses and citation"
 subtitle: "CBIO7501 · Lesson 11"
-adapted_from:
-  - title: "Tools for Reproducible Research: Documentation and reproducibility (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/documentation/documentation.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Kept the seven README questions, and merged in 'Why documentation matters' and 'Good documentation should' as one slide; added the repository file checklist and the license spectrum from Week 1 (slides 94 to 96), as text."
 sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Documentation and reproducibility (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/documentation/documentation.html>"
   - "Week 1 slides 94 to 96 (repository hygiene, license spectrum) are the basis; the ENCODEfetch screenshot is not used: the LTEE project is the worked example."
   - "Lee BD (2018). Ten simple rules for documenting scientific software. *PLoS Comput Biol* 14:e1006561. <https://doi.org/10.1371/journal.pcbi.1006561>"
   - "Citation File Format: <https://citation-file-format.github.io/>"

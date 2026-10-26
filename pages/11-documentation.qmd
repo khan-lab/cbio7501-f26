@@ -2,15 +2,8 @@
 title: "11 Documentation"
 subtitle: "Make the LTEE project understandable, citable and reusable by a stranger"
 description: "A README that answers the seven questions a reader has; licenses for code, text and data; a valid CITATION.cff; contributing and conduct files; software versions recorded from the lock file. The finished LTEE project is the worked example."
-adapted_from:
-  - title: "Tools for Reproducible Research: Documentation and reproducibility"
-    url: https://nbisweden.github.io/workshop-reproducible-research/pages/documentation.html
-    authors: "NBIS (Erik Fasterius, John Sundh and contributors)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Kept the seven questions a README should answer and the advice on structure, hardware, reproduction and outputs; applied to the LTEE project, with licenses, CITATION.cff, contributing and conduct files, software versions and a Break it added."
+sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Documentation and reproducibility*, NBIS (Erik Fasterius, John Sundh and contributors). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/pages/documentation.html>"
 test:
   needs: [10-nextflow]
   timeout: 1800

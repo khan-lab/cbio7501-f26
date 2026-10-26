@@ -1,22 +1,9 @@
 ---
 title: "On the art of reproducible and open science"
 subtitle: "CBIO7501 · Lesson 01"
-adapted_from:
-  - title: "On the Art of Reproducible & Open Science (Week 1 deck, slides 5 to 40 and 71 to 83)"
-    url: https://github.com/khan-lab/cbio7501-f26
-    authors: "Aziz Khan"
-    license: "Own work"
-    accessed: 2026-10-24
-    changes: "Condensed from about 50 slides to a 25-minute deck, rebuilt in Quarto from the slide-by-slide reuse map (the original deck was not available as source); third-party photos and screenshots replaced by links with a one-line description; the Cancer Biology numbers and the Excel case corrected; animation builds removed."
-  - title: "Tools for Reproducible Research: Introduction (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/introduction/introduction.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Merged in: the studies of computational reproducibility (Trisovic 2022; Samuel and Mietchen 2024, first author corrected), Freedman 2015, the Open Science Collaboration quote, the 'parts of an analysis' figure (NBIS, CC BY 4.0), the decent / good / great slides for data, code and environment, and 'What's in it for me?'. Not reused: teacher photos, the PhD Comics strip and journal screenshots (not CC BY)."
 sources:
+  - "**Adapted from:** *On the Art of Reproducible & Open Science (Week 1 deck, slides 5 to 40 and 71 to 83)*, Aziz Khan. <https://github.com/khan-lab/cbio7501-f26>"
+  - "**Adapted from:** *Tools for Reproducible Research: Introduction (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/introduction/introduction.html>"
   - "Baker M (2016). 1,500 scientists lift the lid on reproducibility. *Nature* 533:452–454. <https://doi.org/10.1038/533452a>"
   - "Freedman LP, Cockburn IM, Simcoe TS (2015). The economics of reproducibility in preclinical research. *PLoS Biol* 13:e1002165. <https://doi.org/10.1371/journal.pbio.1002165>"
   - "Trisovic A, Lau MK, Pasquier T, Crosas M (2022). A large-scale study on research code quality and execution. *Sci Data* 9:60. <https://doi.org/10.1038/s41597-022-01143-6>"

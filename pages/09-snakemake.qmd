@@ -2,23 +2,9 @@
 title: "09 Snakemake"
 subtitle: "Describe the LTEE pipeline as rules, and let Snakemake work out what to run, in what order, and what is out of date"
 description: "Rules, wildcards and the job graph; rerun triggers; config files and sample sheets; logs, temporary files, threads; the full LTEE pipeline in Snakemake, checked against the shell script; profiles for Slurm clusters."
-adapted_from:
-  - title: "Tools for Reproducible Research: Snakemake"
-    url: https://nbisweden.github.io/workshop-reproducible-research/pages/snakemake.html
-    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Same teaching sequence (basics with a toy example, wildcards, visualising the graph, rerun triggers, a real workflow, parameters and configuration, logs, temporary files, expand, generalising with a sample sheet, best practices, Slurm and profiles as extras). The MRSA RNA-seq workflow is replaced by the LTEE variant-calling pipeline, built rule by rule in the learner's project; tools come from one Pixi environment; added a comparison with the shell script, a threads Break it, and the analysis question."
-  - title: "Data Carpentry Wrangling Genomics: Variant calling"
-    url: https://datacarpentry.github.io/wrangling-genomics/04-variant_calling.html
-    authors: "Data Carpentry contributors"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit d965cc4 (2025-07-18)"
-    changes: "Each step of the lesson (bwa index, bwa mem, samtools view/sort/index/flagstat, bcftools mpileup/call, vcfutils.pl varFilter, bcftools stats) becomes a Snakemake rule with the lesson's options."
+sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Snakemake*, NBIS (John Sundh, Erik Fasterius and contributors). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/pages/snakemake.html>"
+  - "**Adapted from:** *Data Carpentry Wrangling Genomics: Variant calling*, Data Carpentry contributors. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://datacarpentry.github.io/wrangling-genomics/04-variant_calling.html>"
 test:
   needs: [07-quarto]
   timeout: 3600

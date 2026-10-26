@@ -2,23 +2,9 @@
 title: "05b Pixi and Conda compared"
 subtitle: "Same packages, different workflow: translate, convert, export, and know when Conda is fine"
 description: "A fair comparison of Pixi and Conda/Mamba: command table, importing an environment.yml, exporting a Pixi environment for Conda users, explicit specs, and what each tool does and does not guarantee."
-adapted_from:
-  - title: "Tools for Reproducible Research: Controlling your environment with Conda"
-    url: https://nbisweden.github.io/workshop-reproducible-research/pages/conda.html
-    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "The Conda commands of the NBIS tutorial (create, install, activate, environment files, export) are condensed into a command table next to their Pixi equivalents; the hands-on converts and exports the LTEE environment."
-  - title: "Introduction to Pixi: Backwards compatibility with conda"
-    url: https://carpentries-incubator.github.io/pixi-introduction/backwards-compatibility.html
-    authors: "Matthew Feickert and The Carpentries Incubator contributors"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit b88a073 (2026-10-05)"
-    changes: "Kept the export to conda environment files and explicit specs and building a Conda environment from them; used micromamba through pixi exec; added a wrong-platform Break it."
+sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Controlling your environment with Conda*, NBIS (John Sundh, Erik Fasterius and contributors). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/pages/conda.html>"
+  - "**Adapted from:** *Introduction to Pixi: Backwards compatibility with conda*, Matthew Feickert and The Carpentries Incubator contributors. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/pixi-introduction/backwards-compatibility.html>"
 test:
   needs: [05-pixi]
   timeout: 2400

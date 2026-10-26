@@ -2,15 +2,8 @@
 title: "08 Containers: Docker and Apptainer"
 subtitle: "Ship the whole software stack, operating system included, built from the same lock file"
 description: "Run containers with Docker, build an image of the LTEE environment from pixi.lock, run the pipeline in it, archive and share the image, and use it with Apptainer on Linux and HPC."
-adapted_from:
-  - title: "Tools for Reproducible Research: Working with containers"
-    url: https://nbisweden.github.io/workshop-reproducible-research/pages/containers.html
-    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Kept the order (pull and run, interactive use, bind mounts, building from a Dockerfile, sharing, Apptainer, multi-stage builds); the image is built from the LTEE project's pixi.lock instead of a Conda environment file; Apptainer only on Linux, WSL2 or a cluster; added image provenance and a Break it on bind mounts."
+sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Working with containers*, NBIS (John Sundh, Erik Fasterius and contributors). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/pages/containers.html>"
 test:
   needs: [05-pixi]
   timeout: 3600

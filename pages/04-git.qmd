@@ -2,23 +2,9 @@
 title: "04 Git and GitHub"
 subtitle: "Put the LTEE project under version control, share it on GitHub, and let GitHub rerun it for you"
 description: "Track the LTEE project with Git, browse and restore history, work on branches, resolve a conflict, push to GitHub, review through pull requests, and meet the GitHub Action that checks every push."
-adapted_from:
-  - title: "Tools for Reproducible Research: Version control with Git"
-    url: https://nbisweden.github.io/workshop-reproducible-research/pages/git.html
-    authors: "NBIS (Erik Fasterius, John Sundh and contributors)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "The toy Bowtie example is replaced by the learner's LTEE project; same teaching order (init, add/commit, diff, history, ignore, branches, remotes, conflicts, tags); added pull requests, a decision log as the conflict exercise and a Break it on restoring deleted work; the template's GitHub Action is introduced here and given real work in lesson 05. NBIS's two Git overview figures are used unchanged."
-  - title: "Introduction to Pixi (repository-per-learner pattern)"
-    url: https://carpentries-incubator.github.io/pixi-introduction/
-    authors: "Matthew Feickert and The Carpentries Incubator contributors"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit b88a073 (2026-10-05)"
-    changes: "Borrowed the idea that each learner builds their own GitHub repository with one branch and pull request per episode."
+sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Version control with Git*, NBIS (Erik Fasterius, John Sundh and contributors). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/pages/git.html>"
+  - "**Adapted from:** *Introduction to Pixi (repository-per-learner pattern)*, Matthew Feickert and The Carpentries Incubator contributors. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/pixi-introduction/>"
 test:
   needs: [03-data-management]
   timeout: 2400

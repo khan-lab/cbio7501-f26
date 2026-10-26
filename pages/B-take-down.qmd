@@ -2,15 +2,8 @@
 title: "B Take-down"
 subtitle: "Free the disk space the course used, and remove the tools if you want to"
 description: "Remove project environments, Pixi's cache, global tools and Pixi itself; workflow-manager leftovers; Docker images; Codespaces. Keep what you need: your repositories."
-adapted_from:
-  - title: "Tools for Reproducible Research: Take-down"
-    url: https://nbisweden.github.io/workshop-reproducible-research/pages/take-down.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Conda replaced by Pixi (following Pixi's own uninstall steps); Snakemake, Nextflow and Docker sections kept and adapted to the LTEE project; Codespaces added."
+sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Take-down*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/pages/take-down.html>"
 test:
   needs: []
 ---

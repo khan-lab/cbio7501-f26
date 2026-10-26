@@ -2,15 +2,8 @@
 title: "12 Putting it all together"
 subtitle: "Swap and reproduce, release with a DOI, and a checklist for your next project"
 description: "Reproduce a classmate's project from a clean clone using only its README, release your own project and archive it on Zenodo with a DOI, and take a checklist for the before, during, submission and after phases of a project into your research."
-adapted_from:
-  - title: "Tools for Reproducible Research: Putting it all together (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Its summary of practices ('divide your work into projects', 'treasure your data', 'what is reasonable for your project') became the checklist, updated for Pixi; the swap-and-reproduce session, the release and Zenodo steps and the capstone are new."
+sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Putting it all together (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html>"
 test:
   needs: [11-documentation]
   timeout: 2400

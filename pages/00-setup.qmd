@@ -2,23 +2,9 @@
 title: "00 Setup and pre-course"
 subtitle: "Get Pixi, Git and a GitHub account working before the hands-on lessons"
 description: "Install Pixi (and through it everything else), set up Git and GitHub, and check that your laptop is ready. Windows users work in WSL2. GitHub Codespaces is the fallback."
-adapted_from:
-  - title: "Tools for Reproducible Research: Pre-course setup"
-    url: https://nbisweden.github.io/workshop-reproducible-research/home_precourse.html
-    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Pixi replaces the Conda, Snakemake, Nextflow, Quarto and Jupyter installs (everything comes from Pixi); WSL2 and Codespaces notes rewritten; Git configuration and SSH key steps shortened."
-  - title: "Introduction to Pixi: Setup"
-    url: https://carpentries-incubator.github.io/pixi-introduction/
-    authors: "Matthew Feickert and The Carpentries Incubator contributors"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit b88a073 (2026-10-05)"
-    changes: "Kept the install and shell-completion commands and the idea of installing Git with `pixi global`; added a version pin, a telemetry note and a setup check."
+sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Pre-course setup*, NBIS (John Sundh, Erik Fasterius and contributors). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/home_precourse.html>"
+  - "**Adapted from:** *Introduction to Pixi: Setup*, Matthew Feickert and The Carpentries Incubator contributors. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/pixi-introduction/>"
 test:
   needs: []
   timeout: 1800

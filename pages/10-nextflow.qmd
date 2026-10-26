@@ -2,23 +2,9 @@
 title: "10 Nextflow"
 subtitle: "The same LTEE pipeline in a second workflow manager: same steps, same options, same answer"
 description: "Processes, channels and workflow outputs; reading the sample sheet; the LTEE pipeline in Nextflow (current syntax), run with the same config file as Snakemake; resume and reports; comparing results across workflow managers; nf-core."
-adapted_from:
-  - title: "Tools for Reproducible Research: Nextflow"
-    url: https://nbisweden.github.io/workshop-reproducible-research/pages/nextflow.html
-    authors: "NBIS (Erik Fasterius, John Sundh and contributors)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Kept the teaching order (a toy upper-case workflow, process and workflow definitions, workflow outputs, sample sheets, adding processes, resume, configuration, nf-core) and the use of workflow outputs; the MRSA workflow is replaced by the LTEE pipeline with the same steps as our Snakemake workflow; typed params block and the shared config file; launched through Pixi; a cross-tool comparison and a launch-directory Break it added."
-  - title: "Data Carpentry Wrangling Genomics: Variant calling"
-    url: https://datacarpentry.github.io/wrangling-genomics/04-variant_calling.html
-    authors: "Data Carpentry contributors"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit d965cc4 (2025-07-18)"
-    changes: "The lesson's steps and options become Nextflow processes."
+sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Nextflow*, NBIS (Erik Fasterius, John Sundh and contributors). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/pages/nextflow.html>"
+  - "**Adapted from:** *Data Carpentry Wrangling Genomics: Variant calling*, Data Carpentry contributors. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://datacarpentry.github.io/wrangling-genomics/04-variant_calling.html>"
 test:
   needs: [09-snakemake]
   timeout: 3600
@@ -964,7 +950,6 @@ and note which release you would pin.
 
 - Cheat sheet: [Nextflow](../cheatsheets/nextflow.qmd), with links to the official cheat sheets and references.
 - Nextflow documentation: <https://docs.seqera.io/nextflow/> (strict syntax, typed parameters, workflow outputs).
-- Seqera training (CC BY-NC-SA 4.0, link only): *Hello Nextflow*, *Nextflow Run*, *Nextflow for Science: Genomics*, <https://training.nextflow.io/>
 - NBIS, *Nextflow* tutorial (subworkflows, remote files, nf-core): <https://nbisweden.github.io/workshop-reproducible-research/pages/nextflow.html>
 - nf-core: <https://nf-co.re/>; Ewels PA et al. (2020). The nf-core framework for community-curated bioinformatics pipelines. *Nat Biotechnol* 38:276–278. <https://doi.org/10.1038/s41587-020-0439-x>
 - Di Tommaso P et al. (2017). Nextflow enables reproducible computational workflows. *Nat Biotechnol* 35:316–319. <https://doi.org/10.1038/nbt.3820>

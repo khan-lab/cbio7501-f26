@@ -2,31 +2,10 @@
 title: "03 Data management and FAIR"
 subtitle: "Get the LTEE data the reproducible way: recorded source, verified checksums, metadata, read-only"
 description: "FAIR and CARE principles and data availability, then hands-on: download the LTEE data, verify it against the provider's checksums, record checksums and metadata, and protect raw data."
-adapted_from:
-  - title: "FAIR in (biological) practice: Being FAIR"
-    url: https://carpentries-incubator.github.io/fair-bio-practice/03-being-fair.html
-    authors: "Tomasz Zieliński, Andrés Romanowski and contributors (The Carpentries Incubator)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 513e1d5 (2025-01-28)"
-    changes: "Kept the exercise of judging a Zenodo record against FAIR (the Scotland wastewater dataset, as on Week 1 slide 93); FAIR summary rewritten; added an LTEE version of the exercise."
-  - title: "Tools for Reproducible Research: Managing your data (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html
-    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Used the 'data mismanagement in practice' table and the data management plan checklist, shortened."
-  - title: "Data Carpentry Wrangling Genomics: Background and metadata"
-    url: https://datacarpentry.github.io/wrangling-genomics/01-background.html
-    authors: "Data Carpentry contributors"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit d965cc4 (2025-07-18)"
-    changes: "Sample metadata for the three Ara-3 clones copied into our sample sheet; download commands adapted, with checksum checks added."
+sources:
+  - "**Adapted from:** *FAIR in (biological) practice: Being FAIR*, Tomasz Zieliński, Andrés Romanowski and contributors (The Carpentries Incubator). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/fair-bio-practice/03-being-fair.html>"
+  - "**Adapted from:** *Tools for Reproducible Research: Managing your data (lecture)*, NBIS (John Sundh, Erik Fasterius and contributors). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html>"
+  - "**Adapted from:** *Data Carpentry Wrangling Genomics: Background and metadata*, Data Carpentry contributors. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://datacarpentry.github.io/wrangling-genomics/01-background.html>"
 test:
   needs: [02-project-organization]
   timeout: 1800

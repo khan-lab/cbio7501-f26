@@ -16,8 +16,8 @@ their original license and credit:
   (authors, link, license, version), the data, the software and the figures
   we link to. Every page of the site links to it from its footer, and every
   slide deck ends with a Sources slide.
-- Every adapted page records its sources in its `adapted_from:` front matter
-  (source, authors, license, link, what we changed).
+- Every adapted page and deck credits its sources in its front matter
+  (`sources:`: source, authors, license, link).
 - We only adapt material under licenses that allow it (CC BY 4.0, MIT, BSD).
   Material under a non-commercial or share-alike license (for example the
   Seqera Nextflow training, CC BY-NC-SA 4.0) and material whose license we

@@ -1,16 +1,8 @@
 ---
 title: "Literate programming with Quarto"
 subtitle: "CBIO7501 · Lesson 07"
-adapted_from:
-  - title: "Tools for Reproducible Research: Making reports with Quarto (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/quarto/quarto.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Python example from the LTEE report instead of R and penguins (its report screenshot replaced by one of our LTEE report); merged in: the 'connects code with results' figure (NBIS, CC BY 4.0), the anatomy of a document (YAML, Markdown, cells), rendering from the command line or an editor button, output formats, and Quarto vs R Markdown. Quarto logo not reused."
 sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Making reports with Quarto (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/quarto/quarto.html>"
   - "Knuth DE (1984). Literate programming. *The Computer Journal* 27:97–111. <https://doi.org/10.1093/comjnl/27.2.97>"
   - "Quarto: <https://quarto.org/>"
   - "Figure 'Quarto connects code with results': NBIS, *Tools for Reproducible Research*, CC BY 4.0. Report screenshot: our LTEE example report, CC BY 4.0."

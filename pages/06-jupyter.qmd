@@ -2,15 +2,8 @@
 title: "06 Jupyter"
 subtitle: "Explore in a notebook, then make sure it runs from top to bottom without you"
 description: "Explore the LTEE reads in a Jupyter notebook inside the project's Pixi environment, run it headless, clear outputs before sharing, and see how out-of-order execution breaks reproducibility."
-adapted_from:
-  - title: "Tools for Reproducible Research: Working with Jupyter"
-    url: https://nbisweden.github.io/workshop-reproducible-research/pages/jupyter.html
-    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Shortened to a 40-minute lab; LTEE reads instead of the penguins and MRSA examples; Pixi instead of Conda; kept the parts on running notebooks with nbconvert (rendering them with Quarto is in lesson 07); added clearing outputs and an out-of-order Break it. Widgets, magics, nbdime and nbval moved to Further reading. NBIS's JupyterLab screenshot is used unchanged."
+sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Working with Jupyter*, NBIS (John Sundh, Erik Fasterius and contributors). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/pages/jupyter.html>"
 test:
   needs: [05-pixi]
   timeout: 1800

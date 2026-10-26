@@ -1,15 +1,8 @@
 ---
 title: "The LTEE example project"
 subtitle: "The one analysis that runs through every lesson"
-adapted_from:
-  - title: "Data Carpentry Wrangling Genomics: Background and metadata"
-    url: https://datacarpentry.github.io/wrangling-genomics/01-background.html
-    authors: "Data Carpentry contributors"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit d965cc4 (2025-07-18)"
-    changes: "Background on the experiment and the three samples summarized; pipeline, question and lesson map added."
+sources:
+  - "**Adapted from:** *Data Carpentry Wrangling Genomics: Background and metadata*, Data Carpentry contributors. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://datacarpentry.github.io/wrangling-genomics/01-background.html>"
 ---
 
 ## The experiment

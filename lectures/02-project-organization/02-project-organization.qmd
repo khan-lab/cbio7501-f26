@@ -1,30 +1,10 @@
 ---
 title: "Project organization"
 subtitle: "CBIO7501 · Lesson 02"
-adapted_from:
-  - title: "Tools for Reproducible Research: Managing your data (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    changes: "'Which file is the latest?' example rewritten with LTEE file names; layouts compared with our template."
-  - title: "Tools for Reproducible Research: Putting it all together (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-25
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Merged in: 'Treasure your data', 'Organise your coding', the workflow-shaped layout (Snakemake template tree updated to its current layout) and 'Helpful tools' (from the data management lecture)."
-  - title: "FAIR in (biological) practice: Working with files"
-    url: https://carpentries-incubator.github.io/fair-bio-practice/09-files-organization.html
-    authors: "The Carpentries Incubator"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    changes: "Naming rules condensed to one slide."
 sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Managing your data (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html>"
+  - "**Adapted from:** *Tools for Reproducible Research: Putting it all together (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html>"
+  - "**Adapted from:** *FAIR in (biological) practice: Working with files*, The Carpentries Incubator. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/fair-bio-practice/09-files-organization.html>"
   - "Noble WS (2009). A quick guide to organizing computational biology projects. *PLoS Comput Biol* 5:e1000424. <https://doi.org/10.1371/journal.pcbi.1000424>"
   - "Wilson G et al. (2017). Good enough practices in scientific computing. *PLoS Comput Biol* 13:e1005510. <https://doi.org/10.1371/journal.pcbi.1005510>"
   - "Snakemake workflow template (MIT), layout as of 2026-03: <https://github.com/snakemake-workflows/snakemake-workflow-template>"

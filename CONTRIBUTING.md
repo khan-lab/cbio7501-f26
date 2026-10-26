@@ -24,7 +24,7 @@ pixi run check-links     # internal links in the rendered site
 | `tutorials/ltee-project/` | the finished example project (as after lesson 12) |
 | `templates/cookiecutter-repro-project/` | the project template used in lesson 02 |
 | `scripts/` | `test_tutorials.py` |
-| `assets/filters/adapted-from.lua` | turns `adapted_from:` and `sources:` front matter into the Sources slide at the end of each deck (on pages, `adapted_from:` is a record only) |
+| `assets/filters/sources-slide.lua` | turns the `sources:` front matter of each deck into its final Sources slide (on pages, `sources:` is a record only) |
 | `assets/shortcodes/pixi-version.lua` | `{{< pixi-version >}}`: the Pixi version in the footer (Quarto's `{{< version >}}` gives Quarto's) |
 | `assets/css/` | the look: `theme-light.scss` and `theme-dark.scss` (color tokens), `styles.scss` (site), `slides.scss` (decks), `fonts.css` |
 | `assets/fonts/` | Inter and JetBrains Mono, served from the site (SIL OFL 1.1) |
@@ -98,12 +98,13 @@ workflows ran, is the test log in `docs/BUILD_LOG.md`.
 
 - Only adapt material under CC BY, CC0, MIT or BSD licenses; link anything
   else (for example the Seqera training, CC BY-NC-SA).
-- Add an `adapted_from:` entry to the page's front matter (title, url,
-  authors, license, accessed, version, changes) and credit the source on
-  `pages/credits.qmd`. Pages that are entirely our own say
-  `adapted_from: []`.
-- Decks list papers and linked figures under `sources:`; the filter builds the
-  final Sources slide.
+- Credit the source in the front matter of the page or deck, as the first
+  lines of `sources:` (one line each:
+  `"**Adapted from:** *title*, authors. [license](license link). <url>"`),
+  and on `pages/credits.qmd`. Keep detailed notes on what you changed out of
+  Git (for example in `docs/`, which is ignored).
+- Decks also list papers and linked figures under `sources:`; the filter
+  builds the final Sources slide from it.
 - Embed a third-party figure only if its license allows it (CC BY, CC0):
   copy it into `assets/images/<source>/`, add it to that folder's README and
   to the credits page, and show a credit line with it (on slides:

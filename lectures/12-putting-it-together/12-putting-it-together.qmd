@@ -1,16 +1,8 @@
 ---
 title: "Putting it all together"
 subtitle: "CBIO7501 · Lesson 12"
-adapted_from:
-  - title: "Tools for Reproducible Research: Putting it all together (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Summary of practices condensed and updated for Pixi; merged in: the 'take control of each component' figure (NBIS, CC BY 4.0), habits for projects, data and code as one slide, 'what is reasonable for your project' with NBIS's minimal / good / great levels, and the alternatives slides as one table (Jujutsu described without the 'by Google' attribution). Swap-and-reproduce and release added. Not reused: the cartoons (origin unclear or not CC BY), logos, and the NBIS drop-in slide."
 sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Putting it all together (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html>"
   - "Week 1 slides 97 (Zenodo homework) and 98 (checklist) are the basis; the checklist is updated for Pixi."
   - "Ziemann M, Poulain P, Bora A (2023). The five pillars of computational reproducibility. *Brief Bioinform* 24:bbad375. <https://doi.org/10.1093/bib/bbad375>"
   - "Sandve GK et al. (2013). Ten simple rules for reproducible computational research. *PLoS Comput Biol* 9:e1003285. <https://doi.org/10.1371/journal.pcbi.1003285>"

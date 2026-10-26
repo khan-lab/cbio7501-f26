@@ -2,31 +2,10 @@
 title: "05 Environments with Pixi"
 subtitle: "The project, not your laptop, decides which software it runs with"
 description: "Manifest and lock file, pixi add/run/shell, rebuilding an environment from its lock file, tasks for the LTEE pipeline, multi-platform features and environments, pixi global, and Pixi on an HPC cluster."
-adapted_from:
-  - title: "Introduction to Pixi"
-    url: https://carpentries-incubator.github.io/pixi-introduction/
-    authors: "Matthew Feickert and The Carpentries Incubator contributors"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit b88a073 (2026-10-05)"
-    changes: "Kept the order manifest → lock file → add/run/shell → tasks → multi-platform → features and environments → pixi global; the example is the LTEE pipeline with bioconda tools instead of a Python/Jupyter project; added the win-64 failure, cross-environment tasks, a drift demonstration and HPC notes."
-  - title: "Reproducible Research course: Introduction to Pixi (course environments)"
-    url: https://amrei-bp.github.io/Reproducible_Research/course_environments.html
-    authors: "Amrei Binzer-Panchal"
-    license: "MIT"
-    license_url: https://github.com/amrei-bp/Reproducible_Research/blob/main/LICENSE
-    accessed: 2026-10-24
-    version: "commit 015364a (2026-10-22)"
-    changes: "Used the minimal flow (pixi init with conda-forge and bioconda, pixi add, pixi run, pixi shell) and the HPC notes (run tools through `srun ... pixi run`; `pixi shell` may not work on a cluster). Copyright (c) 2026 Amrei, MIT License."
-  - title: "Tools for Reproducible Research: Controlling your environment with Conda"
-    url: https://nbisweden.github.io/workshop-reproducible-research/pages/conda.html
-    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Its Pixi extra section and its explanation of channels informed Part A; the Conda material itself moved to the comparison page (05b)."
+sources:
+  - "**Adapted from:** *Introduction to Pixi*, Matthew Feickert and The Carpentries Incubator contributors. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/pixi-introduction/>"
+  - "**Adapted from:** *Reproducible Research course: Introduction to Pixi (course environments)*, Amrei Binzer-Panchal. [MIT](https://github.com/amrei-bp/Reproducible_Research/blob/main/LICENSE). <https://amrei-bp.github.io/Reproducible_Research/course_environments.html>"
+  - "**Adapted from:** *Tools for Reproducible Research: Controlling your environment with Conda*, NBIS (John Sundh, Erik Fasterius and contributors). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/pages/conda.html>"
 test:
   needs: [04-git]
   timeout: 3600

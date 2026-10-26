@@ -188,7 +188,7 @@ execute:
   echo: true
 
 filters:
-  - assets/filters/adapted-from.lua
+  - assets/filters/sources-slide.lua
 
 # {{< pixi-version >}} in the footer: the Pixi that builds the site.
 shortcodes:

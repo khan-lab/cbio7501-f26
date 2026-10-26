@@ -1,19 +1,10 @@
 ---
 title: "Workflows with Nextflow"
 subtitle: "CBIO7501 · Lesson 10 (40-minute introduction)"
-adapted_from:
-  - title: "Tools for Reproducible Research: Nextflow (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/nextflow/nextflow.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "A 40-minute introduction in current syntax, on the same LTEE pipeline as Snakemake; merged in: Nextflow's features, channels / processes / tasks (diagram redrawn by us for the LTEE samples), the anatomy of a process and of a workflow (shown on our ALIGN process and workflow block), running Nextflow, and the Snakemake vs Nextflow table (with the workflow wrap-up). Not reused: the logo, the adoption chart and the concepts figure (origin not clear); the adoption claim was dropped because its source could not be checked."
 sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Nextflow (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/nextflow/nextflow.html>"
   - "Di Tommaso P et al. (2017). Nextflow enables reproducible computational workflows. *Nat Biotechnol* 35:316–319. <https://doi.org/10.1038/nbt.3820>"
   - "Ewels PA et al. (2020). The nf-core framework for community-curated bioinformatics pipelines. *Nat Biotechnol* 38:276–278. <https://doi.org/10.1038/s41587-020-0439-x>"
-  - "Seqera training (CC BY-NC-SA 4.0, linked, not copied): <https://training.nextflow.io/>"
   - "Nextflow documentation: <https://docs.seqera.io/nextflow/>"
   - "Diagram 'Channels, processes, tasks': own work, CC BY 4.0, after the NBIS slide."
 ---

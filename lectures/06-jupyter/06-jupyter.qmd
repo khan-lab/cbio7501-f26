@@ -1,16 +1,8 @@
 ---
 title: "Notebooks you can rerun"
 subtitle: "CBIO7501 · Lesson 06"
-adapted_from:
-  - title: "Tools for Reproducible Research: Jupyter (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/jupyter/jupyter.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Reproducibility message (hidden state, run-all, clear outputs) on the LTEE example; merged in: what Jupyter is, JupyterLab (with NBIS's launcher screenshot from the tutorial, CC BY 4.0, instead of the Jupyter docs images), text-code-output, magics for other languages, use cases, sharing notebooks, and the Quarto vs Jupyter table of the reports wrap-up. Jupyter logo not reused."
 sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Jupyter (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/jupyter/jupyter.html>"
   - "Rule A, Birmingham A, Zuniga C, et al. (2019). Ten simple rules for writing and sharing computational analyses in Jupyter Notebooks. *PLoS Comput Biol* 15:e1007007. <https://doi.org/10.1371/journal.pcbi.1007007>"
   - "Project Jupyter: <https://jupyter.org/>"
   - "Screenshot 'JupyterLab': NBIS, *Tools for Reproducible Research* (Jupyter tutorial), CC BY 4.0."

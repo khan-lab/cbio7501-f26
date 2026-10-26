@@ -2,15 +2,8 @@
 title: "07 Quarto"
 subtitle: "A report in which every number and figure is computed from the data, every time"
 description: "Write a Quarto report for the LTEE project in Python: text, code, tables, figures, cross-references, inline values, parameters, citations, HTML and PDF output."
-adapted_from:
-  - title: "Tools for Reproducible Research: Working with Quarto"
-    url: https://nbisweden.github.io/workshop-reproducible-research/pages/quarto.html
-    authors: "NBIS (Erik Fasterius, John Sundh and contributors)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Python only (NBIS uses R and the Palmer penguins); the example is the LTEE data report, built step by step in the learner's project; Pixi instead of Conda; added project-relative paths, parameters with -P, a Typst PDF, a Break it exercise on hidden state, and a report task that GitHub reruns on every push."
+sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Working with Quarto*, NBIS (Erik Fasterius, John Sundh and contributors). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/pages/quarto.html>"
 test:
   needs: [06-jupyter]
   timeout: 2400

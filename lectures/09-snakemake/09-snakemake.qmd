@@ -1,16 +1,8 @@
 ---
 title: "Workflows with Snakemake"
 subtitle: "CBIO7501 · Lesson 09"
-adapted_from:
-  - title: "Tools for Reproducible Research: Snakemake (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/snakemake/snakemake.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Core ideas (rules, wildcards, job graph, rerun triggers, config) on the LTEE example; merged in: why workflow managers, the reproducible-and-scalable figures (NBIS, CC BY 4.0), workflow managers in bioinformatics, the Snakemake mindset (quotes from the Snakemake docs), targets and the default rule, the anatomy of a rule (shown on our bwa_mem rule instead of seqtk), per-rule software, and the command line. The MRSA job graphs are replaced by our LTEE rule graph; the Snakemake logo was not reused."
 sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Snakemake (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/snakemake/snakemake.html>"
   - "Week 1 slides 66 and 67 ('the best documentation is automation'; Make, Snakemake, Nextflow, WDL) are the opener."
   - "Mölder F et al. (2021). Sustainable data analysis with Snakemake. *F1000Research* 10:33. <https://doi.org/10.12688/f1000research.29032.3>"
   - "Snakemake documentation: <https://snakemake.readthedocs.io/>; quotes from 'Basics: an example workflow': <https://snakemake.readthedocs.io/en/stable/tutorial/basics.html>"

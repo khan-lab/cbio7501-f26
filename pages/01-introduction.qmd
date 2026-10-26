@@ -2,21 +2,9 @@
 title: "01 Reproducibility and open science"
 subtitle: "Self-paced: audit how reproducible and open a published study really is"
 description: "Key ideas of the lesson in one page, then a hands-on audit of a paper's data, code and environment against the five pillars and FAIR, with a worked example."
-adapted_from:
-  - title: "On the Art of Reproducible & Open Science (Week 1 deck)"
-    url: https://github.com/khan-lab/cbio7501-f26
-    authors: "Aziz Khan"
-    license: "CC BY 4.0"
-    accessed: 2026-10-24
-    changes: "The ideas of slides 5 to 40 and 71 to 83 summarized in text; the audit exercise extends the FAIR exercise of slide 93 and the data availability examples of slide 85."
-  - title: "Tools for Reproducible Research: Introduction (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/introduction/introduction.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Its 'how are you handling your data, code and environment' levels (decent, good, great) became the audit rubric, with FAIR, licensing and documentation rows added. Its overview figure of an analysis is used unchanged."
+sources:
+  - "**Adapted from:** *On the Art of Reproducible & Open Science (Week 1 deck)*, Aziz Khan. CC BY 4.0. <https://github.com/khan-lab/cbio7501-f26>"
+  - "**Adapted from:** *Tools for Reproducible Research: Introduction (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/introduction/introduction.html>"
 test:
   needs: []
   timeout: 900

@@ -1,23 +1,9 @@
 ---
 title: "Data management and FAIR"
 subtitle: "CBIO7501 · Lesson 03"
-adapted_from:
-  - title: "Tools for Reproducible Research: Managing your data (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "'Data (mis)management in practice' table condensed; the data management plan slide and the discussion questions merged in (the Swedish Research Council example replaced by NIH and Horizon Europe); its project-folder slides moved to lesson 02. Open-access logo not reused."
-  - title: "FAIR in (biological) practice: Being FAIR"
-    url: https://carpentries-incubator.github.io/fair-bio-practice/03-being-fair.html
-    authors: "The Carpentries Incubator"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    changes: "FAIR exercise on the Scotland wastewater Zenodo record kept as a think-pair-share."
 sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Managing your data (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html>"
+  - "**Adapted from:** *FAIR in (biological) practice: Being FAIR*, The Carpentries Incubator. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/fair-bio-practice/03-being-fair.html>"
   - "Wilkinson MD et al. (2016). The FAIR Guiding Principles for scientific data management and stewardship. *Sci Data* 3:160018. <https://doi.org/10.1038/sdata.2016.18>"
   - "Gabelica M, Bojčić R, Puljak L (2022). Many researchers were not compliant with their published data sharing statement. *J Clin Epidemiol* 150:33–41. <https://doi.org/10.1016/j.jclinepi.2022.05.019>"
   - "Scorza L, Baby SV, Zieliński T. SARS-CoV-2 RNA levels in Scotland's wastewater. Zenodo, CC BY 4.0. <https://doi.org/10.5281/zenodo.6339631>"

@@ -1,7 +1,6 @@
 ---
 title: "Glossary"
 subtitle: "Terms used in the lessons, in one line each"
-adapted_from: []
 ---
 
 | Term | Meaning | Lesson |

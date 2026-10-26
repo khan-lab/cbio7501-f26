@@ -2,23 +2,9 @@
 title: "02 Project organization"
 subtitle: "Sketch a project by hand, then generate one from a template and understand every folder"
 description: "Plan the folders of the LTEE project on paper, compare with published advice, generate the project with Cookiecutter, and practice file naming and relative paths."
-adapted_from:
-  - title: "FAIR in (biological) practice: Working with files"
-    url: https://carpentries-incubator.github.io/fair-bio-practice/09-files-organization.html
-    authors: "Tomasz Zieliński, Andrés Romanowski and contributors (The Carpentries Incubator)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 513e1d5 (2025-01-28)"
-    changes: "Naming rules condensed; the sorting exercise rewritten with LTEE file names; the folder discussion replaced by our template."
-  - title: "Tools for Reproducible Research: Managing your data (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html
-    authors: "NBIS (John Sundh, Erik Fasterius and contributors)"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Used the 'which sample file is the latest?' example and the idea of comparing several project layouts."
+sources:
+  - "**Adapted from:** *FAIR in (biological) practice: Working with files*, Tomasz Zieliński, Andrés Romanowski and contributors (The Carpentries Incubator). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/fair-bio-practice/09-files-organization.html>"
+  - "**Adapted from:** *Tools for Reproducible Research: Managing your data (lecture)*, NBIS (John Sundh, Erik Fasterius and contributors). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html>"
 test:
   needs: []
   timeout: 1800

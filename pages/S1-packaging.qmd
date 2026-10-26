@@ -2,7 +2,6 @@
 title: "S1 Package and share your tool"
 subtitle: "Supplementary, at home: from a script to an installable package, a conda recipe, and (maybe) conda-forge or Bioconda"
 description: "Level 1: make a small Python tool installable with pyproject.toml, test it, release it with a DOI. Level 2: write a conda recipe (v1, recipe.yaml), build and test it locally with rattler-build, install it from a local channel with Pixi, lint it. Level 3 (optional): submit to conda-forge or Bioconda."
-adapted_from: []
 test:
   needs: []
   timeout: 1800

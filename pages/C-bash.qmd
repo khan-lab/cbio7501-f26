@@ -2,7 +2,6 @@
 title: "C Bash 101"
 subtitle: "Practise the shell: files, folders, pipes, loops and a first script"
 description: "A self-paced practice page for the command line used in every lesson: where you are, files and folders, looking into data, pipes and redirection, loops, a small script, permissions and quoting. Ends with the shell tutorials worth doing next."
-adapted_from: []
 test:
   needs: []
   timeout: 600

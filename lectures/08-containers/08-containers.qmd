@@ -1,16 +1,8 @@
 ---
 title: "Containers: Docker and Apptainer"
 subtitle: "CBIO7501 · Lesson 08"
-adapted_from:
-  - title: "Tools for Reproducible Research: Working with containers (lecture)"
-    url: https://nbisweden.github.io/workshop-reproducible-research/lectures/containers/containers.html
-    authors: "NBIS"
-    license: "CC BY 4.0"
-    license_url: https://creativecommons.org/licenses/by/4.0/
-    accessed: 2026-10-24
-    version: "commit 1bce220 (2026-10-23)"
-    changes: "Merged in: containers in benchmarking (CAMI, paraphrased), the different-OS example, mounting, 'What can I use Docker for?', the Docker vs Apptainer comparison rows, the Singularity history (wording checked against the SingularityCE README) and the wrap-up's further reading. Its image-and-container figure (which includes the Docker Hub logo and clip art) was redrawn by us for the LTEE image; logos not reused. Image built from pixi.lock."
 sources:
+  - "**Adapted from:** *Tools for Reproducible Research: Working with containers (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/containers/containers.html>"
   - "Week 1 slides 68 to 70 (why containers; Docker and Singularity for HPC) are the opener. Update to slide 70: Singularity became Apptainer under the Linux Foundation in 2021; SingularityCE is Sylabs' separate fork. This course uses Apptainer."
   - "Nüst D et al. (2020). Ten simple rules for writing Dockerfiles for reproducible data science. *PLoS Comput Biol* 16:e1008316. <https://doi.org/10.1371/journal.pcbi.1008316>"
   - "Pixi documentation, Containerizing: <https://pixi.prefix.dev/latest/deployment/container/>"
