@@ -37,7 +37,8 @@ Follow the structure of the existing pages: at-a-glance box, overview and
 learning outcomes (at "apply" level, each tied to a check), numbered steps
 with expected output, *Try it yourself* with folded solutions, a *Break it*
 exercise, troubleshooting, *Apply it to your own project*, key points,
-further reading. Use OS tabs where commands differ.
+further reading. Use OS tabs where commands differ. Extras (A, B, C, ...)
+need no *Break it*: show a failure in a normal section instead.
 
 Lessons, decks and quizzes do not name weeks or weekdays, so they work for the
 course, the workshop and self-study alike: give durations in the at-a-glance
@@ -57,7 +58,7 @@ order, as a learner would. Mark every code block:
 | Block | Meaning |
 |-------|---------|
 | ```` ```{.bash .run} ```` | run it |
-| ```` ```{.bash .expect-fail} ```` | run it; it must fail (Break it) |
+| ```` ```{.bash .expect-fail} ```` | run it; it must fail (a *Break it*, or any step that shows an error) |
 | ```` ```{.bash .run-ci} ```` | run only with `--ci` (Git writes, Docker): in GitHub Actions |
 | ```` ```{.python filename="x.py" .write} ```` | write the block to that file (`.append` appends) |
 | ```` ```{.bash .norun} ```` | show only (interactive, needs accounts, destructive) |

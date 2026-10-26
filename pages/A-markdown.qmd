@@ -140,7 +140,7 @@ pixi exec pandoc markdown-test.md -o markdown-test.html
 cat markdown-test.html
 ```
 
-## Break it
+## The blank line before a list
 
 Remove the blank line before the list and render again: the list becomes
 part of the paragraph. Most "Markdown does not work" problems are a missing

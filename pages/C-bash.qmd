@@ -30,7 +30,7 @@ questions.
 The terminal on macOS runs **zsh**; Linux and WSL2 run **bash**. Both are
 shells, and every command on this page works in both. Scripts (section 8)
 always run with bash, because their first line asks for it. The one
-difference that matters here is explained in the [*Break it*](#break-it-spaces-in-file-names).
+difference that matters here is explained in [section 10](#spaces-in-file-names).
 :::
 
 ### Learning outcomes
@@ -461,40 +461,7 @@ bash: data/SRR2589044.fastq: Permission denied
 
 The file is safe. (`chmod u+w FILE` gives the write permission back.)
 
-## Try it yourself
-
-1. In which folder are you? List the files in `results/` without going there.
-
-   ::: {.callout-tip collapse="true" title="Solution"}
-   `pwd`, then `ls results`.
-   :::
-
-2. Which samples carry the mutator (column 5 is not `None`)? Print only their names.
-
-   ::: {.callout-tip collapse="true" title="Solution"}
-   `tail -n +2 samples.tsv | grep -v None | cut -f 1` prints `SRR2584866`.
-   Careful: a plain `grep -v None` would also keep the header line.
-   :::
-
-3. How many bases are in `data/SRR2584866.fastq` in total? (The sequences are
-   on lines 2, 6, 10, ...; `awk` can pick every fourth line and add up
-   lengths.)
-
-   ::: {.callout-tip collapse="true" title="Solution"}
-   `awk 'NR % 4 == 2 { n += length($0) } END { print n }' data/SRR2584866.fastq`
-   prints `70` (20 + 20 + 10 + 20). `NR` is the line number in `awk`.
-   :::
-
-4. Change `count_reads.sh` so that it also prints the total number of reads at
-   the end, then check it with ShellCheck.
-
-   ::: {.callout-tip collapse="true" title="Solution"}
-   Before the loop add `total=0`; inside it, `total=$(( total + reads ))`;
-   after `done`, `printf 'total\t%s\n' "$total"`. The output ends with
-   `total	9`.
-   :::
-
-## Break it: spaces in file names
+## 10. Spaces in file names
 
 The shell splits a command line at spaces, so a file name with a space looks
 like two names, unless it is in quotes. Make such a file and try to count its
@@ -529,6 +496,39 @@ does *not* split variables, so `wc -l $f` happens to work there. Scripts run
 with bash, where it fails.) Two habits avoid the problem: put `"$f"` in quotes
 every time, and never put spaces in file names
 ([lesson 02](02-project-organization.qmd#name-files-so-that-they-sort-and-explain-themselves)).
+
+## Try it yourself
+
+1. In which folder are you? List the files in `results/` without going there.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `pwd`, then `ls results`.
+   :::
+
+2. Which samples carry the mutator (column 5 is not `None`)? Print only their names.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `tail -n +2 samples.tsv | grep -v None | cut -f 1` prints `SRR2584866`.
+   Careful: a plain `grep -v None` would also keep the header line.
+   :::
+
+3. How many bases are in `data/SRR2584866.fastq` in total? (The sequences are
+   on lines 2, 6, 10, ...; `awk` can pick every fourth line and add up
+   lengths.)
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `awk 'NR % 4 == 2 { n += length($0) } END { print n }' data/SRR2584866.fastq`
+   prints `70` (20 + 20 + 10 + 20). `NR` is the line number in `awk`.
+   :::
+
+4. Change `count_reads.sh` so that it also prints the total number of reads at
+   the end, then check it with ShellCheck.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   Before the loop add `total=0`; inside it, `total=$(( total + reads ))`;
+   after `done`, `printf 'total\t%s\n' "$total"`. The output ends with
+   `total	9`.
+   :::
 
 ## Troubleshooting
 

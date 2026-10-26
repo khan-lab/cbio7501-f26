@@ -43,7 +43,7 @@ After this page you can:
 2. **Get out of** vim, saving or discarding your changes, when a program opens it.
 3. **Run** a long command in a tmux or screen session, **detach**, and **reattach** later to see how it went.
 
-Checks: your answers to *Try it yourself*, and the *Break it*: the job inside
+Checks: your answers to *Try it yourself*, and section 4: the job inside
 tmux survives what stops the job outside it.
 
 ## 1. Get the tools
@@ -229,6 +229,52 @@ step 3
 `-d` starts the session detached, `capture-pane -p` prints what the session
 shows, and `kill-session` ends it.
 
+### Why tmux: one job dies, one survives
+
+See the hang-up signal (`HUP`) at work. Send it yourself, as a closing
+terminal would, to a command running in the background (`&`) of this shell:
+
+```{.bash .run}
+sleep 300 &
+job=$!
+kill -HUP "$job"
+sleep 1
+```
+
+`$!` is the process number of the last command started with `&`. Is the job
+still running? `kill -0` asks, without doing anything to it:
+
+```{.bash .expect-fail}
+kill -0 "$job"
+```
+
+```text
+bash: kill: (12345) - No such process
+```
+
+(zsh, the macOS shell, says `kill: kill 12345 failed: no such process`.) The
+job is gone. That is what happens to a pipeline run when the laptop closes or
+the connection drops.
+
+Now start the same job in a tmux session, from a shell that ends right away,
+as a closed terminal would:
+
+```{.bash .run}
+bash -c 'tmux new-session -d -s survivor "sleep 300"'
+tmux ls
+```
+
+```text
+survivor: 1 windows (created Mon Oct 26 20:46:29 2026)
+```
+
+The shell that started it is gone; the job is not, because it belongs to the
+tmux server. Clean up:
+
+```{.bash .run}
+tmux kill-session -t survivor
+```
+
 ### In practice
 
 With the LTEE project, a long run looks like this. On a cluster, log in with
@@ -311,53 +357,6 @@ command to end.
    `tmux new -s watch`, then `Ctrl-b %` to split, `top` in one part, and
    `Ctrl-b` with an arrow key to move to the other. `q` leaves `top`.
    :::
-
-## Break it: a run that dies with its terminal
-
-Closing a terminal sends a *hang-up* signal (`HUP`) to the commands started
-in it. Send that signal yourself, to a command running in the background
-(`&`) of this shell:
-
-```{.bash .run}
-sleep 300 &
-job=$!
-kill -HUP "$job"
-sleep 1
-```
-
-`$!` is the process number of the last command started with `&`. Is the job
-still running? `kill -0` asks, without doing anything to it:
-
-```{.bash .expect-fail}
-kill -0 "$job"
-```
-
-```text
-bash: kill: (12345) - No such process
-```
-
-(zsh, the macOS shell, says `kill: kill 12345 failed: no such process`.) The
-job is gone. That is what happens to a pipeline run when the laptop closes or
-the connection drops.
-
-Now start the same job in a tmux session, from a shell that ends right away,
-as a closed terminal would:
-
-```{.bash .run}
-bash -c 'tmux new-session -d -s survivor "sleep 300"'
-tmux ls
-```
-
-```text
-survivor: 1 windows (created Mon Oct 26 20:46:29 2026)
-```
-
-The shell that started it is gone; the job is not, because it belongs to the
-tmux server. Clean up:
-
-```{.bash .run}
-tmux kill-session -t survivor
-```
 
 ## Troubleshooting
 

@@ -292,46 +292,7 @@ No complaints. yamllint and Python print nothing when a file is fine (the
 `> /dev/null` throws away Python's neat copy); taplo prints one line about
 the files it found.
 
-## Try it yourself
-
-1. Write the `bwa` group of `settings.yaml` on one line.
-
-   ::: {.callout-tip collapse="true" title="Solution"}
-   `bwa: {threads: 4, extra: "-K 10000000"}`. Braces make a group on one
-   line in YAML, as in JSON.
-   :::
-
-2. This TOML line fails: `project = LTEE variant calling`. Why?
-
-   ::: {.callout-tip collapse="true" title="Solution"}
-   Text in TOML must be in quotes. `taplo check` points at `LTEE` and says
-   `expected value`; Python says `Invalid value (at line 1, column 11)`.
-   :::
-
-3. Find the two mistakes in this JSON:
-
-   ```{.json}
-   {
-     'min_depth': 10,
-     "paired": true,
-   }
-   ```
-
-   ::: {.callout-tip collapse="true" title="Solution"}
-   `'min_depth'` uses single quotes (JSON needs double quotes), and there is
-   a comma after the last item, `true`. Python stops at the first one:
-   `Expecting property name enclosed in double quotes: line 2 column 3`.
-   :::
-
-4. After the *Break it* below, change `surprises.yaml` so that all four
-   values stay text, and check with Python.
-
-   ::: {.callout-tip collapse="true" title="Solution"}
-   Quote them: `"3.10"`, `"NO"`, `"yes"`, `"2026-10-26"`. Python then prints
-   `{'python-version': '3.10', 'country': 'NO', 'answer': 'yes', 'date': '2026-10-26'}`.
-   :::
-
-## Break it: YAML reads what you wrote, not what you meant
+## 6. YAML values that are not what they seem
 
 Save this file, then predict what a program will read from each line:
 
@@ -407,6 +368,45 @@ tab.yaml
 
 The fixes: `title: "Data: part 2"`, and two spaces instead of the tab. Set
 your editor to insert spaces when you press Tab in YAML files.
+
+## Try it yourself
+
+1. Write the `bwa` group of `settings.yaml` on one line.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `bwa: {threads: 4, extra: "-K 10000000"}`. Braces make a group on one
+   line in YAML, as in JSON.
+   :::
+
+2. This TOML line fails: `project = LTEE variant calling`. Why?
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   Text in TOML must be in quotes. `taplo check` points at `LTEE` and says
+   `expected value`; Python says `Invalid value (at line 1, column 11)`.
+   :::
+
+3. Find the two mistakes in this JSON:
+
+   ```{.json}
+   {
+     'min_depth': 10,
+     "paired": true,
+   }
+   ```
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `'min_depth'` uses single quotes (JSON needs double quotes), and there is
+   a comma after the last item, `true`. Python stops at the first one:
+   `Expecting property name enclosed in double quotes: line 2 column 3`.
+   :::
+
+4. Change `surprises.yaml` from section 6 so that all four values stay
+   text, and check with Python.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   Quote them: `"3.10"`, `"NO"`, `"yes"`, `"2026-10-26"`. Python then prints
+   `{'python-version': '3.10', 'country': 'NO', 'answer': 'yes', 'date': '2026-10-26'}`.
+   :::
 
 ## Troubleshooting
 

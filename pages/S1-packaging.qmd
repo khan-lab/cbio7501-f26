@@ -447,7 +447,7 @@ pixi exec conda-smithy recipe-lint recipe
 recipe is in fine form
 ```
 
-## Break it: a typo in an entry point
+## 11. A typo in an entry point
 
 Recipes are tested so that broken packages never reach users. Introduce a
 typo in the entry point (`mian` instead of `main`) and build again:
