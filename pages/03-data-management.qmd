@@ -41,11 +41,23 @@ test:
 
 ## Overview
 
-Code can be rerun only if the data it ran on can be found, downloaded and
-checked. This lesson has two parts. Part A covers the ideas:
+### Why manage data?
+
+Data are usually the most expensive and least replaceable part of a project:
+a sequencing run, a field season or a patient cohort cannot be repeated on
+demand. Code can be rerun only if the data it ran on can be found again and
+shown to be the same. Data also outlive the project: others reuse them, and
+journals and funders ask for them years after the paper. Yet data often get
+the least care: downloaded by clicking, renamed by hand, "cleaned" in a
+spreadsheet, and described only in someone's memory.
+
+### What you do in this lesson
+
+This lesson covers both sides. Part A is about sharing data responsibly:
 FAIR and CARE, data availability statements and sensitive data. Part B is the
-hands-on: you get the LTEE data into your project in a way that anyone can
-repeat and check.
+hands-on: the habits that make your own data trustworthy (a recorded source,
+checksums, metadata, read-only raw files), applied to the LTEE data so that
+anyone can repeat and check every step.
 
 ### Learning outcomes
 
@@ -73,6 +85,14 @@ A familiar story, from the NBIS course:
 | Second submission | ends on an external hard drive | pasted as a PDF table in the supplement |
 | Publication | "Data available upon request" | |
 
+Each stage loses something that the habits in Part B keep: the original
+files (keep raw data read-only, exactly as downloaded), the conversion
+settings and the metadata in a notebook or a script (record the sources and
+describe the samples in `metadata/`), the spreadsheets mailed back and forth
+(one sample sheet, kept with the project), and finally the data itself
+(deposit it with an identifier, and say where in a data availability
+statement).
+
 How well does "available upon request" work? Gabelica, Bojčić and Puljak
 (2022) asked the authors of 1,792 papers whose data availability statement
 said data were available on request: 93% did not answer or declined, and only
@@ -80,8 +100,11 @@ said data were available on request: 93% did not answer or declined, and only
 
 ### FAIR in one table
 
-The FAIR principles (Wilkinson et al. 2016) describe data that machines and
-people can use:
+Most data are now found and processed by programs (search engines,
+repository interfaces, workflows), not by a person browsing a website. Data
+that can be found only by knowing whom to ask is, for everyone else, lost.
+The FAIR principles (Wilkinson et al. 2016) describe data that machines as
+well as people can find and use:
 
 | | Means | In practice |
 |-|-------|-------------|
@@ -124,8 +147,10 @@ samples were returned (Garrison 2013).
 ### Exercise A1: is this dataset FAIR? (think, pair, share; 5 minutes)
 
 Open the Zenodo record **"SARS-CoV-2 RNA levels in Scotland's wastewater"**:
-<https://doi.org/10.5281/zenodo.6339631>. For each letter of FAIR, find one
-thing in the record that meets it, and one thing that could be better. Then
+<https://doi.org/10.5281/zenodo.6339631>. You saw its overall score in the
+[lesson 01 audit](01-introduction.qmd#worked-example-sars-cov-2-in-scotlands-wastewater);
+now go letter by letter. For each letter of FAIR, find one thing in the
+record that meets it, and one thing that could be better. Then
 compare with your neighbor.
 
 ::: {.callout-tip collapse="true" title="Some answers"}
@@ -189,7 +214,10 @@ does it miss, and what would you change?
 
 ### Data availability statements
 
-Most journals ask for a data availability statement (DAS). Compare:
+Most journals ask for a data availability statement (DAS): a sentence or two
+saying where the data behind the paper is and how to get it. A DAS is a
+promise that readers can check, and, as the 6.8% above shows, "on request" is
+a promise that is rarely kept. Compare:
 
 - *Weak:* "Data are available from the corresponding author upon reasonable request."
 - *Strong:* "Raw reads are in the NCBI Sequence Read Archive under BioProject
@@ -216,7 +244,11 @@ the DAS?
 
 ### A data management plan in six questions
 
-Funders often ask for a data management plan. It answers: what data will you
+Funders often ask for a data management plan, but the better reason to write
+one is that its decisions are cheap at the start and expensive later: consent
+that did not cover data sharing cannot be added once the samples are
+collected, and storage that runs out in the third year is a crisis rather
+than a budget line. A plan answers: what data will you
 collect or reuse, in which formats; how much storage you need, short and long
 term; how you describe the data (metadata); legal and ethical limits (consent,
 sensitive data, agreements with communities under CARE); where the data will be deposited and under which license; and
@@ -233,8 +265,11 @@ cd ~/cbio7501/ltee-project
 
 ### 1. Write down where the data comes from
 
-Before you download anything, record the source. Create
-`metadata/sources.tsv` (tab-separated; copy the block with the copy button):
+Before you download anything, record the source. Links move and records get
+new versions; the methods section and the data availability statement of
+your paper will need the exact source, and so will anyone who wants to
+download the same files. Create `metadata/sources.tsv` (tab-separated; copy
+the block with the copy button):
 
 ```{.text filename="metadata/sources.tsv" .write}
 name	url	md5	unpack	dest
@@ -269,8 +304,13 @@ stops on an HTTP error instead of saving the error page, and `--retry 5
 --retry-all-errors` tries again when the connection drops, which happens
 more often than you would think.
 
-The file is 115 MB. Check that it is exactly the file figshare published, by
-comparing its md5 checksum with the one in `sources.tsv`:
+How do you know the download is complete, and is the file figshare
+published? With a **checksum**: a short fingerprint computed from every byte
+of a file. Change one byte and the fingerprint changes, so comparing
+fingerprints tells you that two files are identical without opening them.
+Providers publish the checksum of each file for exactly this reason.
+
+The file is 115 MB. Compare its md5 checksum with the one in `sources.tsv`:
 
 ::: {.panel-tabset group="os"}
 
@@ -340,8 +380,10 @@ pipeline writes an uncompressed copy to `data/processed/` later.
 
 The provider's md5 proved the *downloads* were right. Now record a checksum
 of every raw file you keep, so that anyone (including you, in a year) can
-check they have exactly the same data. We use SHA-256, a stronger checksum
-than md5.
+check they have exactly the same data. For our own checksums we use SHA-256.
+md5 is fine for catching accidents, which is why many providers still
+publish it, but two different files can be made on purpose to share an md5;
+for SHA-256 that is practically impossible.
 
 For your own data you would create the file with
 `sha256sum data/raw/fastq/*.fastq data/raw/reference/*.gz > metadata/checksums.sha256`.
@@ -391,7 +433,10 @@ read-only file; `rm -f` does not ask.)
 
 ### 6. Describe the samples
 
-A sample sheet links file names to what they mean. The values come from the
+A sample sheet links file names to what they mean, so the meaning does not
+have to be squeezed into the file names. It is also what the workflows in
+lessons [09](09-snakemake.qmd) and [10](10-nextflow.qmd) read to find each
+sample's files. The values come from the
 Data Carpentry lesson's metadata (Tenaillon et al. 2016). Create
 `metadata/samples.tsv`:
 

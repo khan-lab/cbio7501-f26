@@ -31,9 +31,24 @@ test:
 
 ## Overview
 
-The lecture asked *why* reproducibility and openness matter. This page turns the
-ideas into a skill you will use all your career: looking at a published study
-and judging, in half an hour, whether you could check or reuse its results.
+### Why this matters
+
+Most results in computational biology come out of a chain of steps: data are
+downloaded and cleaned, programs run with particular settings, figures made
+from the output. A paper describes that chain in a few paragraphs, and the
+details that decide the result (a software version, a parameter, a sample left
+out) are rarely among them. When the chain cannot be rerun, nobody can check a
+surprising result, find where an error came in, or build on the work without
+starting over, and that includes the authors. The evidence below shows that
+this is common, and that the causes are mostly ordinary. The first person to
+gain from a reproducible analysis is you: when a reviewer asks for one more
+figure, or when you come back to the project after a year (Markowetz 2015).
+
+### What you do in this lesson
+
+This page gives the key ideas in one page, then turns them into a skill you
+will use all your career: looking at a published study and judging, in half an
+hour, whether you could check or reuse its results.
 
 ### Learning outcome
 
@@ -48,8 +63,10 @@ Check: your written audit of one paper, with evidence (links) for every row.
 
 - **Words.** *Reproducible*: same data, same analysis, same result.
   *Replicable*: new data, same analysis, consistent result. *Robust*: same data,
-  different analysis. *Generalisable*: new data, new analysis (The Turing Way;
-  NASEM 2019). Reproducibility is the minimum.
+  different analysis. *Generalizable*: new data, new analysis (The Turing Way;
+  NASEM 2019). Reproducibility is the minimum: if a result cannot be
+  reproduced from its own data and code, a failed replication cannot tell you
+  whether the biology or the analysis was wrong.
 - **Size of the problem.** In a survey of about 1,500 researchers (Baker 2016)
   more than 70% had failed to reproduce someone else's experiment. For
   computational papers in *Science*, code and data could be obtained for 44%
@@ -60,9 +77,21 @@ Check: your written audit of one paper, with evidence (links) for every row.
 - **Causes.** Mostly honest: undocumented steps, manual edits, missing data or
   code, software that changed, incentives that reward novelty over care. Fraud
   exists but is rare.
-- **The five pillars** (Ziemann et al. 2023): literate programming, code
-  version control and sharing, compute environment control, persistent data
-  sharing, documentation.
+- **What's in it for you** (Markowetz 2015): working reproducibly helps you
+  avoid disasters (an error found before publication, not after), makes
+  papers easier to write and reviewers easier to answer, lets your work go on
+  in the lab after you leave, and builds your reputation.
+- **The five pillars** (Ziemann et al. 2023), each an answer to one of those
+  causes:
+  - *literate programming*: code, results and explanation in one document,
+    so no step goes unrecorded;
+  - *code version control and sharing*: every change is recorded, and the
+    code a reader needs is public;
+  - *compute environment control*: the same software versions, rebuilt on
+    any computer;
+  - *persistent data sharing*: data deposited with an identifier, so it can
+    still be found years later;
+  - *documentation*: what to run, in which order, and why.
 - **Open science**: open access, open data (FAIR), open code, open methods. It
   helps others check and reuse your work and helps you (shared data is cited
   more: Piwowar et al. 2007). FAIR is not the same as open: sensitive data can
@@ -71,6 +100,10 @@ Check: your written audit of one paper, with evidence (links) for every row.
 ![Every analysis has the same parts: data and code go into a workflow, which runs in a software environment and produces results. It gives the same results today and five years later. Figure: by Aziz, CC BY 4.0.](../assets/images/hero-rerun.svg){fig-alt="Diagram: data and code go into a workflow that runs in a software environment and produces results such as reports and figures." width="85%"}
 
 ## 2. The audit rubric
+
+Auditing other people's work is the fastest way to learn what your own will
+need: every "missing" you write down is something a reader of *your* paper
+would also miss.
 
 For each row, look for evidence in the paper (data and code availability
 statements, methods, supplement) and in what it links to. Score each row:
@@ -88,7 +121,8 @@ levels for data, code and environment follow the NBIS course.
 
 ## 3. Worked example: SARS-CoV-2 in Scotland's wastewater
 
-The dataset you judged against FAIR in [lesson 03](03-data-management.qmd):
+The same dataset you will judge against FAIR, letter by letter, in
+[lesson 03](03-data-management.qmd):
 
 - Paper: Scorza LCT, Cameron GJ, Murray-Williams R, Findlay D, et al. (2022).
   SARS-CoV-2 RNA levels in Scotland's wastewater. *Scientific Data* 9:713.
@@ -177,7 +211,7 @@ you share better? Keep the audit: it becomes part of your project's README.
 
 ## Key points
 
-- Reproducible (same data, same analysis) is the minimum; replicable, robust and generalisable go further.
+- Reproducible (same data, same analysis) is the minimum; replicable, robust and generalizable go further.
 - Most irreproducibility is honest: missing data, code, environment or documentation.
 - Audit data, code and environment separately; the environment is the row most often missing.
 - Cite exact versions: version DOIs, tags, lock files.

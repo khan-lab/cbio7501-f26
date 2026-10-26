@@ -1,7 +1,7 @@
 ---
 title: "02 Project organization"
 subtitle: "Sketch a project by hand, then generate one from a template and understand every folder"
-description: "Plan the folders of the LTEE project on paper, compare with published advice, generate the project with Cookiecutter, and practise file naming and relative paths."
+description: "Plan the folders of the LTEE project on paper, compare with published advice, generate the project with Cookiecutter, and practice file naming and relative paths."
 adapted_from:
   - title: "FAIR in (biological) practice: Working with files"
     url: https://carpentries-incubator.github.io/fair-bio-practice/09-files-organization.html
@@ -34,13 +34,32 @@ test:
 ## Overview
 
 Everyone who has worked on a project for a few months knows the folder full of
-`final.csv`, `final_v2.csv` and `final_USE_THIS.csv`. A good layout prevents
-that. It is not one of the five pillars of computational reproducibility
+`final.csv`, `final_v2.csv` and `final_USE_THIS.csv`, and the questions that
+come with it: which one is right, and what made it?
+
+### Why organize a project?
+
+A project changes as it grows. Data arrive in batches, scripts are rewritten,
+results are regenerated for a reviewer, and the student who did half the work
+moves on. After a few months nobody remembers which file came from which, and
+the folder is the only record left. You cannot predict who will need to
+understand the project later: you next year, a labmate who takes it over, a
+reviewer, a reader of the paper. So organize from the first day, not at the
+end. Give each kind of file one place, keep raw data apart and unchanged, and
+make every result traceable to the data and code that made it. Programs need
+this too: the workflows and automatic checks in later lessons can only find
+files that are where they are expected.
+
+Organization is not one of the five pillars of computational reproducibility
 (literate programming, version control, environment control, data sharing,
-documentation; Ziemann et al. 2023), but each pillar is easier when files are
-where everyone expects them. In this lesson you first design a layout yourself, then
-compare it with published advice, then generate one from a template so you
-can see every choice the template makes for you.
+documentation; Ziemann et al. 2023), but it is the ground they stand on: each
+pillar assumes that files are where everyone expects them.
+
+### What you do in this lesson
+
+You first design a layout yourself, then compare it with published advice,
+then generate one from a template so you can see every choice the template
+makes for you.
 
 The running example is the **LTEE project**: variant calling on three samples
 of *E. coli* from Richard Lenski's Long-Term Evolution Experiment, taken at
@@ -65,8 +84,10 @@ Each outcome is checked by a step below; the last one by the *Break it* exercise
 
 ## 1. Sketch first (10 minutes, on paper)
 
-Before you look at any template, design the project yourself. You will
-analyze sequencing data for three samples. The analysis needs:
+Before you look at any template, design the project yourself. A template is
+someone else's decisions, frozen: if you never made the decisions, you cannot
+defend them, or change them when your project needs something different. You
+will analyze sequencing data for three samples. The analysis needs:
 
 - six FASTQ files (two per sample), downloaded from figshare;
 - a reference genome, downloaded from NCBI;
@@ -106,10 +127,12 @@ projects. Read the key points below; the full papers are in *Further reading*.
 - put text documents in `doc/`, raw data and metadata in `data/`, files
   generated during cleanup and analysis in `results/`, source code in `src/`;
 - name all files to reflect their content or function;
-- keep raw data read-only, and create the data you analyse with code.
+- keep raw data read-only, and create the data you analyze with code.
 
 Both agree on the main rule: **raw data in, code in the middle, results out,
-and results can always be regenerated.**
+and results can always be regenerated.** Raw data is the only part of a
+project you cannot regenerate: keep it as you received it, and any mistake
+made later can be fixed by rerunning the code from it.
 
 ## 3. Generate the project from the template
 
@@ -214,6 +237,12 @@ The main `README.md` has a table of all folders. Here is the logic in one pictur
   pixi.toml + pixi.lock  (the software)
 ```
 
+The picture is also a test of the layout: if you delete `data/processed/` and
+`results/`, one command must bring them back (from [lesson 05](05-pixi.qmd)
+on, `pixi run reproduce`). Anything that cannot be rebuilt that way is either
+raw data, which belongs in `data/raw/` and is never changed, or a step
+someone did by hand, which belongs in a script.
+
 ::: {.callout-note title="Compare with your sketch (5 minutes)"}
 Go through your paper sketch. For each difference, decide: is the template
 better, is your version better, or is it a matter of taste? Two points worth
@@ -245,8 +274,11 @@ cat pixi.toml
 
 ## 5. Name files so that they sort and explain themselves
 
-A good file name is readable by people, easy for programs to parse, and sorts
-in a useful order. Rules we follow in this course:
+File names are the first metadata anyone sees, and programs select files by
+pattern: `data/raw/fastq/*_1.trim.sub.fastq`, or a Snakemake wildcard in
+[lesson 09](09-snakemake.qmd), finds the right files only if every name
+follows the same rules. A good file name is readable by people, easy for
+programs to parse, and sorts in a useful order. Rules we follow in this course:
 
 - no spaces or special characters; use `-` or `_`;
 - dates as `YYYY-MM-DD` (ISO 8601), so they sort in time order;
@@ -407,6 +439,7 @@ license) and what you expect to produce. This is your project proposal.
 - Cheat sheet: [Project and data](../cheatsheets/project-and-data.qmd), with links to the official cheat sheets and references.
 - Noble WS (2009). A quick guide to organizing computational biology projects. *PLoS Comput Biol* 5:e1000424. <https://doi.org/10.1371/journal.pcbi.1000424>
 - Wilson G, Bryan J, Cranston K, Kitzes J, Nederbragt L, Teal TK (2017). Good enough practices in scientific computing. *PLoS Comput Biol* 13:e1005510. <https://doi.org/10.1371/journal.pcbi.1005510>
+- Arguillas F, Christian T, Gooch M, Honeyman T, Peer L (2022). *10 Things for Curating Reproducible and FAIR Research*, Thing 2: Organization. CURE Consortium and Research Data Alliance. <https://curating4reproducibility.org/10things/thing02/>
 - The Carpentries Incubator, *FAIR in (biological) practice*, episode "Working with files": <https://carpentries-incubator.github.io/fair-bio-practice/09-files-organization.html>
 - Our template and its README: `templates/cookiecutter-repro-project/` in the course repository.
 - Two other templates we learned from: [mkrapp/cookiecutter-reproducible-science](https://github.com/mkrapp/cookiecutter-reproducible-science) and [bios259/cookie-for-reproducible-research](https://github.com/bios259/cookie-for-reproducible-research).

@@ -27,7 +27,7 @@ sources:
   - "Errington TM et al. (2021). Investigating the replicability of preclinical cancer biology. *eLife* 10:e71601. <https://doi.org/10.7554/eLife.71601>; Challenges for assessing replicability in preclinical cancer biology. *eLife* 10:e67995. <https://doi.org/10.7554/eLife.67995>"
   - "Amaral OB et al. (2019). The Brazilian Reproducibility Initiative. *eLife* 8:e41602. <https://doi.org/10.7554/eLife.41602>"
   - "National Academies of Sciences, Engineering, and Medicine (2019). *Reproducibility and Replicability in Science*. <https://doi.org/10.17226/25303>"
-  - "The Turing Way: definitions of reproducible, replicable, robust and generalisable research (CC BY 4.0; figure linked, not embedded): <https://book.the-turing-way.org/reproducible-research/overview/overview-definitions>"
+  - "The Turing Way: definitions of reproducible, replicable, robust and generalizable research (CC BY 4.0; figure linked, not embedded): <https://book.the-turing-way.org/reproducible-research/overview/overview-definitions>"
   - "Peng RD (2011). Reproducible research in computational science. *Science* 334:1226–1227. <https://doi.org/10.1126/science.1213847>"
   - "Munafò MR et al. (2017). A manifesto for reproducible science. *Nat Hum Behav* 1:0021. <https://doi.org/10.1038/s41562-016-0021>"
   - "Markowetz F (2015). Five selfish reasons to work reproducibly. *Genome Biol* 16:274. <https://doi.org/10.1186/s13059-015-0850-7>"
@@ -39,7 +39,7 @@ sources:
 
 ## By the end of this lesson you can
 
-- tell reproducible, replicable, robust and generalisable apart
+- tell reproducible, replicable, robust and generalizable apart
 - name the main causes of irreproducible research, technical and human
 - explain the five pillars of computational reproducibility
 - judge how a study handles its data, code and environment (decent, good, great)
@@ -105,7 +105,7 @@ The Turing Way's 2 × 2 (figure linked, see Sources):
 | | Same data | Different data |
 |-|-----------|----------------|
 | **Same analysis** | **Reproducible** | **Replicable** |
-| **Different analysis** | **Robust** | **Generalisable** |
+| **Different analysis** | **Robust** | **Generalizable** |
 
 NASEM (2019): *reproducibility* = same data and code, same result;
 *replicability* = new data, consistent result. This course is mostly about the

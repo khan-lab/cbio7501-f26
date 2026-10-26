@@ -169,9 +169,9 @@ them back. That command is the test of your organization.
 - Keep **settings apart from code**: at the top of a script, or better in
   `config/config.yaml`
 
-## A typical reproduciable project step-wise journey
+## A typical reproducible project step-wise journey
 
-![](../../assets/images/project-journey.svg){fig-alt="Diagram: A typical reproduciable project step-wise journey" width="100%"}
+![](../../assets/images/project-journey.svg){fig-alt="Diagram: A typical reproducible project step-wise journey" width="100%"}
 
 ## What the project folder looks like at the end
 
@@ -180,15 +180,16 @@ them back. That command is the test of your organization.
 
 ## Our template
 
+::: {.code-tight}
 ```{.text}
 ltee-project/
 ├── README.md
 ├── LICENSE
 ├── CITATION.cff
-└── data
-    ├── raw/
-    └── processed/
-├──metadata/
+├── data/
+│   ├── raw/
+│   └── processed/
+├── metadata/
 ├── scripts/
 ├── config/
 ├── workflow/
@@ -200,6 +201,7 @@ ltee-project/
 ├── envs/
 └── .github/workflows/reproduce.yml
 ```
+:::
 
 One command creates it:
 
