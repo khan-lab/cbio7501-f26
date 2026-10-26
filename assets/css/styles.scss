@@ -196,6 +196,11 @@ details > summary { font-weight: 600; cursor: pointer; }
 .at-a-glance p { margin-bottom: 0.25rem; }
 .at-a-glance strong { color: $headings-color; font-weight: 600; }
 
+// Contents page: icon links for slides and tutorials (contents.qmd).
+.contents-table td a { text-decoration: none; }
+.contents-table td .bi { font-size: 1.2rem; }
+.contents-table td a + a { margin-left: 0.6rem; }
+
 // ---- Buttons and home page -----------------------------------------------
 .btn { border-radius: 8px; font-weight: 600; padding: 0.5rem 1rem; }
 .hero { padding: 0.5rem 0 1.25rem; }

@@ -10,25 +10,31 @@ it, and each tutorial lists what it needs at the top. When each lesson is
 taught is in the schedules: [7-week course](schedule-course.qmd) and
 [workshop](schedule-workshop.qmd).
 
-| Lesson | Topic | Slides | Tutorial | In short |
-|--------|-------|:------:|:--------:|----------|
-| 00 Setup | Getting started | | [tutorial](pages/00-setup.qmd) | Pixi, Git, GitHub, WSL2 or Codespaces |
-| 01 Reproducibility and open science | Introduction | [slides](lectures/01-introduction/01-introduction.qmd)<br>[[Lecture 1 (PDF)](slides/Lecture1_Reproducibility.pdf)]{.text-nowrap}<br>[[Lecture 2 (PDF)](slides/Lecture2_Open-Science.pdf)]{.text-nowrap} | [tutorial](pages/01-introduction.qmd) | definitions, evidence, five pillars, open science; audit a paper |
-| 02 Project organization | Project organization and data management | [slides](lectures/02-project-organization/02-project-organization.qmd) | [tutorial](pages/02-project-organization.qmd) | sketch a layout, generate the project from the template |
-| 03 Data management and FAIR | Project organization and data management | [slides](lectures/03-data-management/03-data-management.qmd) | [tutorial](pages/03-data-management.qmd) | FAIR and CARE, data availability; download, checksums, metadata |
-| 04 Git and GitHub | Version control | [slides](lectures/04-git/04-git.qmd) | [tutorial](pages/04-git.qmd) | history, branches, pull requests, a check on every push |
-| 05 Pixi | Software environments | [slides](lectures/05-pixi/05-pixi.qmd) | [tutorial](pages/05-pixi.qmd) | manifest and lock file, tasks, features, the pipeline; GitHub reruns it |
-| 05b Pixi and Conda compared | Software environments | | [tutorial](pages/05b-conda-comparison.qmd) | command table, import and export |
-| 06 Jupyter | Notebooks and reports | [slides](lectures/06-jupyter/06-jupyter.qmd) | [tutorial](pages/06-jupyter.qmd) | notebooks that run top to bottom |
-| 07 Quarto | Notebooks and reports | [slides](lectures/07-quarto/07-quarto.qmd) | [tutorial](pages/07-quarto.qmd) | a report computed from the data |
-| 08 Containers | Containers | [slides](lectures/08-containers/08-containers.qmd) | [tutorial](pages/08-containers.qmd) | Docker image from the lock file; Apptainer |
-| 09 Snakemake | Workflows | [slides](lectures/09-snakemake/09-snakemake.qmd) | [tutorial](pages/09-snakemake.qmd) | the pipeline as rules; the analysis question |
-| 10 Nextflow | Workflows | [slides](lectures/10-nextflow/10-nextflow.qmd) | [tutorial](pages/10-nextflow.qmd) | the same pipeline, the same answer |
-| 11 Documentation | Documentation and sharing | [slides](lectures/11-documentation/11-documentation.qmd) | [tutorial](pages/11-documentation.qmd) | README, licenses, citation |
-| 12 Putting it all together | Documentation and sharing | [slides](lectures/12-putting-it-together/12-putting-it-together.qmd) | [tutorial](pages/12-putting-it-together.qmd) | swap and reproduce, release with a DOI |
-| A Markdown | Extras | | [reference](pages/A-markdown.qmd) | the text format of everything |
-| B Take-down | Extras | | [tutorial](pages/B-take-down.qmd) | free disk space, remove tools |
-| C Bash 101 | Extras | | [tutorial](pages/C-bash.qmd) | practice for the command line: files, pipes, loops, a first script |
-| S1 Package and share your tool | Extras (optional) | | [tutorial](pages/S1-packaging.qmd) | pyproject, conda recipe, local channel |
+[]{.bi .bi-easel aria-hidden="true"} slides ·
+[]{.bi .bi-file-earmark-pdf aria-hidden="true"} lecture slides (PDF) ·
+[]{.bi .bi-journal-code aria-hidden="true"} tutorial
+
+::: {.contents-table}
+| Topic | Lesson | Slides | Tutorial |
+|-------|--------|:------:|:--------:|
+| Getting started | 00 Setup | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/00-setup.qmd){aria-label="Tutorial for 00 Setup" title="Tutorial"} |
+| Introduction | 01 Reproducibility and open science | [[]{.bi .bi-easel aria-hidden="true"}](lectures/01-introduction/01-introduction.qmd){aria-label="Slides for 01 Reproducibility and open science" title="Slides"} [[]{.bi .bi-file-earmark-pdf aria-hidden="true"}](slides/Lecture1_Reproducibility.pdf){aria-label="Lecture 1, Reproducibility (PDF)" title="Lecture 1 (PDF)"} [[]{.bi .bi-file-earmark-pdf aria-hidden="true"}](slides/Lecture2_Open-Science.pdf){aria-label="Lecture 2, Open science (PDF)" title="Lecture 2 (PDF)"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/01-introduction.qmd){aria-label="Tutorial for 01 Reproducibility and open science" title="Tutorial"} |
+| Project organization and data management | 02 Project organization | [[]{.bi .bi-easel aria-hidden="true"}](lectures/02-project-organization/02-project-organization.qmd){aria-label="Slides for 02 Project organization" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/02-project-organization.qmd){aria-label="Tutorial for 02 Project organization" title="Tutorial"} |
+| | 03 Data management and FAIR | [[]{.bi .bi-easel aria-hidden="true"}](lectures/03-data-management/03-data-management.qmd){aria-label="Slides for 03 Data management and FAIR" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/03-data-management.qmd){aria-label="Tutorial for 03 Data management and FAIR" title="Tutorial"} |
+| Version control | 04 Git and GitHub | [[]{.bi .bi-easel aria-hidden="true"}](lectures/04-git/04-git.qmd){aria-label="Slides for 04 Git and GitHub" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/04-git.qmd){aria-label="Tutorial for 04 Git and GitHub" title="Tutorial"} |
+| Software environments | 05 Pixi | [[]{.bi .bi-easel aria-hidden="true"}](lectures/05-pixi/05-pixi.qmd){aria-label="Slides for 05 Pixi" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/05-pixi.qmd){aria-label="Tutorial for 05 Pixi" title="Tutorial"} |
+| | 05b Pixi and Conda compared | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/05b-conda-comparison.qmd){aria-label="Tutorial for 05b Pixi and Conda compared" title="Tutorial"} |
+| Notebooks and reports | 06 Jupyter | [[]{.bi .bi-easel aria-hidden="true"}](lectures/06-jupyter/06-jupyter.qmd){aria-label="Slides for 06 Jupyter" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/06-jupyter.qmd){aria-label="Tutorial for 06 Jupyter" title="Tutorial"} |
+| | 07 Quarto | [[]{.bi .bi-easel aria-hidden="true"}](lectures/07-quarto/07-quarto.qmd){aria-label="Slides for 07 Quarto" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/07-quarto.qmd){aria-label="Tutorial for 07 Quarto" title="Tutorial"} |
+| Containers | 08 Containers | [[]{.bi .bi-easel aria-hidden="true"}](lectures/08-containers/08-containers.qmd){aria-label="Slides for 08 Containers" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/08-containers.qmd){aria-label="Tutorial for 08 Containers" title="Tutorial"} |
+| Workflows | 09 Snakemake | [[]{.bi .bi-easel aria-hidden="true"}](lectures/09-snakemake/09-snakemake.qmd){aria-label="Slides for 09 Snakemake" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/09-snakemake.qmd){aria-label="Tutorial for 09 Snakemake" title="Tutorial"} |
+| | 10 Nextflow | [[]{.bi .bi-easel aria-hidden="true"}](lectures/10-nextflow/10-nextflow.qmd){aria-label="Slides for 10 Nextflow" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/10-nextflow.qmd){aria-label="Tutorial for 10 Nextflow" title="Tutorial"} |
+| Documentation and sharing | 11 Documentation | [[]{.bi .bi-easel aria-hidden="true"}](lectures/11-documentation/11-documentation.qmd){aria-label="Slides for 11 Documentation" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/11-documentation.qmd){aria-label="Tutorial for 11 Documentation" title="Tutorial"} |
+| | 12 Putting it all together | [[]{.bi .bi-easel aria-hidden="true"}](lectures/12-putting-it-together/12-putting-it-together.qmd){aria-label="Slides for 12 Putting it all together" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/12-putting-it-together.qmd){aria-label="Tutorial for 12 Putting it all together" title="Tutorial"} |
+| Extras | A Markdown | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/A-markdown.qmd){aria-label="Reference for A Markdown" title="Reference"} |
+| | B Take-down | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/B-take-down.qmd){aria-label="Tutorial for B Take-down" title="Tutorial"} |
+| | C Bash 101 | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/C-bash.qmd){aria-label="Tutorial for C Bash 101" title="Tutorial"} |
+| Extras (optional) | S1 Package and share your tool | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/S1-packaging.qmd){aria-label="Tutorial for S1 Package and share your tool" title="Tutorial"} |
+:::
 
 Also: [cheat sheets](cheatsheets/index.qmd) · [the LTEE example project](pages/ltee-project.qmd) · [glossary](pages/glossary.qmd) · [LTEE project hand-in](assessment/ltee-project.qmd) · [capstone rubric](assessment/capstone-rubric.qmd) · [sources and credits](pages/credits.qmd)
