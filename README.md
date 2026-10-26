@@ -37,35 +37,9 @@ We will have two lectures on Monday and Tuesday and a lab on Wednesday. The time
 
 | Day | Lecture/Lab | Time | Location |
 |---|---|---|---|
-| Monday's | Lecture | 03:00 PM – 04:20 PM | Building 1A, **1A-B201** |
+| Monday's | Lecture | 03:00 PM – 04:20 PM | Building 1B, **LH2** |
 | Tuesday's | Lecture | 04:00 PM – 05:20 PM | Building 1B, **CR1** |
-| Wednesday's | Lab | 05:00 PM – 06:50 PM | Building 1A, **1A-B201** |
-
-#### Lectures
-
-| Date       | Day     | Topics covered               | Time     | Location    | Material                |
-|------------|---------|------------------------------|----------|-------------|-------------------------|
-| 19.10.2026 | Mon  | Introduction to reproducibility | 15:00-16:20 | 1A-B201 | [Slides](/) |
-| 20.10.2026 | Tue  | Introduction to open science | 16:00-17:20 | CR1 | [Slides](/) |
-| 21.10.2026 | Wed  |  Lab | 17:00-18:50 | A-B201 | [Excercise](/) |
-| 26.10.2026 | Mon  |   | 15:00-16:20 | 1A-B201 |  |
-| 27.10.2026 | Tue  |   | 16:00-17:20 | CR1 |  |
-| 28.10.2026 | Wed  |  Lab | 17:00-18:50 | A-B201 |  |
-| 02.11.2026 | Mon  |   | 15:00-16:20 | 1A-B201 |  |
-| 03.11.2026 | Tue  |   | 16:00-17:20 | CR1 |  |
-| 04.11.2026 | Wed  |  Lab | 17:00-18:50 | A-B201 |  |
-| 09.11.2026 | Mon  |   | 15:00-16:20 | 1A-B201 |  |
-| 10.11.2026 | Tue  |   | 16:00-17:20 | CR1 |  |
-| 11.11.2026 | Wed  |  Lab | 17:00-18:50 | A-B201 |  |
-| 16.11.2026 | Mon  |   | 15:00-16:20 | 1A-B201 |  |
-| 17.11.2026 | Tue  |   | 16:00-17:20 | CR1 |  |
-| 18.11.2026 | Wed  |  Lab | 17:00-18:50 | A-B201 |  |
-| 23.11.2026 | Mon  |   | 15:00-16:20 | 1A-B201 |  |
-| 24.11.2026 | Tue  |   | 16:00-17:20 | CR1 |  |
-| 25.11.2026 | Wed  |  Lab | 17:00-18:50 | A-B201 |  |
-| 30.11.2026 | Mon  |   | 15:00-16:20 | 1A-B201 |  |
-| 01.12.2026 | Tue  |   | 16:00-17:20 | CR1 |  |
-| 02.12.2026 | Wed  |  Lab | 17:00-18:50 | A-B201 |  |
+| Wednesday's | Lab | 05:00 PM – 06:50 PM | Building 1B, **CR5** |
 
 ### Getting Started
 
