@@ -41,6 +41,10 @@ We will have two lectures on Monday and Tuesday and a lab on Wednesday. The time
 | Tuesday's | Lecture | 04:00 PM – 05:20 PM | Building 1B, **CR1** |
 | Wednesday's | Lab | 05:00 PM – 06:50 PM | Building 1B, **CR5** |
 
+### Lecture slides and tutorials
+
+Please check: https://khanlab.bio/cbio7501-f26/contents.html
+
 ### Getting Started
 
 Before attending the course, please complete the
