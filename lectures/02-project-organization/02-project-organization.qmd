@@ -169,15 +169,35 @@ them back. That command is the test of your organization.
 - Keep **settings apart from code**: at the top of a script, or better in
   `config/config.yaml`
 
+## A typical reproduciable project step-wise journey
+
+![](../../assets/images/project-journey.svg){fig-alt="Diagram: A typical reproduciable project step-wise journey" width="100%"}
+
+## What the project folder looks like at the end
+
+![](../../assets/images/project-folder-tree.svg){fig-alt="Diagram: What the project folder looks like at the end" width="100%"}
+
+
 ## Our template
 
 ```{.text}
 ltee-project/
-├── README.md  LICENSE  CITATION.cff  pixi.toml
-├── data/raw/   data/processed/   metadata/
-├── scripts/    config/           workflow/
-├── notebooks/  reports/          results/
-├── docs/       envs/             containers/
+├── README.md
+├── LICENSE
+├── CITATION.cff
+└── data
+    ├── raw/
+    └── processed/
+├──metadata/
+├── scripts/
+├── config/
+├── workflow/
+├── containers/
+├── notebooks/
+├── reports/
+├── results/
+├── docs/
+├── envs/
 └── .github/workflows/reproduce.yml
 ```
 
@@ -188,11 +208,16 @@ pixi exec --spec cookiecutter --spec git -- \
   cookiecutter gh:khan-lab/cbio7501-f26 --directory templates/cookiecutter-repro-project
 ```
 
+
 ## Why sketch first?
 
 - A template is someone else's decisions, frozen
 - If you never made the decisions, you cannot defend or change them
 - Sketch → compare with the literature → generate → discuss each difference
+
+## Can you reproduce your analysis in 5 years
+
+![](../../assets/images/hero-rerun.svg){fig-alt="Diagram: Can you reproduce your analysis in 5 years" width="100%"}
 
 ## Names that sort and explain
 

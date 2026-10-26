@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1139.35 316.91">
+  <!-- Generator: Adobe Illustrator 30.8.2, SVG Export Plug-In . SVG Version: 2.1.4 Build 7)  -->
+  <defs>
+    <style>
+      .st0 {
+        stroke: #0c2945;
+      }
+
+      .st0, .st1 {
+        stroke-linejoin: round;
+      }
+
+      .st0, .st1, .st2, .st3 {
+        stroke-width: 2.6px;
+      }
+
+      .st0, .st1, .st4 {
+        fill: none;
+        stroke-linecap: round;
+      }
+
+      .st5 {
+        fill: #fff;
+      }
+
+      .st5, .st6, .st7, .st8, .st9, .st10 {
+        isolation: isolate;
+      }
+
+      .st5, .st6, .st7, .st9, .st10 {
+        font-family: Helvetica-Bold, Helvetica;
+        font-weight: 700;
+      }
+
+      .st5, .st9 {
+        font-size: 17px;
+      }
+
+      .st11, .st7, .st12 {
+        fill: #e6c787;
+      }
+
+      .st6 {
+        font-size: 21px;
+      }
+
+      .st7, .st10 {
+        font-size: 13px;
+      }
+
+      .st12 {
+        stroke: #164678;
+        stroke-width: 3px;
+      }
+
+      .st1, .st2, .st3, .st4, .st13 {
+        stroke: #e6c787;
+      }
+
+      .st8 {
+        font-family: Helvetica, Helvetica;
+        font-size: 18px;
+      }
+
+      .st2, .st13 {
+        fill: #164678;
+      }
+
+      .st3, .st9, .st10 {
+        fill: #0c2945;
+      }
+
+      .st4 {
+        stroke-width: 2.5px;
+      }
+
+      .st13 {
+        stroke-width: 1.5px;
+      }
+    </style>
+  </defs>
+  <path class="st4" d="M148.93,194.51c14,0,6-18,19-18"/>
+  <polygon class="st11" points="178.93 176.51 168.93 170.51 168.93 182.51 178.93 176.51"/>
+  <path class="st4" d="M310.93,176.51c14,0,6-18,19-18"/>
+  <polygon class="st11" points="340.93 158.51 330.93 152.51 330.93 164.51 340.93 158.51"/>
+  <path class="st4" d="M472.93,158.51c14,0,6-18,19-18"/>
+  <polygon class="st11" points="502.93 140.51 492.93 134.51 492.93 146.51 502.93 140.51"/>
+  <path class="st4" d="M634.93,140.51c14,0,6-18,19-18"/>
+  <polygon class="st11" points="664.93 122.51 654.93 116.51 654.93 128.51 664.93 122.51"/>
+  <path class="st4" d="M796.93,122.51c14,0,6-18,19-18"/>
+  <polygon class="st11" points="826.93 104.51 816.93 98.51 816.93 110.51 826.93 104.51"/>
+  <path class="st4" d="M958.93,104.51c14,0,6-18,19-18"/>
+  <polygon class="st11" points="988.93 86.51 978.93 80.51 978.93 92.51 988.93 86.51"/>
+  <rect class="st13" x="16.93" y="119.51" width="132" height="150" rx="16" ry="16"/>
+  <g>
+    <ellipse class="st1" cx="82.93" cy="150.51" rx="14" ry="5.5"/>
+    <path class="st1" d="M68.93,150.51v20c0,4,6,7,14,7s14-3,14-7v-20"/>
+    <path class="st1" d="M68.93,160.51c0,4,6,7,14,7s14-3,14-7"/>
+  </g>
+  <text class="st5" transform="translate(45.61 211.51)"><tspan x="0" y="0">Raw data</tspan></text>
+  <text class="st5" transform="translate(29.3 232.51)"><tspan x="0" y="0">+ checksums</tspan></text>
+  <text class="st7" transform="translate(47.9 257.51)"><tspan x="0" y="0">Same input</tspan></text>
+  <rect class="st13" x="178.93" y="101.51" width="132" height="150" rx="16" ry="16"/>
+  <g>
+    <path class="st1" d="M236.93,131.51v24"/>
+    <path class="st1" d="M236.93,147.51c0-10,16-5,16-14"/>
+  </g>
+  <g>
+    <circle class="st3" cx="236.93" cy="131.51" r="5"/>
+    <circle class="st3" cx="236.93" cy="155.51" r="5"/>
+    <circle class="st3" cx="252.93" cy="133.51" r="5"/>
+  </g>
+  <text class="st5" transform="translate(233.12 193.51)"><tspan x="0" y="0">Git</tspan></text>
+  <text class="st5" transform="translate(216.59 214.51)"><tspan x="0" y="0">history</tspan></text>
+  <text class="st7" transform="translate(202.66 239.51)"><tspan x="0" y="0">Every change</tspan></text>
+  <rect class="st13" x="340.93" y="83.51" width="132" height="150" rx="16" ry="16"/>
+  <g>
+    <rect class="st1" x="393.93" y="122.51" width="26" height="19" rx="4" ry="4"/>
+    <path class="st1" d="M399.93,122.51v-6c0-11,14-11,14,0v6"/>
+  </g>
+  <text class="st5" transform="translate(391.81 175.51)"><tspan x="0" y="0">Pixi</tspan></text>
+  <text class="st5" transform="translate(375.28 196.51)"><tspan x="0" y="0">lock file</tspan></text>
+  <text class="st7" transform="translate(361.05 221.51)"><tspan x="0" y="0">Same software</tspan></text>
+  <rect class="st13" x="502.93" y="65.51" width="132" height="150" rx="16" ry="16"/>
+  <g>
+    <path class="st1" d="M568.93,91.51l14,8v16l-14,8-14-8v-16l14-8Z"/>
+    <path class="st1" d="M554.93,99.51l14,8,14-8M568.93,107.51v16"/>
+  </g>
+  <text class="st5" transform="translate(529.26 157.51)"><tspan x="0" y="0">Container</tspan></text>
+  <text class="st5" transform="translate(544.36 178.51)"><tspan x="0" y="0">image</tspan></text>
+  <text class="st7" transform="translate(527.37 203.51)"><tspan x="0" y="0">Same system</tspan></text>
+  <rect class="st13" x="664.93" y="47.51" width="132" height="150" rx="16" ry="16"/>
+  <g>
+    <path class="st1" d="M721.93,79.51h9c8,0,4,20,10,20"/>
+    <path class="st1" d="M721.93,99.51h7"/>
+  </g>
+  <g>
+    <circle class="st2" cx="718.93" cy="79.51" r="4.5"/>
+    <circle class="st2" cx="718.93" cy="99.51" r="4.5"/>
+    <circle class="st2" cx="743.93" cy="99.51" r="4.5"/>
+  </g>
+  <text class="st5" transform="translate(684.15 139.51)"><tspan x="0" y="0">Snakemake</tspan></text>
+  <text class="st5" transform="translate(695.51 160.51)"><tspan x="0" y="0">Nextflow</tspan></text>
+  <text class="st7" transform="translate(694.8 185.51)"><tspan x="0" y="0">Same steps</tspan></text>
+  <rect class="st13" x="826.93" y="29.51" width="132" height="150" rx="16" ry="16"/>
+  <g>
+    <path class="st1" d="M881.93,55.51h15l8,8v24h-23v-32Z"/>
+    <path class="st1" d="M896.93,55.51v8h8"/>
+    <path class="st1" d="M887.93,72.51h11M887.93,79.51h11"/>
+  </g>
+  <text class="st5" transform="translate(865.07 121.51)"><tspan x="0" y="0">Quarto</tspan></text>
+  <text class="st5" transform="translate(868.37 142.51)"><tspan x="0" y="0">report</tspan></text>
+  <text class="st7" transform="translate(846.33 167.51)"><tspan x="0" y="0">Same numbers</tspan></text>
+  <rect class="st12" x="988.93" y="11.51" width="132" height="150" rx="16" ry="16"/>
+  <g>
+    <rect class="st0" x="1039.93" y="39.51" width="30" height="9" rx="2.5" ry="2.5"/>
+    <path class="st0" d="M1042.93,48.51v19h24v-19"/>
+    <path class="st0" d="M1050.93,56.51h8"/>
+  </g>
+  <text class="st9" transform="translate(1023.7466 103.5083)"><tspan x="0" y="0">Archive</tspan></text>
+  <text class="st9" transform="translate(1032.4915 124.5083)"><tspan x="0" y="0">+ DOI</tspan></text>
+  <text class="st10" transform="translate(1033.2576 149.5083)"><tspan x="0" y="0">Citable</tspan></text>
+  <text class="st8" transform="translate(275.8 299.73)"><tspan x="0" y="0">One project. Each step adds a layer, and none of them replaces the one before.</tspan></text>
+  <text class="st6" transform="translate(358.22 24.07)"><tspan x="0" y="0">A typical reproduciable project step-wise journey</tspan></text>
+</svg>

@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 1200 756.39">
+  <!-- Generator: Adobe Illustrator 30.8.2, SVG Export Plug-In . SVG Version: 2.1.4 Build 7)  -->
+  <defs>
+    <style>
+      .st0, .st1, .st2, .st3 {
+        fill: none;
+      }
+
+      .st4 {
+        fill: url(#dots);
+      }
+
+      .st5, .st6, .st7, .st8, .st9 {
+        fill: #0c2945;
+      }
+
+      .st5, .st7, .st8, .st10, .st11, .st12, .st13, .st14, .st15, .st16, .st9, .st17, .st18, .st19 {
+        isolation: isolate;
+      }
+
+      .st5, .st7, .st8, .st10, .st12, .st14, .st16, .st9, .st17, .st18 {
+        font-weight: 700;
+      }
+
+      .st5, .st7, .st8, .st10, .st12, .st16, .st9, .st17, .st18 {
+        font-family: Helvetica-Bold, Helvetica;
+      }
+
+      .st5, .st13 {
+        font-size: 14px;
+      }
+
+      .st7, .st10, .st14, .st15, .st16 {
+        font-size: 18px;
+      }
+
+      .st8, .st12 {
+        font-size: 14.5px;
+      }
+
+      .st10, .st20, .st15 {
+        fill: #fff;
+      }
+
+      .st1 {
+        stroke-opacity: .55;
+        stroke-width: 2px;
+      }
+
+      .st1, .st20, .st2, .st21, .st22, .st23 {
+        stroke: #e6c787;
+      }
+
+      .st1, .st2, .st3, .st22 {
+        stroke-linecap: round;
+      }
+
+      .st24, .st12, .st14, .st17, .st25, .st18, .st19 {
+        fill: #e6c787;
+      }
+
+      .st20 {
+        fill-opacity: .05;
+        stroke-opacity: .3;
+      }
+
+      .st20, .st23 {
+        stroke-width: 1.5px;
+      }
+
+      .st13 {
+        font-family: Helvetica, Helvetica;
+      }
+
+      .st13, .st16 {
+        fill: #c9d6e4;
+      }
+
+      .st2, .st21, .st3 {
+        stroke-width: 1.98px;
+      }
+
+      .st2, .st3 {
+        stroke-linejoin: round;
+      }
+
+      .st14 {
+        font-family: Menlo-Bold, Menlo;
+      }
+
+      .st21 {
+        stroke-miterlimit: 2.48;
+      }
+
+      .st21, .st23 {
+        fill: #164678;
+      }
+
+      .st15 {
+        font-family: Menlo-Regular, Menlo;
+      }
+
+      .st9, .st18 {
+        font-size: 17px;
+      }
+
+      .st17 {
+        font-size: 13px;
+        letter-spacing: .11em;
+      }
+
+      .st25 {
+        stroke: #f4f7fb;
+        stroke-width: 3px;
+      }
+
+      .st3 {
+        stroke: #0c2945;
+      }
+
+      .st19 {
+        opacity: .16;
+      }
+
+      .st22 {
+        stroke-width: 2.5px;
+      }
+    </style>
+    <pattern id="dots" x="0" y="0" width="28" height="28" patternTransform="translate(54 17139.3906)" patternUnits="userSpaceOnUse" viewBox="0 0 28 28">
+      <g>
+        <rect class="st0" width="28" height="28"/>
+        <g>
+          <rect class="st0" width="28" height="28"/>
+          <circle class="st19" cx="14" cy="14" r="1.6"/>
+        </g>
+      </g>
+    </pattern>
+  </defs>
+  <rect class="st6" width="1200" height="756.39" rx="28" ry="28"/>
+  <rect class="st4" width="1200" height="756.39" rx="28" ry="28"/>
+  <g class="st11">
+    <text class="st16" transform="translate(60 31.39)"><tspan x="0" y="0">Each number shows the step of the journey that adds the file.</tspan></text>
+  </g>
+  <g>
+    <path class="st1" d="M72,101.39v599"/>
+    <path class="st1" d="M72,120.39h16"/>
+    <path class="st1" d="M72,207.39h16"/>
+    <path class="st1" d="M72,265.39h16"/>
+    <path class="st1" d="M72,352.39h16"/>
+    <path class="st1" d="M72,410.39h16"/>
+    <path class="st1" d="M72,468.39h16"/>
+    <path class="st1" d="M72,497.39h16"/>
+    <path class="st1" d="M72,555.39h16"/>
+    <path class="st1" d="M72,584.39h16"/>
+    <path class="st1" d="M72,613.39h16"/>
+    <path class="st1" d="M72,642.39h16"/>
+    <path class="st1" d="M72,671.39h16"/>
+    <path class="st1" d="M72,700.39h16"/>
+    <path class="st1" d="M102,130.39v48"/>
+    <path class="st1" d="M102,149.39h16"/>
+    <path class="st1" d="M102,178.39h16"/>
+    <path class="st1" d="M102,217.39v19"/>
+    <path class="st1" d="M102,236.39h16"/>
+    <path class="st1" d="M102,275.39v48"/>
+    <path class="st1" d="M102,294.39h16"/>
+    <path class="st1" d="M102,323.39h16"/>
+    <path class="st1" d="M102,362.39v19"/>
+    <path class="st1" d="M102,381.39h16"/>
+    <path class="st1" d="M102,420.39v19"/>
+    <path class="st1" d="M102,439.39h16"/>
+    <path class="st1" d="M102,507.39v19"/>
+    <path class="st1" d="M102,526.39h16"/>
+  </g>
+  <g class="st11">
+    <text class="st14" transform="translate(66 97.39)"><tspan x="0" y="0">ltee-project/</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st14" transform="translate(96 126.39)"><tspan x="0" y="0">data/</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st14" transform="translate(126 155.39)"><tspan x="0" y="0">raw/</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="149.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 154.39)"><tspan x="0" y="0">1</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 154.89)"><tspan x="0" y="0">Read-only. Never edited.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st14" transform="translate(126 184.39)"><tspan x="0" y="0">processed/</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="178.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 183.39)"><tspan x="0" y="0">5</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 183.89)"><tspan x="0" y="0">Rebuilt by the workflow.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st14" transform="translate(96 213.39)"><tspan x="0" y="0">metadata/</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st15" transform="translate(126 242.39)"><tspan x="0" y="0">samples.tsv</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="236.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 241.39)"><tspan x="0" y="0">1</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 241.89)"><tspan x="0" y="0">Sample sheet and checksums.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st14" transform="translate(96 271.39)"><tspan x="0" y="0">workflow/</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st15" transform="translate(126 300.39)"><tspan x="0" y="0">Snakefile</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="294.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 299.39)"><tspan x="0" y="0">5</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 299.89)"><tspan x="0" y="0">Same steps, every time.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st15" transform="translate(126 329.39)"><tspan x="0" y="0">config.yaml</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="323.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 328.39)"><tspan x="0" y="0">5</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 328.89)"><tspan x="0" y="0">Settings kept out of the code.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st14" transform="translate(96 358.39)"><tspan x="0" y="0">containers/</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st15" transform="translate(126 387.39)"><tspan x="0" y="0">Dockerfile</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="381.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 386.39)"><tspan x="0" y="0">4</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 386.89)"><tspan x="0" y="0">Same system, on any laptop.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st14" transform="translate(96 416.39)"><tspan x="0" y="0">reports/</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st15" transform="translate(126 445.39)"><tspan x="0" y="0">report.qmd</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="439.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 444.39)"><tspan x="0" y="0">6</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 444.89)"><tspan x="0" y="0">Every number is computed.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st14" transform="translate(96 474.39)"><tspan x="0" y="0">results/</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="468.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 473.39)"><tspan x="0" y="0">6</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 473.89)"><tspan x="0" y="0">Figures and tables you can regenerate.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st14" transform="translate(96 503.39)"><tspan x="0" y="0">.github/workflows/</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st15" transform="translate(126 532.39)"><tspan x="0" y="0">ci.yml</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="526.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 531.39)"><tspan x="0" y="0">2</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 531.89)"><tspan x="0" y="0">GitHub reruns it on every push.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st15" transform="translate(96 561.39)"><tspan x="0" y="0">.gitignore</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="555.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 560.39)"><tspan x="0" y="0">2</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 560.89)"><tspan x="0" y="0">Keeps large data out of Git.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st15" transform="translate(96 590.39)"><tspan x="0" y="0">pixi.toml</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="584.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 589.39)"><tspan x="0" y="0">3</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 589.89)"><tspan x="0" y="0">The software you asked for.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st15" transform="translate(96 619.39)"><tspan x="0" y="0">pixi.lock</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="613.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 618.39)"><tspan x="0" y="0">3</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 618.89)"><tspan x="0" y="0">Exactly what you got.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st15" transform="translate(96 648.39)"><tspan x="0" y="0">README.md</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="642.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 647.39)"><tspan x="0" y="0">7</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 647.89)"><tspan x="0" y="0">How to rerun it.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st15" transform="translate(96 677.39)"><tspan x="0" y="0">LICENSE</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="671.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 676.39)"><tspan x="0" y="0">7</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 676.89)"><tspan x="0" y="0">What others may do with it.</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st15" transform="translate(96 706.39)"><tspan x="0" y="0">CITATION.cff</tspan></text>
+  </g>
+  <circle class="st24" cx="370" cy="700.39" r="12"/>
+  <g class="st11">
+    <text class="st5" transform="translate(366.11 705.39)"><tspan x="0" y="0">7</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st13" transform="translate(398 705.89)"><tspan x="0" y="0">How to cite it.</tspan></text>
+  </g>
+  <rect class="st20" x="730" y="41.39" width="430" height="679" rx="22" ry="22"/>
+  <g class="st11">
+    <text class="st17" transform="translate(754 71.39)"><tspan x="0" y="0">THE JOURNEY, STEP BY STEP</tspan></text>
+  </g>
+  <rect class="st23" x="750" y="91.39" width="390" height="74" rx="16" ry="16"/>
+  <circle class="st24" cx="786" cy="128.39" r="16"/>
+  <g class="st11">
+    <text class="st9" transform="translate(781.27 134.39)"><tspan x="0" y="0">1</tspan></text>
+  </g>
+  <g>
+    <ellipse class="st2" cx="836.88" cy="121.45" rx="8.68" ry="3.41"/>
+    <path class="st2" d="M828.2,121.45v12.4c0,2.48,3.72,4.34,8.68,4.34s8.68-1.86,8.68-4.34v-12.4"/>
+    <path class="st2" d="M828.2,127.65c0,2.48,3.72,4.34,8.68,4.34s8.68-1.86,8.68-4.34"/>
+  </g>
+  <g class="st11">
+    <text class="st10" transform="translate(868 125.39)"><tspan x="0" y="0">Raw data + checksums</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st12" transform="translate(868 147.39)"><tspan x="0" y="0">Same input</tspan></text>
+  </g>
+  <path class="st22" d="M786,165.39v7"/>
+  <polygon class="st24" points="786 182.39 780 172.39 792 172.39 786 182.39"/>
+  <rect class="st23" x="750" y="182.39" width="390" height="74" rx="16" ry="16"/>
+  <circle class="st24" cx="786" cy="219.39" r="16"/>
+  <g class="st11">
+    <text class="st9" transform="translate(781.27 225.39)"><tspan x="0" y="0">2</tspan></text>
+  </g>
+  <g>
+    <g>
+      <path class="st2" d="M831.92,211.83v14.88"/>
+      <path class="st2" d="M831.92,221.75c0-6.2,9.92-3.1,9.92-8.68"/>
+    </g>
+    <g>
+      <circle class="st21" cx="831.92" cy="211.83" r="3.1"/>
+      <circle class="st21" cx="831.92" cy="226.71" r="3.1"/>
+      <circle class="st21" cx="841.84" cy="213.07" r="3.1"/>
+    </g>
+  </g>
+  <g class="st11">
+    <text class="st10" transform="translate(868 216.39)"><tspan x="0" y="0">Git history</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st12" transform="translate(868 238.39)"><tspan x="0" y="0">Every change</tspan></text>
+  </g>
+  <path class="st22" d="M786,256.39v7"/>
+  <polygon class="st24" points="786 273.39 780 263.39 792 263.39 786 273.39"/>
+  <rect class="st23" x="750" y="273.39" width="390" height="74" rx="16" ry="16"/>
+  <circle class="st24" cx="786" cy="310.39" r="16"/>
+  <g class="st11">
+    <text class="st9" transform="translate(781.27 316.39)"><tspan x="0" y="0">3</tspan></text>
+  </g>
+  <g>
+    <rect class="st2" x="828.82" y="308.41" width="16.12" height="11.78" rx="2.48" ry="2.48"/>
+    <path class="st2" d="M832.54,308.41v-3.72c0-6.82,8.68-6.82,8.68,0v3.72"/>
+  </g>
+  <g class="st11">
+    <text class="st10" transform="translate(868 307.39)"><tspan x="0" y="0">Pixi lock file</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st12" transform="translate(868 329.39)"><tspan x="0" y="0">Same software</tspan></text>
+  </g>
+  <path class="st22" d="M786,347.39v7"/>
+  <polygon class="st24" points="786 364.39 780 354.39 792 354.39 786 364.39"/>
+  <rect class="st23" x="750" y="364.39" width="390" height="74" rx="16" ry="16"/>
+  <circle class="st24" cx="786" cy="401.39" r="16"/>
+  <g class="st11">
+    <text class="st9" transform="translate(781.27 407.39)"><tspan x="0" y="0">4</tspan></text>
+  </g>
+  <g>
+    <path class="st2" d="M836.88,391.35l8.68,4.96v9.92l-8.68,4.96-8.68-4.96v-9.92l8.68-4.96Z"/>
+    <path class="st2" d="M828.2,396.31l8.68,4.96,8.68-4.96M836.88,401.27v9.92"/>
+  </g>
+  <g class="st11">
+    <text class="st10" transform="translate(868 398.39)"><tspan x="0" y="0">Container image</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st12" transform="translate(868 420.39)"><tspan x="0" y="0">Same system</tspan></text>
+  </g>
+  <path class="st22" d="M786,438.39v7"/>
+  <polygon class="st24" points="786 455.39 780 445.39 792 445.39 786 455.39"/>
+  <rect class="st23" x="750" y="455.39" width="390" height="74" rx="16" ry="16"/>
+  <circle class="st24" cx="786" cy="492.39" r="16"/>
+  <g class="st11">
+    <text class="st9" transform="translate(781.27 498.39)"><tspan x="0" y="0">5</tspan></text>
+  </g>
+  <g>
+    <g>
+      <path class="st2" d="M831.3,486.07h5.58c4.96,0,2.48,12.4,6.2,12.4"/>
+      <path class="st2" d="M831.3,498.47h4.34"/>
+    </g>
+    <g>
+      <circle class="st21" cx="829.44" cy="486.07" r="2.79"/>
+      <circle class="st21" cx="829.44" cy="498.47" r="2.79"/>
+      <circle class="st21" cx="844.94" cy="498.47" r="2.79"/>
+    </g>
+  </g>
+  <g class="st11">
+    <text class="st10" transform="translate(868 489.39)"><tspan x="0" y="0">Snakemake / Nextflow</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st12" transform="translate(868 511.39)"><tspan x="0" y="0">Same steps</tspan></text>
+  </g>
+  <path class="st22" d="M786,529.39v7"/>
+  <polygon class="st24" points="786 546.39 780 536.39 792 536.39 786 546.39"/>
+  <rect class="st23" x="750" y="546.39" width="390" height="74" rx="16" ry="16"/>
+  <circle class="st24" cx="786" cy="583.39" r="16"/>
+  <g class="st11">
+    <text class="st9" transform="translate(781.27 589.39)"><tspan x="0" y="0">6</tspan></text>
+  </g>
+  <g>
+    <path class="st2" d="M830.06,573.35h9.3l4.96,4.96v14.88h-14.26v-19.84Z"/>
+    <path class="st2" d="M839.36,573.35v4.96h4.96"/>
+    <path class="st2" d="M833.78,583.89h6.82M833.78,588.23h6.82"/>
+  </g>
+  <g class="st11">
+    <text class="st10" transform="translate(868 580.39)"><tspan x="0" y="0">Quarto report</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st12" transform="translate(868 602.39)"><tspan x="0" y="0">Same numbers</tspan></text>
+  </g>
+  <path class="st22" d="M786,620.39v7"/>
+  <polygon class="st24" points="786 637.39 780 627.39 792 627.39 786 637.39"/>
+  <rect class="st25" x="750" y="637.39" width="390" height="74" rx="16" ry="16"/>
+  <circle class="st6" cx="786" cy="674.39" r="16"/>
+  <g class="st11">
+    <text class="st18" transform="translate(781.27 680.39)"><tspan x="0" y="0">7</tspan></text>
+  </g>
+  <g>
+    <rect class="st3" x="827.58" y="665.59" width="18.6" height="5.58" rx="1.55" ry="1.55"/>
+    <path class="st3" d="M829.44,671.17v11.78h14.88v-11.78"/>
+    <path class="st3" d="M834.4,676.13h4.96"/>
+  </g>
+  <g class="st11">
+    <text class="st7" transform="translate(868 671.39)"><tspan x="0" y="0">Archive + DOI</tspan></text>
+  </g>
+  <g class="st11">
+    <text class="st8" transform="translate(868 693.39)"><tspan x="0" y="0">Citable</tspan></text>
+  </g>
+</svg>
