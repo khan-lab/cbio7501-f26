@@ -107,4 +107,4 @@ The material adapts and extends open lessons from [NBIS](https://nbisweden.githu
 [The carpentry](https://software-carpentry.org), [The Data Carpentry](https://datacarpentry.org/) and many more. See [Sources and credits](pages/credits.qmd).
 
 Text and slides: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-Code: [MIT](https://opensource.org/license/mit). Developed and maintianed by [Aziz Khan](https://github.com/asntech/), [Computational Biology and Cancer Regulatory Genomics (CBCRG)](https://khanlab.bio), MBZUAI.
+Code: [MIT](https://opensource.org/license/mit). Developed and maintained by [Aziz Khan](https://github.com/asntech/), [Computational Biology and Cancer Regulatory Genomics (CBCRG)](https://khanlab.bio), MBZUAI.

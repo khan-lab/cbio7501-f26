@@ -1,6 +1,6 @@
 ---
 title: "Course schedule - 7 weeks"
-subtitle: "CBIO750: The Art of Reproducible and Open Science - Fall 2026"
+subtitle: "CBIO7501: The Art of Reproducible and Open Science - Fall 2026"
 toc: false
 ---
 

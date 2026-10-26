@@ -1,0 +1,395 @@
+---
+title: "D Terminal editors and sessions"
+subtitle: "Edit files without leaving the terminal, get out of vim, and keep long runs alive with tmux or screen"
+description: "Practice for working in a terminal only: editing with nano, the few vim keys everyone needs, and tmux and screen sessions that keep a long command running when the terminal closes or the connection drops."
+test:
+  needs: []
+  timeout: 900
+---
+
+::: {.at-a-glance}
+- **Time:** about 40 minutes, at home; best after [C Bash 101](C-bash.qmd).
+- **You need:** a terminal and Pixi ([lesson 00](00-setup.qmd)).
+- **You will have:** nano, tmux and screen installed, Git set to use nano, and a command that kept running after the shell that started it was gone.
+:::
+
+## Overview
+
+### Why this matters
+
+Sooner or later you will work where there is no graphical editor and no
+window you can keep open: on a cluster such as Karakoram, in a GitHub
+Codespace, in WSL2, on any computer you reach with `ssh`. Two skills make
+that comfortable. The first is editing a file in the terminal itself. Git
+even opens an editor by itself when it needs a message from you, and if that
+editor is vim and you have never used it, you are stuck. The second is
+keeping a long command running. A full pipeline run, a container build or a
+large download can take an hour, and a command started in a terminal stops
+when the terminal closes, the laptop sleeps or the connection drops. A
+*terminal multiplexer* (tmux or screen) runs the command in a session of its
+own, which you can leave and come back to.
+
+### What you do in this lesson
+
+You install nano, tmux and screen with Pixi, edit a file with nano and make
+it Git's editor, learn the handful of vim keys that get you out of trouble,
+and run commands in tmux and screen sessions that outlive their terminal.
+
+### Learning outcomes
+
+After this page you can:
+
+1. **Edit** and save a file in the terminal with nano, and **set** it as the editor Git uses.
+2. **Get out of** vim, saving or discarding your changes, when a program opens it.
+3. **Run** a long command in a tmux or screen session, **detach**, and **reattach** later to see how it went.
+
+Checks: your answers to *Try it yourself*, and the *Break it*: the job inside
+tmux survives what stops the job outside it.
+
+## 1. Get the tools
+
+nano, tmux and screen are small programs, but not every computer has them,
+or has the same version. On macOS, for example, the `nano` command is really
+pico, an older editor with the same basic keys, and there is no tmux.
+Install all three with Pixi. It needs no administrator rights, so this also
+works on a cluster ([lesson 05](05-pixi.qmd#personal-tools-with-pixi-global)):
+
+```{.bash .run}
+pixi global install nano tmux screen
+```
+
+Open a new terminal, so that it finds the new commands, then check:
+
+```{.bash .run}
+nano --version | head -n 1
+tmux -V
+```
+
+```text
+ GNU nano, version 9.3
+tmux 3.8
+```
+
+Your versions may be newer. vim is already installed on macOS, Linux and
+WSL2.
+
+Make a folder for this page and go there:
+
+```{.bash .run}
+mkdir -p ~/cbio7501/terminal-practice
+cd ~/cbio7501/terminal-practice
+```
+
+## 2. nano: an editor that shows its keys
+
+Open a file (nano creates it if it does not exist):
+
+```{.bash .norun}
+nano notes.md
+```
+
+nano fills the terminal. Type a few lines, for example a heading and today's
+date. The two lines at the bottom list the commands: `^` means the Ctrl key
+and `M-` the Alt key, so `^O` is Ctrl-O.
+
+| Keys | What it does |
+|------|--------------|
+| `Ctrl-O`, then Enter | save (*write out*) under the name shown; change the name first to save a copy |
+| `Ctrl-X` | exit; if there are unsaved changes, nano asks first (`Y` or `N`) |
+| `Ctrl-W` (or `Ctrl-F` in nano 8 and later) | search; `Ctrl-W` and Enter again finds the next match |
+| `Ctrl-K`, `Ctrl-U` | cut the current line, paste it |
+| `Alt-U` | undo |
+| `Ctrl-G` | help |
+
+Save with `Ctrl-O` and Enter, leave with `Ctrl-X`, and look at the file from
+the shell with `cat notes.md`.
+
+On macOS, the Alt key only works in nano after one setting: in Terminal,
+*Settings → Profiles → Keyboard → Use Option as Meta key*. Without it, press
+Esc and then the letter.
+
+### Make nano Git's editor
+
+Git opens an editor when it needs text from you: a commit message if you run
+`git commit` without `-m`, or a message for a merge after `git pull`. Unless
+you choose one, that editor is often vim. Choose nano:
+
+```{.bash .run-ci}
+git config --global core.editor nano
+git config --global core.editor
+```
+
+```text
+nano
+```
+
+If you set up Git with [lesson 00](00-setup.qmd#tell-git-who-you-are)
+recently, this is done already. Other programs use the editor named in the
+`EDITOR` variable; to make nano their default too, add the line
+`export EDITOR=nano` to `~/.zshrc` (macOS) or `~/.bashrc` (Linux, WSL2).
+
+## 3. vim: the keys that get you out
+
+vim is on almost every Unix computer, and many programs open it. It is
+powerful, and confusing at first, because it has **modes**. In *normal* mode,
+which is where vim starts, keys are commands: `x` deletes a character, `d`
+starts a deletion. Only in *insert* mode do keys type text. That is why
+typing into vim without knowing this seems to do strange things.
+
+```{.bash .norun}
+vim notes.md
+```
+
+| Keys | What it does |
+|------|--------------|
+| `i` | insert mode: now you can type |
+| `Esc` | back to normal mode (press it whenever in doubt) |
+| `:w`, then Enter | save |
+| `:wq`, then Enter | save and quit |
+| `:q!`, then Enter | quit **without** saving |
+| `u` | undo (in normal mode) |
+| `/word`, then Enter | search for *word*; `n` finds the next match |
+
+::: {.callout-tip title="Stuck in vim?"}
+Press `Esc`, type `:q!` and press Enter. You are out, and the file is
+unchanged. If Git opened vim for a message you want to keep, type `:wq`
+instead.
+:::
+
+vim comes with its own 30-minute tutorial, for when you want more than the
+way out:
+
+```{.bash .norun}
+vimtutor
+```
+
+## 4. tmux: sessions that keep running
+
+A command you start in a terminal belongs to that terminal. When the window
+closes, or the `ssh` connection to a cluster drops, the terminal sends it a
+*hang-up* signal and the command stops. tmux works differently: it runs a
+small server in the background, your commands run in the server's
+**sessions**, and your terminal only shows one of them. Close the terminal
+and the session goes on; open a new terminal and **attach** to it again.
+
+Start a session called `practice`:
+
+```{.bash .norun}
+tmux new -s practice
+```
+
+A green bar at the bottom shows that you are inside tmux. Run something slow,
+a loop that counts for a minute:
+
+```{.bash .norun}
+for i in $(seq 1 60); do echo "step $i"; sleep 1; done
+```
+
+Now **detach**: press `Ctrl-b`, let go, then press `d`. You are back in your
+normal terminal, and the loop is still counting inside the session. List the
+sessions, and attach again to watch it finish:
+
+```{.bash .norun}
+tmux ls
+tmux attach -t practice
+```
+
+Every tmux key starts with the *prefix* `Ctrl-b`:
+
+| `Ctrl-b`, then | What it does |
+|----------------|--------------|
+| `d` | detach |
+| `[` | scroll back: arrows or Page Up and Down; `q` leaves |
+| `c`, `n`, `p` | new window, next window, previous window |
+| `%`, `"` | split the window side by side, or top and bottom; `Ctrl-b` and an arrow moves between the parts |
+| `?` | list all keys |
+
+`exit` in the last window ends the session. To scroll with the mouse, put the
+line `set -g mouse on` in a file called `~/.tmux.conf`.
+
+### Without attaching
+
+tmux can also start a session in the background and show you what is on its
+screen, without taking over your terminal. This is handy in scripts, and it
+is how the tests of this page check tmux:
+
+```{.bash .run}
+tmux new-session -d -s counting 'for i in $(seq 1 30); do echo "step $i"; sleep 1; done'
+sleep 3
+tmux ls
+tmux capture-pane -p -t counting | grep step | tail -n 1
+tmux kill-session -t counting
+```
+
+```text
+counting: 1 windows (created Mon Oct 26 20:46:25 2026)
+step 3
+```
+
+`-d` starts the session detached, `capture-pane -p` prints what the session
+shows, and `kill-session` ends it.
+
+### In practice
+
+With the LTEE project, a long run looks like this. On a cluster, log in with
+`ssh` first.
+
+```{.bash .norun}
+tmux new -s pipeline
+cd ~/cbio7501/ltee-project
+pixi run reproduce
+# Ctrl-b d, close the laptop, go home; later, in a new terminal:
+tmux attach -t pipeline
+```
+
+A tmux session lives on the computer where you started it. On a cluster
+with several login nodes, note which one with `hostname`, and log in to the
+same node to attach. Heavy computations belong in jobs on the cluster's
+compute nodes, not on the login node: tmux keeps the command that *submits*
+the jobs alive, such as Snakemake with a cluster profile
+([lesson 09](09-snakemake.qmd)).
+
+## 5. screen: the older alternative
+
+Some computers have screen but not tmux. It works the same way, with
+`Ctrl-a` as the prefix:
+
+| What you want | tmux | screen |
+|---------------|------|--------|
+| start a named session | `tmux new -s NAME` | `screen -S NAME` |
+| detach | `Ctrl-b d` | `Ctrl-a d` |
+| list sessions | `tmux ls` | `screen -ls` |
+| attach again | `tmux attach -t NAME` | `screen -r NAME` |
+| scroll back | `Ctrl-b [` (`q` leaves) | `Ctrl-a [` (`Esc` leaves) |
+| end a session from outside | `tmux kill-session -t NAME` | `screen -S NAME -X quit` |
+
+Try it in the background, as with tmux:
+
+```{.bash .run}
+screen -dmS counting sleep 30
+screen -ls | grep counting
+screen -S counting -X quit
+```
+
+```text
+	12345.counting	(Detached)
+```
+
+`-dm` starts the session detached, `-S` names it, and `-X quit` sends it the
+command to end.
+
+## Try it yourself
+
+1. You opened a file in vim, typed, and now the text is full of strange
+   changes. How do you leave without saving any of them?
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `Esc`, then `:q!` and Enter.
+   :::
+
+2. In nano, how do you find the word `depth` in a long file, and how do you
+   save the file under a new name?
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `Ctrl-W`, type `depth`, Enter (`Ctrl-W` and Enter again for the next
+   match). To save under a new name: `Ctrl-O`, change the name shown, Enter.
+   :::
+
+3. You started a long run in tmux on a cluster, then your connection
+   dropped. What do you type after you log in again?
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `tmux ls` to see the session's name, then `tmux attach -t NAME`. If
+   `tmux ls` finds nothing, check with `hostname` that you are on the same
+   login node as before.
+   :::
+
+4. Start a tmux session with two parts side by side: `top` in one, a shell
+   in the other. Which keys do you need?
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `tmux new -s watch`, then `Ctrl-b %` to split, `top` in one part, and
+   `Ctrl-b` with an arrow key to move to the other. `q` leaves `top`.
+   :::
+
+## Break it: a run that dies with its terminal
+
+Closing a terminal sends a *hang-up* signal (`HUP`) to the commands started
+in it. Send that signal yourself, to a command running in the background
+(`&`) of this shell:
+
+```{.bash .run}
+sleep 300 &
+job=$!
+kill -HUP "$job"
+sleep 1
+```
+
+`$!` is the process number of the last command started with `&`. Is the job
+still running? `kill -0` asks, without doing anything to it:
+
+```{.bash .expect-fail}
+kill -0 "$job"
+```
+
+```text
+bash: kill: (12345) - No such process
+```
+
+(zsh, the macOS shell, says `kill: kill 12345 failed: no such process`.) The
+job is gone. That is what happens to a pipeline run when the laptop closes or
+the connection drops.
+
+Now start the same job in a tmux session, from a shell that ends right away,
+as a closed terminal would:
+
+```{.bash .run}
+bash -c 'tmux new-session -d -s survivor "sleep 300"'
+tmux ls
+```
+
+```text
+survivor: 1 windows (created Mon Oct 26 20:46:29 2026)
+```
+
+The shell that started it is gone; the job is not, because it belongs to the
+tmux server. Clean up:
+
+```{.bash .run}
+tmux kill-session -t survivor
+```
+
+## Troubleshooting
+
+| Problem | What to do |
+|---------|------------|
+| `command not found` for nano, tmux or screen after `pixi global install` | Open a new terminal. If it still fails, check that `~/.pixi/bin` is in your `PATH` (`echo $PATH`); the Pixi installer adds it ([lesson 00](00-setup.qmd)). |
+| Typing in vim does strange things | You are in normal mode. Press `Esc`, then `:q!` and Enter to leave without saving. |
+| nano's `M-` (Alt) keys do nothing on macOS | Turn on *Use Option as Meta key* (section 2), or press Esc and then the letter. |
+| `sessions should be nested with care` | You are already inside tmux. Detach first (`Ctrl-b d`), or open another window with `Ctrl-b c`. |
+| `no server running` or `no sessions` | No tmux session runs on this computer: it ended, the computer restarted, or you are on another login node of the cluster (`hostname`). |
+| `can't find session` | Check the name with `tmux ls`. |
+| `No Sockets found` from `screen -ls` | No screen session runs for you on this computer. |
+| A session on the cluster disappears after some hours | Some clusters end long processes on login nodes. Run the heavy work as jobs, and ask the cluster's documentation whether tmux is allowed there. |
+
+## Apply it to your own project
+
+Two habits for your capstone. Commit once with `git commit` and no `-m`, so
+nano opens: write a short summary line, an empty line, then why you made the
+change. And run the longest step of your own analysis inside tmux, so a
+closed laptop does not cost you the run.
+
+## Key points
+
+- nano shows its keys at the bottom: `Ctrl-O` saves, `Ctrl-X` exits. Make it Git's editor with `git config --global core.editor nano`.
+- In vim, `Esc` then `:wq` saves and quits; `Esc` then `:q!` quits without saving.
+- A command started in a terminal stops when the terminal closes or the connection drops; inside tmux or screen it keeps running.
+- tmux: `tmux new -s NAME`, detach with `Ctrl-b d`, list with `tmux ls`, come back with `tmux attach -t NAME`. screen: `screen -S NAME`, `Ctrl-a d`, `screen -ls`, `screen -r NAME`.
+
+## Further reading
+
+- **GNU nano**: documentation, <https://www.nano-editor.org/docs.php>, and a one-page cheat sheet, <https://www.nano-editor.org/dist/latest/cheatsheet.html>
+- **vim**: run `vimtutor` first; documentation at <https://www.vim.org/docs.php>
+- **tmux**, *Getting Started* on the tmux wiki: <https://github.com/tmux/tmux/wiki/Getting-Started>
+- **GNU Screen** manual: <https://www.gnu.org/software/screen/manual/>
+- **MIT, *The Missing Semester of Your CS Education***: lectures on editors (vim), <https://missing.csail.mit.edu/2020/editors/>, and on the command-line environment (job control, tmux), <https://missing.csail.mit.edu/2020/command-line/>

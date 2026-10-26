@@ -112,6 +112,10 @@ website:
               href: pages/B-take-down.qmd
             - text: "C Bash 101"
               href: pages/C-bash.qmd
+            - text: "D Terminal editors and sessions"
+              href: pages/D-terminal.qmd
+            - text: "E YAML, TOML and JSON"
+              href: pages/E-yaml-toml-json.qmd
             - text: "S1 Package and share your tool"
               href: pages/S1-packaging.qmd
             - text: "The LTEE example project"

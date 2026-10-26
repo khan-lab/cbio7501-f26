@@ -34,6 +34,8 @@ taught is in the schedules: [7-week course](schedule-course.qmd) and
 | Extras | A Markdown | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/A-markdown.qmd){aria-label="Reference for A Markdown" title="Reference"} |
 | | B Take-down | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/B-take-down.qmd){aria-label="Tutorial for B Take-down" title="Tutorial"} |
 | | C Bash 101 | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/C-bash.qmd){aria-label="Tutorial for C Bash 101" title="Tutorial"} |
+| | D Terminal editors and sessions | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/D-terminal.qmd){aria-label="Tutorial for D Terminal editors and sessions" title="Tutorial"} |
+| | E YAML, TOML and JSON | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/E-yaml-toml-json.qmd){aria-label="Tutorial for E YAML, TOML and JSON" title="Tutorial"} |
 | Extras (optional) | S1 Package and share your tool | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/S1-packaging.qmd){aria-label="Tutorial for S1 Package and share your tool" title="Tutorial"} |
 :::
 

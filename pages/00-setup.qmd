@@ -191,10 +191,13 @@ Use the same email address as on GitHub. Replace the example values:
 git config --global user.name "Ada Lovelace"
 git config --global user.email "ada@example.org"
 git config --global init.defaultBranch main
+git config --global core.editor nano
 ```
 
-The last line makes new repositories start on a branch called `main`, as on
-GitHub.
+The third line makes new repositories start on a branch called `main`, as on
+GitHub. The last one makes Git open nano, an easy editor, when it needs a
+message from you; otherwise it often opens vim, which is hard to leave the
+first time ([D Terminal editors and sessions](D-terminal.qmd)).
 
 ### Create a GitHub account and an SSH key
 

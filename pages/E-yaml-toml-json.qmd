@@ -1,0 +1,453 @@
+---
+title: "E YAML, TOML and JSON"
+subtitle: "Read, write and check the settings files that every lesson uses"
+description: "The three text formats that hold a project's settings: the same settings written in YAML, TOML and JSON, the rules of each, the YAML values that are not what they seem, and the checkers to run before you commit."
+test:
+  needs: []
+  timeout: 900
+---
+
+::: {.at-a-glance}
+- **Time:** about 40 minutes, at home; come back when a settings file will not load.
+- **You need:** a terminal and Pixi ([lesson 00](00-setup.qmd)).
+- **Used in:** YAML: Quarto ([07](07-quarto.qmd)), workflow settings ([09](09-snakemake.qmd), [10](10-nextflow.qmd)), GitHub Actions ([04](04-git.qmd)), `CITATION.cff` ([11](11-documentation.qmd)), Conda environment files ([05b](05b-conda-comparison.qmd)). TOML: `pixi.toml` ([05](05-pixi.qmd)), `pyproject.toml` ([S1](S1-packaging.qmd)). JSON: Jupyter notebooks ([06](06-jupyter.qmd)), Zenodo ([01](01-introduction.qmd), [12](12-putting-it-together.qmd)).
+- **You will have:** the same settings in all three formats, read by one Python script, and the checkers to run on any project.
+:::
+
+## Overview
+
+### Why this matters
+
+Much of what makes a project reproducible is not code but settings: which
+software it needs (`pixi.toml`), which samples and thresholds it uses
+(`config/config.yaml`), how GitHub reruns it (`.github/workflows/`), how to
+cite it (`CITATION.cff`). These files are written in three text formats,
+YAML, TOML and JSON, that programs read as data. They are easy to read but
+strict. One space too many stops a workflow on GitHub, and an unquoted value
+can quietly turn into something else, such as `3.10` into `3.1`. A few
+minutes with the rules, and a checker run before every commit, save hours of
+puzzling over error messages.
+
+### What you do in this lesson
+
+You write the same settings in all three formats and read them with one
+Python script, learn the rules and traps of each format, and check files
+with the tools the course uses: yamllint, taplo, Python's `json` module and
+jq.
+
+### Learning outcomes
+
+After this page you can:
+
+1. **Write** settings in YAML, TOML and JSON: values, lists and nested groups.
+2. **Predict** how a YAML value is read (text, number, true or false, date), and **quote** it when it should stay text.
+3. **Check** a settings file before you commit it, and **find** the line an error message points to.
+
+Checks: `read_settings.py` reports that the three files hold the same
+settings, and your answers to *Try it yourself*.
+
+## 1. One set of settings, three formats
+
+Make a folder for this page and go there:
+
+```{.bash .run}
+mkdir -p ~/cbio7501/formats-practice
+cd ~/cbio7501/formats-practice
+```
+
+Here are the same settings for a small variant-calling run in each format.
+Save all three files (the copy buttons help).
+
+YAML, as `settings.yaml`:
+
+```{.yaml filename="settings.yaml" .write}
+---
+# Settings for a small variant-calling run
+project: LTEE variant calling
+min_depth: 10
+paired: true
+samples:
+  - SRR2589044
+  - SRR2584863
+  - SRR2584866
+bwa:
+  threads: 4
+  extra: "-K 10000000"
+```
+
+TOML, as `settings.toml`:
+
+```{.toml filename="settings.toml" .write}
+# Settings for a small variant-calling run
+project = "LTEE variant calling"
+min_depth = 10
+paired = true
+samples = ["SRR2589044", "SRR2584863", "SRR2584866"]
+
+[bwa]
+threads = 4
+extra = "-K 10000000"
+```
+
+JSON, as `settings.json` (JSON has no comments, so the first line is gone):
+
+```{.json filename="settings.json" .write}
+{
+  "project": "LTEE variant calling",
+  "min_depth": 10,
+  "paired": true,
+  "samples": ["SRR2589044", "SRR2584863", "SRR2584866"],
+  "bwa": {
+    "threads": 4,
+    "extra": "-K 10000000"
+  }
+}
+```
+
+Each file holds the same five kinds of data: text (`project`), a number
+(`min_depth`), true or false (`paired`), a list (`samples`) and a group of
+settings inside the main group (`bwa`). A program reads all three into the
+same structure. Check it with a short script, `read_settings.py`:
+
+```{.python filename="read_settings.py" .write}
+"""Read the same settings from YAML, TOML and JSON, and compare them."""
+import json
+import tomllib
+
+import yaml
+
+with open("settings.yaml") as fh:
+    from_yaml = yaml.safe_load(fh)
+with open("settings.toml", "rb") as fh:
+    from_toml = tomllib.load(fh)
+with open("settings.json") as fh:
+    from_json = json.load(fh)
+
+print(from_yaml)
+print("All three the same:", from_yaml == from_toml == from_json)
+```
+
+Python reads TOML and JSON by itself; for YAML it needs the PyYAML package,
+so ask Pixi for a Python that has it:
+
+```{.bash .run}
+pixi exec --spec python --spec pyyaml python read_settings.py
+```
+
+```text
+{'project': 'LTEE variant calling', 'min_depth': 10, 'paired': True, 'samples': ['SRR2589044', 'SRR2584863', 'SRR2584866'], 'bwa': {'threads': 4, 'extra': '-K 10000000'}}
+All three the same: True
+```
+
+Side by side:
+
+| | YAML | TOML | JSON |
+|-|------|------|------|
+| text | `project: LTEE variant calling` (quotes optional) | `project = "LTEE variant calling"` (quotes needed) | `"project": "LTEE variant calling"` |
+| number, true/false | `min_depth: 10`, `paired: true` | `min_depth = 10`, `paired = true` | `"min_depth": 10`, `"paired": true` |
+| list | one item per line, after `-` and a space | `["a", "b"]` | `["a", "b"]` |
+| group | indented lines under `bwa:` | a `[bwa]` section | `"bwa": { ... }` |
+| comment | `# ...` | `# ...` | none |
+
+## 2. YAML
+
+YAML is the format you will write most often. Its rules:
+
+- `key: value`, with a space after the colon.
+- Groups are made by **indentation**, with spaces only, **never tabs**.
+  Everything at the same level has the same indentation; two spaces is usual.
+- A list has one item per line, after a dash and a space. A short list can
+  also be written on one line: `[SRR2589044, SRR2584863]`.
+- Text needs no quotes, until it contains a colon followed by a space, or a
+  space followed by `#` (everything after it becomes a comment); until it
+  starts with a character that means something else in YAML, such as `[`,
+  `{`, `*`, `&`, `!` or `@`; or until it looks like a number, a date or
+  true/false. Then quote it. When in doubt, quote: `extra: "-K 10000000"`
+  above would also work without quotes, but with them nobody has to wonder.
+- `#` starts a comment.
+- `---` marks the start of a document. A Quarto page starts with a YAML
+  document between two `---` lines, its *front matter*.
+- For text over several lines, `|` keeps the line breaks and `>` joins the
+  lines into one. GitHub Actions uses `|` for several commands in one step:
+
+```{.yaml}
+- name: Reproduce
+  run: |
+    pixi install --locked
+    pixi run reproduce
+```
+
+Where you meet YAML in this course:
+
+| File | What it holds | Lesson |
+|------|---------------|--------|
+| front matter of `.qmd` files, `_quarto.yml` | title, author, format, options | [07](07-quarto.qmd) |
+| `config/config.yaml` | samples, thresholds, tool options | [09](09-snakemake.qmd), [10](10-nextflow.qmd) |
+| `.github/workflows/*.yml` | what GitHub runs, and when | [04](04-git.qmd), [05](05-pixi.qmd) |
+| `CITATION.cff` | how to cite the project | [11](11-documentation.qmd) |
+| `environment.yml` | a Conda environment | [05b](05b-conda-comparison.qmd) |
+
+## 3. TOML
+
+TOML is used for project manifests, such as `pixi.toml` and Python's
+`pyproject.toml`. Its rules:
+
+- `key = value`.
+- Text always in double quotes; numbers, `true` and `false` without.
+- Lists in `[ ]`, items separated by commas; a list may span several lines.
+- `[section]` starts a group, called a *table*; every line below belongs to
+  it, until the next section. Dots nest groups: `[feature.pipeline.dependencies]`
+  is the `dependencies` group of the `pipeline` group of the `feature` group.
+- `{ key = value, ... }` is a small group on one line, an *inline table*.
+- `#` starts a comment. Indentation does not matter.
+
+Here are some lines from the LTEE project's `pixi.toml`
+([lesson 05](05-pixi.qmd)). Read them with the rules above:
+
+```{.toml}
+[workspace]
+name = "ltee-project"
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+
+[dependencies]
+python = "3.13.*"
+pandas = ">=2"
+
+[tasks]
+download = { cmd = "python scripts/download_data.py", description = "Download the raw data and verify checksums" }
+
+[feature.pipeline.dependencies]
+bwa = ">=0.7.19,<0.8"
+samtools = ">=1.24,<2"
+```
+
+The `download` task is an inline table with two keys, `cmd` and
+`description`. The versions are text, so they are in quotes.
+
+## 4. JSON
+
+JSON is written mostly by programs, for other programs: a Jupyter notebook
+(`.ipynb`) is a JSON file ([lesson 06](06-jupyter.qmd)), web services such
+as Zenodo answer in JSON ([lesson 01](01-introduction.qmd#break-it-a-link-that-changes-under-you)),
+and `.zenodo.json` describes a release ([lesson 12](12-putting-it-together.qmd)).
+You will read it more often than you write it. Its rules:
+
+- `{ }` holds named values (an *object*), `[ ]` a list (an *array*).
+- Names and text always in **double** quotes.
+- A comma between items, but **not after the last one**.
+- Numbers, `true`, `false` and `null` without quotes.
+- **No comments.**
+
+Python can check a JSON file and print it neatly:
+
+```{.bash .run}
+pixi exec python -m json.tool settings.json
+```
+
+To pick values out of JSON, use **jq**. `.bwa.threads` means "the `threads`
+value in the `bwa` group"; `.samples[]` means "each item of the `samples`
+list", and `-r` prints text without quotes:
+
+```{.bash .run}
+pixi exec jq '.bwa.threads' settings.json
+pixi exec jq -r '.samples[]' settings.json
+```
+
+```text
+4
+SRR2589044
+SRR2584863
+SRR2584866
+```
+
+The same works on a notebook: `jq '.cells | length' analysis.ipynb` counts
+its cells.
+
+## 5. Check before you commit
+
+A checker finds a broken file in a second; GitHub finds it after a push, with
+a less helpful message. All of these run through Pixi, so there is nothing to
+install:
+
+| Format | Check with | Also useful |
+|--------|------------|-------------|
+| YAML | `pixi exec yamllint FILE` | `pixi exec actionlint` for GitHub workflows; `pixi exec cffconvert --validate -i CITATION.cff` ([lesson 11](11-documentation.qmd)) |
+| TOML | `pixi exec taplo check FILE` | `pixi exec taplo fmt FILE` lays the file out neatly; every `pixi` command checks `pixi.toml` |
+| JSON | `pixi exec python -m json.tool FILE` | `pixi exec jq . FILE` |
+
+Check your three files:
+
+```{.bash .run}
+pixi exec yamllint settings.yaml
+pixi exec taplo check settings.toml
+pixi exec python -m json.tool settings.json > /dev/null
+```
+
+```text
+ INFO taplo:lint_files:collect_files: found files total=1 excluded=0 files=[...]
+```
+
+No complaints. yamllint and Python print nothing when a file is fine (the
+`> /dev/null` throws away Python's neat copy); taplo prints one line about
+the files it found.
+
+## Try it yourself
+
+1. Write the `bwa` group of `settings.yaml` on one line.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `bwa: {threads: 4, extra: "-K 10000000"}`. Braces make a group on one
+   line in YAML, as in JSON.
+   :::
+
+2. This TOML line fails: `project = LTEE variant calling`. Why?
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   Text in TOML must be in quotes. `taplo check` points at `LTEE` and says
+   `expected value`; Python says `Invalid value (at line 1, column 11)`.
+   :::
+
+3. Find the two mistakes in this JSON:
+
+   ```{.json}
+   {
+     'min_depth': 10,
+     "paired": true,
+   }
+   ```
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   `'min_depth'` uses single quotes (JSON needs double quotes), and there is
+   a comma after the last item, `true`. Python stops at the first one:
+   `Expecting property name enclosed in double quotes: line 2 column 3`.
+   :::
+
+4. After the *Break it* below, change `surprises.yaml` so that all four
+   values stay text, and check with Python.
+
+   ::: {.callout-tip collapse="true" title="Solution"}
+   Quote them: `"3.10"`, `"NO"`, `"yes"`, `"2026-10-26"`. Python then prints
+   `{'python-version': '3.10', 'country': 'NO', 'answer': 'yes', 'date': '2026-10-26'}`.
+   :::
+
+## Break it: YAML reads what you wrote, not what you meant
+
+Save this file, then predict what a program will read from each line:
+
+```{.yaml filename="surprises.yaml" .write}
+---
+python-version: 3.10
+country: NO
+answer: yes
+date: 2026-10-26
+```
+
+Ask Python:
+
+```{.bash .run}
+pixi exec --spec python --spec pyyaml python -c "import yaml; print(yaml.safe_load(open('surprises.yaml')))"
+```
+
+```text
+{'python-version': 3.1, 'country': False, 'answer': True, 'date': datetime.date(2026, 10, 26)}
+```
+
+- `3.10` is a number, and as a number it is 3.1. In a GitHub Actions
+  workflow, `python-version: 3.10` asks for Python 3.1.
+- `NO` (Norway's country code) and `yes` become false and true. PyYAML and
+  other readers of the older YAML 1.1 do this; YAML 1.2 readers keep them as
+  text. Quoting makes them text for every reader.
+- `2026-10-26` becomes a date, not text.
+
+yamllint warns about two of them; it cannot know that you meant `3.10` as
+text:
+
+```{.bash .run}
+pixi exec yamllint surprises.yaml
+```
+
+```text
+surprises.yaml
+  3:10      warning  truthy value should be one of [false, true]  (truthy)
+  4:9       warning  truthy value should be one of [false, true]  (truthy)
+```
+
+Two more mistakes stop YAML altogether. A second `: ` inside a value:
+
+```{.yaml filename="colon.yaml" .write}
+---
+title: Data: part 2
+```
+
+```{.bash .expect-fail}
+pixi exec yamllint colon.yaml
+```
+
+```text
+colon.yaml
+  2:12      error    syntax error: mapping values are not allowed here (syntax)
+```
+
+And a tab in the indentation. Editors often hide tabs, so make the file with
+`printf`, where `\t` is a tab:
+
+```{.bash .run}
+printf -- '---\nbwa:\n\tthreads: 4\n' > tab.yaml
+```
+
+```{.bash .expect-fail}
+pixi exec yamllint tab.yaml
+```
+
+```text
+tab.yaml
+  3:1       error    syntax error: found character '\t' that cannot start any token (syntax)
+```
+
+The fixes: `title: "Data: part 2"`, and two spaces instead of the tab. Set
+your editor to insert spaces when you press Tab in YAML files.
+
+## Troubleshooting
+
+| Message | What to do |
+|---------|------------|
+| `mapping values are not allowed here` (YAML) | A `: ` inside a value: put the value in quotes. Or a line is indented wrongly. |
+| `found character '\t' that cannot start any token` (YAML) | A tab in the indentation: use spaces. |
+| `did not find expected key` or `expected <block end>` (YAML) | The indentation is off: items at the same level must line up. |
+| `truthy value should be one of [false, true]` on `on:` in a workflow file | yamllint reads `on` as true, as YAML 1.1 does; GitHub reads it as intended. This one warning is safe to ignore in workflow files. |
+| `expected value` or `expected new line` (taplo), `Invalid value` (Python) | TOML text without quotes, or two values on one line. |
+| `Illegal trailing comma` or `Expecting property name enclosed in double quotes` (JSON) | A comma after the last item, single quotes, or a comment. |
+| `Expecting value: line 1 column 1` (JSON) | The file is empty, or not JSON at all: often an error page saved by a download. |
+| `Invalid workflow file` on GitHub | Check the workflow on your computer with `pixi exec actionlint`. |
+
+## Apply it to your own project
+
+Run the checkers on your capstone's settings files, fix what they report,
+and quote every value that should stay text:
+
+```{.bash .norun}
+pixi exec yamllint config/ .github/workflows/
+pixi exec actionlint
+pixi exec taplo check pixi.toml
+pixi exec cffconvert --validate -i CITATION.cff
+```
+
+## Key points
+
+- YAML (`key: value`, indentation), TOML (`key = value`, `[sections]`, quoted text) and JSON (braces, double quotes) hold the same kinds of data: text, numbers, true/false, lists and groups.
+- In YAML, quote any value that should stay text but looks like a number, a date or yes/no: `"3.10"`, `"NO"`.
+- Indent YAML with spaces, never tabs. JSON has no comments and no comma after the last item.
+- Check before you commit: `yamllint`, `taplo check`, `python -m json.tool`, and `actionlint` for workflows, all with `pixi exec`.
+
+## Further reading
+
+- **YAML** 1.2.2 specification: <https://yaml.org/spec/1.2.2/>
+- **TOML** v1.0.0, short and readable: <https://toml.io/en/v1.0.0>
+- **JSON**, the whole format on one page: <https://www.json.org/json-en.html>
+- **yamllint** documentation: <https://yamllint.readthedocs.io/>
+- **Taplo**, the TOML checker and formatter: <https://taplo.tamasfe.dev/>
+- **jq** manual: <https://jqlang.org/manual/>
+- Quarto, *Front matter*: <https://quarto.org/docs/authoring/front-matter.html>
+- Pixi, manifest reference (every section of `pixi.toml`): <https://pixi.prefix.dev/latest/reference/pixi_manifest/>
+- GitHub, *Workflow syntax for GitHub Actions*: <https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions>
