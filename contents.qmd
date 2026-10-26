@@ -31,12 +31,12 @@ taught is in the schedules: [7-week course](schedule-course.qmd) and
 | | 10 Nextflow | [[]{.bi .bi-easel aria-hidden="true"}](lectures/10-nextflow/10-nextflow.qmd){aria-label="Slides for 10 Nextflow" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/10-nextflow.qmd){aria-label="Tutorial for 10 Nextflow" title="Tutorial"} |
 | Documentation and sharing | 11 Documentation | [[]{.bi .bi-easel aria-hidden="true"}](lectures/11-documentation/11-documentation.qmd){aria-label="Slides for 11 Documentation" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/11-documentation.qmd){aria-label="Tutorial for 11 Documentation" title="Tutorial"} |
 | | 12 Putting it all together | [[]{.bi .bi-easel aria-hidden="true"}](lectures/12-putting-it-together/12-putting-it-together.qmd){aria-label="Slides for 12 Putting it all together" title="Slides"} | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/12-putting-it-together.qmd){aria-label="Tutorial for 12 Putting it all together" title="Tutorial"} |
-| Extras | A Markdown | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/A-markdown.qmd){aria-label="Reference for A Markdown" title="Reference"} |
-| | B Take-down | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/B-take-down.qmd){aria-label="Tutorial for B Take-down" title="Tutorial"} |
-| | C Bash 101 | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/C-bash.qmd){aria-label="Tutorial for C Bash 101" title="Tutorial"} |
-| | D Terminal editors and sessions | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/D-terminal.qmd){aria-label="Tutorial for D Terminal editors and sessions" title="Tutorial"} |
-| | E YAML, TOML and JSON | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/E-yaml-toml-json.qmd){aria-label="Tutorial for E YAML, TOML and JSON" title="Tutorial"} |
-| Extras (optional) | S1 Package and share your tool | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/S1-packaging.qmd){aria-label="Tutorial for S1 Package and share your tool" title="Tutorial"} |
+| Extras | Markdown | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/A-markdown.qmd){aria-label="Reference for Markdown" title="Reference"} |
+| | Take-down | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/B-take-down.qmd){aria-label="Tutorial for Take-down" title="Tutorial"} |
+| | Bash 101 | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/C-bash.qmd){aria-label="Tutorial for Bash 101" title="Tutorial"} |
+| | Terminal editors and sessions | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/D-terminal.qmd){aria-label="Tutorial for Terminal editors and sessions" title="Tutorial"} |
+| | YAML, TOML and JSON | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/E-yaml-toml-json.qmd){aria-label="Tutorial for YAML, TOML and JSON" title="Tutorial"} |
+| Extras (optional) | Package and share your tool | | [[]{.bi .bi-journal-code aria-hidden="true"}](pages/S1-packaging.qmd){aria-label="Tutorial for Package and share your tool" title="Tutorial"} |
 :::
 
 Also: [cheat sheets](cheatsheets/index.qmd) · [the LTEE example project](pages/ltee-project.qmd) · [glossary](pages/glossary.qmd) · [LTEE project hand-in](assessment/ltee-project.qmd) · [capstone rubric](assessment/capstone-rubric.qmd) · [sources and credits](pages/credits.qmd)

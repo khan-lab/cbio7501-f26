@@ -20,7 +20,7 @@ package cache. [Take-down](pages/B-take-down.qmd) frees it afterwards.
 
 **I have never used a terminal. Is that a problem?** No. The lessons give
 every command, but they go faster if `cd`, `ls` and pipes are familiar. Spend
-an hour on [C Bash 101](pages/C-bash.qmd) before lesson 02; it ends with
+an hour on [Bash 101](pages/C-bash.qmd) before lesson 02; it ends with
 longer shell tutorials, from Data Carpentry and Software Carpentry, if you
 want more.
 

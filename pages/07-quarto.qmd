@@ -48,7 +48,7 @@ predicted (outcome 4).
 
 Lessons [02](02-project-organization.qmd), [03](03-data-management.qmd#hands-on),
 [04](04-git.qmd) and [05](05-pixi.qmd). Basic Python (variables, functions, `import`, a little pandas). Markdown: see
-[appendix A](A-markdown.qmd) for a one-page summary.
+[the Markdown extra](A-markdown.qmd) for a one-page summary.
 
 ## 1. The project's environment
 

@@ -1,5 +1,5 @@
 ---
-title: "E YAML, TOML and JSON"
+title: "YAML, TOML and JSON"
 subtitle: "Read, write and check the settings files that every lesson uses"
 description: "The three text formats that hold a project's settings: the same settings written in YAML, TOML and JSON, the rules of each, the YAML values that are not what they seem, and the checkers to run before you commit."
 test:
@@ -10,7 +10,7 @@ test:
 ::: {.at-a-glance}
 - **Time:** about 40 minutes, at home; come back when a settings file will not load.
 - **You need:** a terminal and Pixi ([lesson 00](00-setup.qmd)).
-- **Used in:** YAML: Quarto ([07](07-quarto.qmd)), workflow settings ([09](09-snakemake.qmd), [10](10-nextflow.qmd)), GitHub Actions ([04](04-git.qmd)), `CITATION.cff` ([11](11-documentation.qmd)), Conda environment files ([05b](05b-conda-comparison.qmd)). TOML: `pixi.toml` ([05](05-pixi.qmd)), `pyproject.toml` ([S1](S1-packaging.qmd)). JSON: Jupyter notebooks ([06](06-jupyter.qmd)), Zenodo ([01](01-introduction.qmd), [12](12-putting-it-together.qmd)).
+- **Used in:** YAML: Quarto ([07](07-quarto.qmd)), workflow settings ([09](09-snakemake.qmd), [10](10-nextflow.qmd)), GitHub Actions ([04](04-git.qmd)), `CITATION.cff` ([11](11-documentation.qmd)), Conda environment files ([05b](05b-conda-comparison.qmd)). TOML: `pixi.toml` ([05](05-pixi.qmd)), `pyproject.toml` ([packaging](S1-packaging.qmd)). JSON: Jupyter notebooks ([06](06-jupyter.qmd)), Zenodo ([01](01-introduction.qmd), [12](12-putting-it-together.qmd)).
 - **You will have:** the same settings in all three formats, read by one Python script, and the checkers to run on any project.
 :::
 

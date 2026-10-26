@@ -10,6 +10,6 @@
 "git remote add origin git@github.com:ada-lovelace/ltee-project.git": "git init --bare \"$HOME/remotes/ltee-project.git\" && git remote add origin \"$HOME/remotes/ltee-project.git\""
 "git@github.com:ada-lovelace/ltee-project.git": "\"$HOME/remotes/ltee-project.git\""
 
-# Extra D: learners open a new terminal after `pixi global install`, which
+# Terminal editors and sessions: learners open a new terminal after `pixi global install`, which
 # puts ~/.pixi/bin on their PATH; a test run has no new terminal.
 "pixi global install nano tmux screen": "pixi global install nano tmux screen && export PATH=\"$HOME/.pixi/bin:$PATH\""

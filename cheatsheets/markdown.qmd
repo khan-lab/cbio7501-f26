@@ -1,6 +1,6 @@
 ---
 title: "Markdown"
-subtitle: "Cheat sheet for appendix A (used in READMEs, Quarto and notebooks)"
+subtitle: "Cheat sheet for the Markdown extra (used in READMEs, Quarto and notebooks)"
 ---
 
 ## Text
@@ -57,7 +57,7 @@ See @fig-quality and @tbl-reads.      (cross-references to labelled cells)
 As shown by @tenaillon2016.           (a citation from references.bib)
 ```
 
-See [appendix A](../pages/A-markdown.qmd#what-quarto-adds) and the [Quarto cheat sheet](quarto.qmd).
+See [the Markdown extra](../pages/A-markdown.qmd#what-quarto-adds) and the [Quarto cheat sheet](quarto.qmd).
 
 ## Official cheat sheets and references
 

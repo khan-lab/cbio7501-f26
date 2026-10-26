@@ -26,7 +26,7 @@ Each deck also ends with two to four of these questions on a *Quiz* slide.
 | [10 Nextflow](10-nextflow.qmd) | 6 |
 | [11 Documentation](11-documentation.qmd) | 6 |
 | [12 Putting it all together](12-putting-it-together.qmd) | 6 |
-| [S1 Package and share your tool](S1-packaging.qmd) | 6 |
+| [Package and share your tool](S1-packaging.qmd) | 6 |
 
 ::: {.callout-note title="For instructors"}
 The banks are plain Quarto pages. To build a quiz, pick questions by outcome

@@ -37,8 +37,8 @@ Follow the structure of the existing pages: at-a-glance box, overview and
 learning outcomes (at "apply" level, each tied to a check), numbered steps
 with expected output, *Try it yourself* with folded solutions, a *Break it*
 exercise, troubleshooting, *Apply it to your own project*, key points,
-further reading. Use OS tabs where commands differ. Extras (A, B, C, ...)
-need no *Break it*: show a failure in a normal section instead.
+further reading. Use OS tabs where commands differ. Extras need
+no *Break it*: show a failure in a normal section instead.
 
 Lessons, decks and quizzes do not name weeks or weekdays, so they work for the
 course, the workshop and self-study alike: give durations in the at-a-glance

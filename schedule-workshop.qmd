@@ -27,4 +27,4 @@ on day 1 morning while the introduction runs.
 [05b Conda comparison](pages/05b-conda-comparison.qmd), Apptainer and
 registries in [08](pages/08-containers.qmd), the full
 [Nextflow tutorial](pages/10-nextflow.qmd), Zenodo release in
-[12](pages/12-putting-it-together.qmd), [S1 packaging](pages/S1-packaging.qmd).
+[12](pages/12-putting-it-together.qmd), [packaging](pages/S1-packaging.qmd).

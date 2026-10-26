@@ -30,7 +30,7 @@ subtitle: "Terms used in the lessons, in one line each"
 | Metadata | Data about the data: where it comes from, what each column and file means. | [03](03-data-management.qmd) |
 | Process (Nextflow) | A step of a Nextflow pipeline: inputs, outputs, script. | [10](10-nextflow.qmd) |
 | Pull request | A proposal to merge a branch, with review and checks. | [04](04-git.qmd) |
-| Recipe (conda) | Instructions to build a conda package: source, requirements, tests, license. | [S1](S1-packaging.qmd) |
+| Recipe (conda) | Instructions to build a conda package: source, requirements, tests, license. | [Package and share your tool](S1-packaging.qmd) |
 | Replicable | A new study with new data gives consistent results. | [01](01-introduction.qmd) |
 | Reproducible | The same data and the same analysis give the same results. | [01](01-introduction.qmd) |
 | Rule (Snakemake) | How to make output files from input files. | [09](09-snakemake.qmd) |

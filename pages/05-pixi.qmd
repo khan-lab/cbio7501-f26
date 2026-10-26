@@ -592,7 +592,7 @@ exactly the feedback a reviewer would give.
 | A task with a loop or `if` fails with a syntax error | Pixi's task shell is not Bash. Put the logic in a script and run the script from the task. |
 | `pixi run reproduce` fails on native Windows | Expected: the `pipeline` environment does not exist on Windows. Use WSL2 or Codespaces. |
 | Downloads are slow in class | Run `pixi install --all` at home; the cache makes later installs fast. |
-| Disk is full | `pixi clean` removes this project's environments; `pixi clean cache` empties the shared cache ([B Take-down](B-take-down.qmd)). |
+| Disk is full | `pixi clean` removes this project's environments; `pixi clean cache` empties the shared cache ([Take-down](B-take-down.qmd)). |
 
 ## Apply it to your own project
 

@@ -18,7 +18,7 @@ page maps lessons to weeks.
 | 4 | Literate programming | [06 Jupyter](pages/06-jupyter.qmd) (40); [07 Quarto](pages/07-quarto.qmd) §1–3: a first document (40) | [07](pages/07-quarto.qmd) §4–9: the LTEE report, parameters, formats, notebooks, the report in `reproduce` | Your own mini-analysis: explore in a notebook, report in Quarto, both in `reproduce` | Quarto extras; the *Break it* exercises |
 | 5 | Containers | [08](pages/08-containers.qmd) §1–4: Docker | [08](pages/08-containers.qmd) §5–7: image from the lock file, Apptainer | Containerize the LTEE environment; optional Karakoram run | [08](pages/08-containers.qmd) §8–9: registry, provenance |
 | 6 | Workflows and automation | [09 Snakemake](pages/09-snakemake.qmd) §1–5 | [09](pages/09-snakemake.qmd) §6–11 | LTEE pipeline in Snakemake (70) + [10 Nextflow](pages/10-nextflow.qmd) intro (40) | [10 Nextflow](pages/10-nextflow.qmd) full tutorial; nf-core demo |
-| 7 | Publishing, archiving, open practice | [11 Documentation](pages/11-documentation.qmd) | [12](pages/12-putting-it-together.qmd): swap and reproduce | Final presentations (can move a week later) | Fixes from the reproduce report; release with a DOI; optional [S1](pages/S1-packaging.qmd) |
+| 7 | Publishing, archiving, open practice | [11 Documentation](pages/11-documentation.qmd) | [12](pages/12-putting-it-together.qmd): swap and reproduce | Final presentations (can move a week later) | Fixes from the reproduce report; release with a DOI; optional [packaging extra](pages/S1-packaging.qmd) |
 
 **Two projects.** In the hands-on parts of the lessons you build the LTEE
 project; you hand in its GitHub repository and the Zenodo DOI of its release
@@ -30,4 +30,4 @@ with the [rubric](assessment/capstone-rubric.qmd)).
 
 **If a week runs long**, cut in this order: optional HPC steps, Jupyter, the
 Conda comparison (already at home), the Nextflow introduction (shrink to a
-demo). S1 is always at home.
+demo). The packaging extra is always done at home.

@@ -5,16 +5,19 @@ format:
     css: ../../assets/css/fonts.css
     highlight-style: github
     code-line-numbers: false
+    syntax-highlighting: github
     width: 1280
     height: 720
+    margin: 0.06
     slide-number: true
     progress: true
     hash: true
-    transition: none
-    chalkboard: false
+    transition: fade
+    chalkboard: true
+    transition-speed: fast
     incremental: false
     code-copy: true
-    footer: "CBIO7501 Reproducible and Open Science · CC BY 4.0"
+    footer: "CBIO7501: The Art of Reproducible and Open Science - CC BY 4.0"
     link-external-newwindow: true
     preview-links: false
     lang: en

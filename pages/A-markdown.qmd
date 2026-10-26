@@ -1,5 +1,5 @@
 ---
-title: "A Markdown"
+title: "Markdown"
 subtitle: "The one-page reference for the text you write in READMEs, Quarto reports and notebooks"
 description: "Markdown syntax used in this course: headings, emphasis, lists, links, images with alt text, code, tables, and the Quarto additions (callouts, cross-references, citations)."
 sources:

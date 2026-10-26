@@ -1,5 +1,5 @@
 ---
-title: "B Take-down"
+title: "Take-down"
 subtitle: "Free the disk space the course used, and remove the tools if you want to"
 description: "Remove project environments, Pixi's cache, global tools and Pixi itself; workflow-manager leftovers; Docker images; Codespaces. Keep what you need: your repositories."
 sources:

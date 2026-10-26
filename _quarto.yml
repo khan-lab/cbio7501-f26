@@ -1,8 +1,3 @@
-# Site skeleton adapted from NBIS "Tools for Reproducible Research"
-# (https://github.com/NBISweden/workshop-reproducible-research, CC BY 4.0):
-# same split into lectures/<topic>/ decks and pages/<topic> tutorials, same
-# render-list approach. Theme (assets/css/), navigation and filters are our
-# own; fonts are served from assets/fonts/ (SIL OFL 1.1).
 project:
   type: website
   output-dir: _site
@@ -106,20 +101,20 @@ website:
               href: pages/12-putting-it-together.qmd
         - section: "Extras"
           contents:
-            - text: "A Markdown"
+            - text: "Markdown"
               href: pages/A-markdown.qmd
-            - text: "B Take-down"
-              href: pages/B-take-down.qmd
-            - text: "C Bash 101"
+            - text: "Bash 101"
               href: pages/C-bash.qmd
-            - text: "D Terminal editors and sessions"
+            - text: "Terminal editors and sessions"
               href: pages/D-terminal.qmd
-            - text: "E YAML, TOML and JSON"
+            - text: "YAML, TOML and JSON"
               href: pages/E-yaml-toml-json.qmd
-            - text: "S1 Package and share your tool"
+            - text: "Package and share your tool"
               href: pages/S1-packaging.qmd
             - text: "The LTEE example project"
               href: pages/ltee-project.qmd
+            - text: "Take-down"
+              href: pages/B-take-down.qmd
             - text: "Glossary"
               href: pages/glossary.qmd
         - section: "Assessment"

@@ -75,7 +75,7 @@ Check which shell you have; the answer is usually `bash` or `zsh`:
 echo "$SHELL"
 ```
 
-New to the terminal? [C Bash 101](C-bash.qmd) is an hour of practice with the
+New to the terminal? [Bash 101](C-bash.qmd) is an hour of practice with the
 commands the lessons use. Do it before lesson 02.
 
 ## 3. Install Pixi
@@ -197,7 +197,7 @@ git config --global core.editor nano
 The third line makes new repositories start on a branch called `main`, as on
 GitHub. The last one makes Git open nano, an easy editor, when it needs a
 message from you; otherwise it often opens vim, which is hard to leave the
-first time ([D Terminal editors and sessions](D-terminal.qmd)).
+first time ([Terminal editors and sessions](D-terminal.qmd)).
 
 ### Create a GitHub account and an SSH key
 
@@ -307,7 +307,7 @@ git --version
    The line `Cache dir` shows it (on macOS `~/Library/Caches/rattler/cache`,
    on Linux `~/.cache/rattler/cache`). It grows with every package version
    you use, easily to several GB. `pixi clean cache` empties it (see
-   [B Take-down](B-take-down.qmd)).
+   [Take-down](B-take-down.qmd)).
    :::
 
 ## Break it: what "command not found" means

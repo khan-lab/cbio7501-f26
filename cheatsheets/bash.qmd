@@ -1,6 +1,6 @@
 ---
 title: "Bash"
-subtitle: "Cheat sheet for appendix C (and every lesson)"
+subtitle: "Cheat sheet for Bash 101 (and every lesson)"
 ---
 
 ## Where you are
@@ -60,7 +60,7 @@ done
 | Check a script for common mistakes | `pixi exec shellcheck script.sh` |
 
 A script starts with `#!/usr/bin/env bash` and `set -euo pipefail`; `"$@"` is
-the list of its arguments. See [appendix C, section 8](../pages/C-bash.qmd#your-first-script).
+the list of its arguments. See [Bash 101, section 8](../pages/C-bash.qmd#your-first-script).
 
 ## Permissions
 

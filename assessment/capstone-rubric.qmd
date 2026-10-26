@@ -78,7 +78,7 @@ environment* either, because nobody can check them.
 
 - The size or novelty of the analysis. A small, honest analysis that anyone
   can rerun beats an impressive one that nobody can.
-- Acceptance of anything by conda-forge, Bioconda or a journal ([S1](../pages/S1-packaging.qmd) is optional).
+- Acceptance of anything by conda-forge, Bioconda or a journal ([Package and share your tool](../pages/S1-packaging.qmd) is optional).
 - Whether the repository is public, or archived on Zenodo: unpublished
   research can stay private, shared with the instructor.
 - Sharing data you may not share: if your data is sensitive, use public or

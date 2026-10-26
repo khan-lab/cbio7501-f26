@@ -108,10 +108,10 @@ Apptainer, and the project is mounted at run time instead of copied in.
 | Snakemake documentation, <https://snakemake.readthedocs.io/> | MIT (repository `snakemake/snakemake`) | Reference documentation |
 | Nextflow documentation, <https://docs.seqera.io/nextflow/> | Apache-2.0 (repository `nextflow-io/nextflow`) | Reference documentation |
 | The Turing Way, <https://book.the-turing-way.org/> | CC BY 4.0 text, MIT code | Reading list |
-| conda-forge documentation, *Contributing packages* and *noarch*, <https://conda-forge.org/docs/maintainer/adding_pkgs/> | BSD-3-Clause (repository `conda-forge/conda-forge.github.io`) | Rules summarized in our own words in [S1](S1-packaging.qmd) |
-| Bioconda, *Guidelines for bioconda recipes*, <https://bioconda.github.io/contributor/guidelines.html> | MIT (repository `bioconda/bioconda-docs`) | Rules summarized in our own words in [S1](S1-packaging.qmd) |
+| conda-forge documentation, *Contributing packages* and *noarch*, <https://conda-forge.org/docs/maintainer/adding_pkgs/> | BSD-3-Clause (repository `conda-forge/conda-forge.github.io`) | Rules summarized in our own words in [Package and share your tool](S1-packaging.qmd) |
+| Bioconda, *Guidelines for bioconda recipes*, <https://bioconda.github.io/contributor/guidelines.html> | MIT (repository `bioconda/bioconda-docs`) | Rules summarized in our own words in [Package and share your tool](S1-packaging.qmd) |
 | rattler-build, <https://rattler.build/> | BSD-3-Clause | Tool documentation |
-| Pixi build (preview), <https://pixi.prefix.dev/latest/build/getting_started/> | BSD-3-Clause | Mentioned as an alternative in [S1](S1-packaging.qmd) |
+| Pixi build (preview), <https://pixi.prefix.dev/latest/build/getting_started/> | BSD-3-Clause | Mentioned as an alternative in [Package and share your tool](S1-packaging.qmd) |
 | Zenodo GitHub integration, <https://help.zenodo.org/docs/github/> | | Steps in [12](12-putting-it-together.qmd) written in our own words |
 
 ## 3. Data
@@ -165,8 +165,8 @@ example project). Main tools, with the versions we tested on 2026-10-24:
 | snakefmt | 2.1.0 | <https://github.com/snakemake/snakefmt> |
 | OpenJDK (for Nextflow and FastQC) | 25.0.2 | <https://openjdk.org/> |
 | micromamba (lesson 05b) | 2.9.0 | <https://mamba.readthedocs.io/> |
-| rattler-build (lesson S1) | 0.77.0 | <https://rattler.build/> |
-| conda-smithy (lesson S1, linter) | 2026.10.21 | <https://github.com/conda-forge/conda-smithy> |
+| rattler-build (packaging extra) | 0.77.0 | <https://rattler.build/> |
+| conda-smithy (packaging extra, linter) | 2026.10.21 | <https://github.com/conda-forge/conda-smithy> |
 | cffconvert (lessons 11, 12) | from conda-forge | <https://github.com/citation-file-format/cffconvert> |
 | lychee (link checker) | 0.24.2 | <https://github.com/lycheeverse/lychee> |
 | Bioconda | | Grüning B et al. (2018) *Nat Methods* 15:475. <https://doi.org/10.1038/s41592-018-0046-7> |

@@ -1,5 +1,5 @@
 ---
-title: "D Terminal editors and sessions"
+title: "Terminal editors and sessions"
 subtitle: "Edit files without leaving the terminal, get out of vim, and keep long runs alive with tmux or screen"
 description: "Practice for working in a terminal only: editing with nano, the few vim keys everyone needs, and tmux and screen sessions that keep a long command running when the terminal closes or the connection drops."
 test:
@@ -8,7 +8,7 @@ test:
 ---
 
 ::: {.at-a-glance}
-- **Time:** about 40 minutes, at home; best after [C Bash 101](C-bash.qmd).
+- **Time:** about 40 minutes, at home; best after [Bash 101](C-bash.qmd).
 - **You need:** a terminal and Pixi ([lesson 00](00-setup.qmd)).
 - **You will have:** nano, tmux and screen installed, Git set to use nano, and a command that kept running after the shell that started it was gone.
 :::
