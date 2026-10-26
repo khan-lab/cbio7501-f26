@@ -1,0 +1,81 @@
+---
+title: "LTEE project"
+subtitle: "What you hand in for the project you build in the lessons"
+description: "How the LTEE project (40% of the course grade) is assessed: your own ltee-project repository on GitHub, built step by step in the hands-on parts of the lessons, released and archived on Zenodo with a DOI."
+toc: true
+---
+
+::: {.callout-note title="Note"}
+How the 40% is split between the items below is to be confirmed.
+:::
+
+## What it is
+
+The LTEE project is the project you build in the hands-on parts of the
+lessons, from [lesson 02](../pages/02-project-organization.qmd) to
+[lesson 12](../pages/12-putting-it-together.qmd): the same analysis and the
+same data for everyone ([about the project](../pages/ltee-project.qmd)). It
+counts for **40%** of the course grade.
+
+It is assessed separately from the [capstone](capstone-rubric.qmd) (30%), in
+which you apply the same skills to your own research project.
+
+## What you hand in
+
+When you have finished lesson 12:
+
+1. The address of your `ltee-project` repository on GitHub. It must be
+   public, because Zenodo archives only public repositories.
+2. The **DOI** of its released version from Zenodo
+   ([lesson 12, section 3](../pages/12-putting-it-together.qmd#release-and-archive-on-zenodo)).
+   The DOI badge is at the top of your README, and the DOI is in
+   `CITATION.cff`.
+
+## What your repository shows
+
+Each lesson adds something. All of it should be in the released version:
+
+| Lesson | In your repository |
+|--------|--------------------|
+| [02](../pages/02-project-organization.qmd) | the layout from the course template |
+| [03](../pages/03-data-management.qmd#hands-on) | `scripts/download_data.py`; `metadata/sources.tsv`, `checksums.sha256` and `samples.tsv`; no raw data in Git |
+| [04](../pages/04-git.qmd) | a history of small, described commits; the tag `lesson-04`; a merged pull request, and from then on one pull request per lesson |
+| [05](../pages/05-pixi.qmd) | `pixi.toml` and `pixi.lock`, committed together; the tasks, ending in `reproduce`; a green *Reproduce* check on GitHub |
+| [06](../pages/06-jupyter.qmd), [07](../pages/07-quarto.qmd) | `notebooks/explore-reads.ipynb` with outputs cleared; `reports/ltee-report.qmd`, rendered by `pixi run reproduce` |
+| [08](../pages/08-containers.qmd) | `containers/Dockerfile`, which builds the environment from `pixi.lock` |
+| [09](../pages/09-snakemake.qmd) | `workflow/Snakefile`, run by `reproduce`; `pixi run compare-to-shell` reports identical variants; the variants section of the report |
+| [10](../pages/10-nextflow.qmd) | `workflow/nextflow/main.nf`; `pixi run compare-workflows` reports identical variants |
+| [11](../pages/11-documentation.qmd) | a README that answers the seven questions; `LICENSE`; a valid `CITATION.cff`; `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`; `docs/software-versions.txt` |
+| [12](../pages/12-putting-it-together.qmd) | a release (`v1.0.0`) on GitHub, archived on Zenodo with a DOI |
+
+The report gives the expected variant counts
+([the LTEE project](../pages/ltee-project.qmd#the-pipeline)).
+
+The history matters as well as the final files: the commits, tags and pull
+requests from the lessons show how the project was built.
+
+## How it is checked
+
+1. **The *Reproduce* GitHub Action** on the released version: a fresh
+   machine, a clean clone, `pixi install --locked`, `pixi run reproduce`.
+   Green or red.
+2. **The automatic checks**, listed by the same script as for the capstone
+   (`pixi run check-capstone PATH` in the course repository). The finished
+   project in the course repository passes all of them once it has a DOI.
+3. **A reading of the repository** and its history, against the table above.
+
+You can run 1 and 2 yourself at any time.
+
+## Self-check before you hand in
+
+```{.bash}
+# In a new folder, as a grader would:
+git clone git@github.com:YOU/ltee-project.git check && cd check
+pixi install --locked
+pixi run reproduce
+pixi run compare-workflows
+pixi exec cffconvert --validate -i CITATION.cff
+git tag            # v1.0.0 is there
+```
+
+And from the course repository: `pixi run check-capstone ../check`.
