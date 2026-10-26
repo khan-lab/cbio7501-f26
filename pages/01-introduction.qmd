@@ -24,7 +24,7 @@ test:
 
 ::: {.at-a-glance}
 - **Time:** 45 minutes, at home, after the lecture (or on its own, starting from the key ideas below).
-- **Slides:** TBD
+- **Slides (PDF):** [Lecture 1, Reproducibility](../slides/Lecture1_Reproducibility.pdf) and [Lecture 2, Open science](../slides/Lecture2_Open-Science.pdf)
 - **You need:** a web browser; a paper from your field (or use the worked example); Pixi for the *Break it* step.
 - **You will have:** an audit of one paper's data, code and environment, which you can turn into the "related work" of your capstone README.
 :::

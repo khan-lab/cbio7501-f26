@@ -34,7 +34,7 @@ test:
 
 ::: {.at-a-glance}
 - **Time:** Part A (concepts) 25 minutes, self-paced or in the lecture; Part B (hands-on) 40 minutes, after [lesson 02](02-project-organization.qmd).
-- **Slides:** [Data management and FAIR](../lectures/03-data-management/03-data-management.qmd)
+- **Slides:** [Data management and FAIR](../lectures/03-data-management/03-data-management.qmd); open data, FAIR and data repositories are also in [Lecture 2, Open science](../slides/Lecture2_Open-Science.pdf) (PDF)
 - **You need:** the `ltee-project` folder from [lesson 02](02-project-organization.qmd); about 500 MB of free disk space.
 - **You will have:** the LTEE raw data in `data/raw/`, verified, read-only and described in `metadata/`.
 :::

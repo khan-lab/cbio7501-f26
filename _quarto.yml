@@ -21,6 +21,7 @@ project:
     - cheatsheets/*.qmd
   resources:
     - assets/fonts/
+    - slides/*.pdf
 
 website:
   title: "Reproducible and Open Science"

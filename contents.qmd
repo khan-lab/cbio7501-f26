@@ -13,7 +13,7 @@ taught is in the schedules: [7-week course](schedule-course.qmd) and
 | Lesson | Topic | Slides | Tutorial | In short |
 |--------|-------|:------:|:--------:|----------|
 | 00 Setup | Getting started | | [tutorial](pages/00-setup.qmd) | Pixi, Git, GitHub, WSL2 or Codespaces |
-| 01 Reproducibility and open science | Introduction | [slides](lectures/01-introduction/01-introduction.qmd) | [tutorial](pages/01-introduction.qmd) | definitions, evidence, five pillars, open science; audit a paper |
+| 01 Reproducibility and open science | Introduction | [slides](lectures/01-introduction/01-introduction.qmd)<br>[[Lecture 1 (PDF)](slides/Lecture1_Reproducibility.pdf)]{.text-nowrap}<br>[[Lecture 2 (PDF)](slides/Lecture2_Open-Science.pdf)]{.text-nowrap} | [tutorial](pages/01-introduction.qmd) | definitions, evidence, five pillars, open science; audit a paper |
 | 02 Project organization | Project organization and data management | [slides](lectures/02-project-organization/02-project-organization.qmd) | [tutorial](pages/02-project-organization.qmd) | sketch a layout, generate the project from the template |
 | 03 Data management and FAIR | Project organization and data management | [slides](lectures/03-data-management/03-data-management.qmd) | [tutorial](pages/03-data-management.qmd) | FAIR and CARE, data availability; download, checksums, metadata |
 | 04 Git and GitHub | Version control | [slides](lectures/04-git/04-git.qmd) | [tutorial](pages/04-git.qmd) | history, branches, pull requests, a check on every push |

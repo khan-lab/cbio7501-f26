@@ -336,3 +336,5 @@ Answers: 1 reproducible; 2 c (from 23 papers); 3 c.
 - Open science helps others and you; FAIR is not the same as open
 
 **Self-paced:** [tutorial 01](../../pages/01-introduction.qmd), audit a paper's data and code.
+
+**Full lecture slides (PDF):** [Lecture 1, Reproducibility](../../slides/Lecture1_Reproducibility.pdf) and [Lecture 2, Open science](../../slides/Lecture2_Open-Science.pdf).

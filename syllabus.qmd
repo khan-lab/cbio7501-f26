@@ -38,7 +38,7 @@ By the end of the course you can:
 
 | Week | Topic | Lessons |
 |------|-------|---------|
-| 1 | Introduction to reproducibility and open science | 01, 03 (concepts) |
+| 1 | Introduction to reproducibility and open science | 01, 03 (concepts); slides (PDF): [Lecture 1, Reproducibility](slides/Lecture1_Reproducibility.pdf), [Lecture 2, Open science](slides/Lecture2_Open-Science.pdf) |
 | 2 | Project organization and version control: Git and GitHub | 02, 03 (hands-on), 04 |
 | 3 | Portable and reproducible environments (Pixi first; Conda compared) | 05, 05b |
 | 4 | Literate programming: Jupyter and Quarto | 06, 07 |
