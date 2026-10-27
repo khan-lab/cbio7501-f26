@@ -125,7 +125,7 @@ In your editor (or with the copy buttons), save this sample sheet as
 `samples.tsv` in `bash-practice/`. Its columns are separated by tabs; it is a
 short version of the LTEE sample sheet from [lesson 03](03-data-management.qmd#describe-the-samples):
 
-```{.text filename="samples.tsv" .write}
+```{.default filename="samples.tsv" .write}
 sample	strain	generation	population	mutator	cit
 SRR2589044	REL2181A	5000	Ara-3	None	unknown
 SRR2584863	REL7179B	15000	Ara-3	None	unknown
@@ -136,7 +136,7 @@ And three small FASTQ files in `data/`. FASTQ stores one read in four lines:
 a name starting with `@`, the sequence, a `+`, and one quality letter per
 base. These reads are made up for practice:
 
-```{.text filename="data/SRR2589044.fastq" .write}
+```{.default filename="data/SRR2589044.fastq" .write}
 @SRR2589044.1
 ACGTTGCAAGGCTTACGATC
 +
@@ -147,7 +147,7 @@ TTGACCGTAGGCATCGATCA
 IIIIIIIIIIIIHHHHGGGG
 ```
 
-```{.text filename="data/SRR2584863.fastq" .write}
+```{.default filename="data/SRR2584863.fastq" .write}
 @SRR2584863.1
 GGCATTACGTACGATCGGAA
 +
@@ -162,7 +162,7 @@ ATTGCCGATCGTTACGGACT
 IIIIIIIIIIIIIIHHHHHH
 ```
 
-```{.text filename="data/SRR2584866.fastq" .write}
+```{.default filename="data/SRR2584866.fastq" .write}
 @SRR2584866.1
 TTACGGCATCGATTACGCAT
 +

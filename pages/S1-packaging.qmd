@@ -160,7 +160,7 @@ minivcf = "minivcf.cli:main"
 
 A package needs a license and a README:
 
-```{.text filename="LICENSE" .write}
+```{.default filename="LICENSE" .write}
 MIT License
 
 Copyright (c) 2026 Ada Lovelace
@@ -197,7 +197,7 @@ Count and compare the variant records of VCF files.
 
 A tiny example VCF file and three tests:
 
-```{.text filename="tests/data/example.vcf" .write}
+```{.default filename="tests/data/example.vcf" .write}
 ##fileformat=VCFv4.2
 #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
 CP000819.1	100	.	A	G	50	.	DP=12
@@ -251,7 +251,7 @@ minivcf = { path = ".", editable = true }
 test = { cmd = "pytest -q", description = "Run the tests" }
 ```
 
-```{.text filename=".gitignore" .write}
+```{.default filename=".gitignore" .write}
 .pixi/*
 !.pixi/config.toml
 dist/

@@ -250,7 +250,7 @@ your paper will need the exact source, and so will anyone who wants to
 download the same files. Create `metadata/sources.tsv` (tab-separated; copy
 the block with the copy button):
 
-```{.text filename="metadata/sources.tsv" .write}
+```{.default filename="metadata/sources.tsv" .write}
 name	url	md5	unpack	dest
 ltee_subset	https://ndownloader.figshare.com/files/14418248	e1294a9201359d4341856bcc735929d3	tar	data/raw/fastq
 rel606_reference	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/017/985/GCA_000017985.1_ASM1798v1/GCA_000017985.1_ASM1798v1_genomic.fna.gz	84ac547b7fa22c6291aa519f2d1ce444	none	data/raw/reference/ecoli_rel606.fasta.gz
@@ -369,7 +369,7 @@ For your own data you would create the file with
 For the LTEE data, use the values we recorded for the course, so you can check
 your files against ours:
 
-```{.text filename="metadata/checksums.sha256" .write}
+```{.default filename="metadata/checksums.sha256" .write}
 242282451273246c6b01cf97b9689d8fd90e4aac6c4cf53d87ebe2f01303b452  data/raw/fastq/SRR2584863_1.trim.sub.fastq
 df1eebd154c22e50f6117f15131d479a4f3cd73d0fa5e43ef73a2dce516b2e86  data/raw/fastq/SRR2584863_2.trim.sub.fastq
 f8aceb43636667de5cbeb32e8ee770af3b25f3a48c56e8d03e3db2a53aaafecc  data/raw/fastq/SRR2584866_1.trim.sub.fastq
@@ -419,7 +419,7 @@ sample's files. The values come from the
 Data Carpentry lesson's metadata (Tenaillon et al. 2016). Create
 `metadata/samples.tsv`:
 
-```{.text filename="metadata/samples.tsv" .write}
+```{.default filename="metadata/samples.tsv" .write}
 sample	strain	generation	population	mutator	cit	fastq_1	fastq_2
 SRR2589044	REL2181A	5000	Ara-3	None	unknown	data/raw/fastq/SRR2589044_1.trim.sub.fastq	data/raw/fastq/SRR2589044_2.trim.sub.fastq
 SRR2584863	REL7179B	15000	Ara-3	None	unknown	data/raw/fastq/SRR2584863_1.trim.sub.fastq	data/raw/fastq/SRR2584863_2.trim.sub.fastq
@@ -704,7 +704,7 @@ chmod a-w data/raw/reference/ecoli_rel606.fasta.gz
 | `md5sum: command not found` (older macOS) | Use `md5 FILE` and `shasum -a 256 -c metadata/checksums.sha256`. |
 | `FAILED` for a FASTQ file | The download was incomplete or the file was changed. Delete it with `rm -rf data/raw/fastq`, then repeat step 2. |
 | `tar: Error opening archive` | The download did not finish: check the md5 again and download again. |
-| Copy-paste of `.tsv` files lost the tabs | Some editors turn tabs into spaces. Use the copy button on the code block, or check with `cat -t metadata/samples.tsv` (tabs show as `^I`). |
+| `KeyError: 'dest'` from `download_data.py`, or `cut` prints whole lines | The `.tsv` files have spaces instead of tabs: some editors, and older versions of this page, turn tabs into spaces. Check with `cat -t metadata/sources.tsv` (tabs show as `^I`), and turn the spaces back into tabs with `perl -pi -e 's/ +/\t/g' metadata/sources.tsv metadata/samples.tsv` (safe here: no value contains a space). |
 | Windows: `Get-FileHash` prints upper case | Compare ignoring case, or use `.ToLower()` as shown. |
 
 ## Apply it to your own project

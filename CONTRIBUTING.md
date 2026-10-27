@@ -61,6 +61,7 @@ order, as a learner would. Mark every code block:
 | ```` ```{.bash .expect-fail} ```` | run it; it must fail (a *Break it*, or any step that shows an error) |
 | ```` ```{.bash .run-ci} ```` | run only with `--ci` (Git writes, Docker): in GitHub Actions |
 | ```` ```{.python filename="x.py" .write} ```` | write the block to that file (`.append` appends) |
+| ```` ```{.default filename="x.tsv" .write} ```` | the same, for a file with no language (`.tsv`, FASTQ, `LICENSE`): `.default` shows it plain with a copy button; `.text` would have no button |
 | ```` ```{.bash .norun} ```` | show only (interactive, needs accounts, destructive) |
 
 Unmarked shell blocks fail the test run, so nothing slips through. An `.expect-fail` block runs in a subshell, so a `cd` inside it does not

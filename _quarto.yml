@@ -173,6 +173,7 @@ format:
       margin-width: 240px
     number-sections: false
     code-copy: true
+    preserve-tabs: true         # copied .tsv blocks keep their tabs
     code-overflow: wrap
     code-tools: false
     smooth-scroll: true
