@@ -2,8 +2,8 @@
 # that has never seen this project? GitHub gives us a fresh Linux machine and
 # a fresh clone of the repository on every run.
 #
-# From the CBIO7501 project template (MIT). Copy it into any project that has
-# a pixi.toml with a `reproduce` task.
+# From the Reproducible and Open Science project template (MIT). Copy it into
+# any project that has a pixi.toml with a `reproduce` task.
 name: Reproduce
 
 on:

@@ -19,7 +19,7 @@ In the LTEE project, Snakemake is in the `pipeline` environment: put
 | Draw the rule graph | `snakemake --rulegraph > results/rulegraph.dot`, then `dot -Tsvg ...` |
 | Format the Snakefile / check the format | `snakefmt workflow/Snakefile` / `snakefmt --check workflow/Snakefile` |
 | Check for common mistakes | `snakemake --lint` |
-| Run on a cluster with a profile | `snakemake --profile profiles/karakoram` |
+| Run on a cluster with a profile | `snakemake --profile profiles/slurm` |
 
 See [lesson 09, sections 2, 5 and 12](../pages/09-snakemake.qmd#a-toy-workflow-first).
 

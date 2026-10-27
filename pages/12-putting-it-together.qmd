@@ -49,7 +49,7 @@ After this lesson you can:
 Checks: the reproduce report you file (outcome 1); the DOI badge in the
 README of your `ltee-project` (outcome 2); your `ltee-project`, assessed as
 described in [LTEE project](../assessment/ltee-project.qmd), and your
-capstone, graded with the [capstone rubric](../assessment/capstone-rubric.qmd)
+capstone, assessed with the [capstone rubric](../assessment/capstone-rubric.qmd)
 (all).
 
 ## 1. Before the swap: is your own project ready?
@@ -137,7 +137,7 @@ on <https://zenodo.org/>.
 ```{.bash .run-ci}
 git switch main
 git pull
-git tag -a v1.0.0 -m "Version handed in for CBIO7501"
+git tag -a v1.0.0 -m "First release, archived on Zenodo"
 git push origin v1.0.0
 ```
 
@@ -220,10 +220,10 @@ from these lessons.
 
 Two projects, assessed separately:
 
-- **Your `ltee-project`** (40% of the course grade): the GitHub repository
+- **Your `ltee-project`**{{< event grade ltee-project >}}: the GitHub repository
   you built in the lessons and the Zenodo DOI of its release. See
   [LTEE project](../assessment/ltee-project.qmd) for what it should show.
-- **Your capstone** (30%): your own research project, built with the same
+- **Your capstone**{{< event grade capstone short >}}: your own research project, built with the same
   practices, step by step since lesson 02. It is assessed with the
   [capstone rubric](../assessment/capstone-rubric.qmd), which is tied to
   checks you can run yourself: the *Reproduce* GitHub Action on a clean

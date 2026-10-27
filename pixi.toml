@@ -17,8 +17,8 @@ pyyaml = ">=6"
 lychee = ">=0.20"
 
 [tasks]
-render = { cmd = "quarto render", description = "Build the website into _site/" }
-preview = { cmd = "quarto preview", description = "Live preview of the website" }
+render = { cmd = "python scripts/site.py render", description = "Build the website into _site/, for the format in event.yml" }
+preview = { cmd = "python scripts/site.py preview", description = "Live preview of the website, for the format in event.yml" }
 check-links = { cmd = "lychee --offline --include-fragments --no-progress --root-dir _site --exclude-path _site/404.html '_site/**/*.html'", depends-on = ["render"], description = "Check internal links in the rendered site" }
 check-links-online = { cmd = "lychee --no-progress --max-concurrency 8 --accept '200..=299,403,429' --exclude-path _site/404.html '_site/**/*.html'", depends-on = ["render"], description = "Check external links too (slow, needs network)" }
 check-capstone = { cmd = "python assessment/check_capstone.py", description = "List the automatic rubric checks for a capstone or an ltee-project: pixi run check-capstone PATH" }

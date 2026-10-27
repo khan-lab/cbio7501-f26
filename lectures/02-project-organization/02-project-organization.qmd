@@ -1,6 +1,6 @@
 ---
 title: "Project organization"
-subtitle: "CBIO7501 · Lesson 02"
+subtitle: "{{< event lesson 02 >}}"
 sources:
   - "**Adapted from:** *Tools for Reproducible Research: Managing your data (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html>"
   - "**Adapted from:** *Tools for Reproducible Research: Putting it all together (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html>"

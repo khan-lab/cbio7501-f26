@@ -1,6 +1,6 @@
 ---
 title: "Workflows with Snakemake"
-subtitle: "CBIO7501 · Lesson 09"
+subtitle: "{{< event lesson 09 >}}"
 sources:
   - "**Adapted from:** *Tools for Reproducible Research: Snakemake (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/snakemake/snakemake.html>"
   - "Week 1 slides 66 and 67 ('the best documentation is automation'; Make, Snakemake, Nextflow, WDL) are the opener."

@@ -527,7 +527,7 @@ ls results/nextflow-qc/qc/multiqc
 Every task runs in its own folder under `work/`, with its inputs linked in and
 the exact command in `.command.sh`:
 
-![One task per item of the input channel, each in its own folder under `work/`; the tasks' outputs form the channel for the next process. Diagram: CBIO7501, CC BY 4.0.](../assets/images/diagrams/nextflow-concepts.svg){fig-alt="Diagram: a channel holds one item per LTEE sample; the ALIGN process runs one task per item, each in its own work folder; the tasks emit BAM files into an output channel for the next process." width="90%"}
+![One task per item of the input channel, each in its own folder under `work/`; the tasks' outputs form the channel for the next process. Diagram: Reproducible and Open Science lessons, CC BY 4.0.](../assets/images/diagrams/nextflow-concepts.svg){fig-alt="Diagram: a channel holds one item per LTEE sample; the ALIGN process runs one task per item, each in its own work folder; the tasks emit BAM files into an output channel for the next process." width="90%"}
 
 ```{.bash .run}
 d=$(dirname "$(find work -name .command.sh | head -1)")

@@ -1,6 +1,6 @@
 ---
 title: "Data management and FAIR"
-subtitle: "CBIO7501 · Lesson 03"
+subtitle: "{{< event lesson 03 >}}"
 sources:
   - "**Adapted from:** *Tools for Reproducible Research: Managing your data (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html>"
   - "**Adapted from:** *FAIR in (biological) practice: Being FAIR*, The Carpentries Incubator. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/fair-bio-practice/03-being-fair.html>"

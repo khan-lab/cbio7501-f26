@@ -11,7 +11,7 @@ test:
 ---
 
 ::: {.at-a-glance}
-- **Time:** three sessions: sections 1 to 5, 6 to 11, and a lab (12 to 14, 70 minutes, then the [Nextflow](10-nextflow.qmd) introduction). Section 15 (clusters) at home or on Karakoram.
+- **Time:** three sessions: sections 1 to 5, 6 to 11, and a lab (12 and the *Break it*, 70 minutes, then the [Nextflow](10-nextflow.qmd) introduction). Section 13 (clusters) at home or on {{< event cluster >}}.
 - **Slides:** [Snakemake](../lectures/09-snakemake/09-snakemake.qmd)
 - **You need:** the `ltee-project` after [lesson 07](07-quarto.qmd): the `pipeline` environment and the shell-script results in `results/` ([lesson 05](05-pixi.qmd)), and the report.
 - **You will have:** `workflow/Snakefile` and `config/config.yaml` that rebuild every result with one command, a report that answers the project's question, and evidence that Snakemake reproduces the shell script exactly.
@@ -985,7 +985,10 @@ git push -u origin lesson-09-snakemake
 Open the pull request. The *Reproduce* check now runs the Snakemake workflow on
 a fresh machine and renders the report. Merge when it is green.
 
-## 13. Extra: running on a Slurm cluster (Karakoram)
+## 13. Extra: running on a Slurm cluster
+
+::: {.cluster-only}
+{{< event cluster-info >}}
 
 On a cluster, Snakemake can submit each job to the scheduler instead of
 running it on the login node. Add the Slurm executor plugin to the pipeline
@@ -999,10 +1002,10 @@ Give rules the resources they need (`threads:` becomes the number of CPUs;
 add `resources: mem_mb=8000, runtime=60` where needed), and keep
 cluster-specific settings out of the workflow, in a **profile**: a folder with
 a `config.yaml` of command-line options. Create
-`profiles/karakoram/config.yaml` (ask your administrators for the account and
+`profiles/slurm/config.yaml` (ask your administrators for the account and
 partition names):
 
-```{.yaml filename="profiles/karakoram/config.yaml"}
+```{.yaml filename="profiles/slurm/config.yaml"}
 executor: slurm
 jobs: 20
 default-resources:
@@ -1015,11 +1018,12 @@ default-resources:
 Run on the login node, inside `tmux` or `screen` so it survives logging out:
 
 ```{.bash .norun}
-pixi run -e pipeline snakemake --profile profiles/karakoram
+pixi run -e pipeline snakemake --profile profiles/slurm
 ```
 
 The workflow file does not change: the same Snakefile runs on your laptop and
 on the cluster. (Not tested in this build: no cluster access.)
+:::
 
 ## Troubleshooting
 

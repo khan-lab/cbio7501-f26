@@ -538,7 +538,10 @@ cookiecutter --version     # works in any folder (open a new terminal first)
 
 Upgrade with `pixi global update`, remove with `pixi global uninstall cookiecutter`.
 
-## 10. Pixi on an HPC cluster (optional, for Karakoram users)
+## 10. Pixi on an HPC cluster (optional)
+
+::: {.cluster-only}
+{{< event cluster-info >}}
 
 Pixi needs no administrator rights, so it works on clusters:
 
@@ -557,6 +560,7 @@ Pixi needs no administrator rights, so it works on clusters:
 - **Same lock file, other platform:** your laptop is `osx-arm64`, the cluster
   is `linux-64`. Because the manifest lists both, the lock file already has the
   exact Linux packages: nothing is solved again on the cluster.
+:::
 
 ## 11. How does this compare with Conda?
 

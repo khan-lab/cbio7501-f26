@@ -1,0 +1,48 @@
+# Example settings for a four-day workshop. Copy this file over event.yml in
+# the repository folder, fill it in, and run `pixi run render`.
+event:
+  # course-7week, workshop-4day, workshop-5day or self-paced
+  format: workshop-4day
+  title: "Reproducible and Open Science"
+  code: ""                      # course code; empty for a workshop
+  institution: "Example University"
+  term: ""
+  meetings: ""                  # course: when it meets
+  start-date: 2027-01-18        # first day, YYYY-MM-DD
+  day:                          # workshops: the teaching day
+    start: "09:00"
+    lunch: "12:00"
+    lunch-minutes: 60
+    break-minutes: 15
+    end: "17:00"
+  venue: "Room 101, Example Building"
+  online: ""                    # video-call link, for an online run
+  instructors: ["Your Name"]
+  helpers: ["Helper One", "Helper Two"]
+  contact: "you@example.org"    # email for questions
+  links:                        # leave empty what you do not use
+    registration: ""
+    notes: ""                   # shared notes (HackMD, Etherpad)
+    chat: ""
+    pre-survey: ""
+    post-survey: ""
+    code-of-conduct: ""
+  grading:                      # course only
+    enabled: false
+  cluster:                      # for the optional HPC steps
+    enabled: false
+    name: ""
+    login: ""                   # login host, e.g. login.cluster.example.org
+    scheduler: "slurm"
+    docs: ""                    # link to the cluster's user guide
+
+# Your repository and website address (GitHub Pages:
+# https://USER.github.io/REPO/). A fork changes all three links.
+website:
+  site-url: "https://YOUR-USER.github.io/YOUR-REPO/"
+  repo-url: "https://github.com/YOUR-USER/YOUR-REPO"
+  navbar:
+    right:
+      - icon: github
+        href: "https://github.com/YOUR-USER/YOUR-REPO"
+        aria-label: "GitHub repository"

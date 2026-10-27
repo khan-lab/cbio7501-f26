@@ -10,7 +10,7 @@ test:
 ---
 
 ::: {.at-a-glance}
-- **Time:** three sessions: Docker (sections 1 to 4), building an image from the lock file (5 to 7), and a lab (run the LTEE pipeline in your image; optional Apptainer on Karakoram). Sharing and provenance (8, 9) at home.
+- **Time:** three sessions: Docker (sections 1 to 4), building an image from the lock file (5 to 7), and a lab (run the LTEE pipeline in your image; optional Apptainer on {{< event cluster >}}). Sharing and provenance (8, 9) at home.
 - **Slides:** [Containers](../lectures/08-containers/08-containers.qmd)
 - **You need:** Docker ([lesson 00](00-setup.qmd#docker)), the `ltee-project` after [lesson 05](05-pixi.qmd). Apptainer is optional and Linux-only.
 - **You will have:** a Docker image of the LTEE pipeline environment, built from `pixi.lock`, that runs the pipeline on any computer with Docker.
@@ -31,7 +31,7 @@ Two tools in this lesson:
   which is why clusters do not allow it.
 - **Apptainer** (formerly Singularity; SingularityCE is a separate fork by
   Sylabs) runs the same images on HPC clusters, as a normal user. It is
-  Linux-only: use it on Linux, in WSL2, or on Karakoram.
+  Linux-only: use it on Linux, in WSL2, or on {{< event cluster >}}.
 
 We do not write a second recipe for the software: the image is built **from
 `pixi.lock`**, so the container and your laptop cannot drift apart.
@@ -100,7 +100,7 @@ after the container is gone. Everything else it writes disappears with it.
 
 ## 4. Images, tags and digests
 
-![How the pieces fit: a recipe (Dockerfile and `pixi.lock`) is built into an image; containers are running copies of it; registries store and share images; Apptainer turns an image into one `.sif` file for clusters. Diagram: CBIO7501, CC BY 4.0.](../assets/images/diagrams/containers.svg){fig-alt="Diagram: a Dockerfile and pixi.lock are built into an image with docker build; docker run starts containers from it; images are pushed to and pulled from a registry; apptainer build turns an image into a .sif file for HPC." width="90%"}
+![How the pieces fit: a recipe (Dockerfile and `pixi.lock`) is built into an image; containers are running copies of it; registries store and share images; Apptainer turns an image into one `.sif` file for clusters. Diagram: Reproducible and Open Science lessons, CC BY 4.0.](../assets/images/diagrams/containers.svg){fig-alt="Diagram: a Dockerfile and pixi.lock are built into an image with docker build; docker run starts containers from it; images are pushed to and pulled from a registry; apptainer build turns an image into a .sif file for HPC." width="90%"}
 
 ```{.bash .run-ci}
 docker images
@@ -207,7 +207,7 @@ On Linux, files written by a container belong to `root` by default. Add
 Desktop on macOS and Windows handles this for you.
 :::
 
-## 7. Apptainer (Linux, WSL2 or Karakoram)
+## 7. Apptainer (Linux, WSL2 or a cluster) {#apptainer}
 
 Apptainer runs Docker images on clusters without root. Convert your local
 Docker image to an Apptainer image file (`.sif`):

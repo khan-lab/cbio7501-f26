@@ -1,0 +1,179 @@
+# The modules every schedule is built from: one teachable piece each, with
+# its planned length. The schedule files (course-7week.yml, workshop-4day.yml,
+# workshop-5day.yml) list module ids per session or day, and {{< schedule >}}
+# turns them into the tables on the schedule pages.
+#
+#   id:      the name the schedule files use
+#   title:   link text: the lesson number and name
+#   page:    where the link goes, from the site's root folder
+#   detail:  text after the link (optional)
+#   minutes: planned length. After teaching a module, change it to the time
+#            it took: every schedule that uses the module updates.
+#   before:  true for setup, done before the first session
+#
+# Minutes marked "estimate" are not in the lessons yet: check them in class.
+modules:
+  - id: 00-setup
+    title: "Setup"
+    page: pages/00-setup.qmd
+    minutes: 45
+    before: true
+
+  - id: 01-slides
+    title: "01 Introduction"
+    page: lectures/01-introduction/01-introduction.qmd
+    detail: "(slides)"
+    minutes: 40
+  - id: 01-tutorial
+    title: "01 Introduction"
+    page: pages/01-introduction.qmd
+    minutes: 45
+  - id: 01-audit
+    title: "audit a paper"
+    page: pages/01-introduction.qmd#your-turn
+    minutes: 30                 # estimate
+
+  - id: 02-organization
+    title: "02 Project organization"
+    page: pages/02-project-organization.qmd
+    minutes: 80                 # slides and hands-on, as taught in Fall 2026
+
+  - id: 03-slides
+    title: "03 FAIR"
+    page: lectures/03-data-management/03-data-management.qmd
+    minutes: 25
+  - id: 03-concepts
+    title: "03 Data management"
+    page: pages/03-data-management.qmd#part-a-concepts
+    detail: "Part A: concepts"
+    minutes: 25
+  - id: 03-hands-on
+    title: "03 hands-on"
+    page: pages/03-data-management.qmd#hands-on
+    minutes: 40
+
+  - id: 04-git-local
+    title: "04 Git"
+    page: pages/04-git.qmd
+    detail: "§1–6: Git on your laptop and on GitHub"
+    minutes: 80
+  - id: 04-git-branches
+    title: "04 Git"
+    page: pages/04-git.qmd#branches
+    detail: "§7–10: branches, a conflict, tags, pull requests"
+    minutes: 70
+
+  - id: 05-pixi-a
+    title: "05 Pixi"
+    page: pages/05-pixi.qmd
+    detail: "Part A"
+    minutes: 80
+  - id: 05-pixi-b
+    title: "05 Pixi"
+    page: pages/05-pixi.qmd#part-b-the-ltee-pipeline-as-pixi-tasks
+    detail: "Part B: features, tasks"
+    minutes: 80
+  - id: 05-reproduce
+    title: "05 Pixi"
+    page: pages/05-pixi.qmd#save-your-work-and-let-github-reproduce-it
+    detail: "the *Reproduce* check on GitHub"
+    minutes: 30                 # estimate
+  - id: 05-pixi-c
+    title: "05 Part C"
+    page: pages/05-pixi.qmd#part-c-beyond-one-project
+    detail: "(`pixi global`, HPC)"
+    minutes: 40                 # estimate
+  - id: 05b-conda
+    title: "05b Conda comparison"
+    page: pages/05b-conda-comparison.qmd
+    minutes: 40
+
+  - id: 06-jupyter
+    title: "06 Jupyter"
+    page: pages/06-jupyter.qmd
+    minutes: 40
+
+  - id: 07-quarto-first
+    title: "07 Quarto"
+    page: pages/07-quarto.qmd
+    detail: "§1–3: a first document"
+    minutes: 40
+  - id: 07-quarto-report
+    title: "07 Quarto"
+    page: pages/07-quarto.qmd#a-helper-module-for-the-report
+    detail: "§4–9: the LTEE report, parameters, formats, notebooks, the report in `reproduce`"
+    minutes: 80
+
+  - id: 08-docker
+    title: "08 Containers"
+    page: pages/08-containers.qmd
+    detail: "§1–4: Docker"
+    minutes: 80
+  - id: 08-image
+    title: "08 Containers"
+    page: pages/08-containers.qmd#an-image-of-the-ltee-environment-from-pixi.lock
+    detail: "§5–6: an image from the lock file"
+    minutes: 50                 # estimate (§5–7 together: 80)
+  - id: 08-apptainer
+    title: "08 Containers"
+    page: pages/08-containers.qmd#apptainer
+    detail: "§7: Apptainer"
+    minutes: 30                 # estimate
+  - id: 08-share
+    title: "08 Containers"
+    page: pages/08-containers.qmd#archive-and-share-the-image
+    detail: "§8–9: registry, provenance"
+    minutes: 30                 # estimate
+
+  - id: 09-snakemake-a
+    title: "09 Snakemake"
+    page: pages/09-snakemake.qmd
+    detail: "§1–5"
+    minutes: 80
+  - id: 09-snakemake-b
+    title: "09 Snakemake"
+    page: pages/09-snakemake.qmd#variant-calling-and-filtering
+    detail: "§6–11"
+    minutes: 80
+  - id: 09-lab
+    title: "09 Snakemake"
+    page: pages/09-snakemake.qmd#best-practices
+    detail: "lab: the LTEE pipeline, best practices"
+    minutes: 70
+  - id: 09-cluster
+    title: "09 Snakemake"
+    page: pages/09-snakemake.qmd#extra-running-on-a-slurm-cluster
+    detail: "§13: on a Slurm cluster"
+    minutes: 30                 # estimate
+
+  - id: 10-nextflow-intro
+    title: "10 Nextflow"
+    page: pages/10-nextflow.qmd#in-class-40-minutes
+    detail: "intro"
+    minutes: 40
+  - id: 10-nextflow-full
+    title: "10 Nextflow"
+    page: pages/10-nextflow.qmd#at-home-how-the-pipeline-is-built
+    detail: "full tutorial"
+    minutes: 120
+
+  - id: 11-documentation
+    title: "11 Documentation"
+    page: pages/11-documentation.qmd
+    minutes: 80
+
+  - id: 12-swap
+    title: "12 Putting it together"
+    page: pages/12-putting-it-together.qmd
+    detail: "§1–2: swap and reproduce"
+    minutes: 80
+  - id: 12-release
+    title: "12 Putting it together"
+    page: pages/12-putting-it-together.qmd#release-and-archive-on-zenodo
+    detail: "§3: release with a DOI"
+    minutes: 30
+
+  - id: S1-packaging
+    title: "Package and share your tool"
+    page: pages/S1-packaging.qmd
+    minutes: 150

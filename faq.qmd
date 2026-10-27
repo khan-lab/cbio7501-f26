@@ -53,6 +53,8 @@ is about making any analysis reproducible.
 **Can I use this material in my own teaching?** Yes: text and slides are
 CC BY 4.0 and code is MIT. Credit the workshop and the sources it adapts
 ([Sources and credits](pages/credits.qmd)), and say what you changed.
+[Teach these lessons](teach.qmd) shows how to run it as your own course or
+workshop.
 
 **I found a mistake.** Please open an issue or a pull request on the
 [GitHub repository](https://github.com/khan-lab/cbio7501-f26).

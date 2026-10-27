@@ -1,6 +1,6 @@
 ---
 title: "Workflows with Nextflow"
-subtitle: "CBIO7501 · Lesson 10 (40-minute introduction)"
+subtitle: "{{< event lesson 10 >}} (40-minute introduction)"
 sources:
   - "**Adapted from:** *Tools for Reproducible Research: Nextflow (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/nextflow/nextflow.html>"
   - "Di Tommaso P et al. (2017). Nextflow enables reproducible computational workflows. *Nat Biotechnol* 35:316–319. <https://doi.org/10.1038/nbt.3820>"

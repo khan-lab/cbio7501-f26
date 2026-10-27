@@ -1,8 +1,8 @@
 # cookiecutter-repro-project
 
 A [Cookiecutter](https://cookiecutter.readthedocs.io/) template for a small,
-reproducible analysis project, used in the CBIO7501 Reproducible and Open
-Science workshop (lesson 02 and every lesson after it).
+reproducible analysis project, used in the Reproducible and Open Science
+lessons (lesson 02 and every lesson after it).
 
 ## Use it
 

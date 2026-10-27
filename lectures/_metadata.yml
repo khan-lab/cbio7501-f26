@@ -17,7 +17,7 @@ format:
     transition-speed: fast
     incremental: false
     code-copy: true
-    footer: "CBIO7501: The Art of Reproducible and Open Science - CC BY 4.0"
+    footer: "{{< event name >}} - CC BY 4.0"
     link-external-newwindow: true
     preview-links: false
     lang: en

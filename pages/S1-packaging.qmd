@@ -367,8 +367,8 @@ about:
   homepage: https://github.com/ada-lovelace/minivcf
   summary: Count and compare variant records in VCF files
   description: |
-    A tiny command-line tool used in the CBIO7501 workshop to show how a
-    Python tool becomes a conda package.
+    A tiny command-line tool used in the Reproducible and Open Science
+    lessons to show how a Python tool becomes a conda package.
   license: MIT
   license_file: LICENSE
   repository: https://github.com/ada-lovelace/minivcf

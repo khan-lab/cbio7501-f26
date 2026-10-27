@@ -158,11 +158,11 @@ change: easy to describe, easy to undo.
 ## 4. Change, inspect, commit
 
 Edit the README: add a line under the title saying who you are, for example
-*"Course project for CBIO7501, Fall 2026."* (Below we do it with a command so
+*"Practice project from the Reproducible and Open Science lessons."* (Below we do it with a command so
 the tests can run it; use your editor.)
 
 ```{.bash .run-ci}
-printf '\nCourse project for CBIO7501, Fall 2026.\n' >> README.md
+printf '\nPractice project from the Reproducible and Open Science lessons.\n' >> README.md
 git status
 git diff
 ```

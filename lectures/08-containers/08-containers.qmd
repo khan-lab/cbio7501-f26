@@ -1,6 +1,6 @@
 ---
 title: "Containers: Docker and Apptainer"
-subtitle: "CBIO7501 · Lesson 08"
+subtitle: "{{< event lesson 08 >}}"
 sources:
   - "**Adapted from:** *Tools for Reproducible Research: Working with containers (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/containers/containers.html>"
   - "Week 1 slides 68 to 70 (why containers; Docker and Singularity for HPC) are the opener. Update to slide 70: Singularity became Apptainer under the Linux Foundation in 2021; SingularityCE is Sylabs' separate fork. This course uses Apptainer."

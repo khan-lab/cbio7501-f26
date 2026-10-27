@@ -65,7 +65,7 @@ echo "$GITHUB_TOKEN" | docker login ghcr.io -u USER --password-stdin
 | Run the image's default command, with arguments | `apptainer run containers/ltee-project.sif bash scripts/run_variant_calling.sh` |
 
 Apptainer mounts your home folder and the current folder by itself, and runs
-as you. See [section 7](../pages/08-containers.qmd#apptainer-linux-wsl2-or-karakoram).
+as you. See [section 7](../pages/08-containers.qmd#apptainer).
 
 ## A Dockerfile in six instructions
 

@@ -1,0 +1,53 @@
+# Settings for this run of the course or workshop: the one file a host edits.
+# Every page can show these values ({{< meta event.title >}}); `pixi run
+# render` builds the site for the format below. Examples for workshops are in
+# events/: copy one over this file and fill it in.
+event:
+  # course-7week, workshop-4day, workshop-5day or self-paced
+  format: course-7week
+  title: "The Art of Reproducible and Open Science"
+  code: "CBIO7501"              # course code; empty for a workshop
+  institution: "MBZUAI"
+  term: "Fall 2026"
+  meetings: "Monday and Tuesday sessions and a Wednesday lab"  # course: when it meets
+  start-date: ""                # first day, YYYY-MM-DD
+  day:                          # workshops: the teaching day
+    start: "09:00"
+    lunch: "12:00"
+    lunch-minutes: 60
+    break-minutes: 15
+    end: "17:00"
+  venue: ""
+  online: ""                    # video-call link, for an online run
+  instructors: ["Aziz Khan"]
+  helpers: []
+  contact: ""                   # email for questions
+  links:                        # leave empty what you do not use
+    registration: ""
+    notes: ""                   # shared notes (HackMD, Etherpad)
+    chat: ""
+    pre-survey: ""
+    post-survey: ""
+    code-of-conduct: ""
+  grading:                      # course only
+    enabled: true
+    credits: 2
+    ltee-project: 40            # percent of the grade
+    capstone: 30
+  cluster:                      # for the optional HPC steps
+    enabled: true
+    name: "Karakoram"
+    login: ""                   # login host, e.g. login.cluster.example.org
+    scheduler: "slurm"
+    docs: ""                    # link to the cluster's user guide
+
+# Your repository and website address (GitHub Pages:
+# https://USER.github.io/REPO/). A fork changes all three links.
+website:
+  site-url: "https://khan-lab.github.io/cbio7501-f26/"
+  repo-url: "https://github.com/khan-lab/cbio7501-f26"
+  navbar:
+    right:
+      - icon: github
+        href: "https://github.com/khan-lab/cbio7501-f26"
+        aria-label: "GitHub repository"
