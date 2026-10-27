@@ -152,7 +152,7 @@ format:
     toc-location: right
     grid:
       sidebar-width: 270px
-      body-width: 840px
+      body-width: 1100px
       margin-width: 240px
     number-sections: false
     code-copy: true
