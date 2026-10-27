@@ -88,7 +88,7 @@ lesson-04-ci    ●───●───●     push → pull request → review
 
 From now on: **one branch and one pull request per lesson.**
 
-![A branch is a label that points at a commit. While `add-fastqc` and `fix-ref-path` gain commits, `main` stays where it is. Each branch is merged back when its work is ready.](../assets/images/git/git-branches.svg){#fig-git-branches fig-alt="Two branches leave main, one above and one below. Each gains commits while main stays still, then merges back."}
+![A branch is a label that points at a commit. While `add-fastqc` and `fix-ref-path` gain commits, `main` stays where it is. Each branch is merged back when its work is ready.](../../assets/images/git/git-branches.svg){#fig-git-branches fig-alt="Two branches leave main, one above and one below. Each gains commits while main stays still, then merges back."}
 
 
 ## A check on every push
