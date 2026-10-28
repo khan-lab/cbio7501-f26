@@ -16,6 +16,7 @@ INSTALL.txt
 # Quarto
 /.quarto/
 /_site/
+site_libs/
 /_freeze/
 **/*.quarto_ipynb
 **/*_files/
