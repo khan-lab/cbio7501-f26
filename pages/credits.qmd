@@ -16,8 +16,8 @@ cheat sheets and setup instructions) is open in the
 
 The Stanford course was developed and taught with help from:
 
-- **Co-instructors:** Clemens - Standord University
-- **Teaching assistants:** Alvina, Brennan - Standord University
+- **Co-instructors:** Clemens - Stanford University
+- **Teaching assistants:** Alvina, Brennan - Stanford University
 
 We thank them, and the students in that first and second cohort whose questions and
 feedback shaped the material.
