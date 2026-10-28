@@ -50,5 +50,5 @@ See `CITATION.cff`. GitHub shows a "Cite this repository" button for it.
 {% if cookiecutter.license == "Decide later" %}No license has been chosen yet. Until there is one, others may not reuse this work.{% else %}{{ cookiecutter.license }}, see `LICENSE`.{% endif %}
 
 ---
-Project layout generated from the CBIO7501 project template
+Project layout generated from the Reproducible and Open Science project template
 (<https://github.com/khan-lab/cbio7501-f26/tree/main/templates/cookiecutter-repro-project>).

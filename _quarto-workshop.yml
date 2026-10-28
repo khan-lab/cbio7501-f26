@@ -1,0 +1,23 @@
+# Workshop formats (event.yml: workshop-4day, workshop-5day). Added to
+# _quarto.yml: the schedule page, and after the shared menus, schedule and
+# FAQ in the navbar; credits and the host guide at the end of the sidebar.
+project:
+  render:
+    - schedule-workshop.qmd
+
+# Subtitle of schedule-workshop.qmd
+schedule-workshop-subtitle: "Each day's sessions, with their times"
+
+website:
+  navbar:
+    left:
+      - text: "Schedule"
+        href: schedule-workshop.qmd
+      - text: "FAQ"
+        href: faq.qmd
+  sidebar:
+    contents:
+      - text: "Sources and credits"
+        href: pages/credits.qmd
+      - text: "Teach these lessons"
+        href: teach.qmd

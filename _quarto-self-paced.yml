@@ -1,0 +1,14 @@
+# Self-paced format (event.yml: self-paced): no schedule. Added after the
+# shared menus in _quarto.yml: FAQ in the navbar; credits and the host guide
+# at the end of the sidebar.
+website:
+  navbar:
+    left:
+      - text: "FAQ"
+        href: faq.qmd
+  sidebar:
+    contents:
+      - text: "Sources and credits"
+        href: pages/credits.qmd
+      - text: "Teach these lessons"
+        href: teach.qmd

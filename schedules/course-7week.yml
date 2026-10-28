@@ -1,0 +1,114 @@
+# The 7-week course: which modules go in which session. {{< schedule
+# course-7week >}} turns this into the table on schedule-course.qmd.
+#
+# - Each item is a module id from modules.yml, or any other text (Markdown
+#   allowed), shown as written. Text after a module id is shown after it.
+# - A number in brackets at the end, "(40)", is the minutes the item takes
+#   in this session; without it, a module counts its minutes in modules.yml.
+# - Move a module by moving its id. The build warns when a session holds
+#   more minutes than it has, and when a module is in no session.
+# - notes: are yours (how long things really took); they are never shown.
+sessions:
+  - id: lecture-1
+    title: "Lecture 1"
+    minutes: 80
+  - id: lecture-2
+    title: "Lecture 2"
+    minutes: 80
+  - id: lab
+    title: "Lab"
+    minutes: 110
+  - id: home
+    title: "At home"
+
+weeks:
+  - topic: "Reproducibility and open science"
+    lecture-1:
+      - "Reproducibility ([slides, PDF](slides/Lecture1_Reproducibility.pdf))"
+      - "01-tutorial (taught)"
+    lecture-2:
+      - "Open science ([slides, PDF](slides/Lecture2_Open-Science.pdf))"
+      - "03-slides (taught)"
+    lab:
+      - "Week 1 lab (taught)"
+    home:
+      - "00-setup"
+      - "01-audit"
+    notes: ""
+
+  - topic: "Project organization and version control"
+    lecture-1:
+      - "02-organization"
+    lecture-2:
+      - "03-concepts"
+      - "03-hands-on"
+    lab:
+      - "04-git-local"
+      - "your own project under Git (30)"
+    home:
+      - "Project proposal: one paragraph + data source"
+    notes: "Lecture 1: 02, slides and hands-on, took the full 80 minutes."
+
+  - topic: "Portable and reproducible environments"
+    lecture-1:
+      - "04-git-branches"
+    lecture-2:
+      - "05-pixi-a"
+    lab:
+      - "05-pixi-b"
+      - "Pixi for your own project (30)"
+    home:
+      - "05-reproduce"
+      - "05-pixi-c"
+      - "05b-conda"
+    notes: ""
+
+  - topic: "Literate programming"
+    lecture-1:
+      - "06-jupyter (40)"
+      - "07-quarto-first (40)"
+    lecture-2:
+      - "07-quarto-report"
+    lab:
+      - "Your own mini-analysis: explore in a notebook, report in Quarto, both in `reproduce`"
+    home:
+      - "Quarto extras; the *Break it* exercises"
+    notes: ""
+
+  - topic: "Containers"
+    lecture-1:
+      - "08-docker"
+    lecture-2:
+      - "08-image"
+      - "08-apptainer"
+    lab:
+      - "Containerize the LTEE environment; optional Karakoram run"
+    home:
+      - "08-share"
+    notes: ""
+
+  - topic: "Workflows and automation"
+    lecture-1:
+      - "09-snakemake-a"
+    lecture-2:
+      - "09-snakemake-b"
+    lab:
+      - "09-lab (70)"
+      - "10-nextflow-intro (40)"
+    home:
+      - "10-nextflow-full"
+      - "nf-core demo"
+    notes: ""
+
+  - topic: "Publishing, archiving, open practice"
+    lecture-1:
+      - "11-documentation"
+    lecture-2:
+      - "12-swap"
+    lab:
+      - "Final presentations (can move a week later)"
+    home:
+      - "Fixes from the reproduce report"
+      - "12-release"
+      - "S1-packaging (optional)"
+    notes: ""

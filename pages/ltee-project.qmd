@@ -57,12 +57,12 @@ SRR2584863 25, SRR2584866 775. The Data Carpentry lesson reports 10, 25 and
 
 ## Handing it in
 
-Your own `ltee-project` counts for **40%** of the course grade. When you have
+[Your own `ltee-project` counts for **{{< meta event.grading.ltee-project >}}%** of the course grade.]{.content-visible when-meta="event.grading.enabled"} When you have
 finished lesson 12, hand in the address of its GitHub repository and the
 Zenodo DOI of its release. [LTEE project](../assessment/ltee-project.qmd)
 lists what the repository should show and how it is checked. Your capstone,
 on your own research project, is assessed separately
-([capstone rubric](../assessment/capstone-rubric.qmd), 30%).
+([capstone rubric](../assessment/capstone-rubric.qmd)[, {{< meta event.grading.capstone >}}%]{.content-visible when-meta="event.grading.enabled"}).
 
 ## The finished project
 

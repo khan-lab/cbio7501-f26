@@ -12,6 +12,10 @@ pixi run preview         # live preview while you edit
 pixi run check-links     # internal links in the rendered site
 ```
 
+`render` and `preview` build the format that `event.yml` sets (see
+[Formats and schedules](#formats-and-schedules)). To look at another one,
+copy its example from `events/` over `event.yml`, and do not commit that.
+
 ## Repository layout
 
 | Path | Content |
@@ -23,9 +27,15 @@ pixi run check-links     # internal links in the rendered site
 | `cheatsheets/` | one cheat sheet per tool; `_metadata.yml` gives them their table layout |
 | `tutorials/ltee-project/` | the finished example project (as after lesson 12) |
 | `templates/cookiecutter-repro-project/` | the project template used in lesson 02 |
-| `scripts/` | `test_tutorials.py` |
+| `scripts/` | `test_tutorials.py`; `site.py`, which builds the site with the profile `event.yml` asks for |
+| `event.yml` | the settings of this run: format, dates, people, links, grading, cluster, and the site's addresses; `events/` has examples for the workshops |
+| `schedules/` | `modules.yml` (the lessons in teachable parts, with their minutes) and one schedule per format |
+| `_quarto-course.yml`, `_quarto-workshop.yml`, `_quarto-self-paced.yml` | Quarto profiles: the pages and menu items each format adds to `_quarto.yml` |
+| `teach.qmd` | the guide for hosts: running the lessons as a course or a workshop |
 | `assets/filters/sources-slide.lua` | turns the `sources:` front matter of each deck into its final Sources slide (on pages, `sources:` is a record only) |
 | `assets/shortcodes/pixi-version.lua` | `{{< pixi-version >}}`: the Pixi version in the footer (Quarto's `{{< version >}}` gives Quarto's) |
+| `assets/shortcodes/event.lua`, `schedule.lua` | `{{< event KEY >}}`: text from the settings; `{{< schedule FORMAT >}}`: the schedule tables |
+| `assets/filters/cluster.lua`, `event-check.lua` | fold the `.cluster-only` steps when no cluster is set; warn when a build's profile does not match the format |
 | `assets/css/` | the look: `theme-light.scss` and `theme-dark.scss` (color tokens), `styles.scss` (site), `slides.scss` (decks), `fonts.css` |
 | `assets/fonts/` | Inter and JetBrains Mono, served from the site (SIL OFL 1.1) |
 | `assets/images/` | our figures (`diagrams/`, LTEE screenshots) and third-party CC BY figures (`nbis/`, with a README of sources) |
@@ -40,11 +50,23 @@ exercise, troubleshooting, *Apply it to your own project*, key points,
 further reading. Use OS tabs where commands differ. Extras need
 no *Break it*: show a failure in a normal section instead.
 
-Lessons, decks and quizzes do not name weeks or weekdays, so they work for the
-course, the workshop and self-study alike: give durations in the at-a-glance
-box and refer to other lessons by number. When each lesson is taught belongs
-in `schedule-course.qmd`, `schedule-workshop.qmd` and `syllabus.qmd` only. The
-sidebar in `_quarto.yml` groups lessons by topic.
+Lessons, decks and quizzes do not name weeks or weekdays, so they work for
+every format and for self-study: give durations in the at-a-glance box and
+refer to other lessons by number. When each lesson is taught belongs in
+`schedules/` (and the week table of `syllabus.qmd`) only. The sidebar in
+`_quarto.yml` groups lessons by topic.
+
+Lessons do not name a course, an institution or a cluster either, because
+forks teach them elsewhere. Use the settings in `event.yml` instead:
+
+- `{{< event cluster >}}` for the cluster's name ("your cluster" when none is
+  set), and a `::: {.cluster-only}` div around steps that need a cluster:
+  they fold into a collapsed note when no cluster is set.
+- `{{< event name >}}`, `{{< meta event.code >}}` and the other keys listed
+  in `assets/shortcodes/event.lua` for the course's name.
+- Grade shares only with `{{< event grade KEY >}}`, or inside
+  `.content-visible when-meta="event.grading.enabled"`: they disappear when
+  grading is off.
 
 When a lesson changes a command, change its cheat sheet in `cheatsheets/`
 too: the sheets are not run by the tests, and each one links to the lesson
@@ -91,7 +113,7 @@ current status.
 | The finished LTEE project | *LTEE pipeline* (`ltee-pipeline.yml`) |
 | Website, credits, internal links / external links | *Website* (`site.yml`, every push) / *External links* (`links-external.yml`, Mondays) |
 | PowerShell blocks (native Windows) | not tested: no Windows run of the tutorials |
-| Steps that need an account or a cluster (GitHub web pages, Zenodo, Karakoram; `.norun`) | not tested automatically: try them before teaching |
+| Steps that need an account or a cluster (GitHub web pages, Zenodo, a cluster; `.norun`) | not tested automatically: try them before teaching |
 
 The history of the first build, run locally on macOS before any of these
 workflows ran, is the test log in `docs/BUILD_LOG.md`.
@@ -113,6 +135,40 @@ workflows ran, is the test log in `docs/BUILD_LOG.md`.
   `[Figure: NBIS, *Tools for Reproducible Research*, CC BY 4.0]{.fig-credit}`).
 - Never embed press photos, journal pages, comics, logos, or anything whose
   origin is unclear: link it with a one-line description, or draw your own.
+
+## Formats and schedules
+
+A host sets the format in `event.yml`: `course-7week`, `workshop-4day`,
+`workshop-5day` or `self-paced` ([`teach.qmd`](teach.qmd) explains it for
+them). `scripts/site.py` maps it to a Quarto profile, `course`, `workshop` or
+`self-paced`, which adds that format's pages and menus.
+
+### Timing a lesson
+
+`schedules/modules.yml` splits the lessons into modules, parts taught in one
+go, each with a `page` (and section) and its planned `minutes`. When a lesson
+changes length, change the minutes of its modules, and the at-a-glance box of
+the lesson to match: every schedule follows. Minutes not yet checked in class
+are marked `# estimate`. A new lesson needs modules here and a place in each
+format's schedule; a module in no workshop day is listed as self-paced under
+that workshop's schedule.
+
+The build warns when a course session holds more minutes than it has, when a
+workshop morning runs into lunch or a day past its end, and when a schedule
+names a module that `modules.yml` does not have.
+
+### Adding a format
+
+1. Write `schedules/NAME.yml`: `sessions:` and `weeks:` like
+   `course-7week.yml`, or `days:` like `workshop-4day.yml`.
+2. Map `NAME` to a profile in `scripts/site.py` and in
+   `assets/filters/event-check.lua`; the two lists must agree. Another
+   workshop length uses the `workshop` profile; a format with pages or menus
+   of its own needs its own `_quarto-PROFILE.yml`.
+3. Add an example, `events/NAME.yml`, and the format to the comment in
+   `event.yml` and to the table in `teach.qmd`.
+4. A workshop build shows its own format on `schedule-workshop.qmd`; for the
+   course site to show it too, add a tab there.
 
 ## Changing the look
 

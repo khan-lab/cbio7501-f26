@@ -1,6 +1,6 @@
 ---
 title: "Literate programming with Quarto"
-subtitle: "CBIO7501 · Lesson 07"
+subtitle: "{{< event lesson 07 >}}"
 sources:
   - "**Adapted from:** *Tools for Reproducible Research: Making reports with Quarto (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/quarto/quarto.html>"
   - "Knuth DE (1984). Literate programming. *The Computer Journal* 27:97–111. <https://doi.org/10.1093/comjnl/27.2.97>"

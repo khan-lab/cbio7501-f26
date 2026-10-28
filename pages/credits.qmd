@@ -1,7 +1,7 @@
 ---
 title: "Sources and credits"
 subtitle: "Everything this workshop builds on, and how to cite it"
-description: "Adapted material, linked resources, data, software, figures, readings and people behind the CBIO7501 open workshop."
+description: "Adapted material, linked resources, data, software, figures, readings and people behind these open lessons."
 toc-depth: 2
 ---
 

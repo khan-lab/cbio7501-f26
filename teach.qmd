@@ -1,0 +1,225 @@
+---
+title: "Teach these lessons"
+subtitle: "Run them as a course or a workshop, with your own dates, people and schedule"
+description: "How to run these lessons as your own course or workshop: make a copy of the repository, fill in one settings file, publish the site, fit the schedule, and checklists for before, during and after."
+toc: true
+---
+
+The lessons are open: text and slides are CC BY 4.0, code is MIT. To teach
+them, make your own copy of the repository. One settings file, `event.yml`,
+says what kind of run it is, when and where it happens and who teaches it;
+the website builds from it, with your dates, schedule and links. The idea is
+the one of The Carpentries'
+[workshop template](https://github.com/carpentries/workshop-template): one
+repository per run, one file to fill in.
+
+## Choose a format
+
+Every format has all the lessons, slides and cheat sheets. They differ in the
+schedule and in what the home page and menus show.
+
+- **Course**, `format: course-7week`: seven weeks, with two 80-minute
+  lectures and a 110-minute lab a week. The site also shows the 7-week
+  schedule, the syllabus, and the assessment pages in the menu.
+- **Four-day workshop**, `format: workshop-4day`: four days of about six
+  teaching hours. The site also shows the core lessons day by day, with time
+  for participants' own projects every day, and the dates, place, people and
+  links on the home page.
+- **Five-day workshop**, `format: workshop-5day`: the same over five days,
+  with more lessons and a gentler pace.
+- **Self-paced**, `format: self-paced`: no schedule; learners follow the
+  [contents](contents.qmd).
+
+Each format's schedule is a file in `schedules/`: `course-7week.yml`,
+`workshop-4day.yml` and `workshop-5day.yml` ([Fit the schedule](#fit-the-schedule)).
+
+## Make your copy
+
+1. **Fork the repository**: press *Fork* on
+   <https://github.com/khan-lab/cbio7501-f26>, and give your copy a name for
+   your run, for example `ros-2027-01`.
+2. **Get it on your computer.** You need Git and
+   [Pixi](pages/00-setup.qmd#install-pixi):
+
+   ```bash
+   git clone git@github.com:YOUR-USER/YOUR-REPO.git
+   cd YOUR-REPO
+   ```
+
+3. **Start from an example.** `event.yml` in the repository holds the
+   settings of the CBIO7501 course; `events/` has examples for the two
+   workshops. Copy one over it:
+
+   ```bash
+   cp events/workshop-4day.yml event.yml
+   ```
+
+   For a course, edit `event.yml` as it is; for self-paced lessons, set
+   `format: self-paced`.
+4. **Fill it in** ([the settings](#the-settings)). Under `website:`, put the
+   address of your repository and of your site, which on GitHub Pages is
+   `https://YOUR-USER.github.io/YOUR-REPO/`.
+5. **Look at the site.** `pixi run preview` builds it and opens it in your
+   browser, and rebuilds it as you edit; `pixi run render` builds it into
+   `_site/`. Read the build output for warnings about the schedule
+   ([Fit the schedule](#fit-the-schedule)).
+6. **Publish it.** On GitHub, in your copy: *Settings* → *Pages* → *Build and
+   deployment* → *Source*: **GitHub Actions**. GitHub turns workflows off in a
+   new fork: open the *Actions* tab and enable them. Then commit and push to
+   `main`. The *Website* workflow builds the site and publishes it at your
+   address.
+
+## The settings
+
+All in `event.yml`, under `event:`. Leave empty what you do not use: empty
+settings are left out of the site.
+
+| Setting | What it changes |
+|---------|-----------------|
+| `format` | which site is built ([Choose a format](#choose-a-format)) |
+| `title`, `code`, `institution`, `term` | the home page heading and the line above it, the slide subtitles and footers, the course schedule and syllabus |
+| `meetings` | courses: when the course meets, on the syllabus |
+| `start-date` | workshops: the dates on the home page, and the date of each day on the schedule |
+| `day` | workshops: when the day starts and ends, when lunch starts and how long it and the breaks last; the schedule's times come from it |
+| `venue`, `online`, `instructors`, `helpers`, `contact`, `links` | workshops: the table of details on the home page (registration, shared notes, chat, surveys, code of conduct); courses: the instructors on the syllabus |
+| `grading` | courses: the credits and each project's share of the grade ([Grading](#grading)) |
+| `cluster` | the optional cluster steps in the lessons ([A cluster](#a-cluster)) |
+
+Under `website:` are your repository and site addresses, and the GitHub link
+in the menu bar.
+
+## Fit the schedule
+
+The schedules are built from the files in `schedules/`:
+
+- `modules.yml`: each part of a lesson that is taught in one go, with its
+  planned length in minutes.
+- One file per format, `course-7week.yml`, `workshop-4day.yml` and
+  `workshop-5day.yml`: which modules go in which session or day, in order.
+
+To change a schedule, move module ids in the format's file. A workshop day
+also takes `break`, `lunch` and any other text, with its length at the end in
+brackets:
+
+```yaml
+days:
+  - title: "Organize and track"
+    blocks:
+      - "01-slides"
+      - "break"
+      - "02-organization"
+      - "lunch"
+      - "Your own project under Git (30)"
+```
+
+The times are computed from `day:` in `event.yml`, so moving one module moves
+everything after it. Modules that a workshop leaves out are listed under its
+schedule, as self-paced. A course session (`lecture-1`, `lecture-2`, `lab`,
+`home`) lists modules the same way. The build warns when a course session
+holds more minutes than it has, when a morning runs into lunch or a day past
+its end, and when a module id is not in `modules.yml`.
+
+When you have taught a module, note how long it really took and change its
+`minutes:` in `modules.yml`: every schedule that uses it follows. That is how
+the timings get better with each run.
+
+## A cluster
+
+If your participants have an HPC cluster, describe it in `event.yml`:
+
+```yaml
+  cluster:
+    enabled: true
+    name: "Hilbert"
+    login: "login.hpc.example.org"
+    scheduler: "slurm"
+    docs: "https://hpc.example.org/docs"
+```
+
+The lessons then use the cluster's name (lesson 08 suggests running
+[Apptainer](pages/08-containers.qmd#apptainer) on it), and
+[05 §10](pages/05-pixi.qmd#pixi-on-an-hpc-cluster-optional) (Pixi on a
+cluster) and [09 §13](pages/09-snakemake.qmd#extra-running-on-a-slurm-cluster)
+(Snakemake on Slurm) show how to log in and where its user guide is. Without
+a cluster, those two sections fold into a collapsed note, *Optional: on an
+HPC cluster*, and the lessons speak of "your cluster".
+
+The cluster steps are not tested automatically, and the Snakemake profile in
+lesson 09 is written for Slurm: try them on your cluster before you teach.
+
+## Grading
+
+For courses. With `grading: enabled: true`, the syllabus, the
+[LTEE project](pages/ltee-project.qmd) page and the two assessment pages show
+each project's share of the grade, from `ltee-project:` and `capstone:`
+(percent), and the syllabus shows `credits:`. The rest of the grade, the
+deadlines and the policies belong in your official syllabus. Workshops leave
+grading off: the two projects are then described without grades.
+
+## Checklists
+
+### Weeks before
+
+- Book a room with power for every laptop, a projector, and Wi-Fi that
+  reaches conda-forge, bioconda, GitHub, figshare and NCBI.
+- Find helpers: people who know the tools and can unblock a participant
+  while you teach. They do not need to know the lessons by heart.
+- If participants will use a cluster, fill in `cluster:` and check they have
+  accounts.
+- Publish your site and send its address with the registration.
+
+### One to two weeks before
+
+- Send the [setup](pages/00-setup.qmd), including
+  [step 8](pages/00-setup.qmd#fill-the-cache-before-class), which downloads
+  the course software at home: about 2 GB, too much for a room of laptops on
+  one Wi-Fi.
+- Ask everyone to run the [setup check](pages/00-setup.qmd#setup-check), and
+  offer an hour to help those who get stuck. Windows users need WSL2, which
+  needs administrator rights once; [GitHub Codespaces](pages/00-setup.qmd#the-fallback-github-codespaces)
+  is the fallback.
+- Participants need a GitHub account with an SSH key
+  ([setup, step 5](pages/00-setup.qmd#git-and-github)) from lesson 04 on.
+- Run the tests in your copy: *Actions* → *Tutorials* → *Run workflow*. It
+  runs every lesson in a fresh folder on Linux and macOS, with today's
+  packages.
+- Try what is not tested automatically: the steps on GitHub's web pages
+  (pull requests, Pages, Codespaces), the release in
+  [lesson 12](pages/12-putting-it-together.qmd) on the Zenodo sandbox, and
+  the cluster steps.
+
+### During
+
+- Share one notes document (`links: notes:`) for links, questions and the
+  commands you type.
+- Type the commands as you teach, at the participants' pace, rather than
+  showing them finished.
+- Give everyone two colors of sticky notes: one on the laptop means "done",
+  the other "I need help". Helpers go to the second.
+- Write down how long each module takes.
+- At the end of each day, ask for one thing that worked and one to change.
+
+### After
+
+- Send the survey (`links: post-survey:`).
+- Update the minutes in `schedules/modules.yml` with the times you noted, and
+  move what did not fit.
+- Send fixes for the lessons to the original repository, as an
+  [issue or pull request](https://github.com/khan-lab/cbio7501-f26/issues).
+- Leave the site up: participants come back to it, and what the workshop
+  left out is self-paced.
+
+## Keep your copy up to date
+
+Fixes to the lessons arrive in the original repository. To bring them into
+your copy, press *Sync fork* on its GitHub page. Changes you keep to
+`event.yml` and `schedules/` are easy to carry along: if a sync conflicts
+there, keep your version. To change the lessons themselves, see the
+[contributor guide](https://github.com/khan-lab/cbio7501-f26/blob/main/CONTRIBUTING.md):
+every command in a lesson is also a test.
+
+## Credit
+
+Keep the license files and the [Sources and credits](pages/credits.qmd) page
+in your copy. When you teach from it, credit these lessons and the sources
+they adapt, and say what you changed: that is what CC BY 4.0 asks.

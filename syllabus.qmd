@@ -5,15 +5,15 @@ toc: false
 ---
 
 ::: {.callout-note}
-This page summarizes the content. The official CBIO7501 syllabus (credits,
+This page summarizes the content. The official {{< meta event.code >}} syllabus (credits,
 grading, deadlines, attendance and academic integrity policies) is the one
 published by the course and on the course repository's README; where they
 differ, the official syllabus applies.
 :::
 
-**CBIO7501 Reproducible and Open Science**, MBZUAI, Fall 2026. 2 credits;
-seven weeks; Monday and Tuesday sessions and a Wednesday lab. Instructor:
-Aziz Khan.
+**{{< event name >}}**, {{< meta event.institution >}}, {{< meta event.term >}}.
+{{< meta event.grading.credits >}} credits; seven weeks; {{< meta event.meetings >}}.
+Instructor: {{< event instructors >}}.
 
 ## Course learning outcomes
 
@@ -39,8 +39,8 @@ By the end of the course you can:
 | Week | Topic | Lessons |
 |------|-------|---------|
 | 1 | Introduction to reproducibility and open science | 01, 03 (concepts); slides (PDF): [Lecture 1, Reproducibility](slides/Lecture1_Reproducibility.pdf), [Lecture 2, Open science](slides/Lecture2_Open-Science.pdf) |
-| 2 | Project organization and version control: Git and GitHub | 02, 03 (hands-on), 04 |
-| 3 | Portable and reproducible environments (Pixi first; Conda compared) | 05, 05b |
+| 2 | Project organization and version control: Git and GitHub | 02, 03, 04 (§1–6) |
+| 3 | Portable and reproducible environments (Pixi first; Conda compared) | 04 (§7–10), 05, 05b |
 | 4 | Literate programming: Jupyter and Quarto | 06, 07 |
 | 5 | Containers: Docker and Apptainer | 08 |
 | 6 | Workflows and automation: Snakemake and Nextflow | 09, 10 |
@@ -54,8 +54,8 @@ to your own research project, the capstone. Two projects are assessed:
 
 | Project | What it is | Share of the grade | Assessed with |
 |---------|------------|-------------------:|---------------|
-| LTEE project | the project you build in the hands-on parts of the lessons, on GitHub, released with a Zenodo DOI | 40% | [what to hand in](assessment/ltee-project.qmd) |
-| Capstone | your own existing research project (or a manageable part of it), separate from the LTEE project; public, or private and shared with the instructor; no DOI needed | 30% | [capstone rubric](assessment/capstone-rubric.qmd) |
+| LTEE project | the project you build in the hands-on parts of the lessons, on GitHub, released with a Zenodo DOI | {{< meta event.grading.ltee-project >}}% | [what to hand in](assessment/ltee-project.qmd) |
+| Capstone | your own existing research project (or a manageable part of it), separate from the LTEE project; public, or private and shared with the instructor; no DOI needed | {{< meta event.grading.capstone >}}% | [capstone rubric](assessment/capstone-rubric.qmd) |
 
 The rest of the grade, the deadlines and the policies are in the official
 syllabus.

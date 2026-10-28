@@ -1,30 +1,49 @@
 ---
 title: "Workshop schedule"
-subtitle: "A draft for a condensed, in-person version (three days)"
+subtitle: "{{< meta schedule-workshop-subtitle >}}"
 toc: false
 ---
 
+<!-- The course site shows both workshop formats as drafts; a workshop site
+shows its own schedule, with dates. The subtitle is set in the profiles,
+_quarto-course.yml and _quarto-workshop.yml. -->
+
+::: {.content-visible when-profile="course"}
 ::: {.callout-note title="Draft"}
-The workshop length is decided after the content (it is built and tested;
-see the [build report](https://github.com/khan-lab/cbio7501-f26/blob/main/docs/BUILD_REPORT.md)).
-This draft fits the core lessons into three days of about six teaching hours;
-the timings come from the lesson estimates and will be tuned after a first run.
-Participants do the [setup](pages/00-setup.qmd) before day 1, including the
-cache prefetch, and run the [lesson 03 download](pages/03-data-management.qmd#hands-on)
-on day 1 morning while the introduction runs.
+The workshop length is decided after the content. These drafts fit the
+lessons into four or five days of about six teaching hours. The times are
+computed from the planned length of each part and will be tuned after a
+first run. Participants do the [setup](pages/00-setup.qmd)
+before day 1, including the cache prefetch, and run the
+[lesson 03 download](pages/03-data-management.qmd#hands-on) on day 1 morning
+while the introduction runs.
 :::
 
-| Time | Day 1: organize and track | Day 2: environments, reports, containers | Day 3: workflows and sharing |
-|------|---------------------------|-------------------------------------------|------------------------------|
-| 09:00 | [01 Introduction](lectures/01-introduction/01-introduction.qmd) (slides, 40 min) | [05 Pixi](pages/05-pixi.qmd) Part A | [09 Snakemake](pages/09-snakemake.qmd) §1–5 |
-| 10:30 | [02 Project organization](pages/02-project-organization.qmd) + [03 hands-on](pages/03-data-management.qmd#hands-on) | [05 Pixi](pages/05-pixi.qmd) Part B: the pipeline as tasks, the *Reproduce* check | [09 Snakemake](pages/09-snakemake.qmd) §6–11 |
-| 12:00 | Lunch | Lunch | Lunch |
-| 13:00 | [04 Git](pages/04-git.qmd) §1–6: Git on your laptop and on GitHub | [07 Quarto](pages/07-quarto.qmd) | [10 Nextflow](pages/10-nextflow.qmd) in-class part (40 min); [11 Documentation](pages/11-documentation.qmd) (50 min) |
-| 14:45 | [04 Git](pages/04-git.qmd) §7–10: branches, a conflict, pull requests | [08 Containers](pages/08-containers.qmd) §1–6 | [12 Swap and reproduce](pages/12-putting-it-together.qmd) |
-| 16:15 | Your own project: apply the day's tools (30 min) | Your own project (30 min) | Wrap-up, checklist, next steps |
+<!-- The tables are built from schedules/workshop-4day.yml,
+schedules/workshop-5day.yml and schedules/modules.yml; the day's start,
+lunch and breaks come from event.yml. -->
 
-**Not in the three days** (self-paced afterwards): [06 Jupyter](pages/06-jupyter.qmd),
-[05b Conda comparison](pages/05b-conda-comparison.qmd), Apptainer and
-registries in [08](pages/08-containers.qmd), the full
-[Nextflow tutorial](pages/10-nextflow.qmd), Zenodo release in
-[12](pages/12-putting-it-together.qmd), [packaging](pages/S1-packaging.qmd).
+::: {.panel-tabset}
+## Four days
+
+The core lessons, with time for your own project every day and a
+show-and-tell at the end.
+
+{{< schedule workshop-4day >}}
+
+## Five days
+
+All the in-class parts of the course, at a gentler pace, with time for
+your own project every day and a show-and-tell at the end.
+
+{{< schedule workshop-5day >}}
+:::
+:::
+
+::: {.content-visible when-profile="workshop"}
+Do the [setup](pages/00-setup.qmd) before day 1, including
+[step 8](pages/00-setup.qmd#fill-the-cache-before-class), which downloads the
+course software at home.
+
+{{< schedule >}}
+:::

@@ -1,6 +1,6 @@
 ---
 title: "On the art of reproducible and open science"
-subtitle: "CBIO7501 · Lesson 01"
+subtitle: "{{< event lesson 01 >}}"
 sources:
   - "**Adapted from:** *On the Art of Reproducible & Open Science (Week 1 deck, slides 5 to 40 and 71 to 83)*, Aziz Khan. <https://github.com/khan-lab/cbio7501-f26>"
   - "**Adapted from:** *Tools for Reproducible Research: Introduction (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/introduction/introduction.html>"

@@ -1,6 +1,6 @@
 ---
 title: "Version control with Git and GitHub"
-subtitle: "CBIO7501 · Lesson 04"
+subtitle: "{{< event lesson 04 >}}"
 sources:
   - "**Adapted from:** *Tools for Reproducible Research: Version control with Git (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/git/git.html>"
   - "Perez-Riverol Y et al. (2016). Ten simple rules for taking advantage of Git and GitHub. *PLoS Comput Biol* 12:e1004947. <https://doi.org/10.1371/journal.pcbi.1004947>"

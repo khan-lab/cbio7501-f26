@@ -4,10 +4,8 @@ project:
   render:
     - index.qmd
     - contents.qmd
-    - schedule-course.qmd
-    - schedule-workshop.qmd
-    - syllabus.qmd
     - faq.qmd
+    - teach.qmd
     - 404.qmd
     - pages/*.qmd
     - lectures/*/*.qmd
@@ -18,10 +16,19 @@ project:
     - assets/fonts/
     - slides/*.pdf
 
+# The settings of this run (format, dates, people, links, repository): the
+# one file a host edits. Pages show its values with {{< meta event.KEY >}}.
+metadata-files:
+  - event.yml
+
+# Each format adds its own menu items: _quarto-course.yml, _quarto-workshop.yml
+# and _quarto-self-paced.yml. `pixi run render` and `pixi run preview` pick the
+# profile from event.yml; plain `quarto render` uses this one.
+profile:
+  default: course
+
 website:
   title: "Reproducible and Open Science"
-  site-url: "https://khan-lab.github.io/cbio7501-f26/"
-  repo-url: "https://github.com/khan-lab/cbio7501-f26"
   repo-actions: [source, issue]
   description: "Hands-on lessons on reproducible and open computational research: project organization, data management, Quarto, Jupyter, Git, Pixi, containers, Snakemake and Nextflow, built around one LTEE variant-calling project."
   open-graph: true
@@ -33,125 +40,101 @@ website:
         href: index.qmd
       - text: "Lessons"
         href: contents.qmd
-      - text: "Schedule"
-        menu:
-          - text: "Course (CBIO7501)"
-            href: schedule-course.qmd
-          - text: "Workshop"
-            href: schedule-workshop.qmd
-      - text: "Syllabus"
-        href: syllabus.qmd
-      - text: "FAQ"
-        href: faq.qmd
-    right:
-      - icon: github
-        href: "https://github.com/khan-lab/cbio7501-f26"
-        aria-label: "GitHub repository"
   sidebar:
-    - id: lessons
-      title: "Lessons"
-      style: docked
-      collapse-level: 1
-      contents:
-        - text: "All lessons"
-          href: contents.qmd
-        - text: "00 Setup"
-          href: pages/00-setup.qmd
-        - section: "Introduction"
-          contents:
-            - text: "01 Reproducibility and open science"
-              href: pages/01-introduction.qmd
-        - section: "Project organization and data management"
-          contents:
-            - text: "02 Project organization"
-              href: pages/02-project-organization.qmd
-            - text: "03 Data management and FAIR"
-              href: pages/03-data-management.qmd
-        - section: "Version control"
-          contents:
-            - text: "04 Git and GitHub"
-              href: pages/04-git.qmd
-        - section: "Software environments"
-          contents:
-            - text: "05 Pixi"
-              href: pages/05-pixi.qmd
-            - text: "05b Conda comparison"
-              href: pages/05b-conda-comparison.qmd
-        - section: "Notebooks and reports"
-          contents:
-            - text: "06 Jupyter"
-              href: pages/06-jupyter.qmd
-            - text: "07 Quarto"
-              href: pages/07-quarto.qmd
-        - section: "Containers"
-          contents:
-            - text: "08 Docker and Apptainer"
-              href: pages/08-containers.qmd
-        - section: "Workflows"
-          contents:
-            - text: "09 Snakemake"
-              href: pages/09-snakemake.qmd
-            - text: "10 Nextflow"
-              href: pages/10-nextflow.qmd
-        - section: "Documentation and sharing"
-          contents:
-            - text: "11 Documentation"
-              href: pages/11-documentation.qmd
-            - text: "12 Putting it all together"
-              href: pages/12-putting-it-together.qmd
-        - section: "Extras"
-          contents:
-            - text: "Markdown"
-              href: pages/A-markdown.qmd
-            - text: "Bash 101"
-              href: pages/C-bash.qmd
-            - text: "Terminal editors and sessions"
-              href: pages/D-terminal.qmd
-            - text: "YAML, TOML and JSON"
-              href: pages/E-yaml-toml-json.qmd
-            - text: "Package and share your tool"
-              href: pages/S1-packaging.qmd
-            - text: "The LTEE example project"
-              href: pages/ltee-project.qmd
-            - text: "Take-down"
-              href: pages/B-take-down.qmd
-            - text: "Glossary"
-              href: pages/glossary.qmd
-        - section: "Assessment"
-          contents:
-        #    - text: "Quiz banks"
-        #      href: quizzes/index.qmd
-            - text: "LTEE project (40%)"
-              href: assessment/ltee-project.qmd
-            - text: "Capstone (30%)"
-              href: assessment/capstone-rubric.qmd
-        - section: "Cheat sheets"
-          href: cheatsheets/index.qmd
-          contents:
-            - text: "Bash"
-              href: cheatsheets/bash.qmd
-            - text: "Project and data"
-              href: cheatsheets/project-and-data.qmd
-            - text: "Git and GitHub"
-              href: cheatsheets/git.qmd
-            - text: "Pixi"
-              href: cheatsheets/pixi.qmd
-            - text: "Jupyter"
-              href: cheatsheets/jupyter.qmd
-            - text: "Quarto"
-              href: cheatsheets/quarto.qmd
-            - text: "Markdown"
-              href: cheatsheets/markdown.qmd
-            - text: "Docker and Apptainer"
-              href: cheatsheets/containers.qmd
-            - text: "Snakemake"
-              href: cheatsheets/snakemake.qmd
-            - text: "Nextflow"
-              href: cheatsheets/nextflow.qmd
-            - text: "Documentation and sharing"
-              href: cheatsheets/sharing.qmd
-        - text: "Sources and credits"
-          href: pages/credits.qmd
+    id: lessons
+    title: "Lessons"
+    style: docked
+    collapse-level: 1
+    contents:
+      - text: "All lessons"
+        href: contents.qmd
+      - text: "00 Setup"
+        href: pages/00-setup.qmd
+      - section: "Introduction"
+        contents:
+          - text: "01 Reproducibility and open science"
+            href: pages/01-introduction.qmd
+      - section: "Project organization and data management"
+        contents:
+          - text: "02 Project organization"
+            href: pages/02-project-organization.qmd
+          - text: "03 Data management and FAIR"
+            href: pages/03-data-management.qmd
+      - section: "Version control"
+        contents:
+          - text: "04 Git and GitHub"
+            href: pages/04-git.qmd
+      - section: "Software environments"
+        contents:
+          - text: "05 Pixi"
+            href: pages/05-pixi.qmd
+          - text: "05b Conda comparison"
+            href: pages/05b-conda-comparison.qmd
+      - section: "Notebooks and reports"
+        contents:
+          - text: "06 Jupyter"
+            href: pages/06-jupyter.qmd
+          - text: "07 Quarto"
+            href: pages/07-quarto.qmd
+      - section: "Containers"
+        contents:
+          - text: "08 Docker and Apptainer"
+            href: pages/08-containers.qmd
+      - section: "Workflows"
+        contents:
+          - text: "09 Snakemake"
+            href: pages/09-snakemake.qmd
+          - text: "10 Nextflow"
+            href: pages/10-nextflow.qmd
+      - section: "Documentation and sharing"
+        contents:
+          - text: "11 Documentation"
+            href: pages/11-documentation.qmd
+          - text: "12 Putting it all together"
+            href: pages/12-putting-it-together.qmd
+      - section: "Extras"
+        contents:
+          - text: "Markdown"
+            href: pages/A-markdown.qmd
+          - text: "Bash 101"
+            href: pages/C-bash.qmd
+          - text: "Terminal editors and sessions"
+            href: pages/D-terminal.qmd
+          - text: "YAML, TOML and JSON"
+            href: pages/E-yaml-toml-json.qmd
+          - text: "Package and share your tool"
+            href: pages/S1-packaging.qmd
+          - text: "The LTEE example project"
+            href: pages/ltee-project.qmd
+          - text: "Take-down"
+            href: pages/B-take-down.qmd
+          - text: "Glossary"
+            href: pages/glossary.qmd
+      - section: "Cheat sheets"
+        href: cheatsheets/index.qmd
+        contents:
+          - text: "Bash"
+            href: cheatsheets/bash.qmd
+          - text: "Project and data"
+            href: cheatsheets/project-and-data.qmd
+          - text: "Git and GitHub"
+            href: cheatsheets/git.qmd
+          - text: "Pixi"
+            href: cheatsheets/pixi.qmd
+          - text: "Jupyter"
+            href: cheatsheets/jupyter.qmd
+          - text: "Quarto"
+            href: cheatsheets/quarto.qmd
+          - text: "Markdown"
+            href: cheatsheets/markdown.qmd
+          - text: "Docker and Apptainer"
+            href: cheatsheets/containers.qmd
+          - text: "Snakemake"
+            href: cheatsheets/snakemake.qmd
+          - text: "Nextflow"
+            href: cheatsheets/nextflow.qmd
+          - text: "Documentation and sharing"
+            href: cheatsheets/sharing.qmd
   page-footer:
     left: "Material [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), code [MIT](https://opensource.org/license/mit). Parts adapted from other [open lessons](/pages/credits.qmd)"
     right: "Built with [Quarto](https://quarto.org/) {{< version >}} and [Pixi](https://pixi.prefix.dev/) {{< pixi-version >}}"
@@ -169,7 +152,7 @@ format:
     toc-location: right
     grid:
       sidebar-width: 270px
-      body-width: 840px
+      body-width: 1100px
       margin-width: 240px
     number-sections: false
     code-copy: true
@@ -189,7 +172,11 @@ execute:
 
 filters:
   - assets/filters/sources-slide.lua
+  - assets/filters/event-check.lua
+  - assets/filters/cluster.lua
 
 # {{< pixi-version >}} in the footer: the Pixi that builds the site.
 shortcodes:
   - assets/shortcodes/pixi-version.lua
+  - assets/shortcodes/schedule.lua
+  - assets/shortcodes/event.lua

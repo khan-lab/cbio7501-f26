@@ -5,8 +5,8 @@ Lenski's Long-Term Evolution Experiment (LTEE), frozen at 5,000, 15,000 and
 50,000 generations. Question: how many mutations accumulated, and is the
 answer robust to the minimum read depth used to filter variant calls?
 
-Built as the example project of the CBIO7501 Reproducible and Open Science
-workshop. The analysis steps follow the Data Carpentry lesson *Wrangling
+Built as the example project of the Reproducible and Open Science lessons.
+The analysis steps follow the Data Carpentry lesson *Wrangling
 Genomics* (CC BY 4.0).
 
 Author: Ada Lovelace (ORCID [0000-0002-1825-0097](https://orcid.org/0000-0002-1825-0097))

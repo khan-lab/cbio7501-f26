@@ -1,0 +1,39 @@
+# Course format (event.yml: course-7week). Added to _quarto.yml: the course
+# pages, and after the shared menus, schedule, syllabus and FAQ in the
+# navbar; assessment, credits and the host guide at the end of the sidebar.
+project:
+  render:
+    - schedule-course.qmd
+    - schedule-workshop.qmd
+    - syllabus.qmd
+
+# Subtitle of schedule-workshop.qmd
+schedule-workshop-subtitle: "Drafts for an in-person workshop of four or five days"
+
+website:
+  navbar:
+    left:
+      - text: "Schedule"
+        menu:
+          - text: "Course ({{< meta event.code >}})"
+            href: schedule-course.qmd
+          - text: "Workshop"
+            href: schedule-workshop.qmd
+      - text: "Syllabus"
+        href: syllabus.qmd
+      - text: "FAQ"
+        href: faq.qmd
+  sidebar:
+    contents:
+      - section: "Assessment"
+        contents:
+      #    - text: "Quiz banks"
+      #      href: quizzes/index.qmd
+          - text: "LTEE project"
+            href: assessment/ltee-project.qmd
+          - text: "Capstone"
+            href: assessment/capstone-rubric.qmd
+      - text: "Sources and credits"
+        href: pages/credits.qmd
+      - text: "Teach these lessons"
+        href: teach.qmd

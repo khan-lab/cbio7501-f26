@@ -6,9 +6,10 @@ toc: false
 
 Lessons are grouped by topic and numbered in the order they build on each
 other: the LTEE project you create in lesson 02 grows with every lesson after
-it, and each tutorial lists what it needs at the top. When each lesson is
+it, and each tutorial lists what it needs at the top. [When each lesson is
 taught is in the schedules: [7-week course](schedule-course.qmd) and
-[workshop](schedule-workshop.qmd).
+[workshop](schedule-workshop.qmd).]{.content-visible when-profile="course"}[When each lesson is taught is in the
+[schedule](schedule-workshop.qmd).]{.content-visible when-profile="workshop"}
 
 []{.bi .bi-easel aria-hidden="true"} slides ·
 []{.bi .bi-file-earmark-pdf aria-hidden="true"} lecture slides (PDF) ·

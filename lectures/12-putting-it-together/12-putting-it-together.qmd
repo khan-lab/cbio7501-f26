@@ -1,6 +1,6 @@
 ---
 title: "Putting it all together"
-subtitle: "CBIO7501 · Lesson 12"
+subtitle: "{{< event lesson 12 >}}"
 sources:
   - "**Adapted from:** *Tools for Reproducible Research: Putting it all together (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html>"
   - "Week 1 slides 97 (Zenodo homework) and 98 (checklist) are the basis; the checklist is updated for Pixi."

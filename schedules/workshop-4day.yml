@@ -1,0 +1,59 @@
+# The four-day workshop: the modules of each day, in order. {{< schedule
+# workshop-4day >}} turns this into the tables on schedule-workshop.qmd.
+#
+# - Each item is a module id from modules.yml, `break`, `lunch`, or any other
+#   text (Markdown allowed). "(30)" at the end of an item is its minutes.
+# - Times are computed from the day in event.yml (start, lunch, breaks), so
+#   moving a module moves everything after it. Lunch starts at the lunch
+#   time, or later if the morning runs long.
+# - The build warns when a morning runs into lunch or a day past its end.
+#   Modules in no day are listed under the tables as self-paced.
+days:
+  - title: "Organize and track"
+    blocks:
+      - "01-slides"
+      - "03-slides"
+      - "break"
+      - "02-organization"
+      - "lunch"
+      - "03-hands-on"
+      - "04-git-local"
+      - "break"
+      - "04-git-branches"
+      - "Your own project under Git (30)"
+
+  - title: "Environments and reports"
+    blocks:
+      - "05-pixi-a"
+      - "break"
+      - "05-pixi-b"
+      - "lunch"
+      - "05-reproduce"
+      - "07-quarto-first"
+      - "break"
+      - "07-quarto-report"
+      - "Your own project: Pixi and a report (30)"
+
+  - title: "Containers and workflows"
+    blocks:
+      - "08-docker"
+      - "break"
+      - "08-image"
+      - "Your own project: your environment in a container (30)"
+      - "lunch"
+      - "09-snakemake-a"
+      - "break"
+      - "09-snakemake-b"
+      - "10-nextflow-intro"
+
+  - title: "Document and share"
+    blocks:
+      - "11-documentation"
+      - "break"
+      - "12-swap"
+      - "lunch"
+      - "12-release"
+      - "Your own project: README, license, citation, fixes from the swap (45)"
+      - "break"
+      - "Own-project show-and-tell (45)"
+      - "Wrap-up, checklist, next steps (20)"

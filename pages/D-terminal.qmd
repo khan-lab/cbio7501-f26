@@ -18,7 +18,7 @@ test:
 ### Why this matters
 
 Sooner or later you will work where there is no graphical editor and no
-window you can keep open: on a cluster such as Karakoram, in a GitHub
+window you can keep open: on an HPC cluster, in a GitHub
 Codespace, in WSL2, on any computer you reach with `ssh`. Two skills make
 that comfortable. The first is editing a file in the terminal itself. Git
 even opens an editor by itself when it needs a message from you, and if that
