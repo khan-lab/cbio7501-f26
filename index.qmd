@@ -5,7 +5,7 @@ toc: false
 page-layout: full
 body-classes: home-page
 image: assets/images/social-preview.png
-image-alt: "Diagram: the same report.qmd, with the same charts and REL606 variant calls, today and five years later. Both come from the same inputs: data and checksums, code and Git history, the environment in pixi.lock, and a container built from a Dockerfile."
+image-alt: "Diagram: Data, Code and Results need Environments and workflow"
 ---
 
 <!-- Styles: "Home page" in assets/css/styles.scss. The title and the line
@@ -141,12 +141,9 @@ Nextflow), documentation, and open publication.
 
 ### The LTEE project
 
-Everything is hands-on and built around one project that grows with you:
-variant calling on *E. coli* from Richard Lenski's Long-Term Evolution
-Experiment. You do not need to know genomics: the analysis is a given
+All hands-on excercise are around one project of variant calling from Richard Lenski's [Long-Term Evolution
+Experiment](pages/ltee-project.qmd). You do not need to know genomics: the analysis is a given
 pipeline, and the lessons are about making it reproducible.
-
-[The LTEE example project](pages/ltee-project.qmd){.home-card-link}
 
 ::: {.content-visible when-profile="course"}
 [What to hand in](assessment/ltee-project.qmd){.home-card-link}
@@ -157,8 +154,7 @@ pipeline, and the lessons are about making it reproducible.
 
 ### Your capstone
 
-Then you apply the same steps to a small analysis of your own, from any
-field. In lesson 12 a partner reruns it from your repository.
+The capstone is your own existing or ongoing computational research project with a datasets, code and results. You apply to it what each lesson teaches.
 
 [The capstone](assessment/capstone-rubric.qmd){.home-card-link}
 ::::
