@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1054.92 520.83">
+  <!-- Generator: Adobe Illustrator 30.8.2, SVG Export Plug-In . SVG Version: 2.1.4 Build 7)  -->
+  <defs>
+    <style>
+      .st0, .st1, .st2, .st3, .st4 {
+        stroke: #0c2945;
+      }
+
+      .st0, .st2, .st3, .st4 {
+        stroke-width: 3px;
+      }
+
+      .st0, .st5 {
+        fill: #164678;
+      }
+
+      .st1, .st6, .st7, .st8, .st9, .st10, .st11, .st12 {
+        stroke-linecap: round;
+      }
+
+      .st1, .st6, .st7, .st9, .st13, .st10, .st12 {
+        fill: none;
+      }
+
+      .st1, .st8, .st13, .st14, .st12 {
+        stroke-width: 2.5px;
+      }
+
+      .st1, .st12 {
+        stroke-opacity: .4;
+      }
+
+      .st15, .st16, .st17, .st18, .st19, .st20, .st21, .st22, .st23 {
+        isolation: isolate;
+      }
+
+      .st15, .st16, .st19, .st20, .st21, .st24, .st23 {
+        font-family: Helvetica, Helvetica;
+      }
+
+      .st15, .st19 {
+        font-size: 20px;
+      }
+
+      .st15, .st21, .st25 {
+        fill: #2f6fb5;
+      }
+
+      .st16, .st18, .st14, .st23 {
+        fill: #0c2945;
+      }
+
+      .st16, .st21 {
+        font-size: 21px;
+      }
+
+      .st17, .st20 {
+        fill: #4a5b6d;
+        font-size: 18px;
+      }
+
+      .st2 {
+        fill: #2a64a3;
+      }
+
+      .st18, .st26, .st22 {
+        font-family: Helvetica-Bold, Helvetica;
+        font-weight: 700;
+      }
+
+      .st18, .st22, .st23 {
+        font-size: 22px;
+      }
+
+      .st6, .st7, .st10 {
+        stroke-width: 4px;
+      }
+
+      .st6, .st9 {
+        stroke: #2f6fb5;
+      }
+
+      .st27, .st3 {
+        fill: #e6c787;
+      }
+
+      .st7 {
+        stroke: #164678;
+      }
+
+      .st8 {
+        stroke: #8db7e6;
+      }
+
+      .st28 {
+        fill: #8db7e6;
+      }
+
+      .st19, .st22 {
+        fill: #8a6410;
+      }
+
+      .st9 {
+        stroke-dasharray: 2 9;
+        stroke-width: 5px;
+      }
+
+      .st29 {
+        fill: #e4ebf3;
+        stroke: #b9c7d6;
+        stroke-width: 1.5px;
+      }
+
+      .st13 {
+        stroke: #8fa3b8;
+        stroke-dasharray: 8 8;
+      }
+
+      .st14, .st11 {
+        stroke: #e6c787;
+      }
+
+      .st4 {
+        fill: #f0d9a8;
+      }
+
+      .st10 {
+        stroke: #c99a2e;
+      }
+
+      .st30 {
+        fill: #c99a2e;
+      }
+
+      .st11 {
+        stroke-width: 3.5px;
+      }
+
+      .st12 {
+        stroke: #fff;
+      }
+    </style>
+  </defs>
+  <rect class="st13" x="764.04" y="134.73" width="270" height="250" rx="22" ry="22"/>
+  <text class="st22" transform="translate(862.38 168.73)"><tspan x="0" y="0">GitHub</tspan></text>
+  <path class="st0" d="M834.04,214.73v100c0,11.05,29.1,20,65,20s65-8.95,65-20v-100h-130Z"/>
+  <ellipse class="st2" cx="899.04" cy="214.73" rx="65" ry="20"/>
+  <path class="st12" d="M848.04,259.73c0,8.84,22.83,16,51,16s51-7.16,51-16"/>
+  <text class="st18" transform="translate(831.8 422.73)"><tspan x="0" y="0">Remote repo</tspan></text>
+  <text class="st20" transform="translate(848.04 446.73)"><tspan x="0" y="0">shared copy</tspan></text>
+  <rect class="st29" x="22.09" y="56.73" width="120" height="120" rx="22" ry="22"/>
+  <circle class="st5" cx="82.09" cy="98.73" r="19"/>
+  <path class="st27" d="M48.09,146.73c0-34,68-34,68,0H48.09Z"/>
+  <rect class="st14" x="52.09" y="124.73" width="60" height="38" rx="5" ry="5"/>
+  <path class="st11" d="M44.09,166.73h76"/>
+  <path class="st8" d="M68.09,136.73h28M68.09,146.73h18"/>
+  <text class="st23" transform="translate(62.12 208.73)"><tspan x="0" y="0">You</tspan></text>
+  <line class="st6" x1="163.69" y1="96.73" x2="352.44" y2="96.73"/>
+  <polygon class="st25" points="366.04 96.73 349.04 105.73 349.04 87.73 366.04 96.73"/>
+  <text class="st21" transform="translate(225.37 82.73)"><tspan x="0" y="0">add</tspan></text>
+  <line class="st7" x1="163.69" y1="152.73" x2="352.44" y2="152.73"/>
+  <polygon class="st5" points="366.04 152.73 349.04 161.73 349.04 143.73 366.04 152.73"/>
+  <text class="st16" transform="translate(206.7 182.73)"><tspan x="0" y="0">commit</tspan></text>
+  <path class="st3" d="M374.04,74.73v100c0,11.05,26.86,20,60,20s60-8.95,60-20v-100h-120Z"/>
+  <ellipse class="st4" cx="434.04" cy="74.73" rx="60" ry="20"/>
+  <path class="st1" d="M388.04,119.73c0,8.84,20.59,16,46,16s46-7.16,46-16"/>
+  <text class="st18" transform="translate(380.08 31.76)"><tspan x="0" y="0">Local repo</tspan></text>
+  <rect class="st29" x="22.09" y="326.73" width="120" height="120" rx="22" ry="22"/>
+  <circle class="st5" cx="82.09" cy="368.73" r="19"/>
+  <path class="st28" d="M48.09,416.73c0-34,68-34,68,0H48.09Z"/>
+  <rect class="st14" x="52.09" y="394.73" width="60" height="38" rx="5" ry="5"/>
+  <path class="st11" d="M44.09,436.73h76"/>
+  <path class="st8" d="M68.09,406.73h28M68.09,416.73h18"/>
+  <text class="st23" transform="translate(8.31 478.73)"><tspan x="0" y="0">Team member</tspan></text>
+  <line class="st6" x1="163.69" y1="366.73" x2="352.44" y2="366.73"/>
+  <polygon class="st25" points="366.04 366.73 349.04 375.73 349.04 357.73 366.04 366.73"/>
+  <text class="st21" transform="translate(225.37 352.73)"><tspan x="0" y="0">add</tspan></text>
+  <line class="st7" x1="163.69" y1="422.73" x2="352.44" y2="422.73"/>
+  <polygon class="st5" points="366.04 422.73 349.04 431.73 349.04 413.73 366.04 422.73"/>
+  <text class="st16" transform="translate(206.7 452.73)"><tspan x="0" y="0">commit</tspan></text>
+  <path class="st3" d="M374.04,344.73v100c0,11.05,26.86,20,60,20s60-8.95,60-20v-100h-120Z"/>
+  <ellipse class="st4" cx="434.04" cy="344.73" rx="60" ry="20"/>
+  <path class="st1" d="M388.04,389.73c0,8.84,20.59,16,46,16s46-7.16,46-16h0"/>
+  <text class="st18" transform="translate(381.76 491.61)"><tspan x="0" y="0">Local repo</tspan></text>
+  <line class="st10" x1="523.74" y1="109.63" x2="816.34" y2="221.83"/>
+  <polygon class="st30" points="829.04 226.73 809.94 229.03 816.44 212.23 829.04 226.73"/>
+  <polygon class="st30" points="511.04 104.73 530.14 102.43 523.64 119.23 511.04 104.73"/>
+  <line class="st9" x1="826.62" y1="248.15" x2="523.94" y2="145.93"/>
+  <polygon class="st25" points="511.04 141.73 529.94 138.43 524.44 155.53 511.04 141.73"/>
+  <text class="st19" transform="translate(631.24 127.28) rotate(21)"><tspan x="0" y="0">push / pull</tspan></text>
+  <text class="st15" transform="translate(638.4 206.14) rotate(17.9)"><tspan x="0" y="0">clone</tspan></text>
+  <line class="st10" x1="523.74" y1="409.83" x2="816.34" y2="297.63"/>
+  <polygon class="st30" points="829.04 292.73 816.44 307.23 809.94 290.43 829.04 292.73"/>
+  <polygon class="st30" points="511.04 414.73 523.64 400.23 530.14 417.03 511.04 414.73"/>
+  <line class="st9" x1="829.04" y1="274.73" x2="523.94" y2="373.53"/>
+  <polygon class="st25" points="511.04 377.73 524.44 363.93 529.94 381.03 511.04 377.73"/>
+  <text class="st19" transform="translate(631.24 398.19) rotate(-21)"><tspan x="0" y="0">push / pull</tspan></text>
+  <text class="st15" transform="translate(638.4 319.33) rotate(-17.9)"><tspan x="0" y="0">clone</tspan></text>
+  <text class="st17" transform="translate(470.94 49.73)"><tspan class="st26" x="0" y="0">.git/</tspan><tspan class="st24" x="31.99" y="0" xml:space="preserve"> folder in your machine</tspan></text>
+  <text class="st17" transform="translate(475.47 508.19)"><tspan class="st26" x="0" y="0">.git/</tspan><tspan class="st24" x="31.99" y="0" xml:space="preserve"> folder in their machine</tspan></text>
+</svg>

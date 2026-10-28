@@ -21,16 +21,21 @@ sources:
 - A laptop that is lost or stolen takes the only copy with it
 - "Which code made Figure 3?" has no answer
 
-. . .
 
-Git keeps a **complete history** of the project: like a shared drive that
+## Git is a version control system
+
+- **Git** is an open-source, distributed version control system created by Linus Torvalds in 2005
+
+- **Git** keeps a **complete history** of the project/code: like a shared drive that
 keeps versions, except that **you** decide when a version is saved, and why.
-GitHub keeps a **copy** and adds review and automation.
+- **GitHub** keeps a **copy** and adds review and automation.
 
+::: {.notes}
 Git is made for **text** (code, config, Markdown), not for large or binary
 data files.
+:::
 
-## Words you need
+## Terms you need to know
 
 | Word | Meaning |
 |------|---------|
@@ -40,6 +45,8 @@ data files.
 | remote | another copy of the repository, e.g. on GitHub (`origin`) |
 | push / pull | send commits to / get commits from a remote |
 | pull request | a proposal to merge a branch, with review and checks |
+
+![Figure: By Aziz Khan, CC BY 4.0](../../assets/images/git/git-local-remote.svg){fig-alt="" width="70%" fig-align="center"}
 
 ## Three steps, over and over
 
@@ -78,12 +85,21 @@ data files.
 
 `.gitignore` makes this automatic.
 
+```{.text}
+.pixi/*
+!.pixi/config.toml
+
+data/raw/**
+!data/raw/README.md
+.
+.
+```
 ## Branches and pull requests
 
 ```{.text}
-main      ●───●───────────●   (merge)
-               \         /
-lesson-04-ci    ●───●───●     push → pull request → review + checks → merge
+main          ●───●───────────●   (merge)
+                   \         /
+lesson-04-readme    ●───●───●     push → pull request → review + checks → merge
 ```
 
 From now on: **one branch and one pull request per lesson.**
