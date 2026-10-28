@@ -24,16 +24,14 @@ sources:
 
 ## Git is a version control system
 
-- **Git** is an open-source, distributed version control system created by Linus Torvalds in 2005
+- **Git** is an open-source, distributed version control system created by *Linus Torvalds* in 2005
 
 - **Git** keeps a **complete history** of the project/code: like a shared drive that
 keeps versions, except that **you** decide when a version is saved, and why.
 - **GitHub** keeps a **copy** and adds review and automation.
 
-::: {.notes}
-Git is made for **text** (code, config, Markdown), not for large or binary
+*Note*: Git is made for **text** (code, config, Markdown), not for large or binary
 data files.
-:::
 
 ## Terms you need to know
 
@@ -46,7 +44,8 @@ data files.
 | push / pull | send commits to / get commits from a remote |
 | pull request | a proposal to merge a branch, with review and checks |
 
-![Figure: By Aziz Khan, CC BY 4.0](../../assets/images/git/git-local-remote.svg){fig-alt="" width="70%" fig-align="center"}
+![](../../assets/images/git/git-local-remote.svg){fig-alt="" width="70%" fig-align="center"}
+[Figure: By *Aziz Khan*, CC BY 4.0]{.fig-credit}
 
 ## Three steps, over and over
 
@@ -54,9 +53,9 @@ data files.
 
 [Figure: By *Aziz Khan*, CC BY 4.0]{.fig-credit}
 
-1. **Edit** files: `git status` shows what changed
+1. **Edit** files: `git status` shows what changed in the working directory
 2. **Stage** what belongs together: `git add FILE`
-3. **Commit** it to the history: `git commit -m "Why this change"`
+3. **Commit** it to the history: `git commit -m "Why this change"` 
 
 ## Working with a remote
 
