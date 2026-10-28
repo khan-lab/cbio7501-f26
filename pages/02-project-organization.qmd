@@ -150,8 +150,8 @@ pixi exec --spec cookiecutter --spec git -- \
 ```
 
 ::: {.callout-tip title="Same thing, without the questions"}
-You can give all answers on the command line. This is what the course tests
-run; use your own name and ORCID iD:
+You can give all answers on the command line instead, which is quicker when
+you make many projects. Use your own name and ORCID iD:
 
 ```{.bash .run}
 pixi exec --spec cookiecutter --spec git -- \

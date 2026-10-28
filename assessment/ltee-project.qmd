@@ -7,7 +7,7 @@ toc: true
 
 ::: {.content-visible when-meta="event.grading.enabled"}
 ::: {.callout-note title="Note"}
-How the {{< meta event.grading.ltee-project >}}% is split between the items below is to be confirmed.
+How the {{< event share ltee-project >}}% is split between the items below is to be confirmed.
 :::
 :::
 
@@ -17,7 +17,7 @@ The LTEE project is the project you build in the hands-on parts of the
 lessons, from [lesson 02](../pages/02-project-organization.qmd) to
 [lesson 12](../pages/12-putting-it-together.qmd): the same analysis and the
 same data for everyone ([about the project](../pages/ltee-project.qmd)). [It
-counts for **{{< meta event.grading.ltee-project >}}%** of the course grade.]{.content-visible when-meta="event.grading.enabled"}
+counts for **{{< event share ltee-project >}}%** of the course grade.]{.content-visible when-meta="event.grading.enabled"}
 
 It is assessed separately from the [capstone](capstone-rubric.qmd){{< event grade capstone short >}}, in
 which you apply the same skills to your own research project.

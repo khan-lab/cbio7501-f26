@@ -4,7 +4,7 @@ subtitle: "{{< event name >}} - {{< meta event.term >}}"
 toc: false
 ---
 
-This is a {{< meta event.grading.credits >}}-credit 7 week course for graduate students. There are two lecure sessions with hands-on (80 minutes) and one hands-on lab (110 minutes) per week.
+This is a {{< meta event.grading.credits >}}-credit 7 week course for graduate students. There are two lecture sessions with hands-on (80 minutes) and one hands-on lab (110 minutes) per week.
 Nearly 60% of the time is hands-on. Anything that does not fit in class stays
 as an at-home tutorial, so the open material is complete even when class time
 is not. Dates, rooms and grading are in the official course information; this

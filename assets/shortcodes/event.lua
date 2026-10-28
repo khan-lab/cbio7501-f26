@@ -8,6 +8,9 @@
 --   lesson NN     "CBIO7501 · Lesson NN" or "Lesson NN" (deck subtitles)
 --   grade KEY     " (40% of the course grade)" for grading: KEY when grading
 --                 is enabled, else nothing; `grade KEY short` gives " (40%)"
+--   share KEY     just "40", or nothing: for text that is already shown only
+--                 when grading is enabled (a {{< meta >}} there would warn
+--                 in builds whose event.yml has no such key)
 --   instructors   "A", "A and B", "A, B and C"; also helpers
 --   dates         a workshop's dates, "18–21 Jan 2027" (from start-date
 --                 and the number of days in schedules/FORMAT.yml)
@@ -67,6 +70,15 @@ local function dates(event)
     return day(first) .. "–" .. day(last) .. " " .. os.date("%b %Y", last)
   end
   return day(first) .. " " .. os.date("%b", first) .. " – " .. day(last) .. " " .. os.date("%b %Y", last)
+end
+
+-- grading: KEY from event.yml, or "" when grading is off or KEY is not set
+local function share_of(event, key)
+  local g = event.grading or {}
+  if g.enabled ~= true then
+    return ""
+  end
+  return text(g[key])
 end
 
 local function cluster_name(event)
@@ -151,15 +163,16 @@ return {
       local n = args[2] and text(args[2]) or ""
       return pandoc.Inlines((code ~= "" and (code .. " · ") or "") .. "Lesson " .. n)
     elseif key == "grade" then
-      local g = event.grading or {}
-      local share = args[2] and text(g[text(args[2])]) or ""
-      if g.enabled ~= true or share == "" then
+      local share = args[2] and share_of(event, text(args[2])) or ""
+      if share == "" then
         return pandoc.Inlines({})
       end
       local short = args[3] and text(args[3]) == "short"
       local out = pandoc.Inlines({ pandoc.Space() })
       out:extend(pandoc.Inlines("(" .. share .. "%" .. (short and ")" or " of the course grade)")))
       return out
+    elseif key == "share" then
+      return pandoc.Inlines(args[2] and share_of(event, text(args[2])) or "")
     elseif key == "instructors" or key == "helpers" then
       return pandoc.Inlines(names(event[key]))
     elseif key == "dates" then

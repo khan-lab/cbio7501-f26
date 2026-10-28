@@ -65,8 +65,10 @@ forks teach them elsewhere. Use the settings in `event.yml` instead:
 - `{{< event name >}}`, `{{< meta event.code >}}` and the other keys listed
   in `assets/shortcodes/event.lua` for the course's name.
 - Grade shares only with `{{< event grade KEY >}}`, or inside
-  `.content-visible when-meta="event.grading.enabled"`: they disappear when
-  grading is off.
+  `.content-visible when-meta="event.grading.enabled"` with
+  `{{< event share KEY >}}` for the number: they disappear when grading is
+  off. (`{{< meta event.grading.KEY >}}` there would warn in workshop builds,
+  whose `event.yml` has no shares.)
 
 When a lesson changes a command, change its cheat sheet in `cheatsheets/`
 too: the sheets are not run by the tests, and each one links to the lesson

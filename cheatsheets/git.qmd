@@ -10,6 +10,7 @@ subtitle: "Cheat sheet for lesson 04"
 | Check that Git works | `git --version` |
 | Your name and email, written into every commit | `git config --global user.name "NAME"` and `git config --global user.email "EMAIL"` |
 | Call the first branch `main` | `git config --global init.defaultBranch main` |
+| Keep your email private | use GitHub's *noreply* address (**Settings → Emails**) as `user.email` |
 
 See [lesson 04, section 1](../pages/04-git.qmd#is-git-set-up) and [lesson 00](../pages/00-setup.qmd#git-and-github) for the SSH key.
 
@@ -21,7 +22,10 @@ See [lesson 04, section 1](../pages/04-git.qmd#is-git-set-up) and [lesson 00](..
 | What changed, what is staged? | `git status` (one line per file: `git status --short`) |
 | Why is a file not listed? | `git check-ignore -v FILE` |
 | Show changes you have not staged | `git diff` |
+| Show what the next commit will contain | `git diff --staged` |
 | Stage one file, or everything | `git add FILE`, `git add .` |
+| Stage only some changes in a file | `git add -p FILE` (answers `y` or `n` for each change) |
+| Take a file out of the stage (keeps your changes) | `git restore --staged FILE` |
 | Record the staged changes | `git commit -m "MESSAGE"` |
 | Stage and commit every changed tracked file | `git commit -am "MESSAGE"` (does not add new files) |
 | Delete a file and stage the deletion | `git rm FILE` |
@@ -35,10 +39,23 @@ Taught in [lesson 04, sections 2 to 4](../pages/04-git.qmd#start-tracking-the-pr
 | One line per commit | `git log --oneline` |
 | The commits that changed one file | `git log --oneline -- FILE` |
 | All branches as a graph | `git log --oneline --graph --all` |
-| What the last commit changed | `git show --stat HEAD` |
-| Get files back as they were one commit ago | `git restore --source=HEAD~1 FILE` |
+| What the last commit changed | `git show --stat HEAD` (`HEAD`: where you are now) |
+| Every change to one file, as diffs | `git log -p -- FILE` |
+| Which commit last changed each line | `git blame FILE` |
+| Get a file back as it was before commit HASH | `git restore --source=HASH~1 FILE` (`HEAD~1`: before the latest commit) |
 
 See [section 5](../pages/04-git.qmd#browse-the-history) and the [*Break it*](../pages/04-git.qmd#break-it-delete-your-work-then-get-it-back).
+
+## Undo
+
+| What you want | Command |
+|------------|------------------------|
+| Throw away changes you have not staged | `git restore FILE` (the changes are lost) |
+| Put uncommitted changes aside, to switch branch or pull | `git stash`, later `git stash pop` |
+| Fix the last commit, before you push it | `git add FILE`, then `git commit --amend` |
+| Undo a commit you already pushed | `git revert HASH` (a new commit; the history keeps both) |
+
+See *Going further: which undo?* after the [*Break it*](../pages/04-git.qmd#break-it-delete-your-work-then-get-it-back).
 
 ## Branches
 
@@ -49,6 +66,7 @@ See [section 5](../pages/04-git.qmd#browse-the-history) and the [*Break it*](../
 | Merge a branch into the one you are on | `git merge BRANCH` |
 | Delete a merged branch | `git branch -d BRANCH` |
 | Finish a merge conflict | edit the files (remove the `<<<<<<<`, `=======`, `>>>>>>>` lines), then `git add FILE` and `git commit -m "MESSAGE"` |
+| Stop a merge and go back to before it | `git merge --abort` |
 
 See [sections 7 and 8](../pages/04-git.qmd#branches).
 
@@ -57,12 +75,16 @@ See [sections 7 and 8](../pages/04-git.qmd#branches).
 | What you want | Command |
 |------------|------------------------|
 | Connect your project to a new GitHub repository | `git remote add origin git@github.com:USER/REPO.git` |
+| Where does `origin` point? | `git remote -v` |
 | Push a branch the first time | `git push -u origin BRANCH` |
 | Push and pull later | `git push`, `git pull` |
+| Get new commits without changing your files | `git fetch` |
 | Copy a repository to your computer | `git clone git@github.com:USER/REPO.git FOLDER` |
+| Log in with HTTPS instead of an SSH key | `pixi global install gh`, then `gh auth login`; use `https://github.com/USER/REPO.git` |
 | Pull request | push a branch, then *Compare & pull request* on GitHub; merge when the *Reproduce* check is green |
+| After the pull request is merged | `git switch main`, `git pull`, `git branch -d BRANCH`, `git fetch --prune` |
 
-See [section 6](../pages/04-git.qmd#put-the-project-on-github) and [section 10](../pages/04-git.qmd#pull-requests-and-the-reproduce-check).
+See [section 6](../pages/04-git.qmd#put-the-project-on-github) and [section 9](../pages/04-git.qmd#pull-requests-and-the-reproduce-check).
 
 ## Tags
 
@@ -70,9 +92,10 @@ See [section 6](../pages/04-git.qmd#put-the-project-on-github) and [section 10](
 |------------|------------------------|
 | Name the current commit | `git tag -a v1.0.0 -m "MESSAGE"` |
 | Push the tag to GitHub | `git push origin v1.0.0` |
-| List tags | `git tag` |
+| List tags, with their messages | `git tag -n` |
+| Show a tag and the commit it names | `git show v1.0.0` |
 
-See [section 9](../pages/04-git.qmd#tags); releases with a DOI are in [lesson 12](../pages/12-putting-it-together.qmd#release-and-archive-on-zenodo).
+See [section 10](../pages/04-git.qmd#tags); releases with a DOI are in [lesson 12](../pages/12-putting-it-together.qmd#release-and-archive-on-zenodo).
 
 ## `.gitignore`, as in the template
 

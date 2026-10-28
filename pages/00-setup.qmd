@@ -199,6 +199,11 @@ GitHub. The last one makes Git open nano, an easy editor, when it needs a
 message from you; otherwise it often opens vim, which is hard to leave the
 first time ([Terminal editors and sessions](D-terminal.qmd)).
 
+The email is written into every commit, and anyone can read it once you push
+to a public repository. To keep your address private, use the *noreply*
+address that GitHub shows under **Settings → Emails** (it looks like
+`12345678+ada-lovelace@users.noreply.github.com`).
+
 ### Create a GitHub account and an SSH key
 
 1. Create a free account at <https://github.com/signup> if you do not have one.

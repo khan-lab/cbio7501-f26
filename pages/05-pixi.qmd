@@ -511,10 +511,18 @@ only exists on your laptop, or `pixi.lock` out of date with `pixi.toml`
 (run `pixi install` and commit `pixi.lock`).
 :::
 
-Merge locally if you are not using GitHub (or in the course tests):
+Back on your laptop, bring `main` up to date. `git pull` fetches the merge
+commit GitHub made:
 
 ```{.bash .run-ci}
 git switch main
+git pull
+```
+
+Working without GitHub? Merge on your laptop instead. After a `git pull` this
+changes nothing (Git says *Already up to date*):
+
+```{.bash .run-ci}
 git merge lesson-05-pixi
 git push
 ```

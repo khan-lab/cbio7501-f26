@@ -7,7 +7,7 @@ toc: true
 
 ::: {.content-visible when-meta="event.grading.enabled"}
 ::: {.callout-note title="Note"}
-The weights within the capstone are to be confirm.
+The weights within the capstone are to be confirmed.
 :::
 :::
 
@@ -16,11 +16,11 @@ The weights within the capstone are to be confirm.
 The capstone is **your own research project**: an existing or ongoing
 analysis of yours, or one manageable part of it (for example one dataset and
 the analysis behind one result). You apply to it what each lesson teaches. [It
-counts for **{{< meta event.grading.capstone >}}%** of the course grade.]{.content-visible when-meta="event.grading.enabled"}
+counts for **{{< event share capstone >}}%** of the course grade.]{.content-visible when-meta="event.grading.enabled"}
 
 It is separate from the LTEE project: a different repository, your own data
 and question. The LTEE project, which you build in the lessons, is assessed
-on its own ([LTEE project](ltee-project.qmd)[, {{< meta event.grading.ltee-project >}}%]{.content-visible when-meta="event.grading.enabled"}).
+on its own ([LTEE project](ltee-project.qmd)[, {{< event share ltee-project >}}%]{.content-visible when-meta="event.grading.enabled"}).
 
 ## What you hand in
 

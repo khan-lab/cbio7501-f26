@@ -14,9 +14,9 @@ The workshop length is decided after the content. These drafts fit the
 lessons into four or five days of about six teaching hours. The times are
 computed from the planned length of each part and will be tuned after a
 first run. Participants do the [setup](pages/00-setup.qmd)
-before day 1, including the cache prefetch, and run the
-[lesson 03 download](pages/03-data-management.qmd#hands-on) on day 1 morning
-while the introduction runs.
+before day 1, including the cache prefetch, so that class time is not spent
+downloading software. The only large download in class is the
+[lesson 03 data](pages/03-data-management.qmd#hands-on) (115 MB).
 :::
 
 <!-- The tables are built from schedules/workshop-4day.yml,

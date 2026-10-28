@@ -210,8 +210,7 @@ line `set -g mouse on` in a file called `~/.tmux.conf`.
 ### Without attaching
 
 tmux can also start a session in the background and show you what is on its
-screen, without taking over your terminal. This is handy in scripts, and it
-is how the tests of this page check tmux:
+screen, without taking over your terminal. This is handy in scripts:
 
 ```{.bash .run}
 tmux new-session -d -s counting 'for i in $(seq 1 30); do echo "step $i"; sleep 1; done'
