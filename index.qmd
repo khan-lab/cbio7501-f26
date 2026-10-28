@@ -1,44 +1,71 @@
 ---
-pagetitle: "Methods for Reproducible and Open Science"
+pagetitle: "{{< meta event.title >}}"
 description: "Hands-on lessons for computational biologists: organize, record, rerun and share an analysis."
 toc: false
+page-layout: full
+body-classes: home-page
+image: assets/images/social-preview.png
+image-alt: "Diagram: the same report.qmd, with the same charts and REL606 variant calls, today and five years later. Both come from the same inputs: data and checksums, code and Git history, the environment in pixi.lock, and a container built from a Dockerfile."
 ---
 
-::: {.hero}
-[{{< event kicker >}}]{.kicker}
+<!-- Styles: "Home page" in assets/css/styles.scss. The title and the line
+above it come from event.yml; blocks marked when-profile show in one format. -->
+
+::::::: {.home-hero .column-screen}
+:::::: {.home-hero-inner}
+:::: {.home-hero-copy}
+[{{< event kicker >}}]{.home-kicker}
 
 # {{< meta event.title >}} {.unnumbered .unlisted}
 
-[Hands-on lessons for computational biologists: organize, record, rerun and
-share an analysis.]{.lead}
+[Build research that others can reproduce build upon. An open, hands-on guide to computational reproducibility—from organizing your first project to publishing complete, executable research.]{.home-lead}
 
+{{< event register >}}
 [Set up your computer](pages/00-setup.qmd){.btn .btn-primary}
 [Browse the lessons](contents.qmd){.btn .btn-outline-primary}
-[[7-week schedule](schedule-course.qmd){.btn .btn-link}]{.content-visible when-profile="course"}[[Workshop schedule](schedule-workshop.qmd){.btn .btn-link}]{.content-visible when-profile="workshop"}
+::::
+
+:::: {.home-aside}
+[What you will build]{.home-aside-label}
+
+### A project that anyone can rerun
+
+- **Organize** it, and keep the raw data untouched
+- **Track** every change with Git version control
+- **Lock** the software with Pixi, and ship it in containers
+- **Report** results with Quarto and Jupyter
+- **Automate** the pipeline with Snakemake and Nextflow
+- **Share** it with an open license and a DOI via Zenodo
+
+::: {.home-command}
+[\$]{.home-prompt} `pixi run reproduce`
 :::
 
-::: {.content-visible when-profile="workshop"}
+[One command rebuilds every result, on a computer that has never seen the
+project.]{.home-aside-note}
+::::
+::::::
+:::::::
+
+:::::: {.home .column-page}
+
+::: {.home-quicklinks role="navigation" aria-label="Quick links"}
+- [**Lessons** [Slides and tutorials]{.home-quick-note}](contents.qmd){.home-quick}
+- [[**Schedule** [The seven weeks]{.home-quick-note}](schedule-course.qmd){.home-quick}]{.content-visible when-profile="course"}[[**Schedule** [Day by day]{.home-quick-note}](schedule-workshop.qmd){.home-quick}]{.content-visible when-profile="workshop"}[[**The project** [LTEE variant calling]{.home-quick-note}](pages/ltee-project.qmd){.home-quick}]{.content-visible when-profile="self-paced"}
+- [**Cheat sheets** [The commands, by topic]{.home-quick-note}](cheatsheets/index.qmd){.home-quick}
+- [**Glossary** [The words, explained]{.home-quick-note}](pages/glossary.qmd){.home-quick}
+:::
+
+::::: {.content-visible when-profile="workshop"}
+::: {.home-details}
 {{< event details >}}
 :::
-
-Your analysis worked last month. Can you rerun it today? Can a reviewer, a
-labmate, or you in five years? This workshop teaches the tools and habits that
-make the answer *yes*: project organization, data management, literate
-programming with Quarto and Jupyter, version control with Git and GitHub,
-software environments with Pixi, containers, workflow managers (Snakemake and
-Nextflow), documentation, and open publication.
-
-Everything is hands-on and built around **one project** that grows with you:
-variant calling on *E. coli* from Richard Lenski's
-[Long-Term Evolution Experiment](pages/ltee-project.qmd). You do not need to
-know genomics: the analysis is a given pipeline, and the lessons are about
-making it reproducible.
+:::::
 
 ## Three ways to use it
 
-::: {.grid}
-::: {.g-col-12 .g-col-md-4}
-::: {.feature-card}
+::::: {.home-cards}
+:::: {.home-card}
 ::: {.content-visible when-profile="course"}
 ### {{< meta event.code >}} student
 {{< meta event.institution >}}, {{< meta event.term >}}.
@@ -60,10 +87,8 @@ A 7-week course, or a workshop of four or five days.
 Follow your instructor's schedule, and do the
 [setup](pages/00-setup.qmd) first.
 :::
-:::
-:::
-::: {.g-col-12 .g-col-md-4}
-::: {.feature-card}
+::::
+:::: {.home-card}
 ::: {.content-visible when-profile="course"}
 ### Workshop participant
 The same lessons, condensed.
@@ -85,62 +110,108 @@ Run these lessons yourself.
 Fork the repository and set the format, dates and people in one
 file, `event.yml`: see [Teach these lessons](teach.qmd).
 :::
-:::
-:::
-::: {.g-col-12 .g-col-md-4}
-::: {.feature-card}
+::::
+:::: {.home-card}
 ### On your own
 At your own pace.
 
 Do the [setup](pages/00-setup.qmd), then the lessons in the order of the
 [contents](contents.qmd).
-:::
-:::
+::::
+:::::
+
+## Can you rerun it in five years?
+
+Your analysis worked last month. Can you rerun it today? Can a reviewer, a
+labmate, or you in five years? These lessons teach the tools and habits that
+make the answer *yes*: project organization, data management, literate
+programming with Quarto and Jupyter, version control with Git and GitHub,
+software environments with Pixi, containers, workflow managers (Snakemake and
+Nextflow), documentation, and open publication.
+
+::: {.home-figure}
+![](assets/images/social-preview.png){fig-alt="Diagram:"}
 :::
 
+## One project together, then your own
+
+::::: {.home-cards .home-cards-2}
+:::: {.home-card .home-project}
+[Guided project]{.home-card-kicker}
+
+### The LTEE project
+
+Everything is hands-on and built around one project that grows with you:
+variant calling on *E. coli* from Richard Lenski's Long-Term Evolution
+Experiment. You do not need to know genomics: the analysis is a given
+pipeline, and the lessons are about making it reproducible.
+
+[The LTEE example project](pages/ltee-project.qmd){.home-card-link}
+
+::: {.content-visible when-profile="course"}
+[What to hand in](assessment/ltee-project.qmd){.home-card-link}
+:::
+::::
+:::: {.home-card .home-capstone}
+[Your own research]{.home-card-kicker}
+
+### Your capstone
+
+Then you apply the same steps to a small analysis of your own, from any
+field. In lesson 12 a partner reruns it from your repository.
+
+[The capstone](assessment/capstone-rubric.qmd){.home-card-link}
+::::
+:::::
 
 ## What is in every lesson
 
-::: {.grid}
-::: {.g-col-12 .g-col-md-4}
-::: {.feature-card}
+:::: {.home-steps}
+::: {.home-step}
+[1]{.home-step-number}
+
 ### Slides: the *why*
-A short slides-deck that provides background and motivation.
+
+A short slide deck that gives the background and the motivation.
 :::
-:::
-::: {.g-col-12 .g-col-md-4}
-::: {.feature-card}
+::: {.home-step}
+[2]{.home-step-number}
+
 ### Tutorial: the *how*
-Self-contained, with copy-and-paste commands, expected output, exercises and troubleshooting.
+
+Self-contained, with copy-and-paste commands, expected output, exercises and
+troubleshooting.
 :::
-:::
-::: {.g-col-12 .g-col-md-4}
-::: {.feature-card}
+::: {.home-step}
+[3]{.home-step-number}
+
 ### *Break it*
+
 Each lesson ends by breaking something on purpose, so you see what the tool
 protects you from.
 :::
-:::
-:::
+::::
 
-
-## What you will be able to do
-
-- Start a project with a clear layout, download its data with checksums, and keep raw data untouched
-- Write reports in which every number and figure is computed from the data
-- Track your work with Git, collaborate through pull requests, and let GitHub rerun it on every push
-- Pin your software with Pixi lock files, and ship it in containers
-- Run a multi-step pipeline with Snakemake and Nextflow, and get identical results from both
-- Document, license, cite and archive your work with a DOI
-
+::::: {.home-footer}
+:::: {.home-footer-main}
 ## Built on open material
 
 This course began as a [mini-course at Stanford Biosciences](https://explorecourses.stanford.edu/search?q=BIOS+259&view=catalog&page=0&filter-coursestatus-Active=on&collapse=&academicYear=20232024)
 ([BIOS259, Winter 2024](https://github.com/asntech/bios259-w24/)), developed by Aziz Khan and taught with the help of
 Alvina, Clemens and Brennan.
 
-The material adapts and extends open lessons from [NBIS](https://nbisweden.github.io/), 
-[The carpentry](https://software-carpentry.org), [The Data Carpentry](https://datacarpentry.org/) and many more. See [Sources and credits](pages/credits.qmd).
+The material adapts and extends open lessons from [NBIS](https://nbisweden.github.io/),
+[Software Carpentry](https://software-carpentry.org), [Data Carpentry](https://datacarpentry.org/) and many more. See [Sources and credits](pages/credits.qmd).
+::::
+:::: {.home-footer-side}
+### Reuse them
+
+Run them as a course or a workshop, or take single lessons: see
+[Teach these lessons](teach.qmd).
 
 Text and slides: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 Code: [MIT](https://opensource.org/license/mit). Developed and maintained by [Aziz Khan](https://github.com/asntech/), [Computational Biology and Cancer Regulatory Genomics (CBCRG)](https://khanlab.bio), MBZUAI.
+::::
+:::::
+
+::::::

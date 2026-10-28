@@ -20,7 +20,7 @@ h1, .h1 { letter-spacing: -0.028em; }
 
 // Links in text: colored and underlined, so they are not told apart by
 // color alone.
-main a:not(.btn):not(.nav-link):not(.sidebar-link):not(.anchorjs-link):not(.footnote-ref) {
+main a:not(.btn):not(.nav-link):not(.sidebar-link):not(.anchorjs-link):not(.footnote-ref):not(.home-quick) {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
@@ -203,42 +203,186 @@ details > summary { font-weight: 600; cursor: pointer; }
 
 // ---- Buttons and home page -----------------------------------------------
 .btn { border-radius: 8px; font-weight: 600; padding: 0.5rem 1rem; }
-.hero { padding: 0.5rem 0 1.25rem; }
-.hero .kicker {
-  display: inline-block;
+
+// Home page (index.qmd). Colors come from the theme tokens, so it follows
+// light and dark mode; only the "What you will build" panel and the figure's
+// white card look the same in both.
+$home-gold: #e5c687;    // the light navbar
+$home-panel: #154678;
+$home-overlap: 2.5rem; // how far the quick links reach up into the hero
+
+.home { max-width: 1100px; margin: 0 auto; padding-bottom: 1rem; }
+// !important: Quarto sets 1rem on the first h2 of a section on phones
+#quarto-content .home h2 { margin: 3.25rem 0 1rem !important; }
+#quarto-content .home h3 { margin: 0 0 0.45rem; font-size: 1.1rem; }
+
+// Hero: a band across the whole screen, right under the navbar. Inside it,
+// title and buttons with the panel beside them (below on narrow screens),
+// lined up with the rest of the page. The extra space at the bottom is for
+// the quick links.
+body.home-page #quarto-content > main.content { margin-top: 0; padding-top: 0; }
+body.home-page #title-block-header { display: none; }
+.home-hero {
+  padding: clamp(1.75rem, 3.5vw, 2.5rem) 0 calc(clamp(1.75rem, 3.5vw, 2.5rem) + #{$home-overlap});
+  border-bottom: 1px solid $border-subtle;
+  background: linear-gradient(120deg, rgba($home-gold, 0.14), rgba($home-gold, 0.04) 55%, transparent), $surface;
+}
+.home-hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(270px, 1fr);
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  align-items: center;
+  width: min(1100px, calc(100% - 3rem));
+  margin: 0 auto;
+}
+.home-kicker, .home-card-kicker, .home-aside-label {
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: $primary;
 }
-.hero h1 {
-  font-size: clamp(2.2rem, 5vw, 3.3rem);
+.home-hero h1 {
+  font-size: clamp(2.2rem, 4.4vw, 3.5rem);
   font-weight: 750;
   letter-spacing: -0.035em;
   line-height: 1.08;
   margin: 0.5rem 0 1rem;
 }
-.hero .lead { display: block; color: $muted; font-size: 1.22rem; font-weight: 400; line-height: 1.5; margin-bottom: 1.25rem; }
-.hero .btn { margin: 0.35rem 0.5rem 0.35rem 0; }
-.hero a.btn { text-decoration: none; }
+.home-lead { display: block; color: $muted; font-size: 1.2rem; line-height: 1.5; margin-bottom: 0.5rem; }
+.home-hero .btn { margin: 0.35rem 0.5rem 0.35rem 0; }
+// With a Register button first, "Set up your computer" steps back to an outline
+.home-hero .home-register ~ .btn-primary { @include button-outline-variant($primary); }
 
-main .grid { margin-bottom: 1.75rem; }
-.feature-card {
-  height: 100%;
+.home-aside {
+  padding: 1.25rem 1.25rem;
+  border-radius: 16px;
+  background: $home-panel;
+  color: #dfe8ec;
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
+}
+.home-aside .home-aside-label { color: $home-gold; }
+#quarto-content .home-aside h3 { color: #fff; font-size: 1.3rem; margin: 0.35rem 0 0.9rem; }
+.home-aside ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.home-aside li {
+  position: relative;
+  padding: 0.32rem 0 0.32rem 1.5rem;
+  border-top: 1px solid rgba(#fff, 0.13);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.home-aside li::before { content: "✓"; position: absolute; left: 0.1rem; color: #b6d9c4; font-weight: 700; }
+.home-aside strong { color: #fff; }
+.home-command {
+  padding: 0.65rem 0.85rem;
+  border: 1px solid rgba(#fff, 0.14);
+  border-radius: 8px;
+  background: rgba(#fff, 0.07);
+}
+.home-command p { margin: 0; }
+.home-command p code:not(.sourceCode) { background: transparent; color: #e2f7e7; padding: 0; }
+.home-prompt { color: $home-gold; font-family: $font-family-monospace; margin-right: 0.5rem; }
+.home-aside-note { display: block; margin-top: 0.75rem; color: #c0ccd2; font-size: 0.8rem; line-height: 1.5; }
+
+.home-details { margin-top: 1.25rem; }
+
+// Event details ({{< event details >}}, on a workshop's home page): two facts
+// to a row, one on phones; a lone last fact (the links) takes the whole row.
+.event-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 2rem;
+  padding: 0 1.1rem;
   border: 1px solid $border-subtle;
   border-radius: 14px;
-  padding: 1.1rem 1.25rem;
+}
+.event-fact:nth-child(n+3) { border-top: 1px solid $border-subtle; }
+.event-fact:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.event-fact p { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.75rem; align-items: baseline; margin: 0; padding: 0.6rem 0; }
+.event-fact-label { color: $muted; font-size: 0.9rem; font-weight: 600; }
+
+// Quick links: one row of four that reaches up into the hero, two rows of two
+// on phones
+.home-quicklinks { position: relative; z-index: 1; margin-top: -$home-overlap; }
+.home-quicklinks ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid $border-subtle;
+  border-radius: 14px;
+  overflow: hidden;
   background: $body-bg;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 6px 20px $shadow-color;
 }
-.feature-card:hover { border-color: rgba($primary, 0.45); box-shadow: 0 6px 20px $shadow-color; }
-.feature-card h3 {
-  font-size: 1.05rem;
-  margin: 0 0 0.4rem !important;
+.home-quicklinks li { margin: 0; border-left: 1px solid $border-subtle; }
+.home-quicklinks li:first-child { border-left: 0; }
+a.home-quick { display: block; height: 100%; padding: 0.8rem 1.1rem; color: $headings-color; text-decoration: none; }
+a.home-quick:hover { background: $surface; }
+.home-quick strong { display: block; font-size: 0.95rem; font-weight: 600; }
+.home-quick-note { display: block; color: $muted; font-size: 0.8rem; }
+
+// Cards: three (or two) in a row
+.home-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.home-cards-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.home-card {
+  padding: 1.15rem 1.3rem;
+  border: 1px solid $border-subtle;
+  border-radius: 14px;
+  background: $body-bg;
 }
-.feature-card p { margin-bottom: 0.4rem; color: $body-color; font-size: 0.95rem; }
-.feature-card p:last-child { margin-bottom: 0; }
+.home-card p { font-size: 0.95rem; margin-bottom: 0.5rem; }
+.home-card p:last-child { margin-bottom: 0; }
+.home-project { border-top: 4px solid $success; background: $surface; }
+.home-capstone { border-top: 4px solid $warning; background: $surface; }
+.home-card-link { font-weight: 600; }
+.home-card-link::after { content: " →"; }
+
+// The figure is drawn for a white background, in both modes
+.home-figure {
+  padding: clamp(0.5rem, 2vw, 1.5rem);
+  border: 1px solid $border-subtle;
+  border-radius: 18px;
+  background: #fff;
+}
+.home-figure p { margin: 0; }
+.home-figure img { display: block; width: 100%; max-width: 960px; margin: 0 auto; }
+.home-figure-caption { display: block; margin-top: 0.6rem; color: $muted; font-size: 0.85rem; }
+
+.home-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.home-step { padding: 0.2rem 0.5rem 0.2rem 1.1rem; border-left: 2px solid $primary; }
+.home-step p { color: $muted; font-size: 0.93rem; margin: 0; }
+.home-step-number { color: $primary; font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+#quarto-content .home-step h3 { margin-top: 0.35rem; }
+
+.home-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  margin-top: 3.5rem;
+  border-top: 1px solid $border-subtle;
+}
+.home-footer p { color: $muted; font-size: 0.93rem; }
+#quarto-content .home-footer h2,
+#quarto-content .home-footer h3 { margin: 1.75rem 0 0.75rem !important; font-size: 1.25rem; }
+.home-footer-side { padding-left: 2rem; border-left: 1px solid $border-subtle; }
+
+@media (max-width: 991.98px) {
+  .home-hero-inner { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 767.98px) {
+  .home-cards, .home-cards-2, .home-steps, .home-footer { grid-template-columns: minmax(0, 1fr); }
+  .home-quicklinks ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-quicklinks li:nth-child(odd) { border-left: 0; }
+  .home-quicklinks li:nth-child(-n+2) { border-bottom: 1px solid $border-subtle; }
+  .home-footer { gap: 0; }
+  .home-footer-side { padding-left: 0; border-left: 0; }
+  .event-details { grid-template-columns: minmax(0, 1fr); }
+  .event-fact + .event-fact { border-top: 1px solid $border-subtle; }
+  .event-fact p { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .event-fact-label { font-size: 0.8rem; }
+}
 
 // Screenshots: a thin frame so white pages do not melt into the background.
 main img.bordered { border: 1px solid $border-subtle; box-shadow: 0 6px 20px $shadow-color; }

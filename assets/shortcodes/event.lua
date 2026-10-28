@@ -17,8 +17,10 @@
 --   cluster       the cluster's name, or "your cluster" when none is set
 --   cluster-info  a sentence with the cluster's login host and user guide,
 --                 or nothing
---   details       the workshop's facts as a table: when, where, people,
---                 contact and links; empty settings are left out
+--   details       the workshop's facts, two to a row: when, where,
+--                 registration, contact, people and links; empty settings
+--                 are left out (styles: "Event details" in styles.scss)
+--   register      a "Register" button for links: registration, or nothing
 
 local stringify = pandoc.utils.stringify
 
@@ -98,10 +100,11 @@ local function md_inlines(s)
 end
 
 local function details(event)
-  local rows = {}
+  local facts = {}
   local function add(label, value)
     if value ~= "" then
-      table.insert(rows, "| " .. label .. " | " .. value .. " |")
+      table.insert(facts, "::: {.event-fact}\n[" .. label .. "]{.event-fact-label} ["
+        .. value .. "]{.event-fact-value}\n:::")
     end
   end
   local when = dates(event)
@@ -115,15 +118,18 @@ local function details(event)
     where = (where ~= "" and where .. "; " or "") .. "online: <" .. text(event.online) .. ">"
   end
   add("Where", where)
-  add("Instructors", names(event.instructors))
-  add("Helpers", names(event.helpers))
+  local links = event.links or {}
+  if text(links.registration) ~= "" then
+    add("Registration", "[Register for the workshop](" .. text(links.registration) .. ")")
+  end
   if text(event.contact) ~= "" then
     add("Contact", "<" .. text(event.contact) .. ">")
   end
-  local links = event.links or {}
+  add("Instructors", names(event.instructors))
+  add("Helpers", names(event.helpers))
   local shown = {}
   for _, pair in ipairs({
-    { "registration", "Registration" }, { "notes", "Shared notes" }, { "chat", "Chat" },
+    { "notes", "Shared notes" }, { "chat", "Chat" },
     { "pre-survey", "Survey before" }, { "post-survey", "Survey after" },
     { "code-of-conduct", "Code of conduct" },
   }) do
@@ -133,10 +139,10 @@ local function details(event)
     end
   end
   add("Links", table.concat(shown, " · "))
-  if #rows == 0 then
+  if #facts == 0 then
     return pandoc.Blocks({})
   end
-  return md("| | |\n|---|---|\n" .. table.concat(rows, "\n"))
+  return md(":::: {.event-details}\n" .. table.concat(facts, "\n") .. "\n::::")
 end
 
 return {
@@ -197,6 +203,13 @@ return {
       return md("On " .. cluster_name(event) .. ", " .. table.concat(parts, " and ") .. ".")
     elseif key == "details" then
       return details(event)
+    elseif key == "register" then
+      local url = text((event.links or {}).registration)
+      if url == "" then
+        return pandoc.Inlines({})
+      end
+      return pandoc.Inlines({ pandoc.Link("Register", url, "",
+        pandoc.Attr("", { "btn", "btn-primary", "home-register" })) })
     end
     quarto.log.warning("event: unknown key '" .. key .. "'")
     return pandoc.Inlines({})

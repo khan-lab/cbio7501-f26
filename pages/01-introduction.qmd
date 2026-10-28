@@ -85,7 +85,7 @@ Check: your written audit of one paper, with evidence (links) for every row.
   more: Piwowar et al. 2007). FAIR is not the same as open: sensitive data can
   be FAIR under controlled access.
 
-![Every analysis has the same parts: data and code go into a workflow, which runs in a software environment and produces results. It gives the same results today and five years later. Figure: by Aziz, CC BY 4.0.](../assets/images/hero-rerun.svg){fig-alt="Diagram: data and code go into a workflow that runs in a software environment and produces results such as reports and figures." width="85%"}
+![The same report today and five years later. It gives the same results because it comes from the same inputs: the data with its checksums, the code with its Git history, the environment in pixi.lock, and a container built from a Dockerfile. Figure: by Aziz, CC BY 4.0.](../assets/images/hero-rerun.svg){fig-alt="Diagram: the same report.qmd, with the same charts and REL606 variant calls, today and five years later. Both come from the same inputs: data and checksums, code and Git history, the environment in pixi.lock, and a container built from a Dockerfile." width="85%"}
 
 ## 2. The audit rubric
 

@@ -21,7 +21,7 @@ event:
   helpers: ["Helper One", "Helper Two"]
   contact: "you@example.org"    # email for questions
   links:                        # leave empty what you do not use
-    registration: ""
+    registration: "https://example.org/register"
     notes: ""                   # shared notes (HackMD, Etherpad)
     chat: ""
     pre-survey: ""
