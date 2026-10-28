@@ -44,9 +44,6 @@ data files.
 | push / pull | send commits to / get commits from a remote |
 | pull request | a proposal to merge a branch, with review and checks |
 
-![](../../assets/images/git/git-local-remote.svg){fig-alt="" width="70%" fig-align="center"}
-[Figure: By *Aziz Khan*, CC BY 4.0]{.fig-credit}
-
 ## Three steps, over and over
 
 ![](../../assets/images/git/git-staging-local.png){fig-alt="Diagram: working copy, then 'stage changes' to the staging area, then 'commit changes' to the Git repository." width="62%" fig-align="center"}
@@ -125,6 +122,9 @@ Linux machine, a clean clone of your repository, then `pixi run reproduce`.
 - **Backup**: the copy on GitHub survives your laptop
 - **Sharing**: collaborators work on the same history, not on emailed files
 
+![](../../assets/images/git/git-local-remote.svg){fig-alt="" width="70%" fig-align="center"}
+[Figure: By *Aziz Khan*, CC BY 4.0]{.fig-credit}
+
 ## Think, pair, share {.prompt-slide}
 
 ::: {.prompt}
@@ -136,9 +136,14 @@ have answered?
 ## Quiz {.quiz-slide}
 
 ::: {.quiz}
-1. Which file should **not** be committed? (a) `pixi.lock` (b) `data/raw/SRR2584863_1.trim.sub.fastq` (c) `scripts/download_data.py`
-2. You deleted a file and committed the deletion. Can Git restore it? (yes / no)
-3. Two branches change the same line. What does `git merge` do? (a) keeps the newest (b) stops with a conflict for you to resolve (c) keeps both lines
+1. Which file should **not** be committed? 
+  (a) `pixi.lock` (b) `data/raw/SRR2584863_1.trim.sub.fastq` (c) `scripts/download_data.py`
+
+2. You deleted a file and committed the deletion. Can Git restore it?
+  (yes / no)
+
+3. Two branches change the same line. What does `git merge` do? 
+  (a) keeps the newest (b) stops with a conflict for you to resolve (c) keeps both lines
 :::
 
 ::: {.notes}
