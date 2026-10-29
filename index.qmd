@@ -18,7 +18,7 @@ above it come from event.yml; blocks marked when-profile show in one format. -->
 
 # {{< meta event.title >}} {.unnumbered .unlisted}
 
-**Create research that others can reproduce and build upon.** 
+> **Create research that others can reproduce and build upon.** 
 A hands-on course in **computational reproducibility** and **open research**, from organizing your first project to publishing open, executable work.
 
 {{< event register >}}
