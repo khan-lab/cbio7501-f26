@@ -18,8 +18,7 @@ above it come from event.yml; blocks marked when-profile show in one format. -->
 
 # {{< meta event.title >}} {.unnumbered .unlisted}
 
-[Create research that others can reproduce and build upon. This is an open, hands-on course/workshop to computational reproducibility — from organizing your first project to publishing complete, executable research.]{.home-lead}
-
+**Create research that others can reproduce and build upon.** An open, hands-on course on computational reproducibility – from organizing your first project to publishing complete and executable research.
 {{< event register >}}
 [Set up your computer](pages/00-setup.qmd){.btn .btn-primary}
 [Browse the lessons](contents.qmd){.btn .btn-outline-primary}
