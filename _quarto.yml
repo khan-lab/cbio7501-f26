@@ -34,6 +34,7 @@ website:
   open-graph: true
   search: true
   page-navigation: true
+  google-analytics: "GTM-KNJP5DJ6"
   navbar:
     left:
       - text: "Home"
