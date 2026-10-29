@@ -5,7 +5,7 @@
 event:
   # course-7week, workshop-4day, workshop-5day or self-paced
   format: course-7week
-  title: "The Art of Reproducible and Open Science"
+  title: "The Art of Reproducible Research"
   code: "CBIO7501"              # course code; empty for a workshop
   institution: "MBZUAI"
   term: "Fall 2026"

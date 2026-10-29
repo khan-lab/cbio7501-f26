@@ -28,7 +28,7 @@ profile:
   default: course
 
 website:
-  title: "Reproducible and Open Science"
+  title: "Art of Reproducible Research"
   repo-actions: [source, issue]
   description: "Hands-on lessons on reproducible and open computational research: project organization, data management, Quarto, Jupyter, Git, Pixi, containers, Snakemake and Nextflow, built around one LTEE variant-calling project."
   open-graph: true
