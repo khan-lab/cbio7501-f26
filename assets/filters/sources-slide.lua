@@ -1,7 +1,8 @@
 --[[
 Turns the `sources:` front matter of a deck into attribution that cannot be
 forgotten: RevealJS decks get a final "Sources" slide. The list starts with
-the material the deck is adapted from, then papers, figures we link to, data.
+the open material the deck draws on (its main site, not one lecture), then
+papers, figures we link to, data.
 
 On HTML pages `sources:` is a record only: nothing is shown on the page.
 Adapted material is credited on pages/credits.qmd, which every page links to
@@ -10,7 +11,7 @@ from its footer.
 Front matter shape (see CONTRIBUTING.md):
 
 sources:
-  - "**Adapted from:** *Tools for Reproducible Research: Git*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/pages/git.html>"
+  - "*Tools for Reproducible Research*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/>"
   - "Baker M (2016). 1,500 scientists lift the lid on reproducibility. *Nature* 533:452. <https://doi.org/10.1038/533452a>"
 ]]
 

@@ -125,10 +125,13 @@ workflows ran, is the test log in `docs/BUILD_LOG.md`.
 - Only adapt material under CC BY, CC0, MIT or BSD licenses; link anything
   else (for example the Seqera training, CC BY-NC-SA).
 - Credit the source in the front matter of the page or deck, as the first
-  lines of `sources:` (one line each:
-  `"**Adapted from:** *title*, authors. [license](license link). <url>"`),
-  and on `pages/credits.qmd`. Keep detailed notes on what you changed out of
-  Git (for example in `docs/`, which is ignored).
+  lines of `sources:`, one line each. On a deck, name the resource and link
+  its main site, not the single lecture:
+  `"*title*, authors. [license](license link). <main url>"`. On a page:
+  `"**Adapted from:** *title*, authors. [license](license link). <url>"`.
+  Credit it on `pages/credits.qmd` too, which says what is adapted. Keep
+  detailed notes on what you changed out of Git (for example in `docs/`,
+  which is ignored).
 - Decks also list papers and linked figures under `sources:`; the filter
   builds the final Sources slide from it.
 - Embed a third-party figure only if its license allows it (CC BY, CC0):

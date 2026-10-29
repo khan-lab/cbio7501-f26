@@ -2,8 +2,8 @@
 title: "Reproducible environments with Pixi"
 subtitle: "{{< event lesson 05 >}}"
 sources:
-  - "**Adapted from:** *Introduction to Pixi*, Matthew Feickert and The Carpentries Incubator contributors. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/pixi-introduction/>"
-  - "**Adapted from:** *Tools for Reproducible Research: Managing software environments with Conda (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/conda/conda.html>"
+  - "*Introduction to Pixi*, Matthew Feickert and The Carpentries Incubator contributors. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/pixi-introduction/>"
+  - "*Tools for Reproducible Research*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/>"
   - "Week 1 slides 57 to 61 (dependency hell, Conda/Bioconda/Mamba/Lmod, Pixi intro) are the opener; the xkcd comic on slide 58 is linked in class, not embedded (non-commercial license)."
   - "Pixi documentation: <https://pixi.prefix.dev/latest/>"
   - "Grüning B et al. (2018). Bioconda. *Nat Methods* 15:475–476. <https://doi.org/10.1038/s41592-018-0046-7>"

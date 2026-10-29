@@ -2,7 +2,7 @@
 title: "Putting it all together"
 subtitle: "{{< event lesson 12 >}}"
 sources:
-  - "**Adapted from:** *Tools for Reproducible Research: Putting it all together (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html>"
+  - "*Tools for Reproducible Research*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/>"
   - "Week 1 slides 97 (Zenodo homework) and 98 (checklist) are the basis; the checklist is updated for Pixi."
   - "Ziemann M, Poulain P, Bora A (2023). The five pillars of computational reproducibility. *Brief Bioinform* 24:bbad375. <https://doi.org/10.1093/bib/bbad375>"
   - "Sandve GK et al. (2013). Ten simple rules for reproducible computational research. *PLoS Comput Biol* 9:e1003285. <https://doi.org/10.1371/journal.pcbi.1003285>"

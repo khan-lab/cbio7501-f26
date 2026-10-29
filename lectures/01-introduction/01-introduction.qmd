@@ -2,8 +2,8 @@
 title: "On the art of reproducible and open science"
 subtitle: "{{< event lesson 01 >}}"
 sources:
-  - "**Adapted from:** *On the Art of Reproducible & Open Science (Week 1 deck, slides 5 to 40 and 71 to 83)*, Aziz Khan. <https://github.com/khan-lab/cbio7501-f26>"
-  - "**Adapted from:** *Tools for Reproducible Research: Introduction (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/introduction/introduction.html>"
+  - "*On the Art of Reproducible & Open Science* (Week 1 deck), Aziz Khan. <https://github.com/khan-lab/cbio7501-f26>"
+  - "*Tools for Reproducible Research*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/>"
   - "Baker M (2016). 1,500 scientists lift the lid on reproducibility. *Nature* 533:452–454. <https://doi.org/10.1038/533452a>"
   - "Freedman LP, Cockburn IM, Simcoe TS (2015). The economics of reproducibility in preclinical research. *PLoS Biol* 13:e1002165. <https://doi.org/10.1371/journal.pbio.1002165>"
   - "Trisovic A, Lau MK, Pasquier T, Crosas M (2022). A large-scale study on research code quality and execution. *Sci Data* 9:60. <https://doi.org/10.1038/s41597-022-01143-6>"

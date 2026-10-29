@@ -2,7 +2,7 @@
 title: "Documentation, licenses and citation"
 subtitle: "{{< event lesson 11 >}}"
 sources:
-  - "**Adapted from:** *Tools for Reproducible Research: Documentation and reproducibility (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/documentation/documentation.html>"
+  - "*Tools for Reproducible Research*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/>"
   - "Week 1 slides 94 to 96 (repository hygiene, license spectrum) are the basis; the ENCODEfetch screenshot is not used: the LTEE project is the worked example."
   - "Lee BD (2018). Ten simple rules for documenting scientific software. *PLoS Comput Biol* 14:e1006561. <https://doi.org/10.1371/journal.pcbi.1006561>"
   - "Citation File Format: <https://citation-file-format.github.io/>"

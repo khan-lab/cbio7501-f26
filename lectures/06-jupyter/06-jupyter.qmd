@@ -2,10 +2,10 @@
 title: "Notebooks you can rerun"
 subtitle: "{{< event lesson 06 >}}"
 sources:
-  - "**Adapted from:** *Tools for Reproducible Research: Jupyter (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/jupyter/jupyter.html>"
+  - "*Tools for Reproducible Research*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/>"
   - "Rule A, Birmingham A, Zuniga C, et al. (2019). Ten simple rules for writing and sharing computational analyses in Jupyter Notebooks. *PLoS Comput Biol* 15:e1007007. <https://doi.org/10.1371/journal.pcbi.1007007>"
   - "Project Jupyter: <https://jupyter.org/>"
-  - "Screenshot 'JupyterLab': NBIS, *Tools for Reproducible Research* (Jupyter tutorial), CC BY 4.0."
+  - "Screenshot 'JupyterLab': NBIS, *Tools for Reproducible Research*, CC BY 4.0."
 ---
 
 ## Today you will

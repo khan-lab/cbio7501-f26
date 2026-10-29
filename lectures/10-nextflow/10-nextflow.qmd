@@ -2,7 +2,7 @@
 title: "Workflows with Nextflow"
 subtitle: "{{< event lesson 10 >}} (40-minute introduction)"
 sources:
-  - "**Adapted from:** *Tools for Reproducible Research: Nextflow (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/nextflow/nextflow.html>"
+  - "*Tools for Reproducible Research*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/>"
   - "Di Tommaso P et al. (2017). Nextflow enables reproducible computational workflows. *Nat Biotechnol* 35:316–319. <https://doi.org/10.1038/nbt.3820>"
   - "Ewels PA et al. (2020). The nf-core framework for community-curated bioinformatics pipelines. *Nat Biotechnol* 38:276–278. <https://doi.org/10.1038/s41587-020-0439-x>"
   - "Nextflow documentation: <https://docs.seqera.io/nextflow/>"

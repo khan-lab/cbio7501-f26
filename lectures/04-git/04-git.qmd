@@ -2,9 +2,8 @@
 title: "Version control with Git and GitHub"
 subtitle: "{{< event lesson 04 >}}"
 sources:
-  - "**Adapted from:** *Tools for Reproducible Research: Version control with Git (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/git/git.html>"
+  - "*Tools for Reproducible Research*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/>"
   - "Perez-Riverol Y et al. (2016). Ten simple rules for taking advantage of Git and GitHub. *PLoS Comput Biol* 12:e1004947. <https://doi.org/10.1371/journal.pcbi.1004947>"
-  - "Figures 'Three steps, over and over' and 'Working with a remote': NBIS, *Tools for Reproducible Research* (Git tutorial), CC BY 4.0. <https://nbisweden.github.io/workshop-reproducible-research/pages/git.html>"
   - "The lost-thesis and stolen-laptop stories from Week 1 (slides 53 to 56) are told in class without their press images, which cannot be relicensed."
 ---
 

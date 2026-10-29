@@ -2,7 +2,7 @@
 title: "Workflows with Snakemake"
 subtitle: "{{< event lesson 09 >}}"
 sources:
-  - "**Adapted from:** *Tools for Reproducible Research: Snakemake (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/snakemake/snakemake.html>"
+  - "*Tools for Reproducible Research*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/>"
   - "Week 1 slides 66 and 67 ('the best documentation is automation'; Make, Snakemake, Nextflow, WDL) are the opener."
   - "Mölder F et al. (2021). Sustainable data analysis with Snakemake. *F1000Research* 10:33. <https://doi.org/10.12688/f1000research.29032.3>"
   - "Snakemake documentation: <https://snakemake.readthedocs.io/>; quotes from 'Basics: an example workflow': <https://snakemake.readthedocs.io/en/stable/tutorial/basics.html>"

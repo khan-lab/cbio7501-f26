@@ -2,9 +2,8 @@
 title: "Project organization"
 subtitle: "{{< event lesson 02 >}}"
 sources:
-  - "**Adapted from:** *Tools for Reproducible Research: Managing your data (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/data-management/data-management.html>"
-  - "**Adapted from:** *Tools for Reproducible Research: Putting it all together (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/putting-it-together/putting-it-together.html>"
-  - "**Adapted from:** *FAIR in (biological) practice: Working with files*, The Carpentries Incubator. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/fair-bio-practice/09-files-organization.html>"
+  - "*Tools for Reproducible Research*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/>"
+  - "*FAIR in (biological) practice*, The Carpentries Incubator. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://carpentries-incubator.github.io/fair-bio-practice/>"
   - "Noble WS (2009). A quick guide to organizing computational biology projects. *PLoS Comput Biol* 5:e1000424. <https://doi.org/10.1371/journal.pcbi.1000424>"
   - "Wilson G et al. (2017). Good enough practices in scientific computing. *PLoS Comput Biol* 13:e1005510. <https://doi.org/10.1371/journal.pcbi.1005510>"
   - "Snakemake workflow template (MIT), layout as of 2026-03: <https://github.com/snakemake-workflows/snakemake-workflow-template>"
