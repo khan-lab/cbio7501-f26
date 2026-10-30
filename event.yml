@@ -12,8 +12,8 @@ event:
   meetings: "Monday and Tuesday sessions and a Wednesday lab"  # course: when it meets
   start-date: "2026-10-19"                # first day, YYYY-MM-DD
   day:                          # workshops: the teaching day
-    start: "03:00"
-    lunch: "04:20"
+    start: "09:00"
+    lunch: "12:00"
     lunch-minutes: 60
     break-minutes: 15
     end: "17:00"

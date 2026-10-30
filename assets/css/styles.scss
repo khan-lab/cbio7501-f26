@@ -205,27 +205,23 @@ details > summary { font-weight: 600; cursor: pointer; }
 .btn { border-radius: 8px; font-weight: 600; padding: 0.5rem 1rem; }
 
 // Home page (index.qmd). Colors come from the theme tokens, so it follows
-// light and dark mode; only the "What you will build" panel and the figure's
-// white card look the same in both.
+// light and dark mode; only the figure's white card looks the same in both.
 $home-gold: #e5c687;    // the light navbar
-$home-panel: #154678;
-$home-overlap: 2.5rem; // how far the quick links reach up into the hero
 
 .home { max-width: 1100px; margin: 0 auto; padding-bottom: 1rem; }
 // !important: Quarto sets 1rem on the first h2 of a section on phones
 #quarto-content .home h2 { margin: 3.25rem 0 1rem !important; }
 #quarto-content .home h3 { margin: 0 0 0.45rem; font-size: 1.1rem; }
 
-// Hero: a band across the whole screen, right under the navbar. Inside it,
-// title and buttons with the panel beside them (below on narrow screens),
-// lined up with the rest of the page. The extra space at the bottom is for
-// the quick links.
+// Hero: a plain band across the whole screen, right under the navbar.
+// Inside it, title and buttons with the "At a glance" card beside them (below
+// on narrow screens), lined up with the rest of the page.
 body.home-page #quarto-content > main.content { margin-top: 0; padding-top: 0; }
 body.home-page #title-block-header { display: none; }
 .home-hero {
-  padding: clamp(1.75rem, 3.5vw, 2.5rem) 0 calc(clamp(1.75rem, 3.5vw, 2.5rem) + #{$home-overlap});
+  padding: 2.25rem 0;
   border-bottom: 1px solid $border-subtle;
-  background: linear-gradient(120deg, rgba($home-gold, 0.14), rgba($home-gold, 0.04) 55%, transparent), $surface;
+  background: $surface;
 }
 .home-hero-inner {
   display: grid;
@@ -235,7 +231,7 @@ body.home-page #title-block-header { display: none; }
   width: min(1100px, calc(100% - 3rem));
   margin: 0 auto;
 }
-.home-kicker, .home-card-kicker, .home-aside-label {
+.home-kicker, .home-card-kicker, .home-glance-label {
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -243,67 +239,27 @@ body.home-page #title-block-header { display: none; }
   color: $primary;
 }
 .home-hero h1 {
-  font-size: clamp(2.2rem, 4.4vw, 3.5rem);
-  font-weight: 750;
-  letter-spacing: -0.035em;
-  line-height: 1.08;
-  margin: 0.5rem 0 1rem;
+  font-size: clamp(2rem, 3.6vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0.45rem 0 0.8rem;
 }
-.home-lead { display: block; color: $muted; font-size: 1.2rem; line-height: 1.5; margin-bottom: 0.5rem; }
+.home-subtitle { display: block; max-width: 40rem; margin-bottom: 1.1rem; color: $muted; font-size: 1.12rem; line-height: 1.55; }
 .home-hero .btn { margin: 0.35rem 0.5rem 0.35rem 0; }
 // With a Register button first, "Set up your computer" steps back to an outline
 .home-hero .home-register ~ .btn-primary { @include button-outline-variant($primary); }
 
-.home-aside {
-  padding: 1.25rem 1.25rem;
-  border-radius: 16px;
-  background: $home-panel;
-  color: #dfe8ec;
-  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
-}
-.home-aside .home-aside-label { color: $home-gold; }
-#quarto-content .home-aside h3 { color: #fff; font-size: 1.3rem; margin: 0.35rem 0 0.9rem; }
-.home-aside ul { list-style: none; padding: 0; margin: 0 0 1rem; }
-.home-aside li {
-  position: relative;
-  padding: 0.32rem 0 0.32rem 1.5rem;
-  border-top: 1px solid rgba(#fff, 0.13);
-  font-size: 0.9rem;
-  line-height: 1.45;
-}
-.home-aside li::before { content: "✓"; position: absolute; left: 0.1rem; color: #b6d9c4; font-weight: 700; }
-.home-aside strong { color: #fff; }
-.home-command {
-  padding: 0.65rem 0.85rem;
-  border: 1px solid rgba(#fff, 0.14);
-  border-radius: 8px;
-  background: rgba(#fff, 0.07);
-}
-.home-command p { margin: 0; }
-.home-command p code:not(.sourceCode) { background: transparent; color: #e2f7e7; padding: 0; }
-.home-prompt { color: $home-gold; font-family: $font-family-monospace; margin-right: 0.5rem; }
-.home-aside-note { display: block; margin-top: 0.75rem; color: #c0ccd2; font-size: 0.8rem; line-height: 1.5; }
+// At a glance ({{< event glance >}}, and {{< event details >}}): one fact to
+// a row, label beside value
+.home-glance { padding: 1rem 1.25rem 0.4rem; border: 1px solid $border-subtle; border-radius: 12px; background: $body-bg; }
+.home-glance > p:first-child { margin-bottom: 0.3rem; }
+.event-fact + .event-fact { border-top: 1px solid $border-subtle; }
+.event-fact p { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0.75rem; align-items: baseline; margin: 0; padding: 0.5rem 0; font-size: 0.93rem; }
+.event-fact-label { color: $muted; font-size: 0.85rem; font-weight: 600; }
 
-.home-details { margin-top: 1.25rem; }
-
-// Event details ({{< event details >}}, on a workshop's home page): two facts
-// to a row, one on phones; a lone last fact (the links) takes the whole row.
-.event-details {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 2rem;
-  padding: 0 1.1rem;
-  border: 1px solid $border-subtle;
-  border-radius: 14px;
-}
-.event-fact:nth-child(n+3) { border-top: 1px solid $border-subtle; }
-.event-fact:last-child:nth-child(odd) { grid-column: 1 / -1; }
-.event-fact p { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.75rem; align-items: baseline; margin: 0; padding: 0.6rem 0; }
-.event-fact-label { color: $muted; font-size: 0.9rem; font-weight: 600; }
-
-// Quick links: one row of four that reaches up into the hero, two rows of two
-// on phones
-.home-quicklinks { position: relative; z-index: 1; margin-top: -$home-overlap; }
+// Quick links: one row of four under the hero, two rows of two on phones
+.home-quicklinks { margin-top: 1.75rem; }
 .home-quicklinks ul {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -314,7 +270,6 @@ body.home-page #title-block-header { display: none; }
   border-radius: 14px;
   overflow: hidden;
   background: $body-bg;
-  box-shadow: 0 6px 20px $shadow-color;
 }
 .home-quicklinks li { margin: 0; border-left: 1px solid $border-subtle; }
 .home-quicklinks li:first-child { border-left: 0; }
@@ -350,6 +305,10 @@ a.home-quick:hover { background: $surface; }
 .home-figure img { display: block; width: 100%; max-width: 960px; margin: 0 auto; }
 .home-figure-caption { display: block; margin-top: 0.6rem; color: $muted; font-size: 0.85rem; }
 
+// What you will learn: two columns, one on phones
+.home-learn ul { columns: 2; column-gap: 2rem; padding-left: 1.2rem; }
+.home-learn li { break-inside: avoid; padding: 0.15rem 0; }
+
 .home-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .home-step { padding: 0.2rem 0.5rem 0.2rem 1.1rem; border-left: 2px solid $primary; }
 .home-step p { color: $muted; font-size: 0.93rem; margin: 0; }
@@ -378,10 +337,7 @@ a.home-quick:hover { background: $surface; }
   .home-quicklinks li:nth-child(-n+2) { border-bottom: 1px solid $border-subtle; }
   .home-footer { gap: 0; }
   .home-footer-side { padding-left: 0; border-left: 0; }
-  .event-details { grid-template-columns: minmax(0, 1fr); }
-  .event-fact + .event-fact { border-top: 1px solid $border-subtle; }
-  .event-fact p { grid-template-columns: minmax(0, 1fr); gap: 0; }
-  .event-fact-label { font-size: 0.8rem; }
+  .home-learn ul { columns: 1; }
 }
 
 // Screenshots: a thin frame so white pages do not melt into the background.

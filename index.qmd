@@ -1,6 +1,6 @@
 ---
 pagetitle: "{{< meta event.title >}}"
-description: "Hands-on lessons for computational biologists: organize, record, rerun and share an analysis."
+description: "Create research that others can reproduce and build upon: hands-on lessons in computational reproducibility and open research, from organizing your first project to publishing open, executable work."
 toc: false
 page-layout: full
 body-classes: home-page
@@ -8,8 +8,9 @@ image: assets/images/social-preview.png
 image-alt: "Diagram: Data, Code and Results need Environments and workflow"
 ---
 
-<!-- Styles: "Home page" in assets/css/styles.scss. The title and the line
-above it come from event.yml; blocks marked when-profile show in one format. -->
+<!-- Styles: "Home page" in assets/css/styles.scss. The title, the line above
+it and the "At a glance" card come from event.yml; blocks marked
+when-profile show in one format. The previous version is index-backup.qmd. -->
 
 ::::::: {.home-hero .column-screen}
 :::::: {.home-hero-inner}
@@ -18,32 +19,20 @@ above it come from event.yml; blocks marked when-profile show in one format. -->
 
 # {{< meta event.title >}} {.unnumbered .unlisted}
 
-> **Create research that others can reproduce and build upon.** 
-A hands-on course in **computational reproducibility** and **open research**, from organizing your first project to publishing open, executable work.
+[Create research that others can reproduce and build upon. A hands-on
+[course]{.content-visible unless-profile="workshop"}[workshop]{.content-visible when-profile="workshop"}
+in computational reproducibility and open research, from organizing your
+first project to publishing open, executable work.]{.home-subtitle}
 
 {{< event register >}}
 [Set up your computer](pages/00-setup.qmd){.btn .btn-primary}
 [Browse the lessons](contents.qmd){.btn .btn-outline-primary}
 ::::
 
-:::: {.home-aside}
-[What you will build]{.home-aside-label}
+:::: {.home-glance}
+[At a glance]{.home-glance-label}
 
-### A project that anyone can rerun
-
-- **Organize** it, and keep the raw data untouched
-- **Track** every change with Git version control
-- **Lock** the software with Pixi, and ship it in containers
-- **Report** results with Quarto and Jupyter
-- **Automate** the pipeline with Snakemake and Nextflow
-- **Share** it with an open license and a DOI via Zenodo
-
-::: {.home-command}
-[\$]{.home-prompt} `pixi run reproduce`
-:::
-
-[One command rebuilds every result, on a computer that has never seen the
-project.]{.home-aside-note}
+{{< event glance >}}
 ::::
 ::::::
 :::::::
@@ -56,12 +45,6 @@ project.]{.home-aside-note}
 - [**Cheat sheets** [The commands, by topic]{.home-quick-note}](cheatsheets/index.qmd){.home-quick}
 - [**Glossary** [The words, explained]{.home-quick-note}](pages/glossary.qmd){.home-quick}
 :::
-
-::::: {.content-visible when-profile="workshop"}
-::: {.home-details}
-{{< event details >}}
-:::
-:::::
 
 ## Three ways to use it
 
@@ -125,10 +108,16 @@ Do the [setup](pages/00-setup.qmd), then the lessons in the order of the
 
 Your analysis worked last month. Can you rerun it today? Can a reviewer, a
 labmate, or you in five years? These lessons teach the tools and habits that
-make the answer *yes*: project organization, data management, literate
-programming with Quarto and Jupyter, version control with Git and GitHub,
-software environments with Pixi, containers, workflow managers (Snakemake and
-Nextflow), documentation, and open publication.
+make the answer *yes*. You will:
+
+::: {.home-learn}
+- **Organize** a project, and keep the raw data untouched
+- **Track** every change with Git version control
+- **Lock** the software with Pixi, and ship it in containers
+- **Report** results with Quarto and Jupyter
+- **Automate** the pipeline with Snakemake and Nextflow
+- **Share** it with an open license and a DOI via Zenodo
+:::
 
 ::: {.home-figure}
 ![](assets/images/social-preview.png){fig-alt="Diagram:"}
@@ -140,11 +129,9 @@ Nextflow), documentation, and open publication.
 :::: {.home-card .home-project}
 [Guided project]{.home-card-kicker}
 
-### The LTEE project
+### The guided LTEE project
 
-All hands-on excercise are around one project of variant calling from Richard Lenski's [Long-Term Evolution
-Experiment](pages/ltee-project.qmd). You do not need to know genomics: the analysis is a given
-pipeline, and the lessons are about making it reproducible.
+Follow a guided project to build a reproducible genomics analysis using real experimental evolution data.
 
 ::: {.content-visible when-profile="course"}
 [What to hand in](assessment/ltee-project.qmd){.home-card-link}
@@ -153,9 +140,9 @@ pipeline, and the lessons are about making it reproducible.
 :::: {.home-card .home-capstone}
 [Your own research]{.home-card-kicker}
 
-### Your capstone
+### Your capstone project
 
-The capstone is your own existing or ongoing computational research project with a datasets, code and results. You apply to it what each lesson teaches.
+Apply reproducible practices to your own independent project with data, code, and analysis.
 
 [The capstone](assessment/capstone-rubric.qmd){.home-card-link}
 ::::

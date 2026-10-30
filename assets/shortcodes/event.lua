@@ -2,7 +2,7 @@
 -- for the places where a plain {{< meta event.KEY >}} would leave stray
 -- punctuation when a setting is empty.
 --
---   kicker        "CBIO7501 @ MBZUAI - Fall 2026" (code, institution, and
+--   kicker        "CBIO7501 · MBZUAI · Fall 2026" (code, institution, and
 --                 the term or the workshop's dates; empty parts left out)
 --   name          "CBIO7501: The Art of ..." or just the title
 --   lesson NN     "CBIO7501 · Lesson NN" or "Lesson NN" (deck subtitles)
@@ -17,9 +17,12 @@
 --   cluster       the cluster's name, or "your cluster" when none is set
 --   cluster-info  a sentence with the cluster's login host and user guide,
 --                 or nothing
---   details       the workshop's facts, two to a row: when, where,
---                 registration, contact, people and links; empty settings
---                 are left out (styles: "Event details" in styles.scss)
+--   details       the workshop's facts, one to a row: when, where, contact,
+--                 people and links; empty settings are left out (styles:
+--                 "At a glance" in styles.scss)
+--   glance        the facts for the home page's "At a glance" card: a
+--                 workshop's details; for a course its code, term, meetings,
+--                 instructors and length; for self-paced, what it takes
 --   register      a "Register" button for links: registration, or nothing
 
 local stringify = pandoc.utils.stringify
@@ -45,7 +48,8 @@ local function names(list)
   return table.concat(out, ", ", 1, #out - 1) .. " and " .. out[#out]
 end
 
-local function days_in(format)
+-- the number of days: (or weeks:) in schedules/FORMAT.yml, or nil
+local function length_of(format, key)
   local path = pandoc.path.join({ quarto.project.directory, "schedules", format .. ".yml" })
   local f = io.open(path, "r")
   if f == nil then
@@ -54,12 +58,24 @@ local function days_in(format)
   local yaml = f:read("a")
   f:close()
   local meta = pandoc.read("---\n" .. yaml .. "\n---\n", "markdown").meta
-  return meta.days and #meta.days or nil
+  return meta[key] and #meta[key] or nil
+end
+
+-- the numbered lessons: pages/01-*.qmd and up (00 is the setup, 05b an extra)
+local function lesson_count()
+  local n = 0
+  for _, name in ipairs(pandoc.system.list_directory(
+      pandoc.path.join({ quarto.project.directory, "pages" }))) do
+    if name:match("^%d%d%-.+%.qmd$") and not name:match("^00%-") then
+      n = n + 1
+    end
+  end
+  return n
 end
 
 local function dates(event)
   local y, m, d = text(event["start-date"]):match("^(%d%d%d%d)-(%d%d)-(%d%d)$")
-  local n = days_in(text(event.format))
+  local n = length_of(text(event.format), "days")
   if not y or not n then
     return ""
   end
@@ -99,7 +115,8 @@ local function md_inlines(s)
   return pandoc.utils.blocks_to_inlines(md(s))
 end
 
-local function details(event)
+-- facts, label beside value; a fact with an empty value is left out
+local function fact_list()
   local facts = {}
   local function add(label, value)
     if value ~= "" then
@@ -107,6 +124,17 @@ local function details(event)
         .. value .. "]{.event-fact-value}\n:::")
     end
   end
+  local function blocks()
+    if #facts == 0 then
+      return pandoc.Blocks({})
+    end
+    return md(":::: {.event-details}\n" .. table.concat(facts, "\n") .. "\n::::")
+  end
+  return add, blocks
+end
+
+local function details(event)
+  local add, blocks = fact_list()
   local when = dates(event)
   local day = event.day or {}
   if when ~= "" and text(day.start) ~= "" and text(day["end"]) ~= "" then
@@ -119,9 +147,6 @@ local function details(event)
   end
   add("Where", where)
   local links = event.links or {}
-  if text(links.registration) ~= "" then
-    add("Registration", "[Register for the workshop](" .. text(links.registration) .. ")")
-  end
   if text(event.contact) ~= "" then
     add("Contact", "<" .. text(event.contact) .. ">")
   end
@@ -139,10 +164,48 @@ local function details(event)
     end
   end
   add("Links", table.concat(shown, " · "))
-  if #facts == 0 then
-    return pandoc.Blocks({})
+  return blocks()
+end
+
+local function glance(event)
+  local format = text(event.format)
+  if format:match("^workshop") then
+    return details(event)
   end
-  return md(":::: {.event-details}\n" .. table.concat(facts, "\n") .. "\n::::")
+  local add, blocks = fact_list()
+  local lessons = tostring(lesson_count()) .. " lessons"
+  if format == "self-paced" then
+    add("Format", "At your own pace: " .. lessons .. " and a guided project")
+    add("You need", "A laptop (macOS, Linux or Windows) and an internet connection; no genomics background")
+    add("License", "Text and slides [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), code [MIT](https://opensource.org/license/mit)")
+    return blocks()
+  end
+  local course = {}
+  for _, s in ipairs({ text(event.code), text(event.institution) }) do
+    if s ~= "" then
+      table.insert(course, s)
+    end
+  end
+  local credits = share_of(event, "credits")
+  if credits ~= "" then
+    table.insert(course, credits .. " credits")
+  end
+  add("Course", table.concat(course, ", "))
+  local term = text(event.term)
+  local y, m, d = text(event["start-date"]):match("^(%d%d%d%d)-(%d%d)-(%d%d)$")
+  if y then
+    local first = os.time({ year = tonumber(y), month = tonumber(m), day = tonumber(d), hour = 12 })
+    local from = tostring(tonumber(d)) .. " " .. os.date("%B", first)
+    term = term ~= "" and (term .. ", from " .. from) or ("From " .. from .. " " .. y)
+  end
+  add("Term", term)
+  add("Meets", text(event.meetings))
+  local people = event.instructors or {}
+  add(#people > 1 and "Instructors" or "Instructor", names(people))
+  local weeks = length_of(format, "weeks")
+  add("Format", (weeks and (weeks .. " weeks: ") or "") .. lessons
+    .. ", a guided project and your capstone")
+  return blocks()
 end
 
 return {
@@ -153,14 +216,14 @@ return {
     if key == "kicker" then
       local s = code
       if text(event.institution) ~= "" then
-        s = s .. (s ~= "" and " @ " or "") .. text(event.institution)
+        s = s .. (s ~= "" and " · " or "") .. text(event.institution)
       end
       local when = text(event.term)
       if when == "" then
         when = dates(event)
       end
       if when ~= "" then
-        s = s .. (s ~= "" and " - " or "") .. when
+        s = s .. (s ~= "" and " · " or "") .. when
       end
       return pandoc.Inlines(s)
     elseif key == "name" then
@@ -203,6 +266,8 @@ return {
       return md("On " .. cluster_name(event) .. ", " .. table.concat(parts, " and ") .. ".")
     elseif key == "details" then
       return details(event)
+    elseif key == "glance" then
+      return glance(event)
     elseif key == "register" then
       local url = text((event.links or {}).registration)
       if url == "" then
