@@ -42,6 +42,7 @@ using a real genomics dataset.]{.home-subtitle}
 :::::: {.home .column-page}
 
 ## Three ways to learn
+The materials are openly available for graduate courses, focused workshops, and independent study.
 
 ::::: {.home-cards}
 :::: {.home-card}
@@ -100,6 +101,8 @@ Do the [setup](pages/00-setup.qmd), then the lessons in the order of the
 :::::
 
 ## What you will learn?
+Reproducible research requires more than shared code. It connects well-managed data, versioned analyses, computational environments, and documented results. 
+Through this [course]{.content-visible unless-profile="workshop"}[workshop]{.content-visible when-profile="workshop"} you will learn to:
 
 ::::: {.home-goal}
 :::: {.home-goal-list}
@@ -128,18 +131,19 @@ Do the [setup](pages/00-setup.qmd), then the lessons in the order of the
 ::::
 :::::
 
-##  Learn by doing. Apply to your own research
+##  Project-based learning
+Learn through a guided genomics project, then apply the skills to your own research.
 
 ::::: {.home-cards .home-cards-2}
 :::: {.home-card .home-project}
 [Guided genomics project]{.home-card-kicker}
 
-### The guided LTEE project
+### The LTEE project
 
-Work with sequencing data from the Long-Term Evolution Experiment to develop a version-controlled, portable, and automated variant analysis workflow.
+Work with sequencing data from the [Long-Term Evolution Experiment (LTEE)](pages/ltee-project.amd) to develop a version-controlled, portable, and automated variant analysis workflow.
 
 ::: {.content-visible when-profile="course"}
-[What to hand in](assessment/ltee-project.qmd){.home-card-link}
+[More about the project ](assessment/ltee-project.qmd){.home-card-link}
 :::
 ::::
 :::: {.home-card .home-capstone}
