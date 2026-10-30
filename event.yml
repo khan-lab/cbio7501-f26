@@ -9,7 +9,10 @@ event:
   code: "CBIO7501"              # course code; empty for a workshop
   institution: "MBZUAI"
   term: "Fall 2026"
-  meetings: "Monday and Tuesday sessions and a Wednesday lab"  # course: when it meets
+  meetings:                     # course: when it meets, one line per session
+    - "Monday 15:00–16:20, lecture"
+    - "Tuesday 16:00–17:20, lecture"
+    - "Wednesday 17:00–18:50, lab"
   start-date: "2026-10-19"                # first day, YYYY-MM-DD
   day:                          # workshops: the teaching day
     start: "09:00"
@@ -18,10 +21,10 @@ event:
     break-minutes: 15
     end: "17:00"
   venue: ""
-  online: ""                    # video-call link, for an online run
+  online: ""                    # Zoom link, for an online run
   instructors: ["Aziz Khan"]
   helpers: []
-  contact: ""                   # email for questions
+  contact: "aziz.khan@mbzuai.ac.ae" # email for questions
   links:                        # leave empty what you do not use
     registration: ""
     notes: ""                   # shared notes (HackMD, Etherpad)
@@ -36,7 +39,7 @@ event:
     capstone: 30
   cluster:                      # for the optional HPC steps
     enabled: true
-    name: "Karakoram"
+    name: ""
     login: ""                   # login host, e.g. login.cluster.example.org
     scheduler: "slurm"
     docs: ""                    # link to the cluster's user guide

@@ -239,12 +239,14 @@ body.home-page #title-block-header { display: none; }
   color: $primary;
 }
 .home-hero h1 {
-  font-size: clamp(2rem, 3.6vw, 2.3rem);
+  font-size: clamp(2rem,2.7vw,2.8rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
   margin: 0.45rem 0 0.8rem;
+  
 }
+.home-tagline { display: block; max-width: 40rem; margin-bottom: 1rem; font-size: 1.4rem; color: $primary; }
 .home-subtitle { display: block; max-width: 40rem; margin-bottom: 1.1rem; color: $muted; font-size: 1.12rem; line-height: 1.55; }
 .home-hero .btn { margin: 0.35rem 0.5rem 0.35rem 0; }
 // With a Register button first, "Set up your computer" steps back to an outline
@@ -322,25 +324,55 @@ body.home-page #title-block-header { display: none; }
 .home-step-number { color: $primary; font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 #quarto-content .home-step h3 { margin-top: 0.35rem; }
 
-.home-footer {
+
+// Footer: a band across the whole screen, like the hero; about on the left,
+// two columns of links on the right
+.home-footer { margin-top: 4rem; padding: 0.5rem 0 1.5rem; border-top: 1px solid $border-subtle; background: $surface; }
+.home-footer-inner {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
   gap: 2.5rem;
-  margin-top: 3.5rem;
-  border-top: 1px solid $border-subtle;
+  width: min(1100px, calc(100% - 3rem));
+  margin: 0 auto;
 }
 .home-footer p { color: $muted; font-size: 0.93rem; }
-#quarto-content .home-footer h2,
-#quarto-content .home-footer h3 { margin: 1.75rem 0 0.75rem !important; font-size: 1.25rem; }
-.home-footer-side { padding-left: 2rem; border-left: 1px solid $border-subtle; }
+#quarto-content .home-footer h2 { margin: 1.75rem 0 0.75rem !important; font-size: 1.25rem; }
+#quarto-content .home-footer h3 { margin: 1.95rem 0 0.75rem; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: $primary; }
+.home-footer-links ul { list-style: none; margin: 0; padding: 0; }
+.home-footer-links li { padding: 0.25rem 0; font-size: 0.93rem; color: $muted; }
+// Below it, the site's footer becomes the band's bottom line: the GitHub links
+// on the left, the versions on the right (the license is in the Reuse column)
+body.home-page footer.footer { background: $surface; }
+body.home-page footer.footer .nav-footer {
+  width: min(1100px, calc(100% - 3rem));
+  margin: 0 auto;
+  padding: 1rem 0 1.5rem;
+  background: transparent;
+  align-items: flex-start;
+  text-align: left;
+}
+body.home-page .nav-footer-left { display: none; }
+// Quarto puts an &nbsp; before the links: font-size 0 keeps it from taking a
+// line of its own
+body.home-page .nav-footer-center { order: -1; min-height: 0; margin-top: 0; font-size: 0; }
+body.home-page .nav-footer .toc-actions { padding: 0; }
+body.home-page .nav-footer .toc-actions,
+body.home-page .nav-footer .nav-footer-right { font-size: 0.75rem; }
+body.home-page .nav-footer .toc-actions ul { margin: 0; padding: 0; }
+body.home-page .nav-footer .toc-actions ul :first-child,
+body.home-page .nav-footer .toc-actions ul :last-child { margin-left: 0; margin-right: 0; }
+// No white gap between the band and the footer: Quarto leaves 1em under the
+// page and an empty 60px row at the bottom of its grid
+body.home-page main.content { margin-bottom: 0; }
+body.home-page #quarto-content.page-rows-contents { grid-template-rows: [content-top] minmax(max-content, 1fr) [content-bottom] 0 [page-bottom]; }
 
 @media (max-width: 991.98px) {
   .home-hero-inner { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 767.98px) {
-  .home-cards, .home-cards-2, .home-steps, .home-footer { grid-template-columns: minmax(0, 1fr); }
-  .home-footer { gap: 0; }
-  .home-footer-side { padding-left: 0; border-left: 0; }
+  .home-cards, .home-cards-2, .home-steps { grid-template-columns: minmax(0, 1fr); }
+  .home-footer-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.5rem; }
+  .home-footer-about { grid-column: 1 / -1; }
   .home-goal { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
   .home-flow ol { gap: 1.2rem; }
   .home-flow li { min-height: 6rem; font-size: 0.8rem; }

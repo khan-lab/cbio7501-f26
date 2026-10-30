@@ -14,6 +14,9 @@
 --   instructors   "A", "A and B", "A, B and C"; also helpers
 --   dates         a workshop's dates, "18–21 Jan 2027" (from start-date
 --                 and the number of days in schedules/FORMAT.yml)
+--   meetings      a course's sessions on one line, "Monday 15:00–16:20,
+--                 lecture; Tuesday ..." (meetings: is a list, one line per
+--                 session, or a single line)
 --   cluster       the cluster's name, or "your cluster" when none is set
 --   cluster-info  a sentence with the cluster's login host and user guide,
 --                 or nothing
@@ -71,6 +74,21 @@ local function lesson_count()
     end
   end
   return n
+end
+
+-- meetings: a list, one session to an item, or a single line
+local function meetings(event)
+  if pandoc.utils.type(event.meetings) == "List" then
+    local out = {}
+    for _, v in ipairs(event.meetings) do
+      if text(v) ~= "" then
+        table.insert(out, text(v))
+      end
+    end
+    return out
+  end
+  local s = text(event.meetings)
+  return s ~= "" and { s } or {}
 end
 
 local function dates(event)
@@ -199,7 +217,7 @@ local function glance(event)
     term = term ~= "" and (term .. ", from " .. from) or ("From " .. from .. " " .. y)
   end
   add("Term", term)
-  add("Meets", text(event.meetings))
+  add("Meets", table.concat(meetings(event), "\\\n"))   -- one session to a line
   local people = event.instructors or {}
   add(#people > 1 and "Instructors" or "Instructor", names(people))
   local weeks = length_of(format, "weeks")
@@ -246,6 +264,8 @@ return {
       return pandoc.Inlines(names(event[key]))
     elseif key == "dates" then
       return pandoc.Inlines(dates(event))
+    elseif key == "meetings" then
+      return pandoc.Inlines(table.concat(meetings(event), "; "))
     elseif key == "cluster" then
       return pandoc.Inlines(cluster_name(event))
     elseif key == "cluster-info" then

@@ -1,11 +1,8 @@
 ---
-pagetitle: "{{< meta event.title >}}"
-description: "Create research that others can reproduce and build upon: hands-on lessons in computational reproducibility and open research, from organizing your first project to publishing open, executable work."
+description: "Create research that others can reproduce and build upon. Free, open, hands-on lessons in computational reproducibility and open research."
 toc: false
 page-layout: full
 body-classes: home-page
-image: assets/images/social-preview.png
-image-alt: "Diagram: Data, Code and Results need Environments and workflow"
 ---
 
 <!-- Styles: "Home page" in assets/css/styles.scss. The title, the line above
@@ -19,15 +16,14 @@ when-profile show in one format. The previous version is index-backup.qmd. -->
 
 # {{< meta event.title >}} {.unnumbered .unlisted}
 
-[Learn how to make computational research reproducible, transparent, and
-reusable. This hands-on
-[course]{.content-visible unless-profile="workshop"}[workshop]{.content-visible when-profile="workshop"}
-covers project organization, version control, software environments,
-workflow automation, and open science practices through practical exercises
-using a real genomics dataset.]{.home-subtitle}
+[Create research that others can reproduce and build upon]{.home-tagline}
+
+[A hands-on [course]{.content-visible unless-profile="workshop"}[workshop]{.content-visible when-profile="workshop"}
+in computational reproducibility and open research. Learn to organize, record, rerun and share an analysis, so others can reproduce it.
+Free and open, with no genomics background needed.]{.home-subtitle}
 
 {{< event register >}}
-[Browse the lessons](contents.qmd){.btn .btn-primary}
+[Start learning](contents.qmd){.btn .btn-primary}
 [Set up your computer](pages/00-setup.qmd){.btn .btn-outline-primary}
 ::::
 
@@ -42,7 +38,7 @@ using a real genomics dataset.]{.home-subtitle}
 :::::: {.home .column-page}
 
 ## Three ways to learn
-The materials are openly available for graduate courses, focused workshops, and independent study.
+The materials are openly available for graduate courses, focused workshops and independent study.
 
 ::::: {.home-cards}
 :::: {.home-card}
@@ -100,24 +96,24 @@ Do the [setup](pages/00-setup.qmd), then the lessons in the order of the
 ::::
 :::::
 
-## What you will learn?
-Reproducible research requires more than shared code. It connects well-managed data, versioned analyses, computational environments, and documented results. 
+## What you will learn
+Reproducible research requires more than shared code. It connects well-managed data, versioned analyses, computational environments and documented results. 
 Through this [course]{.content-visible unless-profile="workshop"}[workshop]{.content-visible when-profile="workshop"} you will learn to:
 
 ::::: {.home-goal}
 :::: {.home-goal-list}
 - **Organize** a project, and keep the raw data untouched
 - **Track** every change with Git and collaborate through GitHub
-- **Lock** the software version with Pixi, and ship it in containers
-- **Report** results with Quarto and Jupyter - literate programming
+- **Lock** the software dependencies with Pixi, and ship in containers
+- **Report** results with Quarto and Jupyter (literate programming)
 - **Automate** the pipeline with Snakemake and Nextflow
-- **Share** it with an open license and archive on Zenodo
+- **Share** your work with an open license, and archive it on Zenodo
 ::::
 
 :::: {.home-goal-card}
 [The goal]{.home-card-kicker}
 
-[Create research others can reproduce & build upon]{.home-goal-title}
+[From raw data to results anyone can reproduce]{.home-goal-title}
 
 ::: {.home-flow}
 1. []{.bi .bi-file-earmark-code aria-hidden="true"} Data & code
@@ -131,6 +127,14 @@ Through this [course]{.content-visible unless-profile="workshop"}[workshop]{.con
 ::::
 :::::
 
+## Who it is for
+
+Graduate students, postdocs and researchers who analyse data with code, in
+genomics, biology or any other field. You need some experience with Python or
+R, and basic comfort with a terminal: if it is new to you, an hour of
+[Bash 101](pages/C-bash.qmd) gets you there. No genomics or Git experience is
+needed.
+
 ##  Project-based learning
 Learn through a guided genomics project, then apply the skills to your own research.
 
@@ -140,7 +144,7 @@ Learn through a guided genomics project, then apply the skills to your own resea
 
 ### The LTEE project
 
-Work with sequencing data from the [Long-Term Evolution Experiment (LTEE)](pages/ltee-project.qmd) to develop a version-controlled, portable, and automated variant analysis workflow.
+Work with sequencing data from the [Long-Term Evolution Experiment (LTEE)](pages/ltee-project.qmd) to develop an automated and reproducible variant analysis workflow.
 
 ::: {.content-visible when-profile="course"}
 [More about the project ](assessment/ltee-project.qmd){.home-card-link}
@@ -151,7 +155,7 @@ Work with sequencing data from the [Long-Term Evolution Experiment (LTEE)](pages
 
 ### Your capstone project
 
-Apply the principles and tools learned in the course to organize, document, automate, and share an analysis from your own research.
+Apply what you learned to organize, document, automate and share an analysis from your own research.
 
 [The capstone](assessment/capstone-rubric.qmd){.home-card-link}
 ::::
@@ -185,26 +189,38 @@ protects you from.
 :::
 ::::
 
-::::: {.home-footer}
-:::: {.home-footer-main}
+::::::
+
+::::::: {.home-footer .column-screen}
+:::::: {.home-footer-inner}
+:::: {.home-footer-about}
 ## Built on open material
 
 This course began as a [mini-course at Stanford Biosciences](https://explorecourses.stanford.edu/search?q=BIOS+259&view=catalog&page=0&filter-coursestatus-Active=on&collapse=&academicYear=20232024)
 ([BIOS259, Winter 2024](https://github.com/asntech/bios259-w24/)), developed by Aziz Khan and taught with the help of
-Alvina, Clemens and Brennan.
+Alvina, Clemens and Brennan. It adapts and extends open lessons from
+[NBIS](https://nbisweden.github.io/), [Software Carpentry](https://software-carpentry.org),
+[Data Carpentry](https://datacarpentry.org/) and others.
 
-The material adapts and extends open lessons from [NBIS](https://nbisweden.github.io/),
-[Software Carpentry](https://software-carpentry.org), [Data Carpentry](https://datacarpentry.org/) and many more. See [Sources and credits](pages/credits.qmd).
+Developed and maintained by [Aziz Khan](https://github.com/asntech/),
+[Computational Biology and Cancer Regulatory Genomics (CBCRG)](https://khanlab.bio), MBZUAI.
 ::::
-:::: {.home-footer-side}
-### Reuse them
+:::: {.home-footer-links}
+### Learn
 
-Run them as a course or a workshop, or take single lessons: see
-[Teach these lessons](teach.qmd).
-
-Text and slides: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-Code: [MIT](https://opensource.org/license/mit). Developed and maintained by [Aziz Khan](https://github.com/asntech/), [Computational Biology and Cancer Regulatory Genomics (CBCRG)](https://khanlab.bio), MBZUAI.
+- [Lessons](contents.qmd)
+- [Set up your computer](pages/00-setup.qmd)
+- [Cheat sheets](cheatsheets/index.qmd)
+- [Glossary](pages/glossary.qmd)
+- [FAQ](faq.qmd)
 ::::
-:::::
+:::: {.home-footer-links}
+### Reuse
 
+- [Teach these lessons](teach.qmd)
+- [Sources and credits](pages/credits.qmd)
+- Text and slides: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- Code: [MIT](https://opensource.org/license/mit)
+::::
 ::::::
+:::::::

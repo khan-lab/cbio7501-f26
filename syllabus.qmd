@@ -12,7 +12,7 @@ differ, the official syllabus applies.
 :::
 
 **{{< event name >}}**, {{< meta event.institution >}}, {{< meta event.term >}}.
-{{< meta event.grading.credits >}} credits; seven weeks; {{< meta event.meetings >}}.
+{{< meta event.grading.credits >}} credits; seven weeks; {{< event meetings >}}.
 Instructor: {{< event instructors >}}.
 
 ## Course learning outcomes

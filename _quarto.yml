@@ -28,9 +28,11 @@ profile:
   default: course
 
 website:
-  title: "Art of Reproducible Research"
+  title: "The Art of Reproducible Research"
   repo-actions: [source, issue]
-  description: "Hands-on lessons on reproducible and open computational research: project organization, data management, Quarto, Jupyter, Git, Pixi, containers, Snakemake and Nextflow, built around one LTEE variant-calling project."
+  description: "Create research that others can reproduce and build upon. Free, open, hands-on lessons in computational reproducibility and open research."
+  image: assets/images/social-preview.png
+  image-alt: "Diagram: data and code run in a reproducible environment and workflow (Pixi, Conda, Docker, Apptainer, Snakemake, Nextflow) to give the same results, which others reuse, verify and extend."
   open-graph: true
   search: true
   page-navigation: true

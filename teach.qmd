@@ -78,7 +78,7 @@ settings are left out of the site.
 |---------|-----------------|
 | `format` | which site is built ([Choose a format](#choose-a-format)) |
 | `title`, `code`, `institution`, `term` | the home page heading and the line above it, the slide subtitles and footers, the course schedule and syllabus |
-| `meetings` | courses: when the course meets, on the syllabus |
+| `meetings` | courses: when the course meets, one line per session, on the home page and the syllabus |
 | `start-date` | workshops: the dates on the home page, and the date of each day on the schedule |
 | `day` | workshops: when the day starts and ends, when lunch starts and how long it and the breaks last; the schedule's times come from it |
 | `venue`, `online`, `instructors`, `helpers`, `contact`, `links` | workshops: the table of details on the home page (registration, shared notes, chat, surveys, code of conduct); courses: the instructors on the syllabus |
