@@ -231,6 +231,9 @@ body.home-page #title-block-header { display: none; }
   width: min(1100px, calc(100% - 3rem));
   margin: 0 auto;
 }
+// Title and tagline are sized to the width of this column (cqi), so they grow
+// and shrink together and each fits one line on a laptop screen
+.home-hero-copy { container-type: inline-size; }
 .home-kicker, .home-card-kicker, .home-glance-label {
   font-size: 0.78rem;
   font-weight: 600;
@@ -239,14 +242,14 @@ body.home-page #title-block-header { display: none; }
   color: $primary;
 }
 .home-hero h1 {
-  font-size: clamp(2rem,2.7vw,2.8rem);
+  font-size: clamp(2rem, 6.4cqi, 2.75rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
   margin: 0.45rem 0 0.8rem;
   
 }
-.home-tagline { display: block; max-width: 40rem; margin-bottom: 1rem; font-size: 1.4rem; color: $primary; }
+.home-tagline { display: block; max-width: 40rem; margin-bottom: 1rem; font-size: clamp(1.15rem, 3.65cqi, 1.5rem); color: $primary; }
 .home-subtitle { display: block; max-width: 40rem; margin-bottom: 1.1rem; color: $muted; font-size: 1.12rem; line-height: 1.55; }
 .home-hero .btn { margin: 0.35rem 0.5rem 0.35rem 0; }
 // With a Register button first, "Set up your computer" steps back to an outline

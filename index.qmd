@@ -144,7 +144,7 @@ Learn through a guided genomics project, then apply the skills to your own resea
 
 ### The LTEE project
 
-Work with sequencing data from the [Long-Term Evolution Experiment (LTEE)](pages/ltee-project.qmd) to develop an automated and reproducible variant analysis workflow.
+Work with genomic data from the [Long-Term Evolution Experiment](pages/ltee-project.qmd) to develop an automated and reproducible variant analysis workflow.
 
 ::: {.content-visible when-profile="course"}
 [More about the project ](assessment/ltee-project.qmd){.home-card-link}
