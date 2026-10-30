@@ -19,10 +19,12 @@ when-profile show in one format. The previous version is index-backup.qmd. -->
 
 # {{< meta event.title >}} {.unnumbered .unlisted}
 
-[Learn how to make computational research reproducible, transparent, and reusable. This hands-on course 
+[Learn how to make computational research reproducible, transparent, and
+reusable. This hands-on
 [course]{.content-visible unless-profile="workshop"}[workshop]{.content-visible when-profile="workshop"}
-covers project organization, version control, software environments, workflow automation, and open science practices through practical exercises using a real genomics dataset.]
-{.home-subtitle}
+covers project organization, version control, software environments,
+workflow automation, and open science practices through practical exercises
+using a real genomics dataset.]{.home-subtitle}
 
 {{< event register >}}
 [Browse the lessons](contents.qmd){.btn .btn-primary}
@@ -113,7 +115,7 @@ make the answer *yes*. You will:
 :::
 
 ::: {.home-figure}
-![](assets/images/social-preview.png){fig-alt="Diagram:"}
+![](assets/images/social-preview.png){fig-alt="Diagram: from raw data to results anyone can reproduce. Data and code go into a reproducible environment and workflow (Pixi, Conda, Docker, Apptainer and a workflow manager), which produces figures and tables, reports, papers and open results."}
 :::
 
 ## One project together, then your own
