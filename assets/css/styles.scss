@@ -20,7 +20,7 @@ h1, .h1 { letter-spacing: -0.028em; }
 
 // Links in text: colored and underlined, so they are not told apart by
 // color alone.
-main a:not(.btn):not(.nav-link):not(.sidebar-link):not(.anchorjs-link):not(.footnote-ref):not(.home-quick) {
+main a:not(.btn):not(.nav-link):not(.sidebar-link):not(.anchorjs-link):not(.footnote-ref) {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
@@ -258,26 +258,6 @@ body.home-page #title-block-header { display: none; }
 .event-fact p { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0.75rem; align-items: baseline; margin: 0; padding: 0.5rem 0; font-size: 0.93rem; }
 .event-fact-label { color: $muted; font-size: 0.85rem; font-weight: 600; }
 
-// Quick links: one row of four under the hero, two rows of two on phones
-.home-quicklinks { margin-top: 1.75rem; }
-.home-quicklinks ul {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border: 1px solid $border-subtle;
-  border-radius: 14px;
-  overflow: hidden;
-  background: $body-bg;
-}
-.home-quicklinks li { margin: 0; border-left: 1px solid $border-subtle; }
-.home-quicklinks li:first-child { border-left: 0; }
-a.home-quick { display: block; height: 100%; padding: 0.8rem 1.1rem; color: $headings-color; text-decoration: none; }
-a.home-quick:hover { background: $surface; }
-.home-quick strong { display: block; font-size: 0.95rem; font-weight: 600; }
-.home-quick-note { display: block; color: $muted; font-size: 0.8rem; }
-
 // Cards: three (or two) in a row
 .home-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .home-cards-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -332,9 +312,6 @@ a.home-quick:hover { background: $surface; }
 }
 @media (max-width: 767.98px) {
   .home-cards, .home-cards-2, .home-steps, .home-footer { grid-template-columns: minmax(0, 1fr); }
-  .home-quicklinks ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .home-quicklinks li:nth-child(odd) { border-left: 0; }
-  .home-quicklinks li:nth-child(-n+2) { border-bottom: 1px solid $border-subtle; }
   .home-footer { gap: 0; }
   .home-footer-side { padding-left: 0; border-left: 0; }
   .home-learn ul { columns: 1; }
