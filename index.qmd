@@ -117,7 +117,7 @@ Through this [course]{.content-visible unless-profile="workshop"}[workshop]{.con
 :::: {.home-goal-card}
 [The goal]{.home-card-kicker}
 
-[Create research others can reproduce and build upon]{.home-goal-title}
+[Create research others can reproduce & build upon]{.home-goal-title}
 
 ::: {.home-flow}
 1. []{.bi .bi-file-earmark-code aria-hidden="true"} Data & code
