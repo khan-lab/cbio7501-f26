@@ -205,7 +205,7 @@ details > summary { font-weight: 600; cursor: pointer; }
 .btn { border-radius: 8px; font-weight: 600; padding: 0.5rem 1rem; }
 
 // Home page (index.qmd). Colors come from the theme tokens, so it follows
-// light and dark mode; only the figure's white card looks the same in both.
+// light and dark mode.
 $home-gold: #e5c687;    // the light navbar
 
 .home { max-width: 1100px; margin: 0 auto; padding-bottom: 1rem; }
@@ -239,7 +239,7 @@ body.home-page #title-block-header { display: none; }
   color: $primary;
 }
 .home-hero h1 {
-  font-size: clamp(2rem, 3.6vw, 2.75rem);
+  font-size: clamp(2rem, 3.6vw, 2.3rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -269,25 +269,52 @@ body.home-page #title-block-header { display: none; }
 }
 .home-card p { font-size: 0.95rem; margin-bottom: 0.5rem; }
 .home-card p:last-child { margin-bottom: 0; }
-.home-project { border-top: 4px solid $home-gold; background: $surface; }
-.home-capstone { border-top: 4px solid $home-gold; background: $surface; }
+.home-project { border-top: 4px solid #154677; background: $surface; }
+.home-capstone { border-top: 4px solid #154677; background: $surface; }
 .home-card-link { font-weight: 600; }
 .home-card-link::after { content: " →"; }
 
-// The figure is drawn for a white background, in both modes
-.home-figure {
-  padding: clamp(0.5rem, 2vw, 1.5rem);
+// What you will learn: the list, and beside it the goal card (below it on
+// phones)
+.home-goal { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; align-items: center; }
+.home-goal-list ul { list-style: none; margin: 0; padding: 0; }
+.home-goal-list li { position: relative; padding: 0.7rem 0 0.7rem 1.6rem; border-bottom: 1px solid $border-subtle; }
+.home-goal-list li:last-child { border-bottom: 0; }
+.home-goal-list li::before { content: "✓"; position: absolute; left: 0.15rem; color: $primary; font-weight: 700; }
+.home-goal-card {
+  padding: 1.4rem 1.5rem 1.5rem;
   border: 1px solid $border-subtle;
-  border-radius: 18px;
-  background: #fff;
+  border-top: 4px solid #f6f7f9;
+  border-radius: 14px;
+  background: $body-bg;
+  box-shadow: 0 10px 28px $shadow-color;
 }
-.home-figure p { margin: 0; }
-.home-figure img { display: block; width: 100%; max-width: 960px; margin: 0 auto; }
-.home-figure-caption { display: block; margin-top: 0.6rem; color: $muted; font-size: 0.85rem; }
-
-// What you will learn: two columns, one on phones
-.home-learn ul { columns: 2; column-gap: 2rem; padding-left: 1.2rem; }
-.home-learn li { break-inside: avoid; padding: 0.15rem 0; }
+.home-goal-card p { margin: 0; }
+.home-goal-title { display: block; margin: 0.45rem 0 1.25rem; color: $headings-color; font-size: 1.3rem; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
+// The three steps, with an arrow in the gap between two
+.home-flow ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.6rem; list-style: none; margin: 0; padding: 0; }
+.home-flow li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 6.75rem;
+  padding: 0.9rem 0.4rem;
+  border-radius: 8px;
+  background: $primary;
+  color: $body-bg;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+}
+.home-flow .bi { font-size: 1.6rem; line-height: 1; }
+.home-flow li:not(:last-child)::after { content: "→"; position: absolute; right: -1.2rem; top: 50%; transform: translateY(-50%); color: $primary; font-weight: 700; }
+.home-command { margin-top: 1.25rem; padding: 0.7rem 0.9rem; border: 1px solid $border-subtle; border-radius: 8px; background: $surface; }
+.home-command p code:not(.sourceCode) { background: transparent; color: $body-color; padding: 0; }
+.home-prompt { color: $primary; font-family: $font-family-monospace; margin-right: 0.5rem; }
 
 .home-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .home-step { padding: 0.2rem 0.5rem 0.2rem 1.1rem; border-left: 2px solid $primary; }
@@ -314,7 +341,10 @@ body.home-page #title-block-header { display: none; }
   .home-cards, .home-cards-2, .home-steps, .home-footer { grid-template-columns: minmax(0, 1fr); }
   .home-footer { gap: 0; }
   .home-footer-side { padding-left: 0; border-left: 0; }
-  .home-learn ul { columns: 1; }
+  .home-goal { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+  .home-flow ol { gap: 1.2rem; }
+  .home-flow li { min-height: 6rem; font-size: 0.8rem; }
+  .home-flow li:not(:last-child)::after { right: -1rem; }
 }
 
 // Screenshots: a thin frame so white pages do not melt into the background.

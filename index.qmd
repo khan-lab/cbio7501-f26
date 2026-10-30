@@ -41,7 +41,7 @@ using a real genomics dataset.]{.home-subtitle}
 
 :::::: {.home .column-page}
 
-## Three ways to use it
+## Three ways to learn
 
 ::::: {.home-cards}
 :::: {.home-card}
@@ -99,45 +99,55 @@ Do the [setup](pages/00-setup.qmd), then the lessons in the order of the
 ::::
 :::::
 
-## Create research that others can reproduce and build upon
+## What you will learn?
 
-Your analysis worked last month. Can you rerun it today? Can a reviewer, a
-labmate, or you in five years? These lessons teach the tools and habits that
-make the answer *yes*. You will:
-
-::: {.home-learn}
+::::: {.home-goal}
+:::: {.home-goal-list}
 - **Organize** a project, and keep the raw data untouched
 - **Track** every change with Git version control
 - **Lock** the software with Pixi, and ship it in containers
 - **Report** results with Quarto and Jupyter
 - **Automate** the pipeline with Snakemake and Nextflow
 - **Share** it with an open license and a DOI via Zenodo
+::::
+
+:::: {.home-goal-card}
+[The goal]{.home-card-kicker}
+
+[Create research others can reproduce & build upon]{.home-goal-title}
+
+::: {.home-flow}
+1. []{.bi .bi-file-earmark-code aria-hidden="true"} Data & code
+2. []{.bi .bi-box-seam aria-hidden="true"} Environment & workflow
+3. []{.bi .bi-graph-up-arrow aria-hidden="true"} Results
 :::
 
-::: {.home-figure}
-![](assets/images/social-preview.png){fig-alt="Diagram: from raw data to results anyone can reproduce. Data and code go into a reproducible environment and workflow (Pixi, Conda, Docker, Apptainer and a workflow manager), which produces figures and tables, reports, papers and open results."}
+::: {.home-command}
+[\$]{.home-prompt} `pixi run reproduce`
 :::
+::::
+:::::
 
-## One project together, then your own
+##  Learn by doing. Apply to your own research
 
 ::::: {.home-cards .home-cards-2}
 :::: {.home-card .home-project}
-[Guided project]{.home-card-kicker}
+[Guided genomics project]{.home-card-kicker}
 
 ### The guided LTEE project
 
-Follow a guided project to build a reproducible genomics analysis using real experimental evolution data.
+Work with sequencing data from the Long-Term Evolution Experiment to develop a version-controlled, portable, and automated variant analysis workflow.
 
 ::: {.content-visible when-profile="course"}
 [What to hand in](assessment/ltee-project.qmd){.home-card-link}
 :::
 ::::
 :::: {.home-card .home-capstone}
-[Your own research]{.home-card-kicker}
+[Apply to your own research]{.home-card-kicker}
 
 ### Your capstone project
 
-Apply reproducible practices to your own independent project with data, code, and analysis.
+Apply the principles and tools learned in the course to organize, document, automate, and share an analysis from your own research.
 
 [The capstone](assessment/capstone-rubric.qmd){.home-card-link}
 ::::
