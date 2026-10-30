@@ -107,17 +107,17 @@ Through this [course]{.content-visible unless-profile="workshop"}[workshop]{.con
 ::::: {.home-goal}
 :::: {.home-goal-list}
 - **Organize** a project, and keep the raw data untouched
-- **Track** every change with Git version control
-- **Lock** the software with Pixi, and ship it in containers
-- **Report** results with Quarto and Jupyter
+- **Track** every change with Git and collaborate through GitHub
+- **Lock** the software version with Pixi, and ship it in containers
+- **Report** results with Quarto and Jupyter - literate programming
 - **Automate** the pipeline with Snakemake and Nextflow
-- **Share** it with an open license and a DOI via Zenodo
+- **Share** it with an open license and archive on Zenodo
 ::::
 
 :::: {.home-goal-card}
 [The goal]{.home-card-kicker}
 
-[Create research others can reproduce & build upon]{.home-goal-title}
+[Create research others can reproduce and build upon]{.home-goal-title}
 
 ::: {.home-flow}
 1. []{.bi .bi-file-earmark-code aria-hidden="true"} Data & code
@@ -140,7 +140,7 @@ Learn through a guided genomics project, then apply the skills to your own resea
 
 ### The LTEE project
 
-Work with sequencing data from the [Long-Term Evolution Experiment (LTEE)](pages/ltee-project.amd) to develop a version-controlled, portable, and automated variant analysis workflow.
+Work with sequencing data from the [Long-Term Evolution Experiment (LTEE)](pages/ltee-project.qmd) to develop a version-controlled, portable, and automated variant analysis workflow.
 
 ::: {.content-visible when-profile="course"}
 [More about the project ](assessment/ltee-project.qmd){.home-card-link}
