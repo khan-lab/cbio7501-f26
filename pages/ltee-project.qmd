@@ -5,6 +5,14 @@ sources:
   - "**Adapted from:** *Data Carpentry Wrangling Genomics: Background and metadata*, Data Carpentry contributors. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://datacarpentry.github.io/wrangling-genomics/01-background.html>"
 ---
 
+## The question
+
+How many mutations did *E. coli* accumulate over 50,000 generations of the
+Long-Term Evolution Experiment ([Tenaillon et al., 2016](https://doi.org/10.1038/nature18959)),
+and is that answer robust to how strictly we filter the variant calls? The
+pipeline is a tool for that question, not a recipe: the report compares four
+depth thresholds and records a decision.
+
 ## The experiment
 
 In 1988 Richard Lenski started twelve populations of *Escherichia coli* from
@@ -22,13 +30,6 @@ prepared for teaching by Data Carpentry:
 The reads are a trimmed subset (175,000 pairs per sample, 115 MB to
 download, CC0) from figshare, <https://doi.org/10.6084/m9.figshare.7726454>;
 the reference is *E. coli* B str. REL606 (GenBank CP000819.1).
-
-## The question
-
-*How many mutations did the clones accumulate over 50,000 generations, and is
-the answer robust to how strictly we filter the variant calls?* The pipeline
-is a tool for that question, not a recipe: the report compares four depth
-thresholds and records a decision.
 
 ## The pipeline
 

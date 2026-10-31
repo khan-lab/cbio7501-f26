@@ -298,8 +298,34 @@ body.home-page #title-block-header { display: none; }
 .home-card p:last-child { margin-bottom: 0; }
 .home-project { border-top: 4px solid #154677; background: $surface; }
 .home-capstone { border-top: 4px solid #154677; background: $surface; }
-.home-card-link { font-weight: 600; }
+.home-card-link { font-weight: 600; white-space: nowrap; }
 .home-card-link::after { content: " →"; }
+// The LTEE card's question: a label that shows it in a bubble on hover, on
+// keyboard focus and on tap (phones have no hover). The bubble's ::before
+// fills the gap down to the label, so the pointer can move onto the bubble.
+.home-question { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; margin-right: 1.25rem; border-bottom: 1px dotted currentColor; color: $muted; cursor: help; }
+.home-question:focus-visible { outline: 2px solid $primary; outline-offset: 3px; border-radius: 2px; }
+.home-question-text {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 0.6rem);
+  left: 0;
+  z-index: 10;
+  width: max-content;
+  max-width: min(22rem, calc(100vw - 4.5rem));
+  padding: 0.7rem 0.85rem;
+  border: 1px solid $border-subtle;
+  border-radius: 8px;
+  background: $body-bg;
+  box-shadow: 0 10px 28px $shadow-color;
+  color: $body-color;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  cursor: auto;
+}
+.home-question-text::before { content: ""; position: absolute; left: 0; right: 0; bottom: -0.7rem; height: 0.7rem; }
+.home-question:hover .home-question-text,
+.home-question:focus .home-question-text { display: block; }
 
 // What you will learn: the list, and beside it the goal card (below it on
 // phones)
@@ -346,7 +372,7 @@ body.home-page #title-block-header { display: none; }
 .home-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .home-step { padding: 0.2rem 0.5rem 0.2rem 1.1rem; border-left: 2px solid $primary; }
 .home-step p { color: $muted; font-size: 0.93rem; margin: 0; }
-.home-step-number { color: $primary; font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.home-step-number { color: $primary; font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 #quarto-content .home-step h3 { margin-top: 0.35rem; }
 
 

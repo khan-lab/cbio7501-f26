@@ -19,7 +19,7 @@ when-profile show in one format. The previous version is index-backup.qmd. -->
 [Create research that others can reproduce and build upon]{.home-tagline}
 
 [A hands-on [course]{.content-visible unless-profile="workshop"}[workshop]{.content-visible when-profile="workshop"}
-in computational reproducibility and open research. Learn to organize, record, rerun and share an analysis, so others can reproduce it.
+in computational reproducibility and open research. Learn to organize, track, automate and share an analysis, so others can reproduce it.
 Free and open, with no genomics background needed.]{.home-subtitle}
 
 {{< event register >}}
@@ -146,9 +146,8 @@ Learn through a guided genomics project, then apply the skills to your own resea
 
 Work with genomic data from the [Long-Term Evolution Experiment](pages/ltee-project.qmd) to develop an automated and reproducible variant analysis workflow.
 
-::: {.content-visible when-profile="course"}
-[More about the project ](assessment/ltee-project.qmd){.home-card-link}
-:::
+[[]{.bi .bi-question-circle aria-hidden="true"} The question[How many mutations did *E. coli* accumulate over 50,000 generations, and is that answer robust to how strictly we filter the variant calls?]{#ltee-question .home-question-text role="tooltip"}]{.home-question tabindex="0" aria-describedby="ltee-question"}
+[[More about the project ](assessment/ltee-project.qmd){.home-card-link}]{.content-visible when-profile="course"}
 ::::
 :::: {.home-card .home-capstone}
 [Apply to your own research]{.home-card-kicker}
