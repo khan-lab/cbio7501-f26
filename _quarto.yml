@@ -139,7 +139,7 @@ website:
           - text: "Documentation and sharing"
             href: cheatsheets/sharing.qmd
   page-footer:
-    left: "Material [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), code [MIT](https://opensource.org/license/mit). Parts adapted from other [open lessons](/pages/credits.qmd)"
+    left: "Text and slides [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), code [MIT](https://opensource.org/license/mit) · [Sources and credits](/pages/credits.qmd)"
     right: "Built with [Quarto](https://quarto.org/) {{< version >}} and [Pixi](https://pixi.prefix.dev/) {{< pixi-version >}}"
 
 format:
