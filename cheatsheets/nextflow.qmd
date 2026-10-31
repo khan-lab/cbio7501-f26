@@ -1,6 +1,6 @@
 ---
 title: "Nextflow"
-subtitle: "Cheat sheet for lesson 10"
+subtitle: "A workflow manager that connects processes with channels and runs them on laptops, clusters and clouds"
 ---
 
 ## Run

@@ -344,7 +344,7 @@ command and the image ID in your README.
 
 ## Further reading
 
-- Cheat sheet: [Docker and Apptainer](../cheatsheets/containers.qmd), with links to the official cheat sheets and references.
+- Cheat sheets: [Docker](../cheatsheets/docker.qmd) and [Apptainer](../cheatsheets/apptainer.qmd), with links to the official cheat sheets and references.
 - NBIS, *Working with containers* (including Seqera containers and multi-platform builds): <https://nbisweden.github.io/workshop-reproducible-research/pages/containers.html>
 - Pixi documentation, *Containerizing*: <https://pixi.prefix.dev/latest/deployment/container/>
 - Apptainer user guide: <https://apptainer.org/docs/user/latest/>

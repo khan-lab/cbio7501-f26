@@ -1,0 +1,65 @@
+---
+title: "Apptainer"
+subtitle: "Runs container images on HPC clusters as a normal user, without administrator rights (formerly Singularity)"
+---
+
+## Words
+
+| Word | Meaning |
+|------------|------------------------|
+| `.sif` file | an Apptainer image: one read-only file you can copy, archive and run |
+| definition file (`.def`) | a recipe that builds a `.sif`; ours starts from the project's Docker image |
+| bind | a folder of the computer made visible inside the container; your home folder and the current folder are bound by default |
+
+Apptainer runs on Linux only: on a Linux computer, in WSL2 on Windows, or on
+{{< event cluster >}}, where it is often a module (`module load apptainer`).
+
+## Build an image
+
+| What you want | Command |
+|------------|------------------------|
+| From a Docker image on this computer | `apptainer build containers/ltee-project.sif docker-daemon://ltee-project:0.1.0` |
+| From a registry, without Docker | `apptainer build containers/ltee-project.sif docker://ghcr.io/USER/ltee-project:0.1.0` |
+| From the project's recipe | `apptainer build containers/ltee-project.sif containers/apptainer.def` |
+
+See [lesson 08, section 7](../pages/08-containers.qmd#apptainer). The Docker
+image comes from [section 5](../pages/08-containers.qmd#an-image-of-the-ltee-environment-from-pixi.lock),
+and reaches the registry in [section 8](../pages/08-containers.qmd#archive-and-share-the-image).
+
+## Run
+
+| What you want | Command |
+|------------|------------------------|
+| Run one command in it | `apptainer exec containers/ltee-project.sif samtools --version` |
+| Run the image's start script, with arguments | `apptainer run containers/ltee-project.sif bash scripts/run_variant_calling.sh` |
+| Run it as a cluster job (Slurm) | `srun -A PROJECT -t 00:30:00 apptainer run containers/ltee-project.sif ...` |
+
+Apptainer runs as you and binds your home folder and the current folder by
+itself, so it needs no `-v` (Docker does). `apptainer run` uses the image's
+start script, which activates the environment; `apptainer exec` runs the
+command directly.
+
+## The recipe file
+
+```{.default filename="containers/apptainer.def"}
+Bootstrap: docker
+From: ghcr.io/USER/ltee-project:0.1.0
+
+%runscript
+    exec /entrypoint.sh "$@"
+```
+
+## When it fails
+
+| Problem | What to do |
+|------------|------------------------|
+| `apptainer: command not found` | use Linux, WSL2 or the cluster; there, try `module load apptainer` |
+| `FATAL: ... user namespaces` | your system blocks unprivileged user namespaces: ask the administrator |
+| The cluster has `singularity`, not `apptainer` | the same commands work with `singularity` in place of `apptainer` (SingularityCE is a separate fork by Sylabs) |
+
+## Official cheat sheets and references
+
+- Apptainer has no official cheat sheet. Its **Quick Start** is the closest: <https://apptainer.org/docs/user/latest/quick_start.html>
+- Apptainer, *Command Line Interface* (every command): <https://apptainer.org/docs/user/latest/cli.html>
+- Apptainer user guide: <https://apptainer.org/docs/user/latest/>
+- To build the Docker image it starts from, see the [Docker](docker.qmd) cheat sheet.

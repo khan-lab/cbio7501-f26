@@ -1,6 +1,6 @@
 ---
 title: "Project and data"
-subtitle: "Cheat sheet for lessons 02 and 03"
+subtitle: "A tidy project layout, raw data kept read-only, and checksums that prove it has not changed"
 ---
 
 ## Start a project

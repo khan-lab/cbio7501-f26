@@ -270,7 +270,7 @@ can build it from there.
 
 ## Further reading
 
-- Cheat sheet: [Pixi](../cheatsheets/pixi.qmd), with links to the official cheat sheets and references.
+- Cheat sheets: [Pixi](../cheatsheets/pixi.qmd) and [Conda and Mamba](../cheatsheets/conda.qmd), with links to the official cheat sheets and references.
 - NBIS, *Controlling your environment with Conda*: <https://nbisweden.github.io/workshop-reproducible-research/pages/conda.html>
 - The Carpentries Incubator, *Introduction to Pixi*, episode "Backwards compatibility with conda": <https://carpentries-incubator.github.io/pixi-introduction/backwards-compatibility.html>
 - Pixi documentation, *Exporting*: <https://pixi.prefix.dev/latest/reference/cli/pixi/workspace/export/>

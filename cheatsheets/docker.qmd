@@ -1,6 +1,8 @@
 ---
-title: "Docker and Apptainer"
-subtitle: "Cheat sheet for lesson 08"
+title: "Docker"
+subtitle: "Packs an operating system and your software into an image that runs the same on any computer"
+aliases:
+  - containers.html             # the old address, when Docker and Apptainer shared a sheet
 ---
 
 ## Words
@@ -55,17 +57,8 @@ echo "$GITHUB_TOKEN" | docker login ghcr.io -u USER --password-stdin
 | Give the image its registry name | `docker tag ltee-project:0.1.0 ghcr.io/USER/ltee-project:0.1.0` |
 | Upload it | `docker push ghcr.io/USER/ltee-project:0.1.0` |
 
-## Apptainer (Linux, WSL2, clusters)
-
-| What you want | Command |
-|------------|------------------------|
-| Convert a local Docker image | `apptainer build containers/ltee-project.sif docker-daemon://ltee-project:0.1.0` |
-| Convert an image from a registry | `apptainer build containers/ltee-project.sif docker://ghcr.io/USER/ltee-project:0.1.0` |
-| Run one command in it | `apptainer exec containers/ltee-project.sif samtools --version` |
-| Run the image's default command, with arguments | `apptainer run containers/ltee-project.sif bash scripts/run_variant_calling.sh` |
-
-Apptainer mounts your home folder and the current folder by itself, and runs
-as you. See [section 7](../pages/08-containers.qmd#apptainer).
+On a cluster, Apptainer runs the same image without Docker: see the
+[Apptainer](apptainer.qmd) cheat sheet.
 
 ## A Dockerfile in six instructions
 
@@ -86,5 +79,3 @@ Ubuntu image. See [section 5](../pages/08-containers.qmd#an-image-of-the-ltee-en
 
 - **Docker cheat sheet** (PDF), from Docker: <https://docs.docker.com/get-started/docker_cheatsheet.pdf>
 - Docker, *Dockerfile reference*: <https://docs.docker.com/reference/dockerfile/>
-- Apptainer has no official cheat sheet. Its **Quick Start** is the closest: <https://apptainer.org/docs/user/latest/quick_start.html>
-- Apptainer, *Command Line Interface* (every command): <https://apptainer.org/docs/user/latest/cli.html>

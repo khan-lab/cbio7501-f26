@@ -1,6 +1,6 @@
 ---
 title: "Snakemake"
-subtitle: "Cheat sheet for lesson 09"
+subtitle: "A Python-based workflow manager: you write how each file is made, and it works out what to run"
 ---
 
 ## Run

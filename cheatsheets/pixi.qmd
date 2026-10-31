@@ -1,6 +1,6 @@
 ---
 title: "Pixi"
-subtitle: "Cheat sheet for lessons 05 and 05b"
+subtitle: "One file lists the software a project needs; a lock file pins every version, for every platform"
 ---
 
 ## Start and add software
@@ -86,7 +86,8 @@ See [section 9](../pages/05-pixi.qmd#personal-tools-with-pixi-global).
 | An `environment.yml` from an environment | `pixi workspace export conda-environment -e pipeline envs/pipeline.yml` |
 | Exact Conda specs, one file per platform | `pixi workspace export conda-explicit-spec -e pipeline envs/explicit` |
 
-The full Conda-to-Pixi command table is in [lesson 05b](../pages/05b-conda-comparison.qmd#the-command-table).
+The full Conda-to-Pixi command table is in [lesson 05b](../pages/05b-conda-comparison.qmd#the-command-table);
+Conda's own commands are on the [Conda and Mamba](conda.qmd) cheat sheet.
 
 ## `pixi.toml` at a glance
 

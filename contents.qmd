@@ -12,7 +12,7 @@ taught is in the schedules: [7-week course](schedule-course.qmd) and
 [schedule](schedule-workshop.qmd).]{.content-visible when-profile="workshop"}
 
 []{.bi .bi-easel aria-hidden="true"} slides ·
-[]{.bi .bi-file-earmark-pdf aria-hidden="true"} lecture slides (PDF) ·
+[]{.bi .bi-file-earmark-pdf aria-hidden="true"}  slides (PDF) ·
 []{.bi .bi-journal-code aria-hidden="true"} tutorial
 
 ::: {.contents-table}

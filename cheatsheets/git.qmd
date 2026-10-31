@@ -1,6 +1,6 @@
 ---
 title: "Git and GitHub"
-subtitle: "Cheat sheet for lesson 04"
+subtitle: "Git records every version of your project; GitHub keeps it online and lets others work with you"
 ---
 
 ## Set up once

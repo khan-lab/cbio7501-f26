@@ -1,6 +1,6 @@
 ---
 title: "Bash"
-subtitle: "Cheat sheet for Bash 101 (and every lesson)"
+subtitle: "The shell: move between folders, look inside files and chain commands into pipelines"
 ---
 
 ## Where you are

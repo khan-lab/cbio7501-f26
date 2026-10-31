@@ -1,0 +1,86 @@
+---
+title: "Conda and Mamba"
+subtitle: "The long-standing environment managers for conda-forge and Bioconda; Mamba and micromamba are faster versions of Conda"
+---
+
+The course uses [Pixi](pixi.qmd), which installs the same packages. Conda is
+what you meet on shared servers, in older projects and in workflow managers;
+[lesson 05b](../pages/05b-conda-comparison.qmd) compares the two.
+
+## Words
+
+| Word | Meaning |
+|------------|------------------------|
+| channel | where packages come from: `conda-forge` for most software, `bioconda` for bioinformatics |
+| environment | a folder with its own set of packages; Conda keeps them all in one place (`~/miniforge3/envs/`) |
+| `environment.yml` | the packages an environment needs, often with loose versions |
+| explicit spec | the exact package files of one platform, one URL per line |
+
+## Environments
+
+| What you want | Command |
+|------------|------------------------|
+| A new environment with packages | `conda create -n ltee -c conda-forge -c bioconda samtools` |
+| Use it / leave it | `conda activate ltee` / `conda deactivate` |
+| Run one command in it | `conda run -n ltee samtools --version` |
+| List your environments | `conda env list` |
+| Delete it | `conda env remove -n ltee` |
+
+## Packages
+
+| What you want | Command |
+|------------|------------------------|
+| Add a package | `conda install -n ltee bwa` |
+| Remove a package | `conda remove -n ltee bwa` |
+| Update everything | `conda update -n ltee --all` |
+| See what is installed | `conda list -n ltee` |
+
+See [lesson 05b, the command table](../pages/05b-conda-comparison.qmd#the-command-table), with the Pixi command for each.
+
+## Share and rebuild
+
+| What you want | Command |
+|------------|------------------------|
+| Write what you asked for, for any platform | `conda env export --from-history > environment.yml` |
+| Rebuild from it | `conda env create -f environment.yml` |
+| ... into a folder instead of a name | `conda env create -p ./conda-env -f envs/pipeline.yml` |
+| The exact packages of this platform | `conda list --explicit > spec.txt` |
+| Rebuild exactly from such a file | `conda create -p ./env --file envs/explicit/pipeline_linux-64_conda_spec.txt` |
+| Lock files for every platform | the separate [conda-lock](https://conda.github.io/conda-lock/) tool |
+
+`conda env export` without `--from-history` writes the exact builds of your
+computer, which often fail to install on another one. See
+[sections 2 and 3](../pages/05b-conda-comparison.qmd#from-pixi-to-conda-an-environment-file).
+
+## Mamba and micromamba
+
+`mamba` takes the same commands as `conda` and solves faster
+(`mamba create ...`, `mamba install ...`). micromamba is one small program
+with no base environment; through Pixi you need not install it:
+
+| What you want | Command |
+|------------|------------------------|
+| An environment in a folder, from a file | `pixi exec micromamba create -y -p ./conda-env -f envs/pipeline.yml` |
+| Run a command in it | `pixi exec micromamba run -p ./conda-env samtools --version` |
+| Empty micromamba's package cache | `pixi exec micromamba clean --all -y` |
+
+Run tools through `run` (or `conda activate`), not as `./conda-env/bin/TOOL`:
+FastQC, for one, needs the environment's Java.
+
+## Between Conda and Pixi
+
+| What you want | Command |
+|------------|------------------------|
+| A Pixi workspace from an `environment.yml` | `pixi init --import environment.yml NAME` |
+| An `environment.yml` from a Pixi environment (version ranges) | `pixi workspace export conda-environment -e pipeline envs/pipeline.yml` |
+| Exact specs from `pixi.lock`, one file per platform | `pixi workspace export conda-explicit-spec -e pipeline envs/explicit` |
+
+See [section 1](../pages/05b-conda-comparison.qmd#from-environment.yml-to-pixi)
+and [section 3](../pages/05b-conda-comparison.qmd#exact-versions-for-conda-users-explicit-specs).
+
+## Official cheat sheets and references
+
+- **Conda cheat sheet**, from the Conda project: <https://docs.conda.io/projects/conda/en/latest/user-guide/cheatsheet.html>
+- Mamba and micromamba documentation: <https://mamba.readthedocs.io/>
+- Bioconda, with how to set up its channels: <https://bioconda.github.io/>
+- NBIS, *Controlling your environment with Conda*: <https://nbisweden.github.io/workshop-reproducible-research/pages/conda.html>

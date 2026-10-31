@@ -1,6 +1,6 @@
 ---
 title: "Quarto"
-subtitle: "Cheat sheet for lesson 07"
+subtitle: "Reports, slides and websites written in Markdown, with code that runs when you render"
 ---
 
 ## Render

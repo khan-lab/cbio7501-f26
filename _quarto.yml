@@ -124,14 +124,18 @@ website:
             href: cheatsheets/git.qmd
           - text: "Pixi"
             href: cheatsheets/pixi.qmd
+          - text: "Conda and Mamba"
+            href: cheatsheets/conda.qmd
           - text: "Jupyter"
             href: cheatsheets/jupyter.qmd
           - text: "Quarto"
             href: cheatsheets/quarto.qmd
           - text: "Markdown"
             href: cheatsheets/markdown.qmd
-          - text: "Docker and Apptainer"
-            href: cheatsheets/containers.qmd
+          - text: "Docker"
+            href: cheatsheets/docker.qmd
+          - text: "Apptainer"
+            href: cheatsheets/apptainer.qmd
           - text: "Snakemake"
             href: cheatsheets/snakemake.qmd
           - text: "Nextflow"

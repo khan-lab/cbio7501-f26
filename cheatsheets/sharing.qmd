@@ -1,6 +1,6 @@
 ---
 title: "Documentation and sharing"
-subtitle: "Cheat sheet for lessons 11 and 12"
+subtitle: "A README, a license, a citation file and an archived release with a DOI make your work reusable and citable"
 ---
 
 ## Seven questions a README answers

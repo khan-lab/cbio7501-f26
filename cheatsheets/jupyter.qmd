@@ -1,6 +1,6 @@
 ---
 title: "Jupyter"
-subtitle: "Cheat sheet for lesson 06"
+subtitle: "Notebooks that keep code, results and notes together in your browser"
 ---
 
 ## Start and stop

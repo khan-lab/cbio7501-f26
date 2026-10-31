@@ -1,6 +1,6 @@
 ---
 title: "Markdown"
-subtitle: "Cheat sheet for the Markdown extra (used in READMEs, Quarto and notebooks)"
+subtitle: "Plain text with a few symbols for headings, lists, links and code, used in READMEs, Quarto and notebooks"
 ---
 
 ## Text
