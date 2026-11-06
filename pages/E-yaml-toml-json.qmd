@@ -10,7 +10,7 @@ test:
 ::: {.at-a-glance}
 - **Time:** about 40 minutes, at home; come back when a settings file will not load.
 - **You need:** a terminal and Pixi ([lesson 00](00-setup.qmd)).
-- **Used in:** YAML: Quarto ([07](07-quarto.qmd)), workflow settings ([09](09-snakemake.qmd), [10](10-nextflow.qmd)), GitHub Actions ([04](04-git.qmd)), `CITATION.cff` ([11](11-documentation.qmd)), Conda environment files ([05b](05b-conda-comparison.qmd)). TOML: `pixi.toml` ([05](05-pixi.qmd)), `pyproject.toml` ([packaging](S1-packaging.qmd)). JSON: Jupyter notebooks ([06](06-jupyter.qmd)), Zenodo ([01](01-introduction.qmd), [12](12-putting-it-together.qmd)).
+- **Used in:** YAML: Quarto ([07](07-quarto.qmd)), workflow settings ([09](09-snakemake.qmd), [10](10-nextflow.qmd)), GitHub Actions ([04](04-git.qmd)), `CITATION.cff` ([11](11-documentation.qmd)), Conda environment files ([05b](05b-conda-comparison.qmd)). TOML: `pixi.toml` ([05](05-pixi.qmd)), `pyproject.toml` ([packaging](S1-packaging.qmd)). JSON: Jupyter notebooks ([06](06-jupyter.qmd)), Zenodo ([01b](01b-open-science.qmd), [12](12-putting-it-together.qmd)).
 - **You will have:** the same settings in all three formats, read by one Python script, and the checkers to run on any project.
 :::
 
@@ -229,7 +229,7 @@ The `download` task is an inline table with two keys, `cmd` and
 
 JSON is written mostly by programs, for other programs: a Jupyter notebook
 (`.ipynb`) is a JSON file ([lesson 06](06-jupyter.qmd)), web services such
-as Zenodo answer in JSON ([lesson 01](01-introduction.qmd#break-it-a-link-that-changes-under-you)),
+as Zenodo answer in JSON ([lesson 01b](01b-open-science.qmd#break-it)),
 and `.zenodo.json` describes a release ([lesson 12](12-putting-it-together.qmd)).
 You will read it more often than you write it. Its rules:
 

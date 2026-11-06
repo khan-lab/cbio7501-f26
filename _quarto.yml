@@ -55,8 +55,10 @@ website:
         href: pages/00-setup.qmd
       - section: "Introduction"
         contents:
-          - text: "01 Reproducibility and open science"
-            href: pages/01-introduction.qmd
+          - text: "01a Reproducibility"
+            href: pages/01a-reproducibility.qmd
+          - text: "01b Open science"
+            href: pages/01b-open-science.qmd
       - section: "Project organization and data management"
         contents:
           - text: "02 Project organization"

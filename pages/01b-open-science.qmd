@@ -1,0 +1,649 @@
+---
+title: "01b Open science"
+subtitle: "Sharing papers, data, code and methods so that others can check, reuse and build on them"
+description: "A graduate-level reading for Lecture 2: how openness and reproducibility differ, the open practices across the research cycle and the evidence for them, licenses and repositories, open methods and review, openness in machine learning, privacy and equity limits, then a hands-on openness audit of a published paper with a worked example."
+sources:
+  - "**Adapted from:** *On the Art of Reproducible & Open Science, Lecture 2: Open science*, Aziz Khan. CC BY 4.0. <https://github.com/khan-lab/cbio7501-f26>"
+  - "**Adapted from:** *Tools for Reproducible Research: Introduction (lecture)*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/lectures/introduction/introduction.html>"
+test:
+  needs: []
+  timeout: 900
+---
+
+::: {.at-a-glance}
+- **Time:** about 45 minutes of reading, before or after Lecture 2; the openness audit (45 minutes) starts in class and is finished at home.
+- **Slides (PDF):** [Lecture 2, Open science](../slides/Lecture2_Open-Science.pdf)
+- **You need:** the paper you placed on the ladder in [lesson 01a](01a-reproducibility.qmd#homework-place-a-paper-on-the-ladder) (or use the worked example); a web browser; Pixi for the *Break it* step.
+- **You will have:** an openness audit of one paper, with evidence for every row, and its data and code availability statement rewritten as it should have been. Keep both: they become part of your capstone README.
+:::
+
+## Overview
+
+### Why this matters
+
+In [lesson 01a](01a-reproducibility.qmd) the main obstacle to checking
+published work was rarely the science. It was access. Ten of eighteen
+microarray analyses could not be reproduced, mostly because the data were not
+available; the data needed to recompute effect sizes were public for 4 of 193
+cancer biology experiments; and when authors promise data "on request", only
+6.8% deliver (Gabelica et al. 2022). A result that nobody else can reach
+cannot be reproduced by anybody else.
+
+Open science is the set of practices that removes that obstacle: open papers,
+data, code and methods, and an open, continuing evaluation of all of them. It
+is also more than a technical fix. It raises questions of who may see what
+(patients' genomes), who pays (to publish, to store), who gets credit, and who
+benefits. This lesson covers both sides.
+
+### What you do in this lesson
+
+You learn how openness and reproducibility relate, what each open practice
+contributes and what the evidence says about its benefits. You learn where to
+deposit each kind of output, which license to give it, and how to describe
+what you cannot share. Then you audit the openness of a real paper, the one
+you placed on the ladder in lesson 01a, against a six-row scorecard, and
+rewrite its availability statement as it should have been.
+
+### Learning outcomes
+
+After this lesson you can:
+
+1. **Explain** how open science and reproducibility differ, and how each
+   strengthens the other.
+2. **Describe** the main open practices across the research cycle (open
+   access, data, code, methods, evaluation and education) and the evidence
+   for and against their benefits.
+3. **Choose** a repository, an identifier, a license and an access level for
+   each output of a project.
+4. **Recognize** when privacy, consent and equity limit openness, and share
+   responsibly anyway.
+5. **Audit** a paper's openness with evidence, and **write** an availability
+   statement in which every item resolves.
+
+## 1. Two sides of trustworthy science
+
+Reproducibility and openness are often used as if they meant the same thing.
+They do not. **Reproducibility** faces inward: it is about rigor,
+verification and the integrity of methods and results. **Openness** faces
+outward: it is about access, sharing and engaging others. Each is possible
+without the other:
+
+| | Reproducible | Not reproducible |
+|-|--------------|------------------|
+| **Open** | a public, documented workflow that anyone can rerun | a public repository with missing inputs and broken dependencies |
+| **Restricted** | an auditable workflow on controlled-access patient data, with a documented route to apply | a closed, undocumented analysis that nobody can check |
+
+Reproducibility without openness gives results that are verifiable in
+principle but hidden in practice. Openness without reproducibility gives
+results that are shared but possibly unreliable: a repository full of code
+that no longer runs is open, and useless. The goal is the top-left cell, and,
+where data must be restricted, the bottom-left one.
+
+::: {.callout-note title="Stop and think (2 minutes)"}
+Which cell is your current research project in? What single change would
+move it one cell closer to the top left?
+:::
+
+## 2. What open science is
+
+In November 2021 the 193 member states of UNESCO adopted the first global
+definition. In short: open science makes scientific knowledge openly
+available, accessible and reusable for everyone, and opens the processes that
+create, evaluate and communicate it to society. The Recommendation rests on
+four pillars: **open scientific knowledge** (publications, data, software,
+methods, educational resources), **open science infrastructures**, **open
+engagement of societal actors** (citizen science, for example) and **open
+dialogue with other knowledge systems**, including Indigenous knowledge
+(UNESCO 2021).
+
+That is broader than "free PDFs". A useful way to see the practices is as
+answers to the gaps in lesson 01a:
+
+| Open practice | The gap it fills | In this course |
+|---------------|------------------|----------------|
+| **Open access** | anyone can read the claim and its methods | [section 4](#open-papers) |
+| **Open data** | others can rerun and re-analyze | [03 Data management](03-data-management.qmd) |
+| **Open code** | the analysis can be executed, not only described | [04 Git](04-git.qmd), [11 Documentation](11-documentation.qmd) |
+| **Open methods** | plans and protocols are on record before the results | [section 7](#open-methods) |
+| **Open evaluation** | reviews are published; scrutiny continues after publication | [section 8](#open-evaluation) |
+| **Open education** | teaching materials others can reuse and adapt | this course: CC BY 4.0 and MIT |
+
+The computational case was put sharply in 1995, crediting the geophysicist
+Jon Claerbout: an article about computational science "is not the scholarship
+itself, it is merely advertising of the scholarship. The actual scholarship
+is the complete software development environment and the complete set of
+instructions which generated the figures" (Buckheit and Donoho 1995). An open
+paper without its data and code is, in that sense, still an advertisement.
+
+## 3. Why open? The evidence, and its limits
+
+The arguments come at three levels:
+
+- **Good for science.** Outputs are not stuck behind paywalls, so anyone can
+  check and build on them, and discovery is faster. Lesson 01a showed what
+  happens without them.
+- **Good for society.** Publicly funded research becomes publicly available,
+  and answers to shared problems (a pandemic, for example) arrive faster.
+- **Good for you.** Data and code become citable outputs; work is more
+  visible; collaborators find you (McKiernan et al. 2016).
+
+The evidence for the last point is real but needs careful reading:
+
+| Finding | Study |
+|---------|-------|
+| Cancer microarray trials with public data received **69% more citations**, after adjusting for journal impact factor, date and country (85 trials) | Piwowar et al. 2007 |
+| Papers whose availability statement links to data in a repository had up to **25% more citations** (about 532,000 PLOS and BMC articles) | Colavizza et al. 2020 |
+| Open access articles were cited more than paywalled ones in most of the studies reviewed, across many fields | McKiernan et al. 2016 |
+| Of 1,792 papers whose authors said data were available on request, **6.8%** shared them when asked; 93% did not reply or declined | Gabelica et al. 2022 |
+
+These are associations, not proof of cause: researchers who share may also be
+those doing work that is cited more. But the direction is consistent, and the
+last row needs no statistics: "available on request" is, in practice, not
+available. A promise to share is not sharing; an accession, a DOI and a
+license are.
+
+Openness is not absolute. The European Commission's phrase is the right
+default: **as open as possible, as closed as necessary**. Openness is where
+you start, and every restriction needs a reason you can state: consent,
+privacy, security or law.
+
+## 4. Open papers: access, preprints and policy {#open-papers}
+
+### Five routes to an open paper
+
+| Route | How it works | Who pays | Reuse |
+|-------|--------------|----------|-------|
+| **Gold** | the journal publishes everything open access | usually the author, through an article processing charge (APC) | open, often CC BY |
+| **Diamond** | an open-access journal with no author fees | institutions, societies, funders | open, often CC BY |
+| **Hybrid** | a subscription journal; you pay to open one article | the author, on top of library subscriptions | open, for that article |
+| **Green** | you deposit the accepted manuscript in a repository | nobody directly | depends on the journal; may follow an embargo |
+| **Bronze** | free to read on the publisher's site | the publisher's choice | none: it can be withdrawn |
+
+: {tbl-colwidths="[12,38,26,24]"}
+
+Only gold, diamond and hybrid with an open license give others the right to
+reuse the text and figures. "Free to read" is not the same as "open".
+
+### Preprints: share first, review in the open
+
+A **preprint** is a manuscript posted publicly before (or alongside) peer
+review: arXiv since 1991 (physics, mathematics, then computer science and
+machine learning), bioRxiv since 2013 (life sciences) and medRxiv since 2019
+(health sciences, with extra screening for anything that could affect
+patients). A preprint gets your results out months earlier, gives them a
+dated DOI that establishes priority, and invites feedback before the version
+of record. Read them knowing they have not yet been peer reviewed, check the
+target journal's preprint policy, and post the data and code *with* the
+preprint, not later.
+
+### Funders increasingly require openness
+
+| Year | Policy | In brief |
+|------|--------|----------|
+| 2008 | NIH Public Access Policy | papers deposited in PubMed Central, after at most a 12-month embargo |
+| 2018 | Plan S (cOAlition S) | mainly European funders; immediate open access for funded papers, in force from 2021 |
+| 2021 | UNESCO Recommendation on Open Science | the first global standard-setting text on open science |
+| 2022 | US OSTP "Nelson memo" | asked all federal funders for zero-embargo access to papers and their data |
+| 2023 | NIH Data Management and Sharing Policy | a data management and sharing plan for all NIH-funded research |
+| 2025 | NIH Public Access Policy, updated | accepted manuscripts public in PubMed Central on the day of publication, from 1 July 2025 |
+
+These rules change often and differ by country and funder. Before you submit,
+check your funder's current policy and your target journal's
+([Sherpa Romeo](https://v2.sherpa.ac.uk/romeo/) lists what each journal
+lets you deposit, and when).
+
+## 5. Open data {#open-data}
+
+### FAIR, in one paragraph
+
+Data that only a person who knows whom to ask can find is, for everyone else,
+lost. The **FAIR** principles (Wilkinson et al. 2016) describe data that
+people *and machines* can use. **Findable:** a persistent identifier and rich
+metadata, indexed where people search. **Accessible:** retrievable by that
+identifier through a standard protocol, with the metadata kept even if the
+data cannot be. **Interoperable:** community formats and vocabularies (FASTQ,
+BAM, VCF, BED; ontology terms), never a table pasted into a Word file or a
+PDF. **Reusable:** a clear license, documented provenance, and the
+community's standards met. [Lesson 03](03-data-management.qmd) applies FAIR
+letter by letter, together with the CARE principles for Indigenous data.
+
+### FAIR is not the same as open
+
+FAIR is about how data are described and reached, not whether anyone may
+download them. Human genomic data are the clearest case:
+
+| Level | What a user does | Typical data |
+|-------|------------------|--------------|
+| **Open** | downloads, no sign-in | cell lines, model organisms, consented public cohorts |
+| **Registered** | signs in and accepts terms of use | some summary-level human data |
+| **Controlled** | applies; a data access committee reviews each request | individual-level human genomes, clinical data |
+| **Closed** | cannot get the data; the metadata may still be public | no consent for sharing; legal limits |
+
+Controlled-access data can still be fully FAIR: findable metadata, a clear
+route to apply, and a license that states what is allowed.
+
+### Where to deposit: a domain repository first
+
+| What you have | Where it usually goes |
+|---------------|-----------------------|
+| Raw sequencing reads | SRA, ENA or DDBJ (they mirror each other) |
+| Functional genomics experiments | GEO or ArrayExpress: raw reads plus processed files |
+| Human data with consent limits | EGA or dbGaP, under controlled access |
+| Variants | dbSNP, ClinVar, the European Variation Archive |
+| Proteomics; structures | PRIDE; PDB |
+| Everything else, and code and models | Zenodo, figshare or Dryad, each with a DOI |
+
+A domain repository checks formats and metadata and is where others in your
+field look first; a general repository is the fallback. Not sure?
+[FAIRsharing](https://fairsharing.org/) lists repositories and standards by
+data type, and many journals publish their own lists.
+
+### Availability statements that resolve
+
+Most journals ask for a data (and code) availability statement. Compare the
+usual "Data are available from the corresponding author upon reasonable
+request" with:
+
+> Raw ChIP-seq and ATAC-seq reads: GEO, accession GSE______. Peaks and source
+> data for every figure: Zenodo, DOI ______, CC BY 4.0. Code: archived
+> release v1.0, Zenodo, DOI ______, MIT license; environment in `pixi.lock`.
+> Human genotypes: EGA, accession EGAS______, through the data access
+> committee.
+
+Three properties make it good: **every item resolves** (an accession or a DOI,
+not a promise), **every item is licensed** (so reuse is legal, not only
+possible), and **restrictions are explained** (what is closed, why, and how to
+apply). Lesson 03 writes one for the LTEE data.
+
+## 6. Open code {#open-code}
+
+### No license means no reuse
+
+Code on GitHub is visible, but visible is not reusable. Copyright applies
+automatically, so without a license nobody may legally copy, modify or
+redistribute your code, whatever you intended. (GitHub's terms let others view
+and fork a public repository on GitHub, and nothing more.) Put a `LICENSE`
+file in the repository root on day one:
+
+| For | Common choice | What it allows |
+|-----|---------------|----------------|
+| Code | MIT, BSD-3-Clause, Apache-2.0 | **permissive**: any use, including commercial, with attribution (Apache-2.0 adds an explicit patent grant) |
+| Code | GPL-3.0 | **copyleft**: software that includes yours must be released under the same terms |
+| Text, figures, slides | CC BY 4.0 | any reuse with credit; the NC (non-commercial) and ND (no derivatives) variants block much legitimate reuse |
+| Data | CC0 or CC BY 4.0 | CC0 waives all rights, which makes combining datasets simplest |
+
+: {tbl-colwidths="[16,24,60]"}
+
+Choose the license with the fewest restrictions that still meets your needs,
+and check your institution's intellectual property policy first. Do not use
+Creative Commons licenses for software: they were not written for it.
+[Choose a License](https://choosealicense.com/) explains the software options.
+
+### A repository others can use
+
+Beyond the license, a reusable repository has a `README.md` (what it is, how
+to install it, how to run it), a `CITATION.cff` (how to cite it; GitHub then
+shows a "Cite this repository" button), tests that run automatically on every
+change (continuous integration, with GitHub Actions), and, once others
+contribute, a `CONTRIBUTING.md` and a code of conduct. You build all of these
+for the LTEE project in [lesson 11](11-documentation.qmd).
+
+### Make software citable, and cite the software you use
+
+Software is a research output and deserves the same credit as a paper (Smith
+et al. 2016). In practice:
+
+- **Archive each release.** Link GitHub to Zenodo, and every tagged release
+  gets its own DOI ([lesson 12](12-putting-it-together.qmd)).
+  [Software Heritage](https://www.softwareheritage.org/) also archives public
+  source code for the long term.
+- **Tell people how to cite it**, with a `CITATION.cff`.
+- **Cite the tools you use, with versions.** "Aligned with BWA" credits
+  nobody and reproduces nothing; "BWA-MEM 0.7.19 (Li 2013)" does both.
+
+## 7. Open methods: preregistration, reports and checklists {#open-methods}
+
+Several questionable practices from [lesson 01a](01a-reproducibility.qmd#where-research-goes-wrong)
+(p-hacking, HARKing, publication bias) work because the analysis is decided
+after the data are seen, in private. Open methods put the plan on the record
+first.
+
+- **Preregistration:** a time-stamped plan (hypotheses, sample size, primary
+  analysis) on the [Open Science Framework](https://osf.io/) or a trial
+  registry, before the data are collected or analyzed. Exploratory analysis
+  stays welcome; it is simply labelled as exploratory.
+- **Registered Reports:** the journal reviews the introduction and methods
+  *before* the results exist, and accepts the paper in principle. A second
+  review checks that the plan was followed. Because acceptance does not
+  depend on the result, null findings get published too (Chambers and
+  Tzavella 2022).
+
+```text
+Usual route:        design → data → analysis → write-up → review → publish?
+Registered Report:  design → review 1 → data → analysis → review 2 → publish
+```
+
+Preregistration fits confirmatory, hypothesis-testing work best. Much of
+computational biology is exploratory, and that is fine: the honest
+equivalent is to say so, to keep the full history of what you tried (Git does
+this for free), and to show that conclusions survive reasonable alternative
+choices.
+
+**Reporting checklists** do the remembering for you. They list the minimum
+information a reader needs, so that "standard parameters" is no longer an
+option:
+
+| Standard | Use it for |
+|----------|------------|
+| MIAME, MINSEQE | microarray and sequencing experiments: the minimum metadata to interpret them |
+| ARRIVE 2.0 | animal studies, including xenograft models |
+| CONSORT, STROBE | clinical trials; observational studies |
+| TRIPOD+AI | clinical prediction models, including machine learning |
+| Model cards, datasheets | what a model or a dataset is for, how it was built, and its limits |
+| [protocols.io](https://www.protocols.io/) | step-by-step wet-lab and computational protocols, versioned, with a DOI |
+
+Find the right one at the [EQUATOR Network](https://www.equator-network.org/)
+and [FAIRsharing](https://fairsharing.org/).
+
+## 8. Open evaluation: peer review is opening up {#open-evaluation}
+
+Peer review used to be a closed, one-time gate. It is becoming open and
+continuous:
+
+- **Transparent review:** the reviewers' reports and the authors' responses
+  are published with the paper, with or without the reviewers' names.
+- **Reviewed preprints:** reviews are attached to a public preprint. Since
+  2023 *eLife* publishes every paper it reviews, with an assessment, instead
+  of accepting or rejecting it.
+- **Post-publication review:** comments on [PubPeer](https://pubpeer.com/) and
+  elsewhere, corrections and retractions. Scrutiny does not stop at
+  publication; the Duke case in lesson 01a was post-publication review.
+
+Open review lets readers see how a paper was challenged and how the authors
+answered, and gives reviewers credit for work that was invisible.
+
+## 9. Open models and AI {#open-ai}
+
+For a machine learning claim, "open" means more than posting weights. To
+check the claim a reader may need the training data or its provenance, the
+train, validation and test splits, the preprocessing, the code, the
+hyperparameters and seeds, the evaluation code, and a model card that states
+what the model is for and where it fails.
+
+Two cases show the tension. In 2020 a Google Health team reported in
+*Nature* that an AI system read screening mammograms as well as radiologists
+(McKinney et al. 2020). A group of scientists replied that without the
+code and enough methodological detail, the claim could not be independently
+checked (Haibe-Kains et al. 2020); the authors answered that parts were
+proprietary and the data were protected. In 2024 DeepMind's AlphaFold 3 was
+published without its code, unlike AlphaFold 2, prompting a public protest
+from researchers; the code followed six months later, with the trained
+weights available to academic users on request (Abramson et al. 2024).
+
+There is no single right answer. Some data cannot be shared, and some models
+are too costly to retrain. But a claim is only as strong as what others can
+check, and there are intermediate routes: controlled access to data, model
+weights released for research use, evaluation on public benchmarks, and
+evaluation code that others can run on their own data.
+
+::: {.callout-note title="Discuss (5 minutes)"}
+A foundation model trained on controlled-access clinical genomes is released
+as model weights and a benchmark score. Which of its claims can an outsider
+check? Which cannot? What one additional release would help most?
+:::
+
+## 10. The limits: privacy, consent and equity {#limits}
+
+### "Anonymous" genomes are not anonymous for long
+
+- **2008, pooled data.** Homer and colleagues showed that a person's presence
+  in a study could be detected from published allele frequencies alone,
+  using only their genotype (Homer et al. 2008). Soon after, the NIH and the
+  Wellcome Trust moved aggregate genome-wide association data behind
+  controlled access. (In 2018 the NIH relaxed that rule again for most
+  studies, after weighing the risk: the balance keeps moving.)
+- **2013, surname inference.** Gymrek and colleagues recovered surnames of
+  research participants by matching Y-chromosome markers in their published
+  genomes to public genealogy databases; combined with age and state, the
+  surname identified individuals (Gymrek et al. 2013).
+
+The lesson is not "never share". It is that consent written today must
+anticipate the sharing and the re-identification methods of tomorrow, and
+that some data belong under controlled access even when every name has been
+removed. You can almost always share openly the code, the environment, the
+metadata schema, summary results that cannot be traced to a person, and how
+to apply for the rest.
+
+### Open for whom?
+
+Openness can still leave people out:
+
+- **Who is in the data.** In 2016, about 81% of participants in genome-wide
+  association studies were of European ancestry (Popejoy and Fullerton 2016).
+  Open data that under-represents most of the world produces results that
+  work less well for most of the world.
+- **Who pays to publish.** Article processing charges move the paywall from
+  readers to authors: several thousand dollars per paper, more than ten
+  thousand at some prestigious journals. Waivers exist, but researchers in
+  low-income settings still face the steepest cost. Diamond open access and
+  green deposit avoid it.
+- **Who controls the data.** The CARE principles (Collective benefit,
+  Authority to control, Responsibility, Ethics) ask who benefits from data
+  about a people and who decides how it is used (Carroll et al. 2020).
+  [Lesson 03](03-data-management.qmd) works through an example.
+
+Privacy and equity are design questions: answer them before the data exist,
+not at submission.
+
+## 11. Concerns about open science, and answers
+
+| Concern | The worry | What answers it |
+|---------|-----------|-----------------|
+| **Being scooped** | others publish faster with my shared data or code | a preprint, a DOI and a timestamp establish priority; share at publication, not before, if you must |
+| **Loss of credit** | datasets, software or ideas reused without attribution | licenses that require attribution; `CITATION.cff`; data and software DOIs that count as outputs |
+| **Data misuse** | shared data misinterpreted or used unethically | clear metadata and documentation; licenses and terms of use; controlled access where needed |
+| **Legal and privacy** | patient and clinical data cannot always be fully open | controlled-access repositories; de-identification; share the code and the metadata openly |
+| **Extra workload** | FAIR data, documentation and repositories take time | templates, automation and the tools in this course; it is less work than redoing an analysis nobody can rerun |
+| **Career risk** | open outputs undervalued in hiring and promotion | funders and institutions increasingly reward them ([DORA](https://sfdora.org/)); open work is easier to find and evaluate |
+
+: {tbl-colwidths="[16,34,50]"}
+
+Some concerns are real: open work takes time, and credit for data and
+software is still uneven. But most of the cost is paid once, by setting up a
+project well, and this course is about making that cost small.
+
+## 12. The openness audit {#openness-audit}
+
+Auditing someone else's paper is the fastest way to learn what your own will
+need: every gap you write down is one a reader of *your* paper would also
+find. The scorecard below turns the lecture into six rows, scored 0, 1 or 2.
+
+| Row | 0 | 1 | 2 |
+|-----|---|---|---|
+| **Paper** | paywalled | free to read, no license | open license, or an open preprint |
+| **Data** | none, or "on request" | processed or partial data only | raw data with accessions |
+| **Code** | none | linked, but no version | an archived release with a DOI |
+| **Environment** | not stated | tool names only | versions, a lock file or a container |
+| **Methods** | vague | detailed in the text | a protocol, a checklist or a preregistration |
+| **Licenses** | none on data or code | unclear or partial | clear for both data and code |
+
+: {tbl-colwidths="[16,24,30,30]"}
+
+Every score needs **evidence**: a link, an accession, or a quotation from the
+paper. Two habits make an audit fair:
+
+- **"Not found" is not "absent".** Record what you looked for and where.
+  Write *verified* (you opened it), *partly documented*, *not found* or *not
+  applicable*, and do not treat *not found* as proof that something does not
+  exist.
+- **Keep three questions apart.** *Can the computation be reconstructed?*
+  (reproducibility); *is the inference justified?* (validity: design,
+  controls, leakage); *can others responsibly access and reuse the outputs?*
+  (openness). This scorecard measures the third, with some of the first. A
+  paper can score 12 and still be wrong, or score 6 for good reasons.
+
+### Worked example: SARS-CoV-2 in Scotland's wastewater {#worked-example}
+
+The same dataset you judge against FAIR, letter by letter, in
+[lesson 03](03-data-management.qmd):
+
+- Paper: Scorza LCT, Cameron GJ, Murray-Williams R, Findlay D, et al. (2022).
+  SARS-CoV-2 RNA levels in Scotland's wastewater. *Scientific Data* 9:713.
+  <https://doi.org/10.1038/s41597-022-01788-3>
+- Data and code: Zenodo, <https://doi.org/10.5281/zenodo.6339631> (CC BY 4.0),
+  an archive of the GitHub release
+- Code: GitHub, <https://github.com/BioRDM/COVID-Wastewater-Scotland>
+
+What we found (checked 2026-10-31):
+
+| Row | Score | Evidence |
+|-----|------:|----------|
+| Paper | **2** | open access in *Scientific Data*, CC BY 4.0 |
+| Data | **2** | curated data as CSV on Zenodo with a DOI; the curation from the agency's original measurements is done by scripts (`src/data_transformations/`), not by hand |
+| Code | **2** | all curation and figure code public, with tagged releases (`RC-1.2.0` to `RC-1.2.2`); release `RC-1.2.2` is archived on Zenodo with a DOI |
+| Environment | **1** | `Installation.R` installs the R packages (`sgo`, `tidyr`, `lubridate`, `tidyverse`) but pins no versions, and the R version is not stated. Rerun in five years, the packages will be different |
+| Methods | **2** | a data descriptor paper, a README per folder, and the normalization method on protocols.io with a DOI |
+| Licenses | **2** | CC BY 4.0 for the data and for the repository (`LICENCE`); a software license (MIT, BSD) would be the usual choice for the code |
+
+: {tbl-colwidths="[16,8,76]"}
+
+**Total 11 of 12. Lowest row:** environment. **Closed for a reason, or
+avoidable?** Avoidable. **On the ladder** of lesson 01a: rung 2 (code and
+data, no pinned environment, and several scripts to run in order). **The one
+change that would help most:** record the environment: the R version and the
+package versions, ideally in a lock file (with `renv`, or with Pixi from
+conda-forge). Everything else is unusually good: this is a model to learn
+from, not a bad example.
+
+### Your turn {#your-turn}
+
+1. Take the paper you placed on the ladder in lesson 01a (or, if you did not,
+   a paper you cite in your own work).
+2. **Alone (about 15 minutes).** Copy the template below into a file (for
+   example `docs/audit.md` in your capstone project, once you create it in
+   [lesson 02](02-project-organization.qmd)). Score every row, with evidence.
+3. **In groups of three (8 minutes, in class).** Compare your cards. For each
+   paper's lowest row, decide: closed for a stated reason, or avoidable?
+4. **Rewrite** the paper's data and code availability statement as it should
+   have been, in 60 words or fewer, with every item resolvable.
+5. Optional: try to get one number from the paper's data or code. How long
+   did it take? What stopped you?
+
+```{.markdown filename="audit.md" .write}
+# Openness audit
+
+Paper: <!-- authors, year, title, journal, DOI -->
+Audited by: <!-- name --> on <!-- date -->
+
+| Row | Score (0, 1, 2) | Evidence (links, accessions, quotes) |
+|-----|-----------------|--------------------------------------|
+| Paper | | |
+| Data | | |
+| Code | | |
+| Environment | | |
+| Methods | | |
+| Licenses | | |
+
+Total: __ / 12. Lowest row: ______. Closed for a reason, or avoidable?
+
+Rung on the reproducibility ladder (0 to 5), and what stopped it going higher:
+
+The one change that would help a reader most:
+
+Availability statement, rewritten (60 words or fewer):
+
+Could I reproduce one number? How long did it take, and what stopped me?
+```
+
+## Break it: a link that changes under you {#break-it}
+
+A DOI should point to *one thing*. Zenodo gives two kinds: a **concept DOI**
+for "the latest version" and a **version DOI** for one exact version. The
+Scotland dataset's concept DOI is `10.5281/zenodo.6339631`. Ask Zenodo what it
+resolves to today:
+
+```{.bash .run}
+pixi exec python -c "
+import json, urllib.request
+r = json.load(urllib.request.urlopen('https://zenodo.org/api/records/6339631'))
+print('concept DOI:', r['conceptdoi'])
+print('resolves to:', r['doi'], '- version', r['metadata']['version'], '- published', r['metadata']['publication_date'])
+"
+```
+
+```text
+concept DOI: 10.5281/zenodo.6339631
+resolves to: 10.5281/zenodo.6349579 - version V1.2 - published 2022-03-12
+```
+
+If a paper cites the concept DOI and the authors publish V1.3 next year, the
+same link silently gives readers different data. For a result, cite the
+**version** DOI (and record checksums, as you will in lesson 03).
+
+## Apply it to your own project
+
+Start your capstone open, rather than opening it at the end. A checklist to
+keep:
+
+| When | What to do | Lesson |
+|------|------------|--------|
+| **Before you start** | choose licenses (MIT for code, CC BY for text, CC0 or CC BY for data); start from a project template with a README and `.gitignore`; write a data management plan (storage, access, sharing, ethics) | [02](02-project-organization.qmd), [03](03-data-management.qmd) |
+| **During the project** | track code with Git; pin the environment in `pixi.toml` and `pixi.lock` (or a container); automate the pipeline; write tests | [04](04-git.qmd), [05](05-pixi.qmd), [08](08-containers.qmd), [09](09-snakemake.qmd) |
+| **At submission** | deposit data in a domain repository; archive code and models with DOIs; add `CITATION.cff`; post a preprint; write an availability statement that resolves | [11](11-documentation.qmd), [12](12-putting-it-together.qmd) |
+| **After publication** | answer issues; fix bugs and publish new versions; keep the old versions citable | [12](12-putting-it-together.qmd) |
+
+Keep the audit of your paper: its lowest row tells you what *your* project
+should do better.
+
+## Key points
+
+- Reproducibility lets *you* rerun your work; openness lets *others* do it.
+  Trustworthy science needs both.
+- Open by default; closed only for a reason you can state, with a route to
+  apply.
+- FAIR is about how data are described and reached, not whether anyone can
+  download them.
+- A promise to share is not sharing. Accessions, DOIs and licenses are.
+- No license means no legal reuse; cite software with versions.
+- Privacy and equity are design questions, to answer before the data exist.
+
+## Further reading
+
+The core readings for this lesson:
+
+- UNESCO (2021). *UNESCO Recommendation on Open Science*. <https://unesdoc.unesco.org/ark:/48223/pf0000379949>
+- Wilkinson MD, Dumontier M, Aalbersberg IJ, et al. (2016). The FAIR Guiding Principles for scientific data management and stewardship. *Sci Data* 3:160018. <https://doi.org/10.1038/sdata.2016.18>
+- McKiernan EC, Bourne PE, Brown CT, et al. (2016). How open science helps researchers succeed. *eLife* 5:e16800. <https://doi.org/10.7554/eLife.16800>
+- Carroll SR, Garba I, Figueroa-Rodríguez OL, et al. (2020). The CARE Principles for Indigenous Data Governance. *Data Sci J* 19:43. <https://doi.org/10.5334/dsj-2020-043>
+- Chambers CD, Tzavella L (2022). The past, present and future of Registered Reports. *Nat Hum Behav* 6:29–42. <https://doi.org/10.1038/s41562-021-01193-7>
+
+Tools and communities worth bookmarking:
+
+| To… | Start with |
+|-----|------------|
+| learn the practices | [The Turing Way](https://book.the-turing-way.org/); Software Carpentry and Data Carpentry lessons |
+| share outputs | [OSF](https://osf.io/) for projects and preregistrations; [Zenodo](https://zenodo.org/) for DOIs; [protocols.io](https://www.protocols.io/) |
+| find standards | [FAIRsharing](https://fairsharing.org/) for data; [EQUATOR Network](https://www.equator-network.org/) for reporting guidelines |
+| check policies | [Sherpa Romeo](https://v2.sherpa.ac.uk/romeo/) for journals; your funder's own pages |
+| get credit | an [ORCID](https://orcid.org/) iD; `CITATION.cff`; [DORA](https://sfdora.org/) for fairer research assessment |
+| find peers | ReproducibiliTea journal clubs; national reproducibility networks |
+
+## References
+
+- Abramson J, Adler J, Dunger J, et al. (2024). Accurate structure prediction of biomolecular interactions with AlphaFold 3. *Nature* 630:493–500. <https://doi.org/10.1038/s41586-024-07487-w>
+- Buckheit JB, Donoho DL (1995). WaveLab and reproducible research. In *Wavelets and Statistics*, Lecture Notes in Statistics 103:55–81. Springer. <https://doi.org/10.1007/978-1-4612-2544-7_5>
+- Carroll SR, Garba I, Figueroa-Rodríguez OL, et al. (2020). The CARE Principles for Indigenous Data Governance. *Data Sci J* 19:43. <https://doi.org/10.5334/dsj-2020-043>
+- Chambers CD, Tzavella L (2022). The past, present and future of Registered Reports. *Nat Hum Behav* 6:29–42. <https://doi.org/10.1038/s41562-021-01193-7>
+- Colavizza G, Hrynaszkiewicz I, Staden I, Whitaker K, McGillivray B (2020). The citation advantage of linking publications to research data. *PLoS ONE* 15:e0230416. <https://doi.org/10.1371/journal.pone.0230416>
+- Gabelica M, Bojčić R, Puljak L (2022). Many researchers were not compliant with their published data sharing statement: a mixed-methods study. *J Clin Epidemiol* 150:33–41. <https://doi.org/10.1016/j.jclinepi.2022.05.019>
+- Gymrek M, McGuire AL, Golan D, Halperin E, Erlich Y (2013). Identifying personal genomes by surname inference. *Science* 339:321–324. <https://doi.org/10.1126/science.1229566>
+- Haibe-Kains B, Adam GA, Hosny A, et al. (2020). Transparency and reproducibility in artificial intelligence. *Nature* 586:E14–E16. <https://doi.org/10.1038/s41586-020-2766-y>
+- Homer N, Szelinger S, Redman M, et al. (2008). Resolving individuals contributing trace amounts of DNA to highly complex mixtures using high-density SNP genotyping microarrays. *PLoS Genet* 4:e1000167. <https://doi.org/10.1371/journal.pgen.1000167>
+- McKiernan EC, Bourne PE, Brown CT, et al. (2016). How open science helps researchers succeed. *eLife* 5:e16800. <https://doi.org/10.7554/eLife.16800>
+- McKinney SM, Sieniek M, Godbole V, et al. (2020). International evaluation of an AI system for breast cancer screening. *Nature* 577:89–94. <https://doi.org/10.1038/s41586-019-1799-6>
+- Piwowar HA, Day RS, Fridsma DB (2007). Sharing detailed research data is associated with increased citation rate. *PLoS ONE* 2:e308. <https://doi.org/10.1371/journal.pone.0000308>
+- Popejoy AB, Fullerton SM (2016). Genomics is failing on diversity. *Nature* 538:161–164. <https://doi.org/10.1038/538161a>
+- Scorza LCT, Cameron GJ, Murray-Williams R, Findlay D, et al. (2022). SARS-CoV-2 RNA levels in Scotland's wastewater. *Sci Data* 9:713. <https://doi.org/10.1038/s41597-022-01788-3>
+- Smith AM, Katz DS, Niemeyer KE, FORCE11 Software Citation Working Group (2016). Software citation principles. *PeerJ Comput Sci* 2:e86. <https://doi.org/10.7717/peerj-cs.86>
+- UNESCO (2021). *UNESCO Recommendation on Open Science*. <https://unesdoc.unesco.org/ark:/48223/pf0000379949>
+- Wilkinson MD, Dumontier M, Aalbersberg IJ, et al. (2016). The FAIR Guiding Principles for scientific data management and stewardship. *Sci Data* 3:160018. <https://doi.org/10.1038/sdata.2016.18>

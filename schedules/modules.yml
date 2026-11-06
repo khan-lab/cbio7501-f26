@@ -25,13 +25,15 @@ modules:
     detail: "(slides)"
     minutes: 40
   - id: 01-tutorial
-    title: "01 Introduction"
-    page: pages/01-introduction.qmd
-    minutes: 45
+    title: "01a Reproducibility"
+    page: pages/01a-reproducibility.qmd
+    detail: "reading"
+    minutes: 60                 # estimate
   - id: 01-audit
-    title: "audit a paper"
-    page: pages/01-introduction.qmd#your-turn
-    minutes: 30                 # estimate
+    title: "01b Open science"
+    page: pages/01b-open-science.qmd
+    detail: "reading and the openness audit"
+    minutes: 105                # estimate
 
   - id: 02-organization
     title: "02 Project organization"

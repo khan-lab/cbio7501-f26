@@ -31,8 +31,8 @@ subtitle: "Terms used in the lessons, in one line each"
 | Process (Nextflow) | A step of a Nextflow pipeline: inputs, outputs, script. | [10](10-nextflow.qmd) |
 | Pull request | A proposal to merge a branch, with review and checks. | [04](04-git.qmd) |
 | Recipe (conda) | Instructions to build a conda package: source, requirements, tests, license. | [Package and share your tool](S1-packaging.qmd) |
-| Replicable | A new study with new data gives consistent results. | [01](01-introduction.qmd) |
-| Reproducible | The same data and the same analysis give the same results. | [01](01-introduction.qmd) |
+| Replicable | A new study with new data gives consistent results. | [01a](01a-reproducibility.qmd) |
+| Reproducible | The same data and the same analysis give the same results. | [01a](01a-reproducibility.qmd) |
 | Rule (Snakemake) | How to make output files from input files. | [09](09-snakemake.qmd) |
 | Task (Pixi) | A named command in `pixi.toml`, run with `pixi run NAME`. | [05](05-pixi.qmd) |
 | Template | A ready-made project layout generated with one command (Cookiecutter). | [02](02-project-organization.qmd) |

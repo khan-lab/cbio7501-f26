@@ -127,7 +127,7 @@ samples were returned (Garrison 2013).
 
 Open the Zenodo record **"SARS-CoV-2 RNA levels in Scotland's wastewater"**:
 <https://doi.org/10.5281/zenodo.6339631>. You saw its overall score in the
-[lesson 01 audit](01-introduction.qmd#worked-example-sars-cov-2-in-scotlands-wastewater);
+[lesson 01b audit](01b-open-science.qmd#worked-example);
 now go letter by letter. For each letter of FAIR, find one thing in the
 record that meets it, and one thing that could be better. Then
 compare with your neighbor.
