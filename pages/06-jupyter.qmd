@@ -52,7 +52,7 @@ JupyterLab opens in your browser. (If it does not, copy the
 started it with `pixi run`, its Python kernel uses the project's environment:
 the same Python, pandas and matplotlib that `pixi.lock` pins for everyone.
 
-![JupyterLab: the file browser on the left, the launcher on the right. Your launcher shows the kernels of your project's environment. Screenshot: NBIS, *Tools for Reproducible Research*, CC BY 4.0.](../assets/images/nbis/jupyterlab_dashboard.png){.bordered fig-alt="JupyterLab with a file browser on the left and the launcher on the right, with buttons for a Python notebook, a console, a terminal and text files." width="90%"}
+![JupyterLab: the file browser on the left, the launcher on the right. Your launcher shows the kernels of your project's environment.](../assets/images/JupyterLab.png){.bordered fig-alt="JupyterLab with a file browser on the left and the launcher on the right, with buttons for a Python notebook, a console, a terminal and text files." width="90%"}
 
 ::: {.callout-note}
 The terminal is now busy running Jupyter. Open a second terminal for other

@@ -19,9 +19,8 @@ sources:
 
 :::: {.columns}
 ::: {.column width="62%"}
-![](../../assets/images/nbis/jupyterlab_dashboard.png){.bordered fig-alt="JupyterLab: a file browser on the left and the launcher on the right, with buttons for a Python notebook, a console, a terminal and text files." width="100%"}
+![](../../assets/images/JupyterLab.png){.bordered fig-alt="JupyterLab: a file browser on the left and the launcher on the right, with buttons for a Python notebook, a console, a terminal and text files." width="100%"}
 
-[Screenshot: NBIS, *Tools for Reproducible Research*, CC BY 4.0]{.fig-credit}
 :::
 ::: {.column width="38%"}
 - An open-source project for **interactive** computing
