@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 470" role="img" aria-labelledby="t d">
+  <title id="t">Containers and virtual machines</title>
+  <desc id="d">Left: containers. Three containers, each holding tools, libraries and operating system files, run on one container engine (Docker or Apptainer), which runs on the host operating system and its kernel, on the hardware. Right: virtual machines. Three virtual machines, each holding tools and libraries plus a full guest operating system with its own kernel, run on a hypervisor, on the hardware.</desc>
+  <!-- Own work, CBIO7501, CC BY 4.0, after the Docker documentation figure -->
+  <defs>
+    <style>
+      text { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; fill: #0f172a; }
+      .h { font-size: 26px; font-weight: 700; }
+      .t { font-size: 20px; font-weight: 650; }
+      .s { font-size: 17px; fill: #5b6475; }
+    </style>
+  </defs>
+
+  <!-- ===== Containers ===== -->
+  <rect x="20" y="10" width="570" height="450" rx="18" fill="#ffffff" stroke="#cfd4dc" stroke-width="2"/>
+  <text class="h" x="305" y="48" text-anchor="middle">Containers</text>
+  <text class="s" x="305" y="76" text-anchor="middle">share the host's kernel</text>
+
+  <g>
+    <rect x="40" y="190" width="163" height="100" rx="12" fill="#e8f5ee" stroke="#7cbf9e" stroke-width="2"/>
+    <text class="t" x="121.5" y="226" text-anchor="middle">tools + libs</text>
+    <text class="s" x="121.5" y="254" text-anchor="middle">OS files</text>
+    <rect x="223" y="190" width="164" height="100" rx="12" fill="#e8f5ee" stroke="#7cbf9e" stroke-width="2"/>
+    <text class="t" x="305" y="226" text-anchor="middle">tools + libs</text>
+    <text class="s" x="305" y="254" text-anchor="middle">OS files</text>
+    <rect x="407" y="190" width="163" height="100" rx="12" fill="#e8f5ee" stroke="#7cbf9e" stroke-width="2"/>
+    <text class="t" x="488.5" y="226" text-anchor="middle">tools + libs</text>
+    <text class="s" x="488.5" y="254" text-anchor="middle">OS files</text>
+  </g>
+  <rect x="40" y="300" width="530" height="44" rx="10" fill="#f3eefb" stroke="#ab93d6" stroke-width="2"/>
+  <text class="t" x="305" y="329" text-anchor="middle">Container engine (Docker, Apptainer)</text>
+  <rect x="40" y="352" width="530" height="44" rx="10" fill="#eaf0fb" stroke="#8fa6d6" stroke-width="2"/>
+  <text class="t" x="305" y="381" text-anchor="middle">Host operating system + kernel</text>
+  <rect x="40" y="404" width="530" height="40" rx="10" fill="#f6f7f9" stroke="#cfd4dc" stroke-width="2"/>
+  <text class="t" x="305" y="431" text-anchor="middle">Hardware</text>
+
+  <!-- ===== Virtual machines ===== -->
+  <rect x="610" y="10" width="570" height="450" rx="18" fill="#ffffff" stroke="#cfd4dc" stroke-width="2"/>
+  <text class="h" x="895" y="48" text-anchor="middle">Virtual machines</text>
+  <text class="s" x="895" y="76" text-anchor="middle">each boots its own kernel</text>
+
+  <g>
+    <rect x="630" y="96" width="163" height="248" rx="12" fill="#ffffff" stroke="#cfd4dc" stroke-width="2"/>
+    <rect x="640" y="106" width="143" height="70" rx="10" fill="#e8f5ee" stroke="#7cbf9e" stroke-width="2"/>
+    <text class="t" x="711.5" y="148" text-anchor="middle">tools + libs</text>
+    <rect x="640" y="184" width="143" height="150" rx="10" fill="#fff4e5" stroke="#e0b46a" stroke-width="2"/>
+    <text class="t" x="711.5" y="248" text-anchor="middle">guest OS</text>
+    <text class="t" x="711.5" y="276" text-anchor="middle">+ kernel</text>
+
+    <rect x="813" y="96" width="164" height="248" rx="12" fill="#ffffff" stroke="#cfd4dc" stroke-width="2"/>
+    <rect x="823" y="106" width="144" height="70" rx="10" fill="#e8f5ee" stroke="#7cbf9e" stroke-width="2"/>
+    <text class="t" x="895" y="148" text-anchor="middle">tools + libs</text>
+    <rect x="823" y="184" width="144" height="150" rx="10" fill="#fff4e5" stroke="#e0b46a" stroke-width="2"/>
+    <text class="t" x="895" y="248" text-anchor="middle">guest OS</text>
+    <text class="t" x="895" y="276" text-anchor="middle">+ kernel</text>
+
+    <rect x="997" y="96" width="163" height="248" rx="12" fill="#ffffff" stroke="#cfd4dc" stroke-width="2"/>
+    <rect x="1007" y="106" width="143" height="70" rx="10" fill="#e8f5ee" stroke="#7cbf9e" stroke-width="2"/>
+    <text class="t" x="1078.5" y="148" text-anchor="middle">tools + libs</text>
+    <rect x="1007" y="184" width="143" height="150" rx="10" fill="#fff4e5" stroke="#e0b46a" stroke-width="2"/>
+    <text class="t" x="1078.5" y="248" text-anchor="middle">guest OS</text>
+    <text class="t" x="1078.5" y="276" text-anchor="middle">+ kernel</text>
+  </g>
+  <rect x="630" y="352" width="530" height="44" rx="10" fill="#f3eefb" stroke="#ab93d6" stroke-width="2"/>
+  <text class="t" x="895" y="381" text-anchor="middle">Hypervisor</text>
+  <rect x="630" y="404" width="530" height="40" rx="10" fill="#f6f7f9" stroke="#cfd4dc" stroke-width="2"/>
+  <text class="t" x="895" y="431" text-anchor="middle">Hardware</text>
+</svg>

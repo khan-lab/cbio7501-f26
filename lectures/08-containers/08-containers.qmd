@@ -2,6 +2,7 @@
 title: "Containers: Docker and Apptainer"
 subtitle: "{{< event lesson 08 >}}"
 sources:
+  - "**Adapted from:** *BIOS 259: The Art of Reproducible Science*, Day 04: Containerization using Docker and Singularity, Aziz Khan, Stanford (2024). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://github.com/asntech/bios259-a24/>. Containers vs virtual machines, Dockerfile instructions, the `RUN` vs `CMD` question, archiving the image, pros and cons; Singularity and Docker Hub updated to Apptainer and GHCR."
   - "*Tools for Reproducible Research*, NBIS. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://nbisweden.github.io/workshop-reproducible-research/>"
   - "Week 1 slides 68 to 70 (why containers; Docker and Singularity for HPC) are the opener. Update to slide 70: Singularity became Apptainer under the Linux Foundation in 2021; SingularityCE is Sylabs' separate fork. This course uses Apptainer."
   - "Nüst D et al. (2020). Ten simple rules for writing Dockerfiles for reproducible data science. *PLoS Comput Biol* 16:e1008316. <https://doi.org/10.1371/journal.pcbi.1008316>"
@@ -11,6 +12,7 @@ sources:
   - "SingularityCE README, End of Life / End of Engineering notice (read 2026-10-25): <https://github.com/sylabs/singularity>"
   - "Docker documentation: <https://docs.docker.com/>; Apptainer documentation: <https://apptainer.org/docs/user/latest/>"
   - "Diagram 'Image and container': own work, CC BY 4.0, after the NBIS figure."
+  - "Diagram 'Containers and virtual machines': own work, CC BY 4.0, after the figure in the Docker documentation (<https://www.docker.com/resources/what-container/>)."
 ---
 
 ## Today you will
@@ -62,6 +64,13 @@ Linux aarch64
 The container brings its own operating system files; it borrows only the
 kernel of the computer it runs on (on a Mac, a small Linux virtual machine).
 
+## Containers vs virtual machines
+
+![](../../assets/images/diagrams/containers-vs-vms.svg){fig-alt="Diagram: on the left, three containers with tools, libraries and OS files run on one container engine on the host operating system and kernel. On the right, three virtual machines each carry tools, libraries and a full guest operating system with its own kernel, on a hypervisor." width="80%" fig-align="center"}
+
+- **Container**: shares the host's kernel; starts in seconds, as big as its software
+- **Virtual machine**: boots its own operating system; heavier and slower, but fully separate
+
 ## A container sees only what you mount
 
 :::: {.columns}
@@ -89,6 +98,34 @@ run_variant_calling.sh
 
 `-v "$PWD":/work` puts your project folder at `/work` inside the container;
 `-w /work` starts there. Results written to `/work` land in your project.
+
+## Commands you will use today
+
+:::: {.columns}
+::: {.column width="56%"}
+```{.bash}
+docker build -t NAME:TAG .   # Dockerfile → image
+docker images                # list images
+docker run --rm IMAGE CMD    # image → container
+docker ps -a                 # list containers
+docker pull IMAGE            # from a registry
+docker push IMAGE            # to a registry
+docker rmi IMAGE             # delete an image
+```
+:::
+::: {.column width="44%"}
+| Flag | Means |
+|------|-------|
+| `--rm` | delete the container when it exits |
+| `-v "$PWD":/work` | mount your project |
+| `-w /work` | start in that folder |
+| `-it` | interactive shell |
+| `--platform linux/amd64` | build for Intel/AMD Linux |
+:::
+::::
+
+Any command: `docker <command> --help`. All of it on one page: the
+[Docker cheat sheet](../../cheatsheets/docker.qmd).
 
 ## Docker or Apptainer?
 
@@ -125,6 +162,23 @@ Best overall: a **Git repository** with code, documentation, the environment
 files (`pixi.toml`, `pixi.lock`, `Dockerfile`) and instructions to download the
 data; the image is built from it, and archived with each release.
 
+## Dockerfile instructions
+
+| Instruction | What it does | Takes effect |
+|-------------|--------------|--------------|
+| `FROM` | start from an existing image | build |
+| `COPY` | copy files from your project into the image | build |
+| `RUN` | run a command, for example install software | build |
+| `WORKDIR` | set the working folder | build, and where containers start |
+| `ENV` | set an environment variable | build, and in containers |
+| `ENTRYPOINT` / `CMD` | what runs when a container starts | container start |
+
+: {tbl-colwidths="[24,46,30]"}
+
+`RUN` and `COPY` each add a **layer**, and Docker reuses unchanged layers.
+That is why our Dockerfile copies `pixi.toml` and `pixi.lock` first: the slow
+install is redone only when they change.
+
 ## The Dockerfile, in three ideas
 
 ```{.dockerfile}
@@ -139,6 +193,25 @@ ENTRYPOINT ["/entrypoint.sh"]                          # 3. activate, then run
 
 Container and laptop **cannot drift**: both come from `pixi.lock`.
 
+## Peer instruction {.prompt-slide}
+
+::: {.prompt}
+**Vote, discuss with your neighbour, vote again.** What is the difference
+between `RUN` and `CMD` in a Dockerfile?
+
+(a) There is no difference\
+(b) `CMD` runs when the image is built; `RUN` when a container starts\
+(c) `RUN` runs when the image is built; `CMD` when a container starts\
+(d) No difference, unless the container is started interactively
+:::
+
+::: {.notes}
+Answer: c. One minute to vote alone, two minutes to discuss, then vote again.
+The usual confusion: `RUN` sounds like `docker run`. Point at our Dockerfile:
+`RUN pixi install --locked` happens once, at build; `ENTRYPOINT` (like `CMD`)
+happens every time a container starts.
+:::
+
 ## Run the pipeline in it
 
 ```{.bash}
@@ -150,6 +223,73 @@ docker run --rm -v "$PWD":/work -w /work ltee-project:0.1.0 \
 ```
 
 10, 25 and 775 variants: the same as on your laptop.
+
+## On the cluster: Apptainer
+
+Docker needs a root service, so shared clusters do not offer it. Apptainer
+runs the **same image** without root:
+
+```{.bash}
+# turn the image into one file (docker:// pulls from a registry,
+# docker-daemon:// takes your local Docker image)
+apptainer build ltee-project.sif \
+  docker://ghcr.io/ada-lovelace/ltee-project:0.1.0
+
+# home and current folder are mounted for you: no -v
+apptainer exec ltee-project.sif samtools --version
+apptainer run  ltee-project.sif bash scripts/run_variant_calling.sh
+```
+
+`run` starts the image's start script; `exec` runs a command directly.
+
+## Share and archive the image
+
+:::: {.columns}
+::: {.column width="50%"}
+**To share: a registry**
+
+```{.bash}
+docker tag ltee-project:0.1.0 \
+  ghcr.io/ada-lovelace/ltee-project:0.1.0
+docker push \
+  ghcr.io/ada-lovelace/ltee-project:0.1.0
+```
+:::
+::: {.column width="50%"}
+**To archive: a file**
+
+```{.bash}
+docker save ltee-project:0.1.0 \
+  | gzip > ltee-project_0.1.0.tar.gz
+# upload with the release to Zenodo
+docker load -i ltee-project_0.1.0.tar.gz
+```
+:::
+::::
+
+Registries change their rules and delete old images; a file archived with a
+DOI stays.
+
+## Pros and cons of containers
+
+:::: {.columns}
+::: {.column width="50%"}
+**Pros**
+
+- Move a workflow between laptop, CI and cluster unchanged
+- Much lighter than virtual machines
+- Works on any machine with a container engine, not only yours
+- For software with many dependencies, the most reliable way to keep it
+  runnable for years
+:::
+::: {.column width="50%"}
+**Cons**
+
+- Images can contain security vulnerabilities
+- Can hide installation problems instead of fixing them
+- Not always clear what belongs in the recipe and what in the image
+:::
+::::
 
 ## Think, pair, share {.prompt-slide}
 
@@ -171,10 +311,11 @@ a digest, and an archived image file (Zenodo).
 1. `docker run ltee-project:0.1.0 bash scripts/run_variant_calling.sh` says "No such file". Why? (a) image broken (b) project not mounted (c) wrong tag
 2. Which pins an image exactly? (a) `:latest` (b) `:0.1.0` (c) `@sha256:…`
 3. Where do you use Apptainer instead of Docker? (a) on a Mac (b) on an HPC cluster (c) in Word
+4. Which order is right? (a) Dockerfile → container → image (b) image → container → Dockerfile (c) Dockerfile → image → container
 :::
 
 ::: {.notes}
-Answers: 1 b; 2 c; 3 b.
+Answers: 1 b; 2 c; 3 b; 4 c.
 :::
 
 ## Recap
