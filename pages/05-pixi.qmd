@@ -173,6 +173,30 @@ if the lock file does not match the manifest. This is what the GitHub Action
 does (`locked: true`), and what a colleague does after cloning your project.
 The second install is fast because Pixi keeps downloaded packages in a cache.
 
+### Exercise: what rebuilds the environment? (3 minutes)
+
+You clone a colleague's LTEE project on a new laptop. What do you need to get
+**exactly** the samtools they ran, with the same htslib under it?
+
+a) `pixi.toml`
+b) `pixi.lock`
+c) `pixi.toml` and `pixi.lock`, plus internet access (or the packages in Pixi's cache)
+d) a copy of their `.pixi/` folder
+
+::: {.callout-tip collapse="true" title="Solution"}
+**c.** `pixi install --locked` reads both files and downloads exactly the
+packages the lock file lists.
+
+- **a)** gives you *an* environment, not theirs. `samtools = ">=1.24,<2"`
+  allows any newer 1.x, so Pixi solves again and may pick other versions.
+  The manifest is what you asked for, not what you got.
+- **b)** is not enough on its own. Pixi needs the manifest to find the
+  workspace, and `--locked` checks that the two files agree.
+- **d)** does not work. `.pixi/` is not committed (it is in `.gitignore`),
+  it is built for their operating system, and an environment cannot move to
+  another folder (see *Troubleshooting*).
+:::
+
 ## 5. Break it: change a version on purpose
 
 Your reviewer asks you to rerun with samtools 1.21. Keep a copy of the lock

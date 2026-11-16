@@ -18,6 +18,16 @@ test:
 
 ## Overview
 
+Welcome. These lessons teach you to turn an analysis into something others
+can rerun and build on: organized, tracked with Git, with its software
+pinned, its report computed from the data, and the whole pipeline rebuilt
+with one command. You learn by doing, on one project that grows from lesson
+to lesson: the [LTEE project](ltee-project.qmd), a variant analysis of
+*E. coli* genomes from a 50,000-generation evolution experiment. Each lesson
+has short slides for the *why*, a tutorial for the *how*, and a *Break it*
+step where you break something on purpose to see what the tool protects you
+from. Everything starts here, with one tool.
+
 In this course almost all software comes from one tool, **Pixi**. You install
 Pixi once; Pixi then installs Python, Quarto, Jupyter, the bioinformatics
 tools, Snakemake and Nextflow *inside each project*, at the exact versions the

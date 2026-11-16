@@ -53,3 +53,9 @@ quizzes/*-*.qmd
 README.proposed.md
 SETUP.proposed.md
 docs/
+
+slides/*.pptx
+
+# Local grading: student data and the dashboard (never committed)
+students_list.tsv
+grading/
